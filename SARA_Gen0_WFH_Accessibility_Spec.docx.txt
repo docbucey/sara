@@ -1,0 +1,143 @@
+SARA Gen0 WFH & Accessibility Spec Sheet
+========================================
+
+Version: Draft (2026-04-18)
+
+Overview
+--------
+This document outlines the architecture, onboarding, and accessibility roadmap for SARA as a Work-From-Home (WFH) and Office Suite middleware/AI system, with a focus on ADA compliance and EEG-based accessibility extensions. This file is designed for easy editing in Microsoft Word and can be referenced by SARA, the C# project, and Office integrations.
+
+1. Pillar Architecture
+----------------------
+- CONTROL: Central routing, governance, and audit authority. All actions pass through CONTROL.
+- SECURITY: Trust, validation, and policy enforcement. Handles permissions and escalation.
+- CORE: Persistent memory, profile, and continuity management. Ensures context is never lost.
+- MAMA: UX, summary, and adaptive interface logic. Handles accessibility and user-facing summaries.
+- SDK: Adapter layer for external integrations (VS Code, Word, Excel, Blender, EEG, etc.).
+
+2. C# Project Role
+------------------
+- Acts as the main entrypoint and middleware for all environments.
+- Handles onboarding, plugin management, and AI fallback logic.
+- Coordinates UI, accessibility, and pillar communication.
+
+3. Onboarding & Environment Integration
+---------------------------------------
+- Minimal onboarding: Install SARA, connect to Office tools (Word, Excel), and C# middleware.
+- Plugins/adapters for VS Code, Blender, EEG, etc., are registered through CONTROL.
+- All environments share a single NBS (Notebook System) for continuity and audit.
+
+4. Accessibility & ADA Compliance
+---------------------------------
+- MAMA pillar manages adaptive UI and accessibility features.
+- EEG extension ("Muse Two") planned as first major accessibility upgrade.
+- UI themes and components are custom-made OBJ files, managed by Blender and integrated via SDK.
+- All actions, including accessibility features, are logged and governed by CONTROL and SECURITY.
+
+5. Workflow & Use Cases
+-----------------------
+- User can pause/resume work at any pace (minutes to months) with no loss of context.
+- SARA tracks business plans, tasks, and progress for long-term and burst workflows.
+- Office Suite (Word, Excel) integration supports full document and analytics capabilities.
+- Blender integration enables custom UI/theme creation.
+- EEG input can be used for adaptive control, focus tracking, or accessibility enhancements.
+
+6. Governance & Audit
+---------------------
+- All actions are logged in the NBS and governed by CONTROL.
+- Permission escalation, onboarding/removal, and AI-to-AI communication are centrally managed.
+- Profiles (user, admin, system) determine access and override capabilities.
+
+7. Roadmap & Next Steps
+-----------------------
+- Finalize C# middleware and pillar integration.
+- Build and test plugins/adapters for all target environments.
+- Develop and integrate EEG extension for ADA compliance.
+- Refine UI themes and OBJ asset pipeline with Blender.
+- Document onboarding, escalation, and accessibility procedures.
+- Complete and validate the final spec sheet for handoff and future reference.
+
+
+8. Night Mode, Shift Work, and Automation Support
+-----------------------------------------------
+- The architecture supports "night time mode," shift work handoff, and continuous operations.
+- CONTROL and CORE ensure persistent state and seamless handoff between users, shifts, or AIs.
+- MAMA adapts UI and notifications for different modes (night, shift, focus, etc.).
+- Automation can be implemented in the pillars or C# middleware, with all actions governed and logged.
+- AI generation (if supported) is performed as part of automation, shift handoff, or specialized workflows, and is built into the C# AI side.
+- Profiles and permissions control who/what can automate, escalate, or take over tasks during off-hours or shift changes.
+
+---
+
+This file is intended for ongoing editing in Word and can be referenced by SARA, the C# project, and all Office Suite integrations to ensure continuity, accessibility, and a unified vision for WFH and ADA-compliant AI middleware.
+C# Middleware: Key Technical Requirements
+(Terminal-Based, Generative & Adaptable AI)
+1. Universal Entry Point
+
+All user actions, plugin events, and system integrations must be routed through a single, CONTROL-governed entry point in the C# middleware.
+No direct cross-pillar or plugin-to-plugin communication is permitted; everything is mediated by CONTROL.
+
+2. Generative AI Engine (Terminal-Scoped)
+
+The C# middleware must host or interface with a generative AI engine that is fully adaptable and instance-specific (i.e., each terminal runs its own semi-independent AI).
+The AI must support:
+
+Contextual learning (adapts to user framing, preferences, and workflows)
+Document-level and session-level memory (not just token-based)
+Audio-visual interaction by default (text, speech, and visual feedback)
+Customizable UI themes and layouts, with OBJ asset support (from Blender)
+
+
+
+3. Plugin & Adapter Management
+
+All plugins (Word, Excel, Blender, EEG, etc.) must register with CONTROL via the C# middleware.
+The middleware must provide APIs for:
+
+Plugin registration and deregistration
+Event normalization and dispatch
+Fallback handling if a plugin fails or is unavailable
+
+
+
+4. Accessibility & ADA Compliance
+
+The middleware must expose all accessibility features (night mode, adaptive UI, EEG input, etc.) through CONTROL and MAMA.
+All accessibility actions and adaptations must be logged and auditable.
+Support for EEG-based input (e.g., Muse Two) must be modular and pluggable.
+
+5. Profile & Permission Management
+
+User, admin, and system profiles must be managed centrally, with all changes routed through CONTROL.
+The middleware must enforce permission boundaries for all actions, including automation and escalation.
+
+6. Audit & Logging
+
+Every action, event, and adaptation must be logged by CONTROL for audit and compliance.
+The middleware must support real-time and batch log export for review and troubleshooting.
+
+7. UI/UX Adaptation
+
+All UI events, theme changes, and accessibility adaptations must be routed through CONTROL and MAMA.
+The middleware must support:
+
+Dynamic theme switching (OBJ assets, color schemes, HUD layouts)
+Macro/micro mapping for input devices (gamepad, keyboard, adaptive hardware)
+Gamified productivity features (custom scoring, progress tracking)
+
+
+
+8. State Persistence & Continuity
+
+The middleware must ensure that all user context, session data, and workflow state are persisted via CORE, allowing pause/resume at any time.
+Seamless handoff between users, shifts, or AIs must be supported for continuous operations.
+
+9. Automation & Shift Work Support
+
+The middleware must support automation triggers, shift handoff protocols, and night mode adaptations, all governed by CONTROL.
+Profiles and permissions must control who/what can automate, escalate, or take over tasks during off-hours or shift changes.
+
+10. Extensibility & Future-Proofing
+
+The architecture must allow for future plugins, accessibility upgrades, and AI enhancements without breaking the CONTROL-centric model.
+All new features must be registered and governed through CONTROL.
