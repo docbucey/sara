@@ -9,6 +9,24 @@
 
 ## 1. Scope and Purpose
 
+### 1.1 Design Target — Zero-Tech-Literacy Standard
+
+**The universal test:** If a 10–12 year old with no interest in technology and zero reading of any manual can figure out every feature in under 30 seconds, the design passes.
+
+This standard — sometimes called the "dumb jock / preteen" bar — means:
+
+- **No jargon, anywhere.** If a word appears in a technical dictionary but not in normal everyday speech, it must not appear on screen.
+- **Action first.** Every button, label, and prompt uses everyday verbs: "Find", "Teach", "Save", "Test It". Not "Refresh", "Configure", "Apply", "Remove".
+- **Show, don't label.** Status is communicated with color, size, and plain phrases ("✓ Plugged in and ready", "SARA is ready ✓") — not icons requiring a legend or boolean text.
+- **One question at a time.** Forms are replaced with guided, conversational prompts: "What should SARA do when you press this?" rather than multi-column grids with field codes.
+- **Sliders over text boxes for ranges.** Numeric fields for things like delay or sensitivity are always sliders with plain English endpoints ("No wait ← → Longer wait") so the effect is felt, not calculated.
+- **No body diagrams, legends, or placeholder content.** If it doesn't immediately tell the user something useful, it is removed.
+- **Progressive disclosure.** Complexity is hidden until needed. The default view shows only what matters for the current step.
+
+This standard applies to all SARA C# UI surfaces: input mapper, device selector, stability settings, status bar, and any future panels.
+
+---
+
 This document extends the C# front-end specification for SARA using the reconciled workspace spec map as the authoritative source for:
 
 - ADA and accessibility expectations

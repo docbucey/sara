@@ -94,28 +94,27 @@
             <StackPanel Orientation="Horizontal">
                 <Button Style="{StaticResource BtnStyle}"
                         Command="{Binding RefreshDevicesCommand}"
-                        Content="Refresh Devices" Margin="0,0,8,0" FontSize="16"/>
+                        Content="Find My Devices" Margin="0,0,8,0" FontSize="16"
+                        ToolTip="Look for any controllers, keyboards, or other devices plugged in"/>
                 <Button Style="{StaticResource BtnStyle}"
                         Command="{Binding TogglePollingCommand}"
                         Content="{Binding IsPolling, Converter={StaticResource ToggleLabel}}"
-                        Margin="0,0,8,0" FontSize="16"/>
+                        Margin="0,0,8,0" FontSize="16"
+                        ToolTip="Start or stop watching your devices for input"/>
                 <Button Style="{StaticResource BtnStyle}"
                         Command="{Binding SaveAllCommand}"
-                        Content="Save" FontSize="16"/>
+                        Content="Save My Settings" FontSize="16"
+                        ToolTip="Save everything you've set up"/>
                 <Button Style="{StaticResource BtnStyle}"
                         Content="Office Suite" FontSize="16" Margin="8,0,0,0"
                         Click="OpenOffice_Click"
-                        ToolTip="Open SARA Office Suite"/>
-                <Button Style="{StaticResource BtnStyle}"
-                        Content="UI Spec" FontSize="16" Margin="8,0,0,0"
-                        Click="OpenSaraFallbackUi_Click"
-                        ToolTip="MAMA/Mapper PNG spec — vector fallback (no PNG files)"/>
+                        ToolTip="Open the SARA Office Suite"/>
                 <StackPanel VerticalAlignment="Center" Margin="20,0,0,0">
                     <TextBlock FontSize="17" FontWeight="Bold" Foreground="{StaticResource AccentA}">
-                        <TextBlock.Text>Accessibility Input Mapper</TextBlock.Text>
+                        <TextBlock.Text>SARA — Your Everyday Helper</TextBlock.Text>
                     </TextBlock>
                     <TextBlock FontSize="16" Foreground="{StaticResource FgSub}">
-                        <TextBlock.Text>Works with any disability — mouse · gamepad · voice · switch · touch and more</TextBlock.Text>
+                        <TextBlock.Text>Works with any input — controller · keyboard · mouse · voice · switch · joystick and more</TextBlock.Text>
                     </TextBlock>
                 </StackPanel>
             </StackPanel>
@@ -135,7 +134,7 @@
             <Border Grid.Column="0" Background="{StaticResource Bg1}"
                     BorderThickness="2" BorderBrush="{StaticResource AccentA}" Padding="8">
                 <DockPanel>
-                    <TextBlock DockPanel.Dock="Top" Text="Devices"
+                    <TextBlock DockPanel.Dock="Top" Text="My Devices"
                                FontSize="16" FontWeight="Bold"
                                Foreground="{StaticResource AccentA}"
                                Margin="0,0,0,8"/>
@@ -144,36 +143,54 @@
                              SelectedItem="{Binding SelectedDevice}">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <StackPanel Margin="2">
-                                    <StackPanel Orientation="Horizontal" Margin="0,0,0,2">
-                                        <Ellipse Width="10" Height="10" Margin="0,0,6,0"
-                                                 VerticalAlignment="Center">
-                                            <Ellipse.Style>
-                                                <Style TargetType="Ellipse">
-                                                    <Setter Property="Fill" Value="{StaticResource AccentB}"/>
-                                                    <Style.Triggers>
-                                                        <DataTrigger Binding="{Binding IsConnected}" Value="False">
-                                                            <Setter Property="Fill" Value="{StaticResource Warning}"/>
-                                                        </DataTrigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </Ellipse.Style>
-                                        </Ellipse>
-                                        <TextBlock Text="{Binding DeviceName}" FontWeight="Bold" FontSize="15">
+                                <Border Padding="8,10" Margin="2,2,2,4">
+                                    <StackPanel>
+                                        <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
+                                            <Ellipse Width="14" Height="14" Margin="0,0,8,0"
+                                                     VerticalAlignment="Center">
+                                                <Ellipse.Style>
+                                                    <Style TargetType="Ellipse">
+                                                        <Setter Property="Fill" Value="{StaticResource AccentB}"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding IsConnected}" Value="False">
+                                                                <Setter Property="Fill" Value="{StaticResource Warning}"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Ellipse.Style>
+                                            </Ellipse>
+                                            <TextBlock Text="{Binding DeviceName}" FontWeight="Bold" FontSize="16">
+                                                <TextBlock.Style>
+                                                    <Style TargetType="TextBlock"
+                                                           BasedOn="{StaticResource {x:Type TextBlock}}">
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding IsConnected}" Value="False">
+                                                                <Setter Property="Foreground" Value="{StaticResource FgSub}"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
+                                        </StackPanel>
+                                        <TextBlock Text="{Binding DeviceType}" FontSize="14"
+                                                   Foreground="{StaticResource Cyan}" Margin="22,0,0,0"/>
+                                        <TextBlock FontSize="13" Margin="22,2,0,0">
                                             <TextBlock.Style>
                                                 <Style TargetType="TextBlock"
                                                        BasedOn="{StaticResource {x:Type TextBlock}}">
+                                                    <Setter Property="Text" Value="&#x2713; Plugged in and ready"/>
+                                                    <Setter Property="Foreground" Value="{StaticResource AccentB}"/>
                                                     <Style.Triggers>
                                                         <DataTrigger Binding="{Binding IsConnected}" Value="False">
-                                                            <Setter Property="Foreground" Value="{StaticResource FgSub}"/>
+                                                            <Setter Property="Text" Value="Not connected"/>
+                                                            <Setter Property="Foreground" Value="{StaticResource Warning}"/>
                                                         </DataTrigger>
                                                     </Style.Triggers>
                                                 </Style>
                                             </TextBlock.Style>
                                         </TextBlock>
                                     </StackPanel>
-                                    <TextBlock Text="{Binding DeviceType}" FontSize="14" Foreground="{StaticResource Cyan}"/>
-                                </StackPanel>
+                                </Border>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                         <ListBox.ItemContainerStyle>
@@ -222,7 +239,7 @@
                                             <TextBlock Text="{Binding DeviceType}"
                                                        Foreground="{StaticResource Cyan}" FontSize="15" Margin="0,2,0,0"/>
                                         </StackPanel>
-                                        <CheckBox Grid.Column="1" Content="Active"
+                                        <CheckBox Grid.Column="1" Content="This device is on"
                                                   IsChecked="{Binding IsEnabled}"
                                                   VerticalAlignment="Center" FontWeight="Bold" Foreground="{StaticResource FgPrim}"/>
                                     </Grid>
@@ -237,17 +254,19 @@
                                         <ColumnDefinition Width="Auto"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock Grid.Column="0" Text="Profile:" VerticalAlignment="Center" FontWeight="Bold" Margin="0,0,8,0" Foreground="{StaticResource AccentA}"/>
+                                    <TextBlock Grid.Column="0" Text="My saved settings:" VerticalAlignment="Center" FontWeight="Bold" Margin="0,0,8,0" Foreground="{StaticResource AccentA}"/>
                                     <ComboBox Grid.Column="1" ItemsSource="{Binding ProfileNames}"
                                               SelectedItem="{Binding SelectedProfileName}" FontSize="15"/>
                                     <Button Grid.Column="2" Margin="8,0,0,0" Style="{StaticResource BtnStyle}"
-                                            Command="{Binding AddProfileCommand}" Content="Add" Padding="8,2" FontSize="14"/>
+                                            Command="{Binding AddProfileCommand}" Content="+ New" Padding="8,2" FontSize="14"
+                                            ToolTip="Create a new set of settings"/>
                                     <Button Grid.Column="3" Margin="4,0,0,0" Style="{StaticResource BtnStyle}"
-                                            Command="{Binding RemoveCurrentProfileCommand}" Content="Remove" Padding="8,2" FontSize="14"/>
+                                            Command="{Binding RemoveCurrentProfileCommand}" Content="Delete" Padding="8,2" FontSize="14"
+                                            ToolTip="Remove this set of settings"/>
                                 </Grid>
 
-                                <!-- INPUT BUTTON LAYOUT (Visual Grid) -->
-                                <GroupBox Header="Button Layout — Click any button to configure" Margin="0,0,0,12">
+                                <!-- MY BUTTONS GRID -->
+                                <GroupBox Header="My Buttons — tap any one to set it up" Margin="0,0,0,12">
                                     <Grid>
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="Auto"/>
@@ -258,7 +277,7 @@
                                         <!-- Header -->
                                         <DockPanel Grid.Row="0" Margin="0,0,0,8">
                                             <TextBlock DockPanel.Dock="Left"
-                                                       Text="CLICK ANY BUTTON BELOW TO EDIT OR [LEARN] NEW INPUT"
+                                                       Text="Tap any button below — then tell SARA what it should do"
                                                        FontSize="15" FontWeight="Bold" Foreground="{StaticResource AccentA}"/>
                                             <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" HorizontalAlignment="Right">
                                                 <TextBlock Text="Last input: " FontSize="14" Foreground="{StaticResource AccentA}" FontWeight="Bold"/>
@@ -308,55 +327,63 @@
                                         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
                                             <Button Style="{StaticResource BtnStyle}"
                                                     Command="{Binding SelectedMappingRow.LearnInputCommand}"
-                                                    Content="Learn New Input" Padding="12,6" FontSize="15" Margin="0,0,8,0"/>
+                                                    Content="Teach SARA This Button" Padding="12,6" FontSize="15" Margin="0,0,8,0"
+                                                    ToolTip="Press the physical button you want SARA to learn"/>
                                             <Button Style="{StaticResource BtnStyle}"
                                                     Command="{Binding SelectedMappingRow.EditMappingCommand}"
-                                                    Content="Edit Selected" Padding="12,6" FontSize="15" Margin="0,0,8,0"/>
+                                                    Content="Set Up This Button" Padding="12,6" FontSize="15" Margin="0,0,8,0"
+                                                    ToolTip="Change what this button does"/>
                                         </StackPanel>
                                     </Grid>
                                 </GroupBox>
 
-                                <!-- DETAILED EDITOR -->
-                                <GroupBox Header="Detailed Editor — Select a button above to edit" Margin="0,0,0,12">
-                                    <Border Padding="8" Background="{StaticResource Bg1}" BorderThickness="2" BorderBrush="{StaticResource Cyan}">
-                                        <Grid DataContext="{Binding SelectedMappingRow}">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="Auto"/>
-                                                <ColumnDefinition Width="220"/>
-                                                <ColumnDefinition Width="20"/>
-                                                <ColumnDefinition Width="Auto"/>
-                                                <ColumnDefinition Width="220"/>
-                                            </Grid.ColumnDefinitions>
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="Auto"/>
-                                                <RowDefinition Height="Auto"/>
-                                                <RowDefinition Height="Auto"/>
-                                            </Grid.RowDefinitions>
+                                <!-- BUTTON SETUP -->
+                                <GroupBox Header="Button Setup — select a button above first" Margin="0,0,0,12">
+                                    <Border Padding="12" Background="{StaticResource Bg1}" BorderThickness="2" BorderBrush="{StaticResource Cyan}">
+                                        <StackPanel DataContext="{Binding SelectedMappingRow}">
 
-                                            <TextBlock Grid.Row="0" Grid.Column="0" Text="INPUT:" VerticalAlignment="Center" FontSize="15" FontWeight="Bold" Foreground="{StaticResource AccentA}"/>
-                                            <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding InputName}" FontSize="16" FontWeight="Bold" VerticalAlignment="Center" Foreground="{StaticResource AccentB}" Padding="6"/>
+                                            <!-- Which button is selected -->
+                                            <Border Background="{StaticResource Bg2}" Padding="10,8" Margin="0,0,0,16"
+                                                    BorderThickness="2" BorderBrush="{StaticResource AccentA}">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock Text="You picked:  " FontSize="15"
+                                                               Foreground="{StaticResource FgSub}" VerticalAlignment="Center"/>
+                                                    <TextBlock Text="{Binding InputName}" FontSize="20" FontWeight="Bold"
+                                                               Foreground="{StaticResource AccentB}" VerticalAlignment="Center"/>
+                                                </StackPanel>
+                                            </Border>
 
-                                            <TextBlock Grid.Row="0" Grid.Column="3" Text="ACTION:" VerticalAlignment="Center" FontSize="15" FontWeight="Bold" Foreground="{StaticResource AccentA}"/>
-                                            <ComboBox Grid.Row="0" Grid.Column="4"
-                                                      ItemsSource="{Binding ActionTypes}"
+                                            <!-- What should it do -->
+                                            <TextBlock Text="What should SARA do when you press this?"
+                                                       FontSize="15" FontWeight="Bold"
+                                                       Foreground="{StaticResource AccentA}" Margin="0,0,0,4"/>
+                                            <ComboBox ItemsSource="{Binding ActionTypes}"
                                                       SelectedItem="{Binding ActionType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                                      FontSize="15"/>
+                                                      FontSize="16" Margin="0,0,0,14"/>
 
-                                            <TextBlock Grid.Row="1" Grid.Column="0" Text="TARGET VALUE:" VerticalAlignment="Center" FontSize="15" FontWeight="Bold" Margin="0,8,0,0" Foreground="{StaticResource AccentA}"/>
-                                            <TextBox Grid.Row="1" Grid.Column="1"
-                                                     Text="{Binding ActionValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                                     FontSize="15" Margin="0,8,0,0"/>
+                                            <!-- Which key -->
+                                            <TextBlock Text="Which key or action should it trigger?"
+                                                       FontSize="15" FontWeight="Bold"
+                                                       Foreground="{StaticResource AccentA}" Margin="0,0,0,4"/>
+                                            <TextBox Text="{Binding ActionValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                     FontSize="16" Margin="0,0,0,14"/>
 
-                                            <TextBlock Grid.Row="1" Grid.Column="3" Text="LABEL:" VerticalAlignment="Center" FontSize="15" FontWeight="Bold" Margin="0,8,0,0" Foreground="{StaticResource AccentA}"/>
-                                            <TextBox Grid.Row="1" Grid.Column="4"
-                                                     Text="{Binding Label, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                                     FontSize="15" Margin="0,8,0,0"/>
+                                            <!-- Nickname -->
+                                            <TextBlock Text="Your nickname for this button (optional):"
+                                                       FontSize="15" FontWeight="Bold"
+                                                       Foreground="{StaticResource AccentA}" Margin="0,0,0,4"/>
+                                            <TextBox Text="{Binding Label, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                     FontSize="16" Margin="0,0,0,14"/>
 
-                                            <TextBlock Grid.Row="2" Grid.Column="0" Text="MACRO TEXT:" VerticalAlignment="Center" FontSize="15" FontWeight="Bold" Margin="0,8,0,0" Foreground="{StaticResource AccentA}"/>
-                                            <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="4"
-                                                     Text="{Binding MacroText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                                     FontSize="15" Margin="0,8,0,0" MinHeight="40" TextWrapping="Wrap" VerticalAlignment="Stretch" AcceptsReturn="True"/>
-                                        </Grid>
+                                            <!-- Macro text -->
+                                            <TextBlock Text="Should SARA type a phrase when pressed? (leave empty if not needed)"
+                                                       FontSize="15" FontWeight="Bold"
+                                                       Foreground="{StaticResource AccentA}" Margin="0,0,0,4"/>
+                                            <TextBox Text="{Binding MacroText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                     FontSize="16" MinHeight="52" TextWrapping="Wrap"
+                                                     VerticalAlignment="Stretch" AcceptsReturn="True"/>
+
+                                        </StackPanel>
                                     </Border>
                                 </GroupBox>
 
@@ -377,48 +404,102 @@
                                         <StackPanel Orientation="Horizontal">
                                             <Button Style="{StaticResource BtnStyle}"
                                                     Command="{Binding SelectedMappingRow.LearnInputCommand}"
-                                                    Content="Learn" Padding="10,4" FontSize="14" Margin="0,0,6,0"/>
+                                                    Content="Teach" Padding="10,4" FontSize="14" Margin="0,0,6,0"
+                                                    ToolTip="Press the physical button to teach SARA what it is"/>
                                             <Button Style="{StaticResource BtnStyle}"
                                                     Command="{Binding SelectedMappingRow.EditMappingCommand}"
-                                                    Content="Test" Padding="10,4" FontSize="14" Margin="0,0,6,0"/>
+                                                    Content="Test It" Padding="10,4" FontSize="14" Margin="0,0,6,0"
+                                                    ToolTip="Try out this button"/>
                                         </StackPanel>
                                     </GroupBox>
                                 </Grid>
 
-                                <!-- STABILITY & ACCESSIBILITY -->
-                                <GroupBox Header="Input Stability" Margin="0,12,0,0">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto"/>
-                                            <ColumnDefinition Width="120"/>
-                                            <ColumnDefinition Width="20"/>
-                                            <ColumnDefinition Width="Auto"/>
-                                            <ColumnDefinition Width="120"/>
-                                        </Grid.ColumnDefinitions>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="Auto"/>
-                                        </Grid.RowDefinitions>
+                                <!-- STEADINESS SETTINGS -->
+                                <GroupBox Header="Steadiness Settings" Margin="0,12,0,0">
+                                    <StackPanel>
 
-                                        <CheckBox Grid.Row="0" Grid.ColumnSpan="5"
-                                                  Content="Enable tremor filter (debounce + dead-zone + smoothing)"
+                                        <CheckBox Content="My hand shakes — turn on steadiness helpers"
                                                   IsChecked="{Binding TremorEnabled}"
-                                                  Margin="0,0,0,8" Foreground="{StaticResource FgPrim}" FontWeight="Bold"/>
-                                        <Label Grid.Row="1" Grid.Column="0" Content="DEBOUNCE (ms):" VerticalAlignment="Center" Foreground="{StaticResource AccentA}" FontWeight="Bold"/>
-                                        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding DebounceMs, UpdateSourceTrigger=PropertyChanged}"
-                                                 IsEnabled="{Binding TremorEnabled}" FontSize="15"/>
-                                        <Label Grid.Row="1" Grid.Column="3" Content="DEAD-ZONE (0-1):" VerticalAlignment="Center" Foreground="{StaticResource AccentA}" FontWeight="Bold"/>
-                                        <TextBox Grid.Row="1" Grid.Column="4" Text="{Binding AxisDeadZone, UpdateSourceTrigger=PropertyChanged}"
-                                                 IsEnabled="{Binding TremorEnabled}" FontSize="15"/>
-                                        <Label Grid.Row="2" Grid.Column="0" Content="SMOOTH (0-1):" VerticalAlignment="Center" Margin="0,6,0,0" Foreground="{StaticResource AccentA}" FontWeight="Bold"/>
-                                        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding AxisSmoothAlpha, UpdateSourceTrigger=PropertyChanged}"
-                                                 IsEnabled="{Binding TremorEnabled}" Margin="0,6,0,0" FontSize="15"/>
-                                        <TextBlock Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="2"
-                                                   Text="Lower = more smoothing"
-                                                   FontSize="14" Foreground="{StaticResource Cyan}"
-                                                   VerticalAlignment="Center" Margin="0,6,0,0" FontWeight="Bold"/>
-                                    </Grid>
+                                                  Margin="0,0,0,14" Foreground="{StaticResource FgPrim}"
+                                                  FontWeight="Bold" FontSize="15"/>
+
+                                        <!-- Reaction delay -->
+                                        <StackPanel Margin="0,0,0,14" IsEnabled="{Binding TremorEnabled}">
+                                            <DockPanel Margin="0,0,0,2">
+                                                <TextBlock DockPanel.Dock="Left" Text="Wait before registering a press"
+                                                           FontWeight="Bold" Foreground="{StaticResource AccentA}" FontSize="15"/>
+                                                <TextBlock DockPanel.Dock="Right"
+                                                           Text="{Binding DebounceMs, StringFormat='{}{0} ms'}"
+                                                           FontSize="14" Foreground="{StaticResource FgSub}"
+                                                           HorizontalAlignment="Right"/>
+                                            </DockPanel>
+                                            <TextBlock FontSize="13" Foreground="{StaticResource FgSub}"
+                                                       TextWrapping="Wrap" Margin="0,0,0,4">
+                                                Higher = SARA waits longer, so accidental quick taps are ignored
+                                            </TextBlock>
+                                            <DockPanel>
+                                                <TextBlock DockPanel.Dock="Left" Text="No wait" FontSize="12"
+                                                           Foreground="{StaticResource FgSub}" Width="50"/>
+                                                <TextBlock DockPanel.Dock="Right" Text="Longer wait" FontSize="12"
+                                                           Foreground="{StaticResource FgSub}" Width="70" TextAlignment="Right"/>
+                                                <Slider Minimum="0" Maximum="500" TickFrequency="10"
+                                                        IsSnapToTickEnabled="True"
+                                                        Value="{Binding DebounceMs, UpdateSourceTrigger=PropertyChanged}"
+                                                        IsEnabled="{Binding TremorEnabled}"/>
+                                            </DockPanel>
+                                        </StackPanel>
+
+                                        <!-- Ignore tiny movements -->
+                                        <StackPanel Margin="0,0,0,14" IsEnabled="{Binding TremorEnabled}">
+                                            <DockPanel Margin="0,0,0,2">
+                                                <TextBlock DockPanel.Dock="Left" Text="Ignore tiny shaky movements"
+                                                           FontWeight="Bold" Foreground="{StaticResource AccentA}" FontSize="15"/>
+                                                <TextBlock DockPanel.Dock="Right"
+                                                           Text="{Binding AxisDeadZone, StringFormat='{}{0:P0}'}"
+                                                           FontSize="14" Foreground="{StaticResource FgSub}"
+                                                           HorizontalAlignment="Right"/>
+                                            </DockPanel>
+                                            <TextBlock FontSize="13" Foreground="{StaticResource FgSub}"
+                                                       TextWrapping="Wrap" Margin="0,0,0,4">
+                                                Higher = more movement is ignored, good if your hand drifts a lot
+                                            </TextBlock>
+                                            <DockPanel>
+                                                <TextBlock DockPanel.Dock="Left" Text="Less" FontSize="12"
+                                                           Foreground="{StaticResource FgSub}" Width="30"/>
+                                                <TextBlock DockPanel.Dock="Right" Text="More" FontSize="12"
+                                                           Foreground="{StaticResource FgSub}" Width="30" TextAlignment="Right"/>
+                                                <Slider Minimum="0" Maximum="1" SmallChange="0.05" LargeChange="0.1"
+                                                        Value="{Binding AxisDeadZone, UpdateSourceTrigger=PropertyChanged}"
+                                                        IsEnabled="{Binding TremorEnabled}"/>
+                                            </DockPanel>
+                                        </StackPanel>
+
+                                        <!-- Extra steadiness -->
+                                        <StackPanel IsEnabled="{Binding TremorEnabled}">
+                                            <DockPanel Margin="0,0,0,2">
+                                                <TextBlock DockPanel.Dock="Left" Text="Extra steadiness (smooth out shaking)"
+                                                           FontWeight="Bold" Foreground="{StaticResource AccentA}" FontSize="15"/>
+                                                <TextBlock DockPanel.Dock="Right"
+                                                           Text="{Binding AxisSmoothAlpha, StringFormat='{}{0:P0}'}"
+                                                           FontSize="14" Foreground="{StaticResource FgSub}"
+                                                           HorizontalAlignment="Right"/>
+                                            </DockPanel>
+                                            <TextBlock FontSize="13" Foreground="{StaticResource FgSub}"
+                                                       TextWrapping="Wrap" Margin="0,0,0,4">
+                                                Higher = smoother movement, slightly less snappy — good for joystick shake
+                                            </TextBlock>
+                                            <DockPanel>
+                                                <TextBlock DockPanel.Dock="Left" Text="Less" FontSize="12"
+                                                           Foreground="{StaticResource FgSub}" Width="30"/>
+                                                <TextBlock DockPanel.Dock="Right" Text="More" FontSize="12"
+                                                           Foreground="{StaticResource FgSub}" Width="30" TextAlignment="Right"/>
+                                                <Slider Minimum="0" Maximum="1" SmallChange="0.05" LargeChange="0.1"
+                                                        Value="{Binding AxisSmoothAlpha, UpdateSourceTrigger=PropertyChanged}"
+                                                        IsEnabled="{Binding TremorEnabled}"/>
+                                            </DockPanel>
+                                        </StackPanel>
+
+                                    </StackPanel>
                                 </GroupBox>
 
                             </StackPanel>
@@ -432,115 +513,93 @@
                           HorizontalAlignment="Stretch"
                           Background="{StaticResource AccentA}"/>
 
-            <!-- COLUMN 4: BODY DIAGRAM (RIGHT SIDE) -->
+            <!-- COLUMN 4: LIVE TEST PANEL (RIGHT SIDE) -->
             <Border Grid.Column="4" Background="{StaticResource Bg1}"
                     BorderThickness="2" BorderBrush="{StaticResource Cyan}" Padding="12">
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
                     <StackPanel>
-                        <TextBlock Text="Body Map" FontSize="16" FontWeight="Bold" 
-                                   Foreground="{StaticResource AccentA}" Margin="0,0,0,12"
-                                   TextAlignment="Center"/>
-                        
-                        <!-- Simple body diagram representation -->
-                        <Border Background="{StaticResource Bg2}" BorderThickness="2" BorderBrush="{StaticResource Cyan}"
-                                Padding="8" Margin="0,0,0,12" CornerRadius="0">
-                            <StackPanel>
-                                <!-- HEAD -->
-                                <Ellipse Width="60" Height="60" Fill="{StaticResource Cyan}" 
-                                         Margin="0,0,0,8" HorizontalAlignment="Center"
-                                         ToolTip="HEAD / HANDS"/>
-                                
-                                <!-- NECK CONNECTION -->
-                                <Rectangle Height="8" Fill="{StaticResource AccentA}" Margin="25,0,25,0"/>
-                                
-                                <!-- TORSO -->
-                                <Rectangle Height="80" Fill="{StaticResource AccentA}" 
-                                          Margin="20,0,20,0"/>
-                                
-                                <!-- SHOULDERS -->
-                                <Grid Height="20" Margin="0,0,0,8">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="60"/>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Ellipse Grid.Column="0" Fill="{StaticResource Warning}" 
-                                            ToolTip="LEFT ARM"/>
-                                    <TextBlock Grid.Column="1" Text="L  R" FontSize="16" 
-                                              HorizontalAlignment="Center" VerticalAlignment="Center"
-                                              Foreground="{StaticResource FgPrim}" FontWeight="Bold"/>
-                                    <Ellipse Grid.Column="2" Fill="{StaticResource Warning}" 
-                                            ToolTip="RIGHT ARM"/>
-                                </Grid>
 
-                                <!-- LEGS -->
-                                <Grid Height="60">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="10"/>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Rectangle Grid.Column="0" Fill="{StaticResource AccentB}" 
-                                              ToolTip="LEFT LEG" Margin="10,0,0,0"/>
-                                    <Rectangle Grid.Column="2" Fill="{StaticResource AccentB}" 
-                                              ToolTip="RIGHT LEG" Margin="0,0,10,0"/>
-                                </Grid>
+                        <TextBlock Text="Try It Out" FontSize="18" FontWeight="Bold"
+                                   Foreground="{StaticResource AccentA}" Margin="0,0,0,4"
+                                   TextAlignment="Center"/>
+                        <TextBlock Text="Press any button, key, or move your device"
+                                   FontSize="13" Foreground="{StaticResource FgSub}"
+                                   TextAlignment="Center" TextWrapping="Wrap" Margin="0,0,0,12"/>
+
+                        <!-- BIG live input display -->
+                        <Border Background="{StaticResource Bg2}" BorderThickness="2"
+                                BorderBrush="{StaticResource AccentA}" Padding="16" Margin="0,0,0,14"
+                                MinHeight="100">
+                            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <TextBlock Text="{Binding LastInput}"
+                                           FontSize="28" FontWeight="Bold"
+                                           Foreground="{StaticResource AccentB}"
+                                           TextAlignment="Center" TextWrapping="Wrap"/>
                             </StackPanel>
                         </Border>
 
-                        <!-- INPUT LEGEND -->
-                        <TextBlock Text="Input Legend" FontSize="15" FontWeight="Bold"
-                                   Foreground="{StaticResource AccentA}" Margin="0,12,0,8"/>
-                        
-                        <StackPanel Margin="0,0,0,6">
-                            <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
-                                <Rectangle Width="14" Height="14" Fill="{StaticResource AccentB}" Margin="0,0,6,0"/>
-                                <TextBlock Text="Active / On" Foreground="{StaticResource FgPrim}" FontSize="14" FontWeight="Bold"/>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
-                                <Rectangle Width="14" Height="14" Fill="{StaticResource Warning}" Margin="0,0,6,0"/>
-                                <TextBlock Text="Warning / Armed" Foreground="{StaticResource FgPrim}" FontSize="14" FontWeight="Bold"/>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
-                                <Rectangle Width="14" Height="14" Fill="{StaticResource Cyan}" Margin="0,0,6,0"/>
-                                <TextBlock Text="Selected / Focus" Foreground="{StaticResource FgPrim}" FontSize="14" FontWeight="Bold"/>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <Rectangle Width="14" Height="14" Fill="{StaticResource AccentA}" Margin="0,0,6,0"/>
-                                <TextBlock Text="Primary Action" Foreground="{StaticResource FgPrim}" FontSize="14" FontWeight="Bold"/>
-                            </StackPanel>
-                        </StackPanel>
-
-                        <!-- DEVICE STATUS -->
-                        <Border Background="{StaticResource Bg2}" BorderThickness="2" BorderBrush="{StaticResource AccentB}"
-                                Padding="6" Margin="0,12,0,0" CornerRadius="0">
+                        <!-- What SARA will do -->
+                        <Border Background="{StaticResource Bg2}" BorderThickness="2"
+                                BorderBrush="{StaticResource AccentB}" Padding="12" Margin="0,0,0,14">
                             <StackPanel>
-                                <TextBlock Text="Device Status" FontSize="14" FontWeight="Bold"
-                                          Foreground="{StaticResource AccentA}" Margin="0,0,0,6"/>
+                                <TextBlock Text="SARA will respond with:"
+                                           FontSize="14" FontWeight="Bold"
+                                           Foreground="{StaticResource AccentA}" Margin="0,0,0,6"/>
+                                <TextBlock Text="{Binding SelectedMappingRow.CurrentMapping}"
+                                           FontSize="16" Foreground="{StaticResource FgPrim}"
+                                           TextWrapping="Wrap"/>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Your device at a glance -->
+                        <Border Background="{StaticResource Bg2}" BorderThickness="2"
+                                BorderBrush="{StaticResource Cyan}" Padding="12" Margin="0,0,0,14">
+                            <StackPanel>
+                                <TextBlock Text="Your Device" FontSize="14" FontWeight="Bold"
+                                           Foreground="{StaticResource AccentA}" Margin="0,0,0,8"/>
                                 <ContentControl Content="{Binding SelectedDevice}">
                                     <ContentControl.ContentTemplate>
                                         <DataTemplate>
                                             <StackPanel>
-                                                <TextBlock FontSize="16" Margin="0,0,0,4">
-                                                    <Run Text="Name: " Foreground="{StaticResource Cyan}" FontWeight="Bold"/>
+                                                <TextBlock FontSize="15" Margin="0,0,0,4">
+                                                    <Run Text="Name:  " Foreground="{StaticResource Cyan}" FontWeight="Bold"/>
                                                     <Run Text="{Binding DeviceName}" Foreground="{StaticResource FgPrim}"/>
                                                 </TextBlock>
-                                                <TextBlock FontSize="16" Margin="0,0,0,4">
-                                                    <Run Text="Type: " Foreground="{StaticResource Cyan}" FontWeight="Bold"/>
+                                                <TextBlock FontSize="15" Margin="0,0,0,4">
+                                                    <Run Text="Type:  " Foreground="{StaticResource Cyan}" FontWeight="Bold"/>
                                                     <Run Text="{Binding DeviceType}" Foreground="{StaticResource FgPrim}"/>
                                                 </TextBlock>
-                                                <TextBlock FontSize="16" Margin="0,0,0,4">
-                                                    <Run Text="Status: " Foreground="{StaticResource Cyan}" FontWeight="Bold"/>
-                                                    <Run Text="{Binding IsConnected, StringFormat='Connected: {0}'}" Foreground="{StaticResource AccentB}"/>
-                                                </TextBlock>
-                                                <TextBlock FontSize="16">
-                                                    <Run Text="Enabled: " Foreground="{StaticResource Cyan}" FontWeight="Bold"/>
-                                                    <Run Text="{Binding IsEnabled}" Foreground="{StaticResource FgPrim}"/>
+                                                <TextBlock FontSize="15">
+                                                    <Run Text="Status:  " Foreground="{StaticResource Cyan}" FontWeight="Bold"/>
+                                                    <Run Text="{Binding IsConnected}" Foreground="{StaticResource AccentB}"/>
                                                 </TextBlock>
                                             </StackPanel>
                                         </DataTemplate>
                                     </ContentControl.ContentTemplate>
                                 </ContentControl>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Tips -->
+                        <Border Background="{StaticResource Bg2}" BorderThickness="2"
+                                BorderBrush="{StaticResource AccentA}" Padding="12">
+                            <StackPanel>
+                                <TextBlock Text="Quick Tips" FontSize="14" FontWeight="Bold"
+                                           Foreground="{StaticResource AccentA}" Margin="0,0,0,8"/>
+                                <TextBlock TextWrapping="Wrap" FontSize="13"
+                                           Foreground="{StaticResource FgSub}" Margin="0,0,0,6">
+                                    Tap a button in the middle, then use
+                                    "Teach SARA This Button" to set what it does.
+                                </TextBlock>
+                                <TextBlock TextWrapping="Wrap" FontSize="13"
+                                           Foreground="{StaticResource FgSub}" Margin="0,0,0,6">
+                                    Check "My hand shakes" in Steadiness Settings
+                                    if you press buttons by accident.
+                                </TextBlock>
+                                <TextBlock TextWrapping="Wrap" FontSize="13"
+                                           Foreground="{StaticResource FgSub}">
+                                    Hit "Save My Settings" at the top when you're done.
+                                </TextBlock>
                             </StackPanel>
                         </Border>
 
@@ -554,20 +613,22 @@
                 Padding="8,4" Margin="0,8,0,0" BorderThickness="2" BorderBrush="{StaticResource AccentB}">
             <DockPanel>
                 <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" VerticalAlignment="Center">
-                    <TextBlock Text="SARA:" FontSize="14" Foreground="{StaticResource FgSub}"
+                    <TextBlock Text="SARA is " FontSize="14" Foreground="{StaticResource FgSub}"
                                VerticalAlignment="Center" Margin="0,0,4,0"/>
-                    <Ellipse Width="10" Height="10" VerticalAlignment="Center">
-                        <Ellipse.Style>
-                            <Style TargetType="Ellipse">
-                                <Setter Property="Fill" Value="Red"/>
+                    <TextBlock VerticalAlignment="Center" FontSize="14" FontWeight="Bold">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+                                <Setter Property="Text" Value="not connected"/>
+                                <Setter Property="Foreground" Value="{StaticResource Warning}"/>
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding SaraConnected}" Value="True">
-                                        <Setter Property="Fill" Value="Lime"/>
+                                        <Setter Property="Text" Value="ready &#x2713;"/>
+                                        <Setter Property="Foreground" Value="{StaticResource AccentB}"/>
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>
-                        </Ellipse.Style>
-                    </Ellipse>
+                        </TextBlock.Style>
+                    </TextBlock>
                 </StackPanel>
                 <TextBlock Text="{Binding StatusText}"
                            Foreground="{StaticResource AccentB}"
