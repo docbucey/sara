@@ -6,19 +6,19 @@
         Width="1400" Height="900"
         MinWidth="900" MinHeight="600"
         WindowStartupLocation="CenterScreen"
-        Background="#000000">
+        Background="#F4F6FA">
 
     <Window.Resources>
-        <!-- HIGH CONTRAST COLORS -->
-        <SolidColorBrush x:Key="Bg0"      Color="#000000"/>  <!-- Pure black -->
-        <SolidColorBrush x:Key="Bg1"      Color="#1A1A1A"/>  <!-- Dark gray -->
-        <SolidColorBrush x:Key="Bg2"      Color="#333333"/>  <!-- Medium gray -->
-        <SolidColorBrush x:Key="AccentA"  Color="#FFFF00"/>  <!-- Bright yellow -->
-        <SolidColorBrush x:Key="AccentB"  Color="#00FF00"/>  <!-- Bright green -->
-        <SolidColorBrush x:Key="FgPrim"   Color="#FFFFFF"/>  <!-- Pure white -->
-        <SolidColorBrush x:Key="FgSub"    Color="#CCCCCC"/>  <!-- Light gray -->
-        <SolidColorBrush x:Key="Warning"  Color="#FF0000"/>  <!-- Bright red -->
-        <SolidColorBrush x:Key="Cyan"     Color="#00FFFF"/>  <!-- Cyan highlight -->
+        <!-- LIGHT THEME -->
+        <SolidColorBrush x:Key="Bg0"      Color="#F4F6FA"/>  <!-- Window bg -->
+        <SolidColorBrush x:Key="Bg1"      Color="#FFFFFF"/>  <!-- Surface -->
+        <SolidColorBrush x:Key="Bg2"      Color="#E8EDF5"/>  <!-- Raised panel -->
+        <SolidColorBrush x:Key="AccentA"  Color="#2F6FED"/>  <!-- Blue -->
+        <SolidColorBrush x:Key="AccentB"  Color="#1BA05E"/>  <!-- Green -->
+        <SolidColorBrush x:Key="FgPrim"   Color="#1A1A2E"/>  <!-- Dark text -->
+        <SolidColorBrush x:Key="FgSub"    Color="#5A6070"/>  <!-- Secondary text -->
+        <SolidColorBrush x:Key="Warning"  Color="#D93025"/>  <!-- Red -->
+        <SolidColorBrush x:Key="Cyan"     Color="#5A7FBE"/>  <!-- Muted blue -->
         
         <vm:BoolToToggleLabelConverter x:Key="ToggleLabel"/>
         <vm:StringNotEmptyConverter    x:Key="NotEmpty"/>

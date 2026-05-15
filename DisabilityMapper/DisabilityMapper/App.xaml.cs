@@ -29,7 +29,7 @@ public partial class App : Application
                     "SARA CONTROL did not start in time.\nCheck that Python is installed and the SARA folder is accessible.",
                     "SARA — Startup Error", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
-            new AssetDeckWindow().Show();
+            new MainWindow().Show();
         });
     }
 
