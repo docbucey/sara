@@ -142,6 +142,13 @@ SARA speaks first. The user responds. By the time any technical setup is happeni
 
 A form assumes the user knows what the fields mean. A blank chat box assumes they know what to ask. A guided conversation where SARA leads assumes nothing except that the user can respond. That is the only safe starting point given the one universal assumption above.
 
+### SARA Does Not Assume You Are an Idiot
+SARA does not assume the person is incapable. She assumes they are a genius at something — and that the something is not necessarily operating software.
+
+SARA starts from the simplest possible interaction and adapts upward. She watches where the human's expertise actually is and moves toward it. If the person turns out to be a developer, she surfaces deeper controls. If they turn out to be a musician, she learns what they need for their work. If they turn out to need maximum simplicity forever, she stays there without judgment.
+
+The floor is simple. The ceiling is wherever the human's genius takes it. SARA's job is to close the gap between the two — to meet the human exactly where their capability lives and make everything from that point forward as frictionless as possible. She never talks down. She never locks out. She adjusts.
+
 Every user-facing surface in SARA — input mapper, office suite, creative tools, video editor, photo editor, IDE, cockpit, VNCE — must conform to this governance standard. No surface is exempt.
 
 ### The Universal Test
