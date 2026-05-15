@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Threading;
 
 namespace DisabilityMapper;
 
@@ -13,7 +16,20 @@ public partial class App : Application
     {
         base.OnStartup(e);
         StartSaraBackend();
-        new AssetDeckWindow().Show();
+
+        // Wait for CONTROL to be ready before opening any windows.
+        // Poll /health until control_loaded == true (up to 15 seconds).
+        Dispatcher.InvokeAsync(async () =>
+        {
+            bool ready = await WaitForControlAsync(timeoutSeconds: 15);
+            if (!ready)
+            {
+                MessageBox.Show(
+                    "SARA CONTROL did not start in time.\nCheck that Python is installed and the SARA folder is accessible.",
+                    "SARA — Startup Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            new AssetDeckWindow().Show();
+        });
     }
 
     protected override void OnExit(ExitEventArgs e)
@@ -48,6 +64,18 @@ public partial class App : Application
         catch
         {
         }
+    }
+
+    private static async Task<bool> WaitForControlAsync(int timeoutSeconds)
+    {
+        var deadline = DateTime.UtcNow.AddSeconds(timeoutSeconds);
+        while (DateTime.UtcNow < deadline)
+        {
+            if (await BuceyShunt.IsAlive())
+                return true;
+            await Task.Delay(300);
+        }
+        return false;
     }
 
     private void StopSaraBackend()
