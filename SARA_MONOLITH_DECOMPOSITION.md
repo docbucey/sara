@@ -1,7 +1,8 @@
-# SARA Monolith Decomposition & Rebuild Map
+# SARA Monolith Decomposition Analysis
 
 **Date:** 2026-05-11 (updated with full project lineage)
-**Purpose:** Break the five gen1 monoliths back into modular files aligned with original architectural intent, legacy structure, gen0.5 spec sheets, the BIOMETRIC_PROTOCOL_SPEC, and the full genealogy of precursor projects.
+**Note:** This is one working document among many spec sheets. All spec sheets carry equal weight and will need to be reconciled. No single document is the source of truth.
+**Purpose:** Analysis of the five gen1 monoliths against the gen0.5 spec sheets, BIOMETRIC_PROTOCOL_SPEC, architecture log, and full project lineage. Use alongside all other spec sheets, not instead of them.
 
 ---
 
@@ -501,4 +502,4 @@ Given the full lineage, the rebuild order should respect where capabilities **ac
 
 ---
 
-*This document is the map. The monoliths are the territory. Eight precursor projects are the geological survey. Let's rebuild SARA the way she was always meant to be.*
+*All spec sheets together form the full picture. This document is one lens on the monoliths — the gen0.5 spec sheets, BIOMETRIC_PROTOCOL_SPEC, architecture log, and working files are equally authoritative.*
