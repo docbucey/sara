@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
@@ -13,6 +14,11 @@ namespace DisabilityMapper
         private static OfficeSuiteWindow? _instance;
         private readonly string _docsFolder;
 
+        // SARA project root — addons are written here
+        private static readonly string _saraRoot = Path.Combine(
+            Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+            "coding projects", "SARA");
+
         public OfficeSuiteWindow()
         {
             InitializeComponent();
@@ -21,7 +27,7 @@ namespace DisabilityMapper
                 "SARA_Documents");
             Directory.CreateDirectory(_docsFolder);
 
-            Loaded += async (_, _) => await CheckSaraAndFatigue();
+            Loaded += async (_, _) => { await CheckSaraAndFatigue(); LoadSaraTree(); };
         }
 
         public static void Toggle()
@@ -356,12 +362,13 @@ namespace DisabilityMapper
             var dlg = new Microsoft.Win32.OpenFileDialog
             {
                 Filter = "Python files (*.py)|*.py|All files (*.*)|*.*",
-                Title = "Open Python script"
+                Title = "Open Python script",
+                InitialDirectory = Directory.Exists(_saraRoot) ? _saraRoot : Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
             };
             if (dlg.ShowDialog() == true)
             {
-                PyEditorBox.Text = System.IO.File.ReadAllText(dlg.FileName);
-                PyStatusText.Text = $"Opened: {System.IO.Path.GetFileName(dlg.FileName)}";
+                PyEditorBox.Text = File.ReadAllText(dlg.FileName);
+                PyStatusText.Text = $"Opened: {Path.GetFileName(dlg.FileName)}";
             }
         }
 
@@ -371,13 +378,130 @@ namespace DisabilityMapper
             {
                 Filter = "Python files (*.py)|*.py|All files (*.*)|*.*",
                 Title = "Save Python script",
-                FileName = $"script_{DateTime.Now:yyyyMMdd_HHmmss}.py"
+                InitialDirectory = Directory.Exists(_saraRoot) ? _saraRoot : Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+                FileName = $"addon_{DateTime.Now:yyyyMMdd_HHmmss}.py"
             };
             if (dlg.ShowDialog() == true)
             {
-                System.IO.File.WriteAllText(dlg.FileName, PyEditorBox.Text);
-                PyStatusText.Text = $"Saved: {System.IO.Path.GetFileName(dlg.FileName)}";
+                File.WriteAllText(dlg.FileName, PyEditorBox.Text);
+                PyStatusText.Text = $"Saved: {Path.GetFileName(dlg.FileName)}";
+                LoadSaraTree();
             }
+        }
+
+        // ── SARA tree ────────────────────────────────────────────────────────
+
+        private void LoadSaraTree()
+        {
+            SaraTree.Items.Clear();
+            string[] pillars = { "sara_control", "sara_core", "sara_mama", "sara_security", "sara_sdk" };
+            foreach (string pillar in pillars)
+            {
+                string dir = Path.Combine(_saraRoot, pillar);
+                if (!Directory.Exists(dir)) continue;
+                var node = new System.Windows.Controls.TreeViewItem { Header = pillar, Tag = dir };
+                LoadTreeDir(node, dir, 0);
+                SaraTree.Items.Add(node);
+            }
+            // Smithy Godot addon
+            string smithyPath = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
+                "OneDrive", "Documents", "sara", "addons", "smithy");
+            if (Directory.Exists(smithyPath))
+            {
+                var smithy = new System.Windows.Controls.TreeViewItem { Header = "addons/smithy", Tag = smithyPath };
+                LoadTreeDir(smithy, smithyPath, 0);
+                SaraTree.Items.Add(smithy);
+            }
+        }
+
+        private static void LoadTreeDir(System.Windows.Controls.TreeViewItem parent, string dir, int depth)
+        {
+            if (depth > 2) return;
+            try
+            {
+                foreach (string sub in Directory.GetDirectories(dir).OrderBy(d => d))
+                {
+                    string name = Path.GetFileName(sub);
+                    if (name.StartsWith(".") || name == "__pycache__") continue;
+                    var node = new System.Windows.Controls.TreeViewItem { Header = name, Tag = sub };
+                    LoadTreeDir(node, sub, depth + 1);
+                    parent.Items.Add(node);
+                }
+                foreach (string file in Directory.GetFiles(dir, "*.py").OrderBy(f => f))
+                {
+                    parent.Items.Add(new System.Windows.Controls.TreeViewItem
+                    {
+                        Header = Path.GetFileName(file),
+                        Tag = file,
+                        Foreground = new SolidColorBrush(Color.FromRgb(0x2F, 0x6F, 0xED))
+                    });
+                }
+            }
+            catch (UnauthorizedAccessException) { }
+        }
+
+        private void RefreshTree_Click(object sender, RoutedEventArgs e) => LoadSaraTree();
+
+        private void SaraTree_SelectedItemChanged(object sender,
+            System.Windows.RoutedPropertyChangedEventArgs<object> e)
+        {
+            if (e.NewValue is System.Windows.Controls.TreeViewItem { Tag: string path }
+                && File.Exists(path)
+                && path.EndsWith(".py", StringComparison.OrdinalIgnoreCase))
+            {
+                PyEditorBox.Text = File.ReadAllText(path);
+                PyStatusText.Foreground = new SolidColorBrush(Color.FromRgb(0x5A, 0x60, 0x70));
+                PyStatusText.Text = $"Opened: {Path.GetFileName(path)}";
+            }
+        }
+
+        private async void RegisterAddon_Click(object sender, RoutedEventArgs e)
+        {
+            string code = PyEditorBox.Text.Trim();
+            if (string.IsNullOrEmpty(code))
+            {
+                PyStatusText.Foreground = new SolidColorBrush(Color.FromRgb(0xC0, 0x39, 0x2B));
+                PyStatusText.Text = "Write addon code first";
+                return;
+            }
+
+            string pillar = (PillarCombo.SelectedItem as System.Windows.Controls.ComboBoxItem)
+                                ?.Content?.ToString() ?? "sara_sdk";
+
+            string targetDir = pillar.StartsWith("addons/")
+                ? Path.Combine(
+                    Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
+                    "OneDrive", "Documents", "sara",
+                    pillar.Replace('/', Path.DirectorySeparatorChar))
+                : Path.Combine(_saraRoot, pillar);
+
+            var dlg = new Microsoft.Win32.SaveFileDialog
+            {
+                Filter = "Python files (*.py)|*.py",
+                Title = $"Register addon into {pillar}",
+                InitialDirectory = Directory.Exists(targetDir) ? targetDir : _saraRoot,
+                FileName = $"addon_{DateTime.Now:yyyyMMdd_HHmmss}.py"
+            };
+            if (dlg.ShowDialog() != true) return;
+
+            File.WriteAllText(dlg.FileName, code);
+            PyStatusText.Foreground = new SolidColorBrush(Color.FromRgb(0x1B, 0xA0, 0x5E));
+            PyStatusText.Text = $"Registered: {Path.GetFileName(dlg.FileName)} → {pillar}";
+            LoadSaraTree();
+
+            // Notify CONTROL — best-effort, ignore if SARA is offline
+            try
+            {
+                var payload = new JObject
+                {
+                    ["addon_path"] = dlg.FileName,
+                    ["pillar"]     = pillar,
+                    ["filename"]   = Path.GetFileName(dlg.FileName)
+                };
+                await BuceyShunt.Dispatch("addon_register", "01", payload);
+            }
+            catch { }
         }
 
         // ── Communication app launchers ──────────────────────────────────────
