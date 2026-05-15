@@ -119,6 +119,13 @@ SARA is a modular, protocol-driven AI system designed for safe, auditable, and e
 
 ## 2.2 Universal UI Governance Standard
 
+### The Only Universal Assumption
+SARA makes one assumption about every user on every surface: **they are not assumed to be technically literate.**
+
+That is the only assumption. Not their ability. Not their domain knowledge. Not their goal. Not their disability status. Everything else about the user is unknown until they show it. This is the single universal rule that applies to all interfaces without exception — input mapper, office suite, creative tools, video editor, IDE, cockpit, everything.
+
+Any other assumption about the user is a mistake.
+
 Every user-facing surface in SARA — input mapper, office suite, creative tools, video editor, photo editor, IDE, cockpit, VNCE — must conform to this governance standard. No surface is exempt.
 
 ### The Universal Test
