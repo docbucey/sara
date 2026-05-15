@@ -13,6 +13,14 @@
     <Description>Accessibility input mapper built for Parkinson's Disease and Tardive Dyskinesia. Remaps any keyboard, gamepad, joystick, mouse, or touch device with tremor filtering, debounce, and steno chord support.</Description>
   </PropertyGroup>
 
+  <!-- AOT for WPF: ReadyToRun pre-compiles to native at publish time.
+       Full Native AOT (PublishAot=true) is not supported by WPF. -->
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <PublishReadyToRun>true</PublishReadyToRun>
+    <PublishReadyToRunComposite>true</PublishReadyToRunComposite>
+    <TieredPGO>true</TieredPGO>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.3.2" />
     <PackageReference Include="InputSimulatorStandard" Version="1.0.0" />
