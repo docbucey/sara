@@ -1,0 +1,61 @@
+{
+  "_comment": "SARA color themes. active_theme sets the default on first launch. Each theme maps to the palette keys used throughout SARA XAML.",
+  "active_theme": "default",
+  "themes": {
+
+    "default": {
+      "name": "SARA Default",
+      "description": "Clean light theme — high readability, ADA-friendly contrast",
+      "bg_win":    "#F4F6FA",
+      "bg_surf":   "#FFFFFF",
+      "bg_raise":  "#E8EDF5",
+      "accent_a":  "#2F6FED",
+      "accent_b":  "#1BA05E",
+      "fg_prim":   "#1A1A2E",
+      "fg_sub":    "#5A6070",
+      "border":    "#C8D0E0",
+      "warning":   "#C0392B",
+      "editor_bg": "#1E2030",
+      "editor_fg": "#CDD6F4",
+      "output_bg": "#151720",
+      "output_fg": "#A6E3A1"
+    },
+
+    "sec": {
+      "name": "SEC",
+      "description": "Southeastern Conference — Navy and Gold",
+      "bg_win":    "#00356B",
+      "bg_surf":   "#004B96",
+      "bg_raise":  "#002A54",
+      "accent_a":  "#F2A900",
+      "accent_b":  "#FFD100",
+      "fg_prim":   "#FFFFFF",
+      "fg_sub":    "#C8D8F0",
+      "border":    "#F2A900",
+      "warning":   "#FF4444",
+      "editor_bg": "#001A3B",
+      "editor_fg": "#F2A900",
+      "output_bg": "#00122A",
+      "output_fg": "#FFD100"
+    },
+
+    "murray_state": {
+      "name": "Murray State Racers",
+      "description": "Murray State University — Royal Blue and Gold",
+      "bg_win":    "#002D72",
+      "bg_surf":   "#003DA5",
+      "bg_raise":  "#001E4E",
+      "accent_a":  "#FFB81C",
+      "accent_b":  "#FFD770",
+      "fg_prim":   "#FFFFFF",
+      "fg_sub":    "#C0CDE8",
+      "border":    "#FFB81C",
+      "warning":   "#FF4444",
+      "editor_bg": "#001230",
+      "editor_fg": "#FFB81C",
+      "output_bg": "#000C20",
+      "output_fg": "#FFD770"
+    }
+
+  }
+}

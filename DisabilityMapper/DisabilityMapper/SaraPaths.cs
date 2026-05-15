@@ -19,4 +19,6 @@ public static class SaraPaths
     public static string AssetsPngDir => Path.Combine(ResolveSaraRoot(), "assets", "png");
 
     public static string IcoPath => Path.Combine(ResolveSaraRoot(), "assets", "ico", "sara.ico");
+
+    public static string ThemesPath => Path.Combine(ResolveSaraRoot(), "assets", "meta", "themes.json");
 }

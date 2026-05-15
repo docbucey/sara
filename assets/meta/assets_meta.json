@@ -1,0 +1,2223 @@
+{
+  "assets": [
+    {
+      "id": "sara_accountant_ledger_chrome_4x3",
+      "file": "assets/png/sara_accountant_ledger_chrome_4x3.png",
+      "pixel_width": 1024,
+      "pixel_height": 768,
+      "aspect": "4:3",
+      "style_tags": [
+        "procedural_bootstrap",
+        "cartoon",
+        "popcap_default"
+      ],
+      "logical_regions": {
+        "safe_rect": {
+          "x0": 0.5,
+          "y0": 0.5,
+          "x1": 9.5,
+          "y1": 9.0
+        },
+        "slice_caps": {
+          "left": 0.9,
+          "right": 0.9,
+          "top": 0.9,
+          "bottom": 0.9
+        },
+        "hit_boxes": []
+      },
+      "keys_drawn_in_art": false,
+      "paint_brief": "Bootstrap placeholder for sara_accountant_ledger_chrome_4x3.png (popcap_default)."
+    },
+    {
+      "id": "sara_accountant_panel_bg_4x3",
+      "file": "assets/png/sara_accountant_panel_bg_4x3.png",
+      "pixel_width": 1024,
+      "pixel_height": 768,
+      "aspect": "4:3",
+      "style_tags": [
+        "procedural_bootstrap",
+        "cartoon",
+        "popcap_default"
+      ],
+      "logical_regions": {
+        "safe_rect": {
+          "x0": 0.5,
+          "y0": 0.5,
+          "x1": 9.5,
+          "y1": 9.0
+        },
+        "slice_caps": {
+          "left": 0.9,
+          "right": 0.9,
+          "top": 0.9,
+          "bottom": 0.9
+        },
+        "hit_boxes": []
+      },
+      "keys_drawn_in_art": false,
+      "paint_brief": "Bootstrap placeholder for sara_accountant_panel_bg_4x3.png (popcap_default)."
+    },
+    {
+      "id": "sara_football_ball_4x3",
+      "file": "assets/png/sara_football_ball_4x3.png",
+      "pixel_width": 1024,
+      "pixel_height": 768,
+      "aspect": "4:3",
+      "style_tags": [
+        "procedural_bootstrap",
+        "cartoon",
+        "popcap_default"
+      ],
+      "logical_regions": {
+        "safe_rect": {
+          "x0": 0.5,
+          "y0": 0.5,
+          "x1": 9.5,
+          "y1": 9.0
+        },
+        "slice_caps": {
+          "left": 0.9,
+          "right": 0.9,
+          "top": 0.9,
+          "bottom": 0.9
+        },
+        "hit_boxes": []
+      },
+      "keys_drawn_in_art": false,
+      "paint_brief": "Bootstrap placeholder for sara_football_ball_4x3.png (popcap_default)."
+    },
+    {
+      "id": "sara_football_endzone_stripes_4x3",
+      "file": "assets/png/sara_football_endzone_stripes_4x3.png",
+      "pixel_width": 1024,
+      "pixel_height": 768,
+      "aspect": "4:3",
+      "style_tags": [
+        "procedural_bootstrap",
+        "cartoon",
+        "popcap_default"
+      ],
+      "logical_regions": {
+        "safe_rect": {
+          "x0": 0.5,
+          "y0": 0.5,
+          "x1": 9.5,
+          "y1": 9.0
+        },
+        "slice_caps": {
+          "left": 0.9,
+          "right": 0.9,
+          "top": 0.9,
+          "bottom": 0.9
+        },
+        "hit_boxes": []
+      },
+      "keys_drawn_in_art": false,
+      "paint_brief": "Bootstrap placeholder for sara_football_endzone_stripes_4x3.png (popcap_default)."
+    },
+    {
+      "id": "sara_football_field_bg_4x3",
+      "file": "assets/png/sara_football_field_bg_4x3.png",
+      "pixel_width": 1024,
+      "pixel_height": 768,
+      "aspect": "4:3",
+      "style_tags": [
+        "procedural_bootstrap",
+        "cartoon",
+        "popcap_default"
+      ],
+      "logical_regions": {
+        "safe_rect": {
+          "x0": 0.5,
+          "y0": 0.5,
+          "x1": 9.5,
+          "y1": 9.0
+        },
+        "slice_caps": {
+          "left": 0.9,
+          "right": 0.9,
+          "top": 0.9,
+          "bottom": 0.9
+        },
+        "hit_boxes": []
+      },
+      "keys_drawn_in_art": false,
+      "paint_brief": "Bootstrap placeholder for sara_football_field_bg_4x3.png (popcap_default)."
+    },
+    {
+      "id": "sara_football_target_ring_4x3",
+      "file": "assets/png/sara_football_target_ring_4x3.png",
+      "pixel_width": 1024,
+      "pixel_height": 768,
+      "aspect": "4:3",
+      "style_tags": [
+        "procedural_bootstrap",
+        "cartoon",
+        "popcap_default"
+      ],
+      "logical_regions": {
+        "safe_rect": {
+          "x0": 0.5,
+          "y0": 0.5,
+          "x1": 9.5,
+          "y1": 9.0
+        },
+        "slice_caps": {
+          "left": 0.9,
+          "right": 0.9,
+          "top": 0.9,
+          "bottom": 0.9
+        },
+        "hit_boxes": []
+      },
+      "keys_drawn_in_art": false,
+      "paint_brief": "Bootstrap placeholder for sara_football_target_ring_4x3.png (popcap_default)."
+    },
+    {
+      "id": "sara_geek_panel_bg_4x3",
+      "file": "assets/png/sara_geek_panel_bg_4x3.png",
+      "pixel_width": 1024,
+      "pixel_height": 768,
+      "aspect": "4:3",
+      "style_tags": [
+        "procedural_bootstrap",
+        "cartoon",
+        "popcap_default"
+      ],
+      "logical_regions": {
+        "safe_rect": {
+          "x0": 0.5,
+          "y0": 0.5,
+          "x1": 9.5,
+          "y1": 9.0
+        },
+        "slice_caps": {
+          "left": 0.9,
+          "right": 0.9,
+          "top": 0.9,
+          "bottom": 0.9
+        },
+        "hit_boxes": []
+      },
+      "keys_drawn_in_art": false,
+      "paint_brief": "Bootstrap placeholder for sara_geek_panel_bg_4x3.png (popcap_default)."
+    },
+    {
+      "id": "sara_geek_terminal_window_chrome_4x3",
+      "file": "assets/png/sara_geek_terminal_window_chrome_4x3.png",
+      "pixel_width": 1024,
+      "pixel_height": 768,
+      "aspect": "4:3",
+      "style_tags": [
+        "procedural_bootstrap",
+        "cartoon",
+        "popcap_default"
+      ],
+      "logical_regions": {
+        "safe_rect": {
+          "x0": 0.5,
+          "y0": 0.5,
+          "x1": 9.5,
+          "y1": 9.0
+        },
+        "slice_caps": {
+          "left": 0.9,
+          "right": 0.9,
+          "top": 0.9,
+          "bottom": 0.9
+        },
+        "hit_boxes": []
+      },
+      "keys_drawn_in_art": false,
+      "paint_brief": "Bootstrap placeholder for sara_geek_terminal_window_chrome_4x3.png (popcap_default)."
+    },
+    {
+      "id": "sara_hid_hat_switch_diagram_4x3",
+      "file": "assets/png/sara_hid_hat_switch_diagram_4x3.png",
+      "pixel_width": 1024,
+      "pixel_height": 768,
+      "aspect": "4:3",
+      "style_tags": [
+        "procedural_bootstrap",
+        "cartoon",
+        "popcap_default"
+      ],
+      "logical_regions": {
+        "safe_rect": {
+          "x0": 0.5,
+          "y0": 0.5,
+          "x1": 9.5,
+          "y1": 9.0
+        },
+        "slice_caps": {
+          "left": 0.9,
+          "right": 0.9,
+          "top": 0.9,
+          "bottom": 0.9
+        },
+        "hit_boxes": []
+      },
+      "keys_drawn_in_art": false,
+      "paint_brief": "Bootstrap placeholder for sara_hid_hat_switch_diagram_4x3.png (popcap_default)."
+    },
+    {
+      "id": "sara_hid_joystick_base_4x3",
+      "file": "assets/png/sara_hid_joystick_base_4x3.png",
+      "pixel_width": 1024,
+      "pixel_height": 768,
+      "aspect": "4:3",
+      "style_tags": [
+        "procedural_bootstrap",
+        "cartoon",
+        "popcap_default"
+      ],
+      "logical_regions": {
+        "safe_rect": {
+          "x0": 0.5,
+          "y0": 0.5,
+          "x1": 9.5,
+          "y1": 9.0
+        },
+        "slice_caps": {
+          "left": 0.9,
+          "right": 0.9,
+          "top": 0.9,
+          "bottom": 0.9
+        },
+        "hit_boxes": []
+      },
+      "keys_drawn_in_art": false,
+      "paint_brief": "Bootstrap placeholder for sara_hid_joystick_base_4x3.png (popcap_default)."
+    },
+    {
+      "id": "sara_hid_joystick_cap_only_4x3",
+      "file": "assets/png/sara_hid_joystick_cap_only_4x3.png",
+      "pixel_width": 1024,
+      "pixel_height": 768,
+      "aspect": "4:3",
+      "style_tags": [
+        "procedural_bootstrap",
+        "cartoon",
+        "popcap_default"
+      ],
+      "logical_regions": {
+        "safe_rect": {
+          "x0": 0.5,
+          "y0": 0.5,
+          "x1": 9.5,
+          "y1": 9.0
+        },
+        "slice_caps": {
+          "left": 0.9,
+          "right": 0.9,
+          "top": 0.9,
+          "bottom": 0.9
+        },
+        "hit_boxes": []
+      },
+      "keys_drawn_in_art": false,
+      "paint_brief": "Bootstrap placeholder for sara_hid_joystick_cap_only_4x3.png (popcap_default)."
+    },
+    {
+      "id": "sara_hid_keyboard_compact_plate_4x3",
+      "file": "assets/png/sara_hid_keyboard_compact_plate_4x3.png",
+      "pixel_width": 1024,
+      "pixel_height": 768,
+      "aspect": "4:3",
+      "style_tags": [
+        "procedural_bootstrap",
+        "cartoon",
+        "popcap_default"
+      ],
+      "logical_regions": {
+        "safe_rect": {
+          "x0": 0.5,
+          "y0": 0.5,
+          "x1": 9.5,
+          "y1": 9.0
+        },
+        "slice_caps": {
+          "left": 0.9,
+          "right": 0.9,
+          "top": 0.9,
+          "bottom": 0.9
+        },
+        "hit_boxes": []
+      },
+      "keys_drawn_in_art": false,
+      "paint_brief": "Bootstrap placeholder for sara_hid_keyboard_compact_plate_4x3.png (popcap_default)."
+    },
+    {
+      "id": "sara_hid_keyboard_numeric_plate_4x3",
+      "file": "assets/png/sara_hid_keyboard_numeric_plate_4x3.png",
+      "pixel_width": 1024,
+      "pixel_height": 768,
+      "aspect": "4:3",
+      "style_tags": [
+        "procedural_bootstrap",
+        "cartoon",
+        "popcap_default"
+      ],
+      "logical_regions": {
+        "safe_rect": {
+          "x0": 0.5,
+          "y0": 0.5,
+          "x1": 9.5,
+          "y1": 9.0
+        },
+        "slice_caps": {
+          "left": 0.9,
+          "right": 0.9,
+          "top": 0.9,
+          "bottom": 0.9
+        },
+        "hit_boxes": []
+      },
+      "keys_drawn_in_art": false,
+      "paint_brief": "Bootstrap placeholder for sara_hid_keyboard_numeric_plate_4x3.png (popcap_default)."
+    },
+    {
+      "id": "sara_hid_keyboard_qwerty_painted_lowercase_4x3",
+      "file": "assets/png/sara_hid_keyboard_qwerty_painted_lowercase_4x3.png",
+      "pixel_width": 1024,
+      "pixel_height": 768,
+      "aspect": "4:3",
+      "style_tags": [
+        "procedural_bootstrap",
+        "cartoon",
+        "popcap_default"
+      ],
+      "logical_regions": {
+        "safe_rect": {
+          "x0": 0.5,
+          "y0": 0.5,
+          "x1": 9.5,
+          "y1": 9.0
+        },
+        "slice_caps": {
+          "left": 0.9,
+          "right": 0.9,
+          "top": 0.9,
+          "bottom": 0.9
+        },
+        "hit_boxes": []
+      },
+      "keys_drawn_in_art": true,
+      "paint_brief": "Bootstrap placeholder for sara_hid_keyboard_qwerty_painted_lowercase_4x3.png (popcap_default)."
+    },
+    {
+      "id": "sara_hid_keyboard_qwerty_plate_4x3",
+      "file": "assets/png/sara_hid_keyboard_qwerty_plate_4x3.png",
+      "pixel_width": 1024,
+      "pixel_height": 768,
+      "aspect": "4:3",
+      "style_tags": [
+        "procedural_bootstrap",
+        "cartoon",
+        "popcap_default"
+      ],
+      "logical_regions": {
+        "safe_rect": {
+          "x0": 0.5,
+          "y0": 0.5,
+          "x1": 9.5,
+          "y1": 9.0
+        },
+        "slice_caps": {
+          "left": 0.9,
+          "right": 0.9,
+          "top": 0.9,
+          "bottom": 0.9
+        },
+        "hit_boxes": []
+      },
+      "keys_drawn_in_art": false,
+      "paint_brief": "Bootstrap placeholder for sara_hid_keyboard_qwerty_plate_4x3.png (popcap_default)."
+    },
+    {
+      "id": "sara_hid_keyboard_symbols_painted_4x3",
+      "file": "assets/png/sara_hid_keyboard_symbols_painted_4x3.png",
+      "pixel_width": 1024,
+      "pixel_height": 768,
+      "aspect": "4:3",
+      "style_tags": [
+        "procedural_bootstrap",
+        "cartoon",
+        "popcap_default"
+      ],
+      "logical_regions": {
+        "safe_rect": {
+          "x0": 0.5,
+          "y0": 0.5,
+          "x1": 9.5,
+          "y1": 9.0
+        },
+        "slice_caps": {
+          "left": 0.9,
+          "right": 0.9,
+          "top": 0.9,
+          "bottom": 0.9
+        },
+        "hit_boxes": []
+      },
+      "keys_drawn_in_art": true,
+      "paint_brief": "Bootstrap placeholder for sara_hid_keyboard_symbols_painted_4x3.png (popcap_default)."
+    },
+    {
+      "id": "sara_hid_keyboard_symbols_plate_4x3",
+      "file": "assets/png/sara_hid_keyboard_symbols_plate_4x3.png",
+      "pixel_width": 1024,
+      "pixel_height": 768,
+      "aspect": "4:3",
+      "style_tags": [
+        "procedural_bootstrap",
+        "cartoon",
+        "popcap_default"
+      ],
+      "logical_regions": {
+        "safe_rect": {
+          "x0": 0.5,
+          "y0": 0.5,
+          "x1": 9.5,
+          "y1": 9.0
+        },
+        "slice_caps": {
+          "left": 0.9,
+          "right": 0.9,
+          "top": 0.9,
+          "bottom": 0.9
+        },
+        "hit_boxes": []
+      },
+      "keys_drawn_in_art": false,
+      "paint_brief": "Bootstrap placeholder for sara_hid_keyboard_symbols_plate_4x3.png (popcap_default)."
+    },
+    {
+      "id": "sara_hid_keycap_blank_round_4x3",
+      "file": "assets/png/sara_hid_keycap_blank_round_4x3.png",
+      "pixel_width": 1024,
+      "pixel_height": 768,
+      "aspect": "4:3",
+      "style_tags": [
+        "procedural_bootstrap",
+        "cartoon",
+        "popcap_default"
+      ],
+      "logical_regions": {
+        "safe_rect": {
+          "x0": 0.5,
+          "y0": 0.5,
+          "x1": 9.5,
+          "y1": 9.0
+        },
+        "slice_caps": {
+          "left": 0.9,
+          "right": 0.9,
+          "top": 0.9,
+          "bottom": 0.9
+        },
+        "hit_boxes": []
+      },
+      "keys_drawn_in_art": false,
+      "paint_brief": "Bootstrap placeholder for sara_hid_keycap_blank_round_4x3.png (popcap_default)."
+    },
+    {
+      "id": "sara_hid_keycap_blank_square_4x3",
+      "file": "assets/png/sara_hid_keycap_blank_square_4x3.png",
+      "pixel_width": 1024,
+      "pixel_height": 768,
+      "aspect": "4:3",
+      "style_tags": [
+        "procedural_bootstrap",
+        "cartoon",
+        "popcap_default"
+      ],
+      "logical_regions": {
+        "safe_rect": {
+          "x0": 0.5,
+          "y0": 0.5,
+          "x1": 9.5,
+          "y1": 9.0
+        },
+        "slice_caps": {
+          "left": 0.9,
+          "right": 0.9,
+          "top": 0.9,
+          "bottom": 0.9
+        },
+        "hit_boxes": []
+      },
+      "keys_drawn_in_art": false,
+      "paint_brief": "Bootstrap placeholder for sara_hid_keycap_blank_square_4x3.png (popcap_default)."
+    },
+    {
+      "id": "sara_hid_macro_bezel_streamdeck_like_4x3",
+      "file": "assets/png/sara_hid_macro_bezel_streamdeck_like_4x3.png",
+      "pixel_width": 1024,
+      "pixel_height": 768,
+      "aspect": "4:3",
+      "style_tags": [
+        "procedural_bootstrap",
+        "cartoon",
+        "popcap_default"
+      ],
+      "logical_regions": {
+        "safe_rect": {
+          "x0": 0.5,
+          "y0": 0.5,
+          "x1": 9.5,
+          "y1": 9.0
+        },
+        "slice_caps": {
+          "left": 0.9,
+          "right": 0.9,
+          "top": 0.9,
+          "bottom": 0.9
+        },
+        "hit_boxes": []
+      },
+      "keys_drawn_in_art": false,
+      "paint_brief": "Bootstrap placeholder for sara_hid_macro_bezel_streamdeck_like_4x3.png (popcap_default)."
+    },
+    {
+      "id": "sara_hid_macro_grid_example_filled_4x3",
+      "file": "assets/png/sara_hid_macro_grid_example_filled_4x3.png",
+      "pixel_width": 1024,
+      "pixel_height": 768,
+      "aspect": "4:3",
+      "style_tags": [
+        "procedural_bootstrap",
+        "cartoon",
+        "popcap_default"
+      ],
+      "logical_regions": {
+        "safe_rect": {
+          "x0": 0.5,
+          "y0": 0.5,
+          "x1": 9.5,
+          "y1": 9.0
+        },
+        "slice_caps": {
+          "left": 0.9,
+          "right": 0.9,
+          "top": 0.9,
+          "bottom": 0.9
+        },
+        "hit_boxes": []
+      },
+      "keys_drawn_in_art": false,
+      "paint_brief": "Bootstrap placeholder for sara_hid_macro_grid_example_filled_4x3.png (popcap_default)."
+    },
+    {
+      "id": "sara_hid_macro_grid_plate_empty_4x3",
+      "file": "assets/png/sara_hid_macro_grid_plate_empty_4x3.png",
+      "pixel_width": 1024,
+      "pixel_height": 768,
+      "aspect": "4:3",
+      "style_tags": [
+        "procedural_bootstrap",
+        "cartoon",
+        "popcap_default"
+      ],
+      "logical_regions": {
+        "safe_rect": {
+          "x0": 0.5,
+          "y0": 0.5,
+          "x1": 9.5,
+          "y1": 9.0
+        },
+        "slice_caps": {
+          "left": 0.9,
+          "right": 0.9,
+          "top": 0.9,
+          "bottom": 0.9
+        },
+        "hit_boxes": []
+      },
+      "keys_drawn_in_art": false,
+      "paint_brief": "Bootstrap placeholder for sara_hid_macro_grid_plate_empty_4x3.png (popcap_default)."
+    },
+    {
+      "id": "sara_hid_macro_keycap_single_4x3",
+      "file": "assets/png/sara_hid_macro_keycap_single_4x3.png",
+      "pixel_width": 1024,
+      "pixel_height": 768,
+      "aspect": "4:3",
+      "style_tags": [
+        "procedural_bootstrap",
+        "cartoon",
+        "popcap_default"
+      ],
+      "logical_regions": {
+        "safe_rect": {
+          "x0": 0.5,
+          "y0": 0.5,
+          "x1": 9.5,
+          "y1": 9.0
+        },
+        "slice_caps": {
+          "left": 0.9,
+          "right": 0.9,
+          "top": 0.9,
+          "bottom": 0.9
+        },
+        "hit_boxes": []
+      },
+      "keys_drawn_in_art": false,
+      "paint_brief": "Bootstrap placeholder for sara_hid_macro_keycap_single_4x3.png (popcap_default)."
+    },
+    {
+      "id": "sara_hid_steno_key_well_left_4x3",
+      "file": "assets/png/sara_hid_steno_key_well_left_4x3.png",
+      "pixel_width": 1024,
+      "pixel_height": 768,
+      "aspect": "4:3",
+      "style_tags": [
+        "procedural_bootstrap",
+        "cartoon",
+        "popcap_default"
+      ],
+      "logical_regions": {
+        "safe_rect": {
+          "x0": 0.5,
+          "y0": 0.5,
+          "x1": 9.5,
+          "y1": 9.0
+        },
+        "slice_caps": {
+          "left": 0.9,
+          "right": 0.9,
+          "top": 0.9,
+          "bottom": 0.9
+        },
+        "hit_boxes": []
+      },
+      "keys_drawn_in_art": false,
+      "paint_brief": "Bootstrap placeholder for sara_hid_steno_key_well_left_4x3.png (popcap_default)."
+    },
+    {
+      "id": "sara_hid_steno_key_well_right_4x3",
+      "file": "assets/png/sara_hid_steno_key_well_right_4x3.png",
+      "pixel_width": 1024,
+      "pixel_height": 768,
+      "aspect": "4:3",
+      "style_tags": [
+        "procedural_bootstrap",
+        "cartoon",
+        "popcap_default"
+      ],
+      "logical_regions": {
+        "safe_rect": {
+          "x0": 0.5,
+          "y0": 0.5,
+          "x1": 9.5,
+          "y1": 9.0
+        },
+        "slice_caps": {
+          "left": 0.9,
+          "right": 0.9,
+          "top": 0.9,
+          "bottom": 0.9
+        },
+        "hit_boxes": []
+      },
+      "keys_drawn_in_art": false,
+      "paint_brief": "Bootstrap placeholder for sara_hid_steno_key_well_right_4x3.png (popcap_default)."
+    },
+    {
+      "id": "sara_hid_steno_machine_silhouette_4x3",
+      "file": "assets/png/sara_hid_steno_machine_silhouette_4x3.png",
+      "pixel_width": 1024,
+      "pixel_height": 768,
+      "aspect": "4:3",
+      "style_tags": [
+        "procedural_bootstrap",
+        "cartoon",
+        "popcap_default"
+      ],
+      "logical_regions": {
+        "safe_rect": {
+          "x0": 0.5,
+          "y0": 0.5,
+          "x1": 9.5,
+          "y1": 9.0
+        },
+        "slice_caps": {
+          "left": 0.9,
+          "right": 0.9,
+          "top": 0.9,
+          "bottom": 0.9
+        },
+        "hit_boxes": []
+      },
+      "keys_drawn_in_art": false,
+      "paint_brief": "Bootstrap placeholder for sara_hid_steno_machine_silhouette_4x3.png (popcap_default)."
+    },
+    {
+      "id": "sara_hid_steno_number_bar_4x3",
+      "file": "assets/png/sara_hid_steno_number_bar_4x3.png",
+      "pixel_width": 1024,
+      "pixel_height": 768,
+      "aspect": "4:3",
+      "style_tags": [
+        "procedural_bootstrap",
+        "cartoon",
+        "popcap_default"
+      ],
+      "logical_regions": {
+        "safe_rect": {
+          "x0": 0.5,
+          "y0": 0.5,
+          "x1": 9.5,
+          "y1": 9.0
+        },
+        "slice_caps": {
+          "left": 0.9,
+          "right": 0.9,
+          "top": 0.9,
+          "bottom": 0.9
+        },
+        "hit_boxes": []
+      },
+      "keys_drawn_in_art": false,
+      "paint_brief": "Bootstrap placeholder for sara_hid_steno_number_bar_4x3.png (popcap_default)."
+    },
+    {
+      "id": "sara_hid_steno_thumb_cluster_4x3",
+      "file": "assets/png/sara_hid_steno_thumb_cluster_4x3.png",
+      "pixel_width": 1024,
+      "pixel_height": 768,
+      "aspect": "4:3",
+      "style_tags": [
+        "procedural_bootstrap",
+        "cartoon",
+        "popcap_default"
+      ],
+      "logical_regions": {
+        "safe_rect": {
+          "x0": 0.5,
+          "y0": 0.5,
+          "x1": 9.5,
+          "y1": 9.0
+        },
+        "slice_caps": {
+          "left": 0.9,
+          "right": 0.9,
+          "top": 0.9,
+          "bottom": 0.9
+        },
+        "hit_boxes": []
+      },
+      "keys_drawn_in_art": false,
+      "paint_brief": "Bootstrap placeholder for sara_hid_steno_thumb_cluster_4x3.png (popcap_default)."
+    },
+    {
+      "id": "sara_hid_throttle_quadrant_4x3",
+      "file": "assets/png/sara_hid_throttle_quadrant_4x3.png",
+      "pixel_width": 1024,
+      "pixel_height": 768,
+      "aspect": "4:3",
+      "style_tags": [
+        "procedural_bootstrap",
+        "cartoon",
+        "popcap_default"
+      ],
+      "logical_regions": {
+        "safe_rect": {
+          "x0": 0.5,
+          "y0": 0.5,
+          "x1": 9.5,
+          "y1": 9.0
+        },
+        "slice_caps": {
+          "left": 0.9,
+          "right": 0.9,
+          "top": 0.9,
+          "bottom": 0.9
+        },
+        "hit_boxes": []
+      },
+      "keys_drawn_in_art": false,
+      "paint_brief": "Bootstrap placeholder for sara_hid_throttle_quadrant_4x3.png (popcap_default)."
+    },
+    {
+      "id": "sara_icon_app_accountant_4x3",
+      "file": "assets/png/sara_icon_app_accountant_4x3.png",
+      "pixel_width": 1024,
+      "pixel_height": 768,
+      "aspect": "4:3",
+      "style_tags": [
+        "procedural_bootstrap",
+        "cartoon",
+        "popcap_default"
+      ],
+      "logical_regions": {
+        "safe_rect": {
+          "x0": 0.5,
+          "y0": 0.5,
+          "x1": 9.5,
+          "y1": 9.0
+        },
+        "slice_caps": {
+          "left": 0.9,
+          "right": 0.9,
+          "top": 0.9,
+          "bottom": 0.9
+        },
+        "hit_boxes": []
+      },
+      "keys_drawn_in_art": false,
+      "paint_brief": "Bootstrap placeholder for sara_icon_app_accountant_4x3.png (popcap_default)."
+    },
+    {
+      "id": "sara_icon_app_geek_4x3",
+      "file": "assets/png/sara_icon_app_geek_4x3.png",
+      "pixel_width": 1024,
+      "pixel_height": 768,
+      "aspect": "4:3",
+      "style_tags": [
+        "procedural_bootstrap",
+        "cartoon",
+        "popcap_default"
+      ],
+      "logical_regions": {
+        "safe_rect": {
+          "x0": 0.5,
+          "y0": 0.5,
+          "x1": 9.5,
+          "y1": 9.0
+        },
+        "slice_caps": {
+          "left": 0.9,
+          "right": 0.9,
+          "top": 0.9,
+          "bottom": 0.9
+        },
+        "hit_boxes": []
+      },
+      "keys_drawn_in_art": false,
+      "paint_brief": "Bootstrap placeholder for sara_icon_app_geek_4x3.png (popcap_default)."
+    },
+    {
+      "id": "sara_icon_app_marketing_4x3",
+      "file": "assets/png/sara_icon_app_marketing_4x3.png",
+      "pixel_width": 1024,
+      "pixel_height": 768,
+      "aspect": "4:3",
+      "style_tags": [
+        "procedural_bootstrap",
+        "cartoon",
+        "popcap_default"
+      ],
+      "logical_regions": {
+        "safe_rect": {
+          "x0": 0.5,
+          "y0": 0.5,
+          "x1": 9.5,
+          "y1": 9.0
+        },
+        "slice_caps": {
+          "left": 0.9,
+          "right": 0.9,
+          "top": 0.9,
+          "bottom": 0.9
+        },
+        "hit_boxes": []
+      },
+      "keys_drawn_in_art": false,
+      "paint_brief": "Bootstrap placeholder for sara_icon_app_marketing_4x3.png (popcap_default)."
+    },
+    {
+      "id": "sara_icon_app_phone_4x3",
+      "file": "assets/png/sara_icon_app_phone_4x3.png",
+      "pixel_width": 1024,
+      "pixel_height": 768,
+      "aspect": "4:3",
+      "style_tags": [
+        "procedural_bootstrap",
+        "cartoon",
+        "popcap_default"
+      ],
+      "logical_regions": {
+        "safe_rect": {
+          "x0": 0.5,
+          "y0": 0.5,
+          "x1": 9.5,
+          "y1": 9.0
+        },
+        "slice_caps": {
+          "left": 0.9,
+          "right": 0.9,
+          "top": 0.9,
+          "bottom": 0.9
+        },
+        "hit_boxes": []
+      },
+      "keys_drawn_in_art": false,
+      "paint_brief": "Bootstrap placeholder for sara_icon_app_phone_4x3.png (popcap_default)."
+    },
+    {
+      "id": "sara_icon_app_secretary_4x3",
+      "file": "assets/png/sara_icon_app_secretary_4x3.png",
+      "pixel_width": 1024,
+      "pixel_height": 768,
+      "aspect": "4:3",
+      "style_tags": [
+        "procedural_bootstrap",
+        "cartoon",
+        "popcap_default"
+      ],
+      "logical_regions": {
+        "safe_rect": {
+          "x0": 0.5,
+          "y0": 0.5,
+          "x1": 9.5,
+          "y1": 9.0
+        },
+        "slice_caps": {
+          "left": 0.9,
+          "right": 0.9,
+          "top": 0.9,
+          "bottom": 0.9
+        },
+        "hit_boxes": []
+      },
+      "keys_drawn_in_art": false,
+      "paint_brief": "Bootstrap placeholder for sara_icon_app_secretary_4x3.png (popcap_default)."
+    },
+    {
+      "id": "sara_icon_app_settings_mapper_4x3",
+      "file": "assets/png/sara_icon_app_settings_mapper_4x3.png",
+      "pixel_width": 1024,
+      "pixel_height": 768,
+      "aspect": "4:3",
+      "style_tags": [
+        "procedural_bootstrap",
+        "cartoon",
+        "popcap_default"
+      ],
+      "logical_regions": {
+        "safe_rect": {
+          "x0": 0.5,
+          "y0": 0.5,
+          "x1": 9.5,
+          "y1": 9.0
+        },
+        "slice_caps": {
+          "left": 0.9,
+          "right": 0.9,
+          "top": 0.9,
+          "bottom": 0.9
+        },
+        "hit_boxes": []
+      },
+      "keys_drawn_in_art": false,
+      "paint_brief": "Bootstrap placeholder for sara_icon_app_settings_mapper_4x3.png (popcap_default)."
+    },
+    {
+      "id": "sara_launcher_bg_desktop_4x3",
+      "file": "assets/png/sara_launcher_bg_desktop_4x3.png",
+      "pixel_width": 1024,
+      "pixel_height": 768,
+      "aspect": "4:3",
+      "style_tags": [
+        "procedural_bootstrap",
+        "cartoon",
+        "popcap_default"
+      ],
+      "logical_regions": {
+        "safe_rect": {
+          "x0": 0.5,
+          "y0": 0.5,
+          "x1": 9.5,
+          "y1": 9.0
+        },
+        "slice_caps": {
+          "left": 0.9,
+          "right": 0.9,
+          "top": 0.9,
+          "bottom": 0.9
+        },
+        "hit_boxes": []
+      },
+      "keys_drawn_in_art": false,
+      "paint_brief": "Bootstrap placeholder for sara_launcher_bg_desktop_4x3.png (popcap_default)."
+    },
+    {
+      "id": "sara_launcher_taskbar_tile_4x3",
+      "file": "assets/png/sara_launcher_taskbar_tile_4x3.png",
+      "pixel_width": 1024,
+      "pixel_height": 768,
+      "aspect": "4:3",
+      "style_tags": [
+        "procedural_bootstrap",
+        "cartoon",
+        "popcap_default"
+      ],
+      "logical_regions": {
+        "safe_rect": {
+          "x0": 0.5,
+          "y0": 0.5,
+          "x1": 9.5,
+          "y1": 9.0
+        },
+        "slice_caps": {
+          "left": 0.9,
+          "right": 0.9,
+          "top": 0.9,
+          "bottom": 0.9
+        },
+        "hit_boxes": []
+      },
+      "keys_drawn_in_art": false,
+      "paint_brief": "Bootstrap placeholder for sara_launcher_taskbar_tile_4x3.png (popcap_default)."
+    },
+    {
+      "id": "sara_mapper_shell_bg_4x3",
+      "file": "assets/png/sara_mapper_shell_bg_4x3.png",
+      "pixel_width": 1024,
+      "pixel_height": 768,
+      "aspect": "4:3",
+      "style_tags": [
+        "procedural_bootstrap",
+        "cartoon",
+        "popcap_default"
+      ],
+      "logical_regions": {
+        "safe_rect": {
+          "x0": 0.5,
+          "y0": 0.5,
+          "x1": 9.5,
+          "y1": 9.0
+        },
+        "slice_caps": {
+          "left": 0.9,
+          "right": 0.9,
+          "top": 0.9,
+          "bottom": 0.9
+        },
+        "hit_boxes": []
+      },
+      "keys_drawn_in_art": false,
+      "paint_brief": "Bootstrap placeholder for sara_mapper_shell_bg_4x3.png (popcap_default)."
+    },
+    {
+      "id": "sara_mapper_shell_device_slot_4x3",
+      "file": "assets/png/sara_mapper_shell_device_slot_4x3.png",
+      "pixel_width": 1024,
+      "pixel_height": 768,
+      "aspect": "4:3",
+      "style_tags": [
+        "procedural_bootstrap",
+        "cartoon",
+        "popcap_default"
+      ],
+      "logical_regions": {
+        "safe_rect": {
+          "x0": 0.5,
+          "y0": 0.5,
+          "x1": 9.5,
+          "y1": 9.0
+        },
+        "slice_caps": {
+          "left": 0.9,
+          "right": 0.9,
+          "top": 0.9,
+          "bottom": 0.9
+        },
+        "hit_boxes": []
+      },
+      "keys_drawn_in_art": false,
+      "paint_brief": "Bootstrap placeholder for sara_mapper_shell_device_slot_4x3.png (popcap_default)."
+    },
+    {
+      "id": "sara_mapper_shell_mapping_canvas_4x3",
+      "file": "assets/png/sara_mapper_shell_mapping_canvas_4x3.png",
+      "pixel_width": 1024,
+      "pixel_height": 768,
+      "aspect": "4:3",
+      "style_tags": [
+        "procedural_bootstrap",
+        "cartoon",
+        "popcap_default"
+      ],
+      "logical_regions": {
+        "safe_rect": {
+          "x0": 0.5,
+          "y0": 0.5,
+          "x1": 9.5,
+          "y1": 9.0
+        },
+        "slice_caps": {
+          "left": 0.9,
+          "right": 0.9,
+          "top": 0.9,
+          "bottom": 0.9
+        },
+        "hit_boxes": []
+      },
+      "keys_drawn_in_art": false,
+      "paint_brief": "Bootstrap placeholder for sara_mapper_shell_mapping_canvas_4x3.png (popcap_default)."
+    },
+    {
+      "id": "sara_mapper_shell_profile_bar_4x3",
+      "file": "assets/png/sara_mapper_shell_profile_bar_4x3.png",
+      "pixel_width": 1024,
+      "pixel_height": 768,
+      "aspect": "4:3",
+      "style_tags": [
+        "procedural_bootstrap",
+        "cartoon",
+        "popcap_default"
+      ],
+      "logical_regions": {
+        "safe_rect": {
+          "x0": 0.5,
+          "y0": 0.5,
+          "x1": 9.5,
+          "y1": 9.0
+        },
+        "slice_caps": {
+          "left": 0.9,
+          "right": 0.9,
+          "top": 0.9,
+          "bottom": 0.9
+        },
+        "hit_boxes": []
+      },
+      "keys_drawn_in_art": false,
+      "paint_brief": "Bootstrap placeholder for sara_mapper_shell_profile_bar_4x3.png (popcap_default)."
+    },
+    {
+      "id": "sara_mapper_shell_sidebar_chrome_4x3",
+      "file": "assets/png/sara_mapper_shell_sidebar_chrome_4x3.png",
+      "pixel_width": 1024,
+      "pixel_height": 768,
+      "aspect": "4:3",
+      "style_tags": [
+        "procedural_bootstrap",
+        "cartoon",
+        "popcap_default"
+      ],
+      "logical_regions": {
+        "safe_rect": {
+          "x0": 0.5,
+          "y0": 0.5,
+          "x1": 9.5,
+          "y1": 9.0
+        },
+        "slice_caps": {
+          "left": 0.9,
+          "right": 0.9,
+          "top": 0.9,
+          "bottom": 0.9
+        },
+        "hit_boxes": []
+      },
+      "keys_drawn_in_art": false,
+      "paint_brief": "Bootstrap placeholder for sara_mapper_shell_sidebar_chrome_4x3.png (popcap_default)."
+    },
+    {
+      "id": "sara_marketing_campaign_board_chrome_4x3",
+      "file": "assets/png/sara_marketing_campaign_board_chrome_4x3.png",
+      "pixel_width": 1024,
+      "pixel_height": 768,
+      "aspect": "4:3",
+      "style_tags": [
+        "procedural_bootstrap",
+        "cartoon",
+        "popcap_default"
+      ],
+      "logical_regions": {
+        "safe_rect": {
+          "x0": 0.5,
+          "y0": 0.5,
+          "x1": 9.5,
+          "y1": 9.0
+        },
+        "slice_caps": {
+          "left": 0.9,
+          "right": 0.9,
+          "top": 0.9,
+          "bottom": 0.9
+        },
+        "hit_boxes": []
+      },
+      "keys_drawn_in_art": false,
+      "paint_brief": "Bootstrap placeholder for sara_marketing_campaign_board_chrome_4x3.png (popcap_default)."
+    },
+    {
+      "id": "sara_marketing_panel_bg_4x3",
+      "file": "assets/png/sara_marketing_panel_bg_4x3.png",
+      "pixel_width": 1024,
+      "pixel_height": 768,
+      "aspect": "4:3",
+      "style_tags": [
+        "procedural_bootstrap",
+        "cartoon",
+        "popcap_default"
+      ],
+      "logical_regions": {
+        "safe_rect": {
+          "x0": 0.5,
+          "y0": 0.5,
+          "x1": 9.5,
+          "y1": 9.0
+        },
+        "slice_caps": {
+          "left": 0.9,
+          "right": 0.9,
+          "top": 0.9,
+          "bottom": 0.9
+        },
+        "hit_boxes": []
+      },
+      "keys_drawn_in_art": false,
+      "paint_brief": "Bootstrap placeholder for sara_marketing_panel_bg_4x3.png (popcap_default)."
+    },
+    {
+      "id": "sara_office_btn_close_4x3",
+      "file": "assets/png/sara_office_btn_close_4x3.png",
+      "pixel_width": 1024,
+      "pixel_height": 768,
+      "aspect": "4:3",
+      "style_tags": [
+        "procedural_bootstrap",
+        "cartoon",
+        "popcap_default"
+      ],
+      "logical_regions": {
+        "safe_rect": {
+          "x0": 0.5,
+          "y0": 0.5,
+          "x1": 9.5,
+          "y1": 9.0
+        },
+        "slice_caps": {
+          "left": 0.9,
+          "right": 0.9,
+          "top": 0.9,
+          "bottom": 0.9
+        },
+        "hit_boxes": []
+      },
+      "keys_drawn_in_art": false,
+      "paint_brief": "Bootstrap placeholder for sara_office_btn_close_4x3.png (popcap_default)."
+    },
+    {
+      "id": "sara_office_btn_icon_square_4x3",
+      "file": "assets/png/sara_office_btn_icon_square_4x3.png",
+      "pixel_width": 1024,
+      "pixel_height": 768,
+      "aspect": "4:3",
+      "style_tags": [
+        "procedural_bootstrap",
+        "cartoon",
+        "popcap_default"
+      ],
+      "logical_regions": {
+        "safe_rect": {
+          "x0": 0.5,
+          "y0": 0.5,
+          "x1": 9.5,
+          "y1": 9.0
+        },
+        "slice_caps": {
+          "left": 0.9,
+          "right": 0.9,
+          "top": 0.9,
+          "bottom": 0.9
+        },
+        "hit_boxes": []
+      },
+      "keys_drawn_in_art": false,
+      "paint_brief": "Bootstrap placeholder for sara_office_btn_icon_square_4x3.png (popcap_default)."
+    },
+    {
+      "id": "sara_office_btn_maximize_4x3",
+      "file": "assets/png/sara_office_btn_maximize_4x3.png",
+      "pixel_width": 1024,
+      "pixel_height": 768,
+      "aspect": "4:3",
+      "style_tags": [
+        "procedural_bootstrap",
+        "cartoon",
+        "popcap_default"
+      ],
+      "logical_regions": {
+        "safe_rect": {
+          "x0": 0.5,
+          "y0": 0.5,
+          "x1": 9.5,
+          "y1": 9.0
+        },
+        "slice_caps": {
+          "left": 0.9,
+          "right": 0.9,
+          "top": 0.9,
+          "bottom": 0.9
+        },
+        "hit_boxes": []
+      },
+      "keys_drawn_in_art": false,
+      "paint_brief": "Bootstrap placeholder for sara_office_btn_maximize_4x3.png (popcap_default)."
+    },
+    {
+      "id": "sara_office_btn_minimize_4x3",
+      "file": "assets/png/sara_office_btn_minimize_4x3.png",
+      "pixel_width": 1024,
+      "pixel_height": 768,
+      "aspect": "4:3",
+      "style_tags": [
+        "procedural_bootstrap",
+        "cartoon",
+        "popcap_default"
+      ],
+      "logical_regions": {
+        "safe_rect": {
+          "x0": 0.5,
+          "y0": 0.5,
+          "x1": 9.5,
+          "y1": 9.0
+        },
+        "slice_caps": {
+          "left": 0.9,
+          "right": 0.9,
+          "top": 0.9,
+          "bottom": 0.9
+        },
+        "hit_boxes": []
+      },
+      "keys_drawn_in_art": false,
+      "paint_brief": "Bootstrap placeholder for sara_office_btn_minimize_4x3.png (popcap_default)."
+    },
+    {
+      "id": "sara_office_btn_primary_4x3",
+      "file": "assets/png/sara_office_btn_primary_4x3.png",
+      "pixel_width": 1024,
+      "pixel_height": 768,
+      "aspect": "4:3",
+      "style_tags": [
+        "procedural_bootstrap",
+        "cartoon",
+        "popcap_default"
+      ],
+      "logical_regions": {
+        "safe_rect": {
+          "x0": 0.5,
+          "y0": 0.5,
+          "x1": 9.5,
+          "y1": 9.0
+        },
+        "slice_caps": {
+          "left": 0.9,
+          "right": 0.9,
+          "top": 0.9,
+          "bottom": 0.9
+        },
+        "hit_boxes": []
+      },
+      "keys_drawn_in_art": false,
+      "paint_brief": "Bootstrap placeholder for sara_office_btn_primary_4x3.png (popcap_default)."
+    },
+    {
+      "id": "sara_office_btn_secondary_4x3",
+      "file": "assets/png/sara_office_btn_secondary_4x3.png",
+      "pixel_width": 1024,
+      "pixel_height": 768,
+      "aspect": "4:3",
+      "style_tags": [
+        "procedural_bootstrap",
+        "cartoon",
+        "popcap_default"
+      ],
+      "logical_regions": {
+        "safe_rect": {
+          "x0": 0.5,
+          "y0": 0.5,
+          "x1": 9.5,
+          "y1": 9.0
+        },
+        "slice_caps": {
+          "left": 0.9,
+          "right": 0.9,
+          "top": 0.9,
+          "bottom": 0.9
+        },
+        "hit_boxes": []
+      },
+      "keys_drawn_in_art": false,
+      "paint_brief": "Bootstrap placeholder for sara_office_btn_secondary_4x3.png (popcap_default)."
+    },
+    {
+      "id": "sara_office_input_field_4x3",
+      "file": "assets/png/sara_office_input_field_4x3.png",
+      "pixel_width": 1024,
+      "pixel_height": 768,
+      "aspect": "4:3",
+      "style_tags": [
+        "procedural_bootstrap",
+        "cartoon",
+        "popcap_default"
+      ],
+      "logical_regions": {
+        "safe_rect": {
+          "x0": 0.5,
+          "y0": 0.5,
+          "x1": 9.5,
+          "y1": 9.0
+        },
+        "slice_caps": {
+          "left": 0.9,
+          "right": 0.9,
+          "top": 0.9,
+          "bottom": 0.9
+        },
+        "hit_boxes": []
+      },
+      "keys_drawn_in_art": false,
+      "paint_brief": "Bootstrap placeholder for sara_office_input_field_4x3.png (popcap_default)."
+    },
+    {
+      "id": "sara_office_list_row_4x3",
+      "file": "assets/png/sara_office_list_row_4x3.png",
+      "pixel_width": 1024,
+      "pixel_height": 768,
+      "aspect": "4:3",
+      "style_tags": [
+        "procedural_bootstrap",
+        "cartoon",
+        "popcap_default"
+      ],
+      "logical_regions": {
+        "safe_rect": {
+          "x0": 0.5,
+          "y0": 0.5,
+          "x1": 9.5,
+          "y1": 9.0
+        },
+        "slice_caps": {
+          "left": 0.9,
+          "right": 0.9,
+          "top": 0.9,
+          "bottom": 0.9
+        },
+        "hit_boxes": []
+      },
+      "keys_drawn_in_art": false,
+      "paint_brief": "Bootstrap placeholder for sara_office_list_row_4x3.png (popcap_default)."
+    },
+    {
+      "id": "sara_office_menubar_strip_4x3",
+      "file": "assets/png/sara_office_menubar_strip_4x3.png",
+      "pixel_width": 1024,
+      "pixel_height": 768,
+      "aspect": "4:3",
+      "style_tags": [
+        "procedural_bootstrap",
+        "cartoon",
+        "popcap_default"
+      ],
+      "logical_regions": {
+        "safe_rect": {
+          "x0": 0.5,
+          "y0": 0.5,
+          "x1": 9.5,
+          "y1": 9.0
+        },
+        "slice_caps": {
+          "left": 0.9,
+          "right": 0.9,
+          "top": 0.9,
+          "bottom": 0.9
+        },
+        "hit_boxes": []
+      },
+      "keys_drawn_in_art": false,
+      "paint_brief": "Bootstrap placeholder for sara_office_menubar_strip_4x3.png (popcap_default)."
+    },
+    {
+      "id": "sara_office_panel_bg_dialog_4x3",
+      "file": "assets/png/sara_office_panel_bg_dialog_4x3.png",
+      "pixel_width": 1024,
+      "pixel_height": 768,
+      "aspect": "4:3",
+      "style_tags": [
+        "procedural_bootstrap",
+        "cartoon",
+        "popcap_default"
+      ],
+      "logical_regions": {
+        "safe_rect": {
+          "x0": 0.5,
+          "y0": 0.5,
+          "x1": 9.5,
+          "y1": 9.0
+        },
+        "slice_caps": {
+          "left": 0.9,
+          "right": 0.9,
+          "top": 0.9,
+          "bottom": 0.9
+        },
+        "hit_boxes": []
+      },
+      "keys_drawn_in_art": false,
+      "paint_brief": "Bootstrap placeholder for sara_office_panel_bg_dialog_4x3.png (popcap_default)."
+    },
+    {
+      "id": "sara_office_panel_bg_main_4x3",
+      "file": "assets/png/sara_office_panel_bg_main_4x3.png",
+      "pixel_width": 1024,
+      "pixel_height": 768,
+      "aspect": "4:3",
+      "style_tags": [
+        "procedural_bootstrap",
+        "cartoon",
+        "popcap_default"
+      ],
+      "logical_regions": {
+        "safe_rect": {
+          "x0": 0.5,
+          "y0": 0.5,
+          "x1": 9.5,
+          "y1": 9.0
+        },
+        "slice_caps": {
+          "left": 0.9,
+          "right": 0.9,
+          "top": 0.9,
+          "bottom": 0.9
+        },
+        "hit_boxes": []
+      },
+      "keys_drawn_in_art": false,
+      "paint_brief": "Bootstrap placeholder for sara_office_panel_bg_main_4x3.png (popcap_default)."
+    },
+    {
+      "id": "sara_office_scroll_thumb_h_4x3",
+      "file": "assets/png/sara_office_scroll_thumb_h_4x3.png",
+      "pixel_width": 1024,
+      "pixel_height": 768,
+      "aspect": "4:3",
+      "style_tags": [
+        "procedural_bootstrap",
+        "cartoon",
+        "popcap_default"
+      ],
+      "logical_regions": {
+        "safe_rect": {
+          "x0": 0.5,
+          "y0": 0.5,
+          "x1": 9.5,
+          "y1": 9.0
+        },
+        "slice_caps": {
+          "left": 0.9,
+          "right": 0.9,
+          "top": 0.9,
+          "bottom": 0.9
+        },
+        "hit_boxes": []
+      },
+      "keys_drawn_in_art": false,
+      "paint_brief": "Bootstrap placeholder for sara_office_scroll_thumb_h_4x3.png (popcap_default)."
+    },
+    {
+      "id": "sara_office_scroll_thumb_v_4x3",
+      "file": "assets/png/sara_office_scroll_thumb_v_4x3.png",
+      "pixel_width": 1024,
+      "pixel_height": 768,
+      "aspect": "4:3",
+      "style_tags": [
+        "procedural_bootstrap",
+        "cartoon",
+        "popcap_default"
+      ],
+      "logical_regions": {
+        "safe_rect": {
+          "x0": 0.5,
+          "y0": 0.5,
+          "x1": 9.5,
+          "y1": 9.0
+        },
+        "slice_caps": {
+          "left": 0.9,
+          "right": 0.9,
+          "top": 0.9,
+          "bottom": 0.9
+        },
+        "hit_boxes": []
+      },
+      "keys_drawn_in_art": false,
+      "paint_brief": "Bootstrap placeholder for sara_office_scroll_thumb_v_4x3.png (popcap_default)."
+    },
+    {
+      "id": "sara_office_scroll_track_h_4x3",
+      "file": "assets/png/sara_office_scroll_track_h_4x3.png",
+      "pixel_width": 1024,
+      "pixel_height": 768,
+      "aspect": "4:3",
+      "style_tags": [
+        "procedural_bootstrap",
+        "cartoon",
+        "popcap_default"
+      ],
+      "logical_regions": {
+        "safe_rect": {
+          "x0": 0.5,
+          "y0": 0.5,
+          "x1": 9.5,
+          "y1": 9.0
+        },
+        "slice_caps": {
+          "left": 0.9,
+          "right": 0.9,
+          "top": 0.9,
+          "bottom": 0.9
+        },
+        "hit_boxes": []
+      },
+      "keys_drawn_in_art": false,
+      "paint_brief": "Bootstrap placeholder for sara_office_scroll_track_h_4x3.png (popcap_default)."
+    },
+    {
+      "id": "sara_office_scroll_track_v_4x3",
+      "file": "assets/png/sara_office_scroll_track_v_4x3.png",
+      "pixel_width": 1024,
+      "pixel_height": 768,
+      "aspect": "4:3",
+      "style_tags": [
+        "procedural_bootstrap",
+        "cartoon",
+        "popcap_default"
+      ],
+      "logical_regions": {
+        "safe_rect": {
+          "x0": 0.5,
+          "y0": 0.5,
+          "x1": 9.5,
+          "y1": 9.0
+        },
+        "slice_caps": {
+          "left": 0.9,
+          "right": 0.9,
+          "top": 0.9,
+          "bottom": 0.9
+        },
+        "hit_boxes": []
+      },
+      "keys_drawn_in_art": false,
+      "paint_brief": "Bootstrap placeholder for sara_office_scroll_track_v_4x3.png (popcap_default)."
+    },
+    {
+      "id": "sara_office_separator_h_4x3",
+      "file": "assets/png/sara_office_separator_h_4x3.png",
+      "pixel_width": 1024,
+      "pixel_height": 768,
+      "aspect": "4:3",
+      "style_tags": [
+        "procedural_bootstrap",
+        "cartoon",
+        "popcap_default"
+      ],
+      "logical_regions": {
+        "safe_rect": {
+          "x0": 0.5,
+          "y0": 0.5,
+          "x1": 9.5,
+          "y1": 9.0
+        },
+        "slice_caps": {
+          "left": 0.9,
+          "right": 0.9,
+          "top": 0.9,
+          "bottom": 0.9
+        },
+        "hit_boxes": []
+      },
+      "keys_drawn_in_art": false,
+      "paint_brief": "Bootstrap placeholder for sara_office_separator_h_4x3.png (popcap_default)."
+    },
+    {
+      "id": "sara_office_separator_v_4x3",
+      "file": "assets/png/sara_office_separator_v_4x3.png",
+      "pixel_width": 1024,
+      "pixel_height": 768,
+      "aspect": "4:3",
+      "style_tags": [
+        "procedural_bootstrap",
+        "cartoon",
+        "popcap_default"
+      ],
+      "logical_regions": {
+        "safe_rect": {
+          "x0": 0.5,
+          "y0": 0.5,
+          "x1": 9.5,
+          "y1": 9.0
+        },
+        "slice_caps": {
+          "left": 0.9,
+          "right": 0.9,
+          "top": 0.9,
+          "bottom": 0.9
+        },
+        "hit_boxes": []
+      },
+      "keys_drawn_in_art": false,
+      "paint_brief": "Bootstrap placeholder for sara_office_separator_v_4x3.png (popcap_default)."
+    },
+    {
+      "id": "sara_office_tab_active_4x3",
+      "file": "assets/png/sara_office_tab_active_4x3.png",
+      "pixel_width": 1024,
+      "pixel_height": 768,
+      "aspect": "4:3",
+      "style_tags": [
+        "procedural_bootstrap",
+        "cartoon",
+        "popcap_default"
+      ],
+      "logical_regions": {
+        "safe_rect": {
+          "x0": 0.5,
+          "y0": 0.5,
+          "x1": 9.5,
+          "y1": 9.0
+        },
+        "slice_caps": {
+          "left": 0.9,
+          "right": 0.9,
+          "top": 0.9,
+          "bottom": 0.9
+        },
+        "hit_boxes": []
+      },
+      "keys_drawn_in_art": false,
+      "paint_brief": "Bootstrap placeholder for sara_office_tab_active_4x3.png (popcap_default)."
+    },
+    {
+      "id": "sara_office_tab_inactive_4x3",
+      "file": "assets/png/sara_office_tab_inactive_4x3.png",
+      "pixel_width": 1024,
+      "pixel_height": 768,
+      "aspect": "4:3",
+      "style_tags": [
+        "procedural_bootstrap",
+        "cartoon",
+        "popcap_default"
+      ],
+      "logical_regions": {
+        "safe_rect": {
+          "x0": 0.5,
+          "y0": 0.5,
+          "x1": 9.5,
+          "y1": 9.0
+        },
+        "slice_caps": {
+          "left": 0.9,
+          "right": 0.9,
+          "top": 0.9,
+          "bottom": 0.9
+        },
+        "hit_boxes": []
+      },
+      "keys_drawn_in_art": false,
+      "paint_brief": "Bootstrap placeholder for sara_office_tab_inactive_4x3.png (popcap_default)."
+    },
+    {
+      "id": "sara_office_titlebar_tile_4x3",
+      "file": "assets/png/sara_office_titlebar_tile_4x3.png",
+      "pixel_width": 1024,
+      "pixel_height": 768,
+      "aspect": "4:3",
+      "style_tags": [
+        "procedural_bootstrap",
+        "cartoon",
+        "popcap_default"
+      ],
+      "logical_regions": {
+        "safe_rect": {
+          "x0": 0.5,
+          "y0": 0.5,
+          "x1": 9.5,
+          "y1": 9.0
+        },
+        "slice_caps": {
+          "left": 0.9,
+          "right": 0.9,
+          "top": 0.9,
+          "bottom": 0.9
+        },
+        "hit_boxes": []
+      },
+      "keys_drawn_in_art": false,
+      "paint_brief": "Bootstrap placeholder for sara_office_titlebar_tile_4x3.png (popcap_default)."
+    },
+    {
+      "id": "sara_office_tooltip_bubble_4x3",
+      "file": "assets/png/sara_office_tooltip_bubble_4x3.png",
+      "pixel_width": 1024,
+      "pixel_height": 768,
+      "aspect": "4:3",
+      "style_tags": [
+        "procedural_bootstrap",
+        "cartoon",
+        "popcap_default"
+      ],
+      "logical_regions": {
+        "safe_rect": {
+          "x0": 0.5,
+          "y0": 0.5,
+          "x1": 9.5,
+          "y1": 9.0
+        },
+        "slice_caps": {
+          "left": 0.9,
+          "right": 0.9,
+          "top": 0.9,
+          "bottom": 0.9
+        },
+        "hit_boxes": []
+      },
+      "keys_drawn_in_art": false,
+      "paint_brief": "Bootstrap placeholder for sara_office_tooltip_bubble_4x3.png (popcap_default)."
+    },
+    {
+      "id": "sara_secretary_calendar_chrome_4x3",
+      "file": "assets/png/sara_secretary_calendar_chrome_4x3.png",
+      "pixel_width": 1024,
+      "pixel_height": 768,
+      "aspect": "4:3",
+      "style_tags": [
+        "procedural_bootstrap",
+        "cartoon",
+        "popcap_default"
+      ],
+      "logical_regions": {
+        "safe_rect": {
+          "x0": 0.5,
+          "y0": 0.5,
+          "x1": 9.5,
+          "y1": 9.0
+        },
+        "slice_caps": {
+          "left": 0.9,
+          "right": 0.9,
+          "top": 0.9,
+          "bottom": 0.9
+        },
+        "hit_boxes": []
+      },
+      "keys_drawn_in_art": false,
+      "paint_brief": "Bootstrap placeholder for sara_secretary_calendar_chrome_4x3.png (popcap_default)."
+    },
+    {
+      "id": "sara_secretary_inbox_list_chrome_4x3",
+      "file": "assets/png/sara_secretary_inbox_list_chrome_4x3.png",
+      "pixel_width": 1024,
+      "pixel_height": 768,
+      "aspect": "4:3",
+      "style_tags": [
+        "procedural_bootstrap",
+        "cartoon",
+        "popcap_default"
+      ],
+      "logical_regions": {
+        "safe_rect": {
+          "x0": 0.5,
+          "y0": 0.5,
+          "x1": 9.5,
+          "y1": 9.0
+        },
+        "slice_caps": {
+          "left": 0.9,
+          "right": 0.9,
+          "top": 0.9,
+          "bottom": 0.9
+        },
+        "hit_boxes": []
+      },
+      "keys_drawn_in_art": false,
+      "paint_brief": "Bootstrap placeholder for sara_secretary_inbox_list_chrome_4x3.png (popcap_default)."
+    },
+    {
+      "id": "sara_secretary_panel_bg_4x3",
+      "file": "assets/png/sara_secretary_panel_bg_4x3.png",
+      "pixel_width": 1024,
+      "pixel_height": 768,
+      "aspect": "4:3",
+      "style_tags": [
+        "procedural_bootstrap",
+        "cartoon",
+        "popcap_default"
+      ],
+      "logical_regions": {
+        "safe_rect": {
+          "x0": 0.5,
+          "y0": 0.5,
+          "x1": 9.5,
+          "y1": 9.0
+        },
+        "slice_caps": {
+          "left": 0.9,
+          "right": 0.9,
+          "top": 0.9,
+          "bottom": 0.9
+        },
+        "hit_boxes": []
+      },
+      "keys_drawn_in_art": false,
+      "paint_brief": "Bootstrap placeholder for sara_secretary_panel_bg_4x3.png (popcap_default)."
+    },
+    {
+      "id": "sara_status_fatigue_meter_fill_green_4x3",
+      "file": "assets/png/sara_status_fatigue_meter_fill_green_4x3.png",
+      "pixel_width": 1024,
+      "pixel_height": 768,
+      "aspect": "4:3",
+      "style_tags": [
+        "procedural_bootstrap",
+        "cartoon",
+        "popcap_default"
+      ],
+      "logical_regions": {
+        "safe_rect": {
+          "x0": 0.5,
+          "y0": 0.5,
+          "x1": 9.5,
+          "y1": 9.0
+        },
+        "slice_caps": {
+          "left": 0.9,
+          "right": 0.9,
+          "top": 0.9,
+          "bottom": 0.9
+        },
+        "hit_boxes": []
+      },
+      "keys_drawn_in_art": false,
+      "paint_brief": "Bootstrap placeholder for sara_status_fatigue_meter_fill_green_4x3.png (popcap_default)."
+    },
+    {
+      "id": "sara_status_fatigue_meter_fill_red_4x3",
+      "file": "assets/png/sara_status_fatigue_meter_fill_red_4x3.png",
+      "pixel_width": 1024,
+      "pixel_height": 768,
+      "aspect": "4:3",
+      "style_tags": [
+        "procedural_bootstrap",
+        "cartoon",
+        "popcap_default"
+      ],
+      "logical_regions": {
+        "safe_rect": {
+          "x0": 0.5,
+          "y0": 0.5,
+          "x1": 9.5,
+          "y1": 9.0
+        },
+        "slice_caps": {
+          "left": 0.9,
+          "right": 0.9,
+          "top": 0.9,
+          "bottom": 0.9
+        },
+        "hit_boxes": []
+      },
+      "keys_drawn_in_art": false,
+      "paint_brief": "Bootstrap placeholder for sara_status_fatigue_meter_fill_red_4x3.png (popcap_default)."
+    },
+    {
+      "id": "sara_status_fatigue_meter_fill_yellow_4x3",
+      "file": "assets/png/sara_status_fatigue_meter_fill_yellow_4x3.png",
+      "pixel_width": 1024,
+      "pixel_height": 768,
+      "aspect": "4:3",
+      "style_tags": [
+        "procedural_bootstrap",
+        "cartoon",
+        "popcap_default"
+      ],
+      "logical_regions": {
+        "safe_rect": {
+          "x0": 0.5,
+          "y0": 0.5,
+          "x1": 9.5,
+          "y1": 9.0
+        },
+        "slice_caps": {
+          "left": 0.9,
+          "right": 0.9,
+          "top": 0.9,
+          "bottom": 0.9
+        },
+        "hit_boxes": []
+      },
+      "keys_drawn_in_art": false,
+      "paint_brief": "Bootstrap placeholder for sara_status_fatigue_meter_fill_yellow_4x3.png (popcap_default)."
+    },
+    {
+      "id": "sara_status_fatigue_meter_frame_4x3",
+      "file": "assets/png/sara_status_fatigue_meter_frame_4x3.png",
+      "pixel_width": 1024,
+      "pixel_height": 768,
+      "aspect": "4:3",
+      "style_tags": [
+        "procedural_bootstrap",
+        "cartoon",
+        "popcap_default"
+      ],
+      "logical_regions": {
+        "safe_rect": {
+          "x0": 0.5,
+          "y0": 0.5,
+          "x1": 9.5,
+          "y1": 9.0
+        },
+        "slice_caps": {
+          "left": 0.9,
+          "right": 0.9,
+          "top": 0.9,
+          "bottom": 0.9
+        },
+        "hit_boxes": []
+      },
+      "keys_drawn_in_art": false,
+      "paint_brief": "Bootstrap placeholder for sara_status_fatigue_meter_frame_4x3.png (popcap_default)."
+    },
+    {
+      "id": "sara_status_icon_energy_4x3",
+      "file": "assets/png/sara_status_icon_energy_4x3.png",
+      "pixel_width": 1024,
+      "pixel_height": 768,
+      "aspect": "4:3",
+      "style_tags": [
+        "procedural_bootstrap",
+        "cartoon",
+        "popcap_default"
+      ],
+      "logical_regions": {
+        "safe_rect": {
+          "x0": 0.5,
+          "y0": 0.5,
+          "x1": 9.5,
+          "y1": 9.0
+        },
+        "slice_caps": {
+          "left": 0.9,
+          "right": 0.9,
+          "top": 0.9,
+          "bottom": 0.9
+        },
+        "hit_boxes": []
+      },
+      "keys_drawn_in_art": false,
+      "paint_brief": "Bootstrap placeholder for sara_status_icon_energy_4x3.png (popcap_default)."
+    },
+    {
+      "id": "sara_status_icon_sleep_4x3",
+      "file": "assets/png/sara_status_icon_sleep_4x3.png",
+      "pixel_width": 1024,
+      "pixel_height": 768,
+      "aspect": "4:3",
+      "style_tags": [
+        "procedural_bootstrap",
+        "cartoon",
+        "popcap_default"
+      ],
+      "logical_regions": {
+        "safe_rect": {
+          "x0": 0.5,
+          "y0": 0.5,
+          "x1": 9.5,
+          "y1": 9.0
+        },
+        "slice_caps": {
+          "left": 0.9,
+          "right": 0.9,
+          "top": 0.9,
+          "bottom": 0.9
+        },
+        "hit_boxes": []
+      },
+      "keys_drawn_in_art": false,
+      "paint_brief": "Bootstrap placeholder for sara_status_icon_sleep_4x3.png (popcap_default)."
+    },
+    {
+      "id": "sara_status_icon_stress_4x3",
+      "file": "assets/png/sara_status_icon_stress_4x3.png",
+      "pixel_width": 1024,
+      "pixel_height": 768,
+      "aspect": "4:3",
+      "style_tags": [
+        "procedural_bootstrap",
+        "cartoon",
+        "popcap_default"
+      ],
+      "logical_regions": {
+        "safe_rect": {
+          "x0": 0.5,
+          "y0": 0.5,
+          "x1": 9.5,
+          "y1": 9.0
+        },
+        "slice_caps": {
+          "left": 0.9,
+          "right": 0.9,
+          "top": 0.9,
+          "bottom": 0.9
+        },
+        "hit_boxes": []
+      },
+      "keys_drawn_in_art": false,
+      "paint_brief": "Bootstrap placeholder for sara_status_icon_stress_4x3.png (popcap_default)."
+    },
+    {
+      "id": "sara_status_toast_banner_4x3",
+      "file": "assets/png/sara_status_toast_banner_4x3.png",
+      "pixel_width": 1024,
+      "pixel_height": 768,
+      "aspect": "4:3",
+      "style_tags": [
+        "procedural_bootstrap",
+        "cartoon",
+        "popcap_default"
+      ],
+      "logical_regions": {
+        "safe_rect": {
+          "x0": 0.5,
+          "y0": 0.5,
+          "x1": 9.5,
+          "y1": 9.0
+        },
+        "slice_caps": {
+          "left": 0.9,
+          "right": 0.9,
+          "top": 0.9,
+          "bottom": 0.9
+        },
+        "hit_boxes": []
+      },
+      "keys_drawn_in_art": false,
+      "paint_brief": "Bootstrap placeholder for sara_status_toast_banner_4x3.png (popcap_default)."
+    },
+    {
+      "id": "sara_app_icon",
+      "file": "assets/png/sara_app_icon.png",
+      "pixel_width": 256,
+      "pixel_height": 256,
+      "aspect": "1:1",
+      "style_tags": ["icon", "app_icon"],
+      "logical_regions": {
+        "safe_rect": { "x0": 0.0, "y0": 0.0, "x1": 10.0, "y1": 10.0 },
+        "slice_caps": { "left": 0.0, "right": 0.0, "top": 0.0, "bottom": 0.0 },
+        "hit_boxes": []
+      },
+      "keys_drawn_in_art": false,
+      "paint_brief": "SARA application icon — sourced from sarabackground.png on the user desktop."
+    }
+  ]
+}
