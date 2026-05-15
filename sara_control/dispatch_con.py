@@ -373,6 +373,37 @@ def _cmd_edit_image(kwargs):
         con_project=kwargs.get("project", SYSTEM_CORE_PROJECT_NAME),
     )
 
+
+# --- Python IDE runner ---
+def _cmd_python_run(kwargs):
+    """Run a Python script string in a sandboxed subprocess. 30-second timeout."""
+    import subprocess, sys, tempfile, os
+    code = kwargs.get("code", "")
+    if not code.strip():
+        return {"success": False, "error": "No code provided"}
+    with tempfile.NamedTemporaryFile(mode="w", suffix=".py", delete=False, encoding="utf-8") as f:
+        f.write(code)
+        tmp_path = f.name
+    try:
+        proc = subprocess.run(
+            [sys.executable, tmp_path],
+            capture_output=True, text=True, timeout=30
+        )
+        return {
+            "success": proc.returncode == 0,
+            "stdout": proc.stdout,
+            "stderr": proc.stderr,
+            "returncode": proc.returncode,
+        }
+    except subprocess.TimeoutExpired:
+        return {"success": False, "error": "Timeout: script ran for more than 30 seconds"}
+    finally:
+        try:
+            os.unlink(tmp_path)
+        except OSError:
+            pass
+
+
 def _cmd_biometric_status(kwargs):
     """Check current biometric learning status."""
     try:
@@ -1001,6 +1032,8 @@ if ShuntFSM is not None:
             ("ready", "write_pdf"):          ("ready",   _cmd_write_pdf),
             ("ready", "compose_image"):      ("ready",   _cmd_compose_image),
             ("ready", "edit_image"):         ("ready",   _cmd_edit_image),
+            ("ready", "python_run"):          ("ready",   _cmd_python_run),
+            ("ready", "python_run"):          ("ready",   _cmd_python_run),
             ("ready", "biometric_status"):   ("ready",   _cmd_biometric_status),
             ("ready", "ai_generate"):        ("ready",   _cmd_ai_generate),
             ("ready", "ai_draft_docx"):      ("ready",   _cmd_ai_draft_docx),

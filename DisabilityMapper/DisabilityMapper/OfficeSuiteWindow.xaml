@@ -1,153 +1,286 @@
 ﻿<Window x:Class="DisabilityMapper.OfficeSuiteWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="SARA — Office Suite"
-        Width="900" Height="700"
-        MinWidth="600" MinHeight="500"
+        Title="SARA — Office &amp; Workspace"
+        Width="980" Height="760"
+        MinWidth="700" MinHeight="540"
         WindowStartupLocation="CenterScreen"
-        Background="#000000">
+        Background="#F4F6FA">
 
     <Window.Resources>
-        <SolidColorBrush x:Key="Bg0"     Color="#000000"/>
-        <SolidColorBrush x:Key="Bg1"     Color="#1A1A1A"/>
-        <SolidColorBrush x:Key="Bg2"     Color="#333333"/>
-        <SolidColorBrush x:Key="AccentA" Color="#FFFF00"/>
-        <SolidColorBrush x:Key="AccentB" Color="#00FF00"/>
-        <SolidColorBrush x:Key="FgPrim"  Color="#FFFFFF"/>
-        <SolidColorBrush x:Key="FgSub"   Color="#CCCCCC"/>
-        <SolidColorBrush x:Key="Warning" Color="#FF0000"/>
-        <SolidColorBrush x:Key="Cyan"    Color="#00FFFF"/>
+        <SolidColorBrush x:Key="BgWin"   Color="#F4F6FA"/>
+        <SolidColorBrush x:Key="BgSurf"  Color="#FFFFFF"/>
+        <SolidColorBrush x:Key="BgRaise" Color="#E8EDF5"/>
+        <SolidColorBrush x:Key="AccentA" Color="#2F6FED"/>
+        <SolidColorBrush x:Key="AccentB" Color="#1BA05E"/>
+        <SolidColorBrush x:Key="FgPrim"  Color="#1A1A2E"/>
+        <SolidColorBrush x:Key="FgSub"   Color="#5A6070"/>
+        <SolidColorBrush x:Key="Warning" Color="#C0392B"/>
+        <SolidColorBrush x:Key="Border"  Color="#C8D0E0"/>
 
         <Style TargetType="TextBlock">
             <Setter Property="Foreground" Value="{StaticResource FgPrim}"/>
             <Setter Property="FontFamily" Value="Segoe UI"/>
-            <Setter Property="FontSize"   Value="13"/>
+            <Setter Property="FontSize"   Value="15"/>
         </Style>
         <Style TargetType="TextBox">
-            <Setter Property="Background"      Value="{StaticResource Bg1}"/>
+            <Setter Property="Background"      Value="{StaticResource BgSurf}"/>
             <Setter Property="Foreground"      Value="{StaticResource FgPrim}"/>
-            <Setter Property="BorderBrush"     Value="{StaticResource AccentA}"/>
-            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="BorderBrush"     Value="{StaticResource Border}"/>
+            <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="Padding"         Value="8,6"/>
             <Setter Property="FontFamily"      Value="Segoe UI"/>
-            <Setter Property="FontSize"        Value="14"/>
+            <Setter Property="FontSize"        Value="15"/>
             <Setter Property="CaretBrush"      Value="{StaticResource FgPrim}"/>
         </Style>
         <Style x:Key="BtnStyle" TargetType="Button">
-            <Setter Property="Background"      Value="{StaticResource Bg2}"/>
-            <Setter Property="Foreground"      Value="{StaticResource AccentA}"/>
-            <Setter Property="BorderBrush"     Value="{StaticResource AccentA}"/>
-            <Setter Property="BorderThickness" Value="2"/>
-            <Setter Property="Padding"         Value="16,8"/>
+            <Setter Property="Background"      Value="{StaticResource AccentA}"/>
+            <Setter Property="Foreground"      Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding"         Value="18,10"/>
             <Setter Property="FontFamily"      Value="Segoe UI"/>
-            <Setter Property="FontWeight"      Value="Bold"/>
-            <Setter Property="FontSize"        Value="13"/>
+            <Setter Property="FontWeight"      Value="SemiBold"/>
+            <Setter Property="FontSize"        Value="15"/>
             <Setter Property="Cursor"          Value="Hand"/>
-            <Setter Property="Margin"          Value="4,0"/>
+            <Setter Property="Margin"          Value="4,2"/>
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="{StaticResource AccentA}"/>
-                    <Setter Property="Foreground" Value="{StaticResource Bg0}"/>
+                    <Setter Property="Background" Value="#1A5CC8"/>
                 </Trigger>
                 <Trigger Property="IsEnabled" Value="False">
-                    <Setter Property="Opacity" Value="0.4"/>
+                    <Setter Property="Opacity" Value="0.45"/>
                 </Trigger>
             </Style.Triggers>
         </Style>
+        <Style x:Key="BtnSecondary" TargetType="Button" BasedOn="{StaticResource BtnStyle}">
+            <Setter Property="Background"      Value="{StaticResource BgRaise}"/>
+            <Setter Property="Foreground"      Value="{StaticResource AccentA}"/>
+            <Setter Property="BorderBrush"     Value="{StaticResource AccentA}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#D0DCF8"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="BtnLaunch" TargetType="Button" BasedOn="{StaticResource BtnStyle}">
+            <Setter Property="Background"      Value="{StaticResource BgRaise}"/>
+            <Setter Property="Foreground"      Value="{StaticResource FgPrim}"/>
+            <Setter Property="BorderBrush"     Value="{StaticResource Border}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding"         Value="18,12"/>
+        </Style>
+        <Style TargetType="TabItem">
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="FontSize"   Value="15"/>
+            <Setter Property="Padding"    Value="18,8"/>
+            <Setter Property="Foreground" Value="{StaticResource FgSub}"/>
+        </Style>
     </Window.Resources>
 
-    <Grid Margin="10">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
+    <DockPanel Background="{StaticResource BgWin}">
 
-        <!-- ROW 0: HEADER -->
-        <Border Grid.Row="0" Background="{StaticResource Bg2}" Padding="10" Margin="0,0,0,8"
-                BorderThickness="2" BorderBrush="{StaticResource AccentA}">
+        <!-- HEADER -->
+        <Border DockPanel.Dock="Top" Background="{StaticResource BgSurf}"
+                BorderBrush="{StaticResource Border}" BorderThickness="0,0,0,1"
+                Padding="16,12">
             <DockPanel>
-                <TextBlock DockPanel.Dock="Left" Text="SARA OFFICE SUITE"
-                           FontSize="16" FontWeight="Bold" Foreground="{StaticResource AccentA}"
-                           VerticalAlignment="Center"/>
-                <!-- Fatigue indicator -->
+                <StackPanel DockPanel.Dock="Left">
+                    <TextBlock Text="Office &amp; Workspace" FontSize="19" FontWeight="Bold"
+                               Foreground="{StaticResource AccentA}"/>
+                    <TextBlock Text="Documents · Email · Calendar · Python IDE"
+                               FontSize="13" Foreground="{StaticResource FgSub}" Margin="0,2,0,0"/>
+                </StackPanel>
                 <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" VerticalAlignment="Center">
-                    <TextBlock Text="FATIGUE:" FontSize="14" Foreground="{StaticResource FgSub}"
-                               VerticalAlignment="Center" Margin="0,0,6,0"/>
-                    <Border x:Name="FatigueBar" Width="60" Height="18"
-                            CornerRadius="2" BorderThickness="1" BorderBrush="{StaticResource FgSub}">
-                        <Border.Background>
-                            <SolidColorBrush Color="#00FF00"/>
-                        </Border.Background>
+                    <TextBlock Text="Fatigue:" FontSize="14" Foreground="{StaticResource FgSub}"
+                               VerticalAlignment="Center" Margin="0,0,8,0"/>
+                    <Border x:Name="FatigueBar" Width="64" Height="18" CornerRadius="9"
+                            BorderThickness="1" BorderBrush="{StaticResource Border}">
+                        <Border.Background><SolidColorBrush Color="#1BA05E"/></Border.Background>
                     </Border>
                 </StackPanel>
             </DockPanel>
         </Border>
 
-        <!-- ROW 1: INPUT AREA -->
-        <TextBox Grid.Row="1" x:Name="InputBox"
-                 AcceptsReturn="True" AcceptsTab="True"
-                 TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"
-                 FontSize="15"/>
-
-        <!-- ROW 2: ACTION BUTTONS -->
-        <Border Grid.Row="2" Padding="4,8">
-            <WrapPanel HorizontalAlignment="Center">
-                <Button Style="{StaticResource BtnStyle}" Content="[ASK SARA]"
-                        Click="AskSara_Click" x:Name="AskBtn"/>
-                <Button Style="{StaticResource BtnStyle}" Content="[SAVE .DOCX]"
-                        Click="SaveDocx_Click"/>
-                <Button Style="{StaticResource BtnStyle}" Content="[SAVE .XLSX]"
-                        Click="SaveXlsx_Click"/>
-                <Button Style="{StaticResource BtnStyle}" Content="[SAVE .PDF]"
-                        Click="SavePdf_Click"/>
-                <Button Style="{StaticResource BtnStyle}" Content="[DRAFT DOC]"
-                        Click="DraftDocx_Click" ToolTip="AI writes a document from your prompt"/>
-                <Button Style="{StaticResource BtnStyle}" Content="[BROWSE]"
-                        Click="WebBrowse_Click" ToolTip="Fetch a URL and show text"/>
-                <Button Style="{StaticResource BtnStyle}" Content="[SEARCH]"
-                        Click="WebSearch_Click" ToolTip="Search the web"/>
-                <Button Style="{StaticResource BtnStyle}" Content="[EMAIL]"
-                        Click="SendEmail_Click" ToolTip="Send email via Gmail"/>
-                <Button Style="{StaticResource BtnStyle}" Content="[CALENDAR]"
-                        Click="CalendarList_Click" ToolTip="Show upcoming calendar events"/>
-                <Button Style="{StaticResource BtnStyle}" Content="[CLEAR]"
-                        Click="Clear_Click"/>
-            </WrapPanel>
-        </Border>
-
-        <!-- ROW 3: RESPONSE AREA -->
-        <TextBox Grid.Row="3" x:Name="ResponseBox"
-                 IsReadOnly="True" AcceptsReturn="True"
-                 TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"
-                 Background="#0D0D0D" BorderBrush="{StaticResource Cyan}"
-                 FontSize="14" Foreground="{StaticResource AccentB}"/>
-
-        <!-- ROW 4: SAVE STATUS -->
-        <Border Grid.Row="4" Padding="4,6">
-            <TextBlock x:Name="SaveStatus" Text="" FontSize="15"
-                       Foreground="{StaticResource Cyan}"/>
-        </Border>
-
-        <!-- ROW 5: STATUS BAR -->
-        <Border Grid.Row="5" Background="{StaticResource Bg2}"
-                Padding="8,4" BorderThickness="2" BorderBrush="{StaticResource AccentB}">
+        <!-- STATUS BAR -->
+        <Border DockPanel.Dock="Bottom" Background="{StaticResource BgRaise}"
+                BorderBrush="{StaticResource Border}" BorderThickness="0,1,0,0" Padding="12,6">
             <DockPanel>
                 <Ellipse x:Name="SaraDot" Width="10" Height="10"
-                         DockPanel.Dock="Left" Margin="0,0,8,0"
-                         VerticalAlignment="Center"/>
-                <TextBlock x:Name="StatusText" Text="Checking SARA..."
-                           Foreground="{StaticResource AccentB}"
-                           FontSize="15" FontWeight="Bold"
-                           VerticalAlignment="Center"/>
+                         DockPanel.Dock="Left" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                <TextBlock x:Name="StatusText" Text="Connecting..."
+                           Foreground="{StaticResource FgSub}" FontSize="14" VerticalAlignment="Center"/>
             </DockPanel>
         </Border>
-    </Grid>
 
-    <Window.InputBindings>
-        <KeyBinding Key="Return" Modifiers="Ctrl" Command="{x:Null}"/>
-    </Window.InputBindings>
+        <!-- TABS -->
+        <TabControl Background="{StaticResource BgWin}" BorderThickness="0">
+
+            <!-- ═══ OFFICE TAB ═══ -->
+            <TabItem Header="Office">
+                <Grid Margin="14,12">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" MinHeight="100"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*" MinHeight="80"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBox Grid.Row="0" x:Name="InputBox"
+                             AcceptsReturn="True" AcceptsTab="True"
+                             TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"
+                             ToolTip="Type a prompt, URL, or document content here"/>
+
+                    <Border Grid.Row="1" Padding="0,8">
+                        <WrapPanel>
+                            <Button Style="{StaticResource BtnStyle}"    Content="Ask SARA"
+                                    Click="AskSara_Click" x:Name="AskBtn"/>
+                            <Button Style="{StaticResource BtnStyle}"    Content="Draft Document"
+                                    Click="DraftDocx_Click"
+                                    ToolTip="SARA writes a full document from your prompt"/>
+                            <Button Style="{StaticResource BtnSecondary}" Content="Browse URL"
+                                    Click="WebBrowse_Click"
+                                    ToolTip="Paste a URL above and fetch the page text"/>
+                            <Button Style="{StaticResource BtnSecondary}" Content="Search Web"
+                                    Click="WebSearch_Click"/>
+                            <Button Style="{StaticResource BtnSecondary}" Content="Save .docx"
+                                    Click="SaveDocx_Click"/>
+                            <Button Style="{StaticResource BtnSecondary}" Content="Save .xlsx"
+                                    Click="SaveXlsx_Click"/>
+                            <Button Style="{StaticResource BtnSecondary}" Content="Save .pdf"
+                                    Click="SavePdf_Click"/>
+                            <Button Style="{StaticResource BtnSecondary}" Content="Clear"
+                                    Click="Clear_Click"/>
+                        </WrapPanel>
+                    </Border>
+
+                    <Border Grid.Row="2" BorderBrush="{StaticResource Border}"
+                            BorderThickness="1" CornerRadius="4">
+                        <TextBox x:Name="ResponseBox" IsReadOnly="True" AcceptsReturn="True"
+                                 TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"
+                                 Background="#F8FAFD" BorderThickness="0" FontSize="15"/>
+                    </Border>
+
+                    <TextBlock Grid.Row="3" x:Name="SaveStatus" Text="" FontSize="14"
+                               Foreground="{StaticResource AccentB}" Margin="0,6,0,0"/>
+                </Grid>
+            </TabItem>
+
+            <!-- ═══ COMMUNICATIONS TAB ═══ -->
+            <TabItem Header="Communications">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="14,12">
+                    <StackPanel>
+
+                        <TextBlock Text="Email" FontSize="17" FontWeight="SemiBold"
+                                   Foreground="{StaticResource AccentA}" Margin="0,0,0,6"/>
+                        <TextBlock Text="Format:  recipient@email.com | Subject | Message body"
+                                   FontSize="13" Foreground="{StaticResource FgSub}" Margin="0,0,0,4"/>
+                        <TextBox x:Name="EmailBox" Height="80" AcceptsReturn="True"
+                                 TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"
+                                 Margin="0,0,0,8"
+                                 ToolTip="recipient@email.com | Subject | Body"/>
+                        <WrapPanel Margin="0,0,0,10">
+                            <Button Style="{StaticResource BtnStyle}"     Content="Send Email"
+                                    Click="SendEmail_Click"/>
+                            <Button Style="{StaticResource BtnSecondary}" Content="View Calendar"
+                                    Click="CalendarList_Click"/>
+                        </WrapPanel>
+                        <Border BorderBrush="{StaticResource Border}" BorderThickness="1"
+                                CornerRadius="4" Margin="0,0,0,20">
+                            <TextBox x:Name="CommResponseBox" IsReadOnly="True" AcceptsReturn="True"
+                                     Height="120" TextWrapping="Wrap"
+                                     VerticalScrollBarVisibility="Auto"
+                                     Background="#F8FAFD" BorderThickness="0"/>
+                        </Border>
+
+                        <Border Height="1" Background="{StaticResource Border}" Margin="0,0,0,16"/>
+
+                        <TextBlock Text="Launch Communication Apps" FontSize="17" FontWeight="SemiBold"
+                                   Foreground="{StaticResource AccentA}" Margin="0,0,0,4"/>
+                        <TextBlock Text="Opens the app if it is installed on this computer."
+                                   FontSize="13" Foreground="{StaticResource FgSub}" Margin="0,0,0,12"/>
+                        <WrapPanel>
+                            <Button Style="{StaticResource BtnLaunch}" Content="Microsoft Teams"
+                                    Click="OpenTeams_Click"   Width="170"/>
+                            <Button Style="{StaticResource BtnLaunch}" Content="Zoom"
+                                    Click="OpenZoom_Click"    Width="170"/>
+                            <Button Style="{StaticResource BtnLaunch}" Content="Slack"
+                                    Click="OpenSlack_Click"   Width="170"/>
+                            <Button Style="{StaticResource BtnLaunch}" Content="Outlook"
+                                    Click="OpenOutlook_Click" Width="170"/>
+                        </WrapPanel>
+
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+            <!-- ═══ PYTHON IDE TAB ═══ -->
+            <TabItem Header="Python IDE">
+                <Grid Margin="14,12">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="3*" MinHeight="140"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="2*" MinHeight="90"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Toolbar -->
+                    <DockPanel Grid.Row="0" Margin="0,0,0,6">
+                        <TextBlock DockPanel.Dock="Left" Text="Python script editor"
+                                   FontSize="14" Foreground="{StaticResource FgSub}"
+                                   VerticalAlignment="Center"/>
+                        <WrapPanel DockPanel.Dock="Right" HorizontalAlignment="Right">
+                            <Button Style="{StaticResource BtnSecondary}" Content="Open .py"
+                                    Click="OpenPyFile_Click" Padding="12,6"/>
+                            <Button Style="{StaticResource BtnSecondary}" Content="Save .py"
+                                    Click="SavePyFile_Click" Padding="12,6"/>
+                            <Button Style="{StaticResource BtnSecondary}" Content="Clear"
+                                    Click="ClearPython_Click" Padding="12,6"/>
+                        </WrapPanel>
+                    </DockPanel>
+
+                    <!-- Code editor -->
+                    <Border Grid.Row="1" BorderBrush="{StaticResource Border}"
+                            BorderThickness="1" CornerRadius="4">
+                        <TextBox x:Name="PyEditorBox"
+                                 AcceptsReturn="True" AcceptsTab="True"
+                                 TextWrapping="NoWrap"
+                                 HorizontalScrollBarVisibility="Auto"
+                                 VerticalScrollBarVisibility="Auto"
+                                 FontFamily="Consolas, Courier New" FontSize="15"
+                                 Background="#1E2030" Foreground="#CDD6F4"
+                                 CaretBrush="#CDD6F4" BorderThickness="0" Padding="10"/>
+                    </Border>
+
+                    <!-- Run row -->
+                    <DockPanel Grid.Row="2" Margin="0,8,0,6">
+                        <Button DockPanel.Dock="Left" Style="{StaticResource BtnStyle}"
+                                Content="Run Script" Click="RunPython_Click"
+                                x:Name="RunBtn" Padding="22,10"/>
+                        <TextBlock x:Name="PyStatusText" Text=""
+                                   FontSize="14" Foreground="{StaticResource FgSub}"
+                                   VerticalAlignment="Center" Margin="12,0,0,0"/>
+                    </DockPanel>
+
+                    <!-- Output area -->
+                    <Border Grid.Row="3" BorderBrush="{StaticResource Border}"
+                            BorderThickness="1" CornerRadius="4">
+                        <TextBox x:Name="PyOutputBox" IsReadOnly="True" AcceptsReturn="True"
+                                 TextWrapping="NoWrap"
+                                 HorizontalScrollBarVisibility="Auto"
+                                 VerticalScrollBarVisibility="Auto"
+                                 FontFamily="Consolas, Courier New" FontSize="14"
+                                 Background="#151720" Foreground="#A6E3A1"
+                                 BorderThickness="0" Padding="10"/>
+                    </Border>
+
+                    <TextBlock Grid.Row="4" FontSize="13" Foreground="{StaticResource FgSub}"
+                               Margin="0,6,0,0"
+                               Text="Scripts run via SARA CONTROL · 30-second timeout · Output shown above"/>
+                </Grid>
+            </TabItem>
+
+        </TabControl>
+    </DockPanel>
 </Window>
