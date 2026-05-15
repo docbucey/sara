@@ -1,4 +1,4 @@
-<Window x:Class="DisabilityMapper.SaraFallbackShellWindow"
+﻿<Window x:Class="DisabilityMapper.SaraFallbackShellWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="SARA / MAMA — UI spec fallback (no PNGs, 4:3 + logical 0–10)"

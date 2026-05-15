@@ -1,4 +1,4 @@
-<Window x:Class="DisabilityMapper.AssetDeckWindow"
+﻿<Window x:Class="DisabilityMapper.AssetDeckWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:DisabilityMapper"
@@ -12,7 +12,7 @@
                 BorderBrush="#FFC9D1E0" BorderThickness="1" CornerRadius="8">
             <StackPanel>
                 <TextBlock x:Name="SaraRootText" FontWeight="Bold" TextWrapping="Wrap" FontSize="14" Foreground="#FF1B2433"/>
-                <TextBlock x:Name="HealthText" Margin="0,6,0,0" FontSize="12" Foreground="#FF2F6FED"
+                <TextBlock x:Name="HealthText" Margin="0,6,0,0" FontSize="15" Foreground="#FF2F6FED"
                            TextWrapping="Wrap"/>
                 <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
                     <Button x:Name="BtnMapper" Content="Open Mapper" Padding="14,8" Margin="0,0,8,0" Click="BtnMapper_OnClick"/>
@@ -23,7 +23,7 @@
             </StackPanel>
         </Border>
 
-        <TextBlock DockPanel.Dock="Bottom" x:Name="CountText" Margin="0,8,0,0" FontSize="12" Foreground="#FF4B5A73"/>
+        <TextBlock DockPanel.Dock="Bottom" x:Name="CountText" Margin="0,8,0,0" FontSize="15" Foreground="#FF4B5A73"/>
 
         <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
             <ItemsControl x:Name="ThumbsList">
@@ -37,7 +37,7 @@
                         <Border Width="200" Height="200" Margin="6" BorderBrush="#FF1B2433" BorderThickness="2" CornerRadius="8" Background="White">
                             <DockPanel Margin="6">
                                 <TextBlock DockPanel.Dock="Bottom" Text="{Binding FileName}" TextTrimming="CharacterEllipsis"
-                                           FontSize="10" Foreground="#FF1B2433" TextWrapping="NoWrap" ToolTip="{Binding FullPath}"/>
+                                           FontSize="13" Foreground="#FF1B2433" TextWrapping="NoWrap" ToolTip="{Binding FullPath}"/>
                                 <Grid>
                                     <Image Source="{Binding Preview}" Stretch="Uniform" MaxHeight="150" MaxWidth="180"
                                            Visibility="{Binding ImageVisibility}"/>
