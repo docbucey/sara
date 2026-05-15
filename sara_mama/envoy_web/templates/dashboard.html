@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SARA Envoy Dashboard</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <header class="top">
+    <h1>SARA Envoy Dashboard</h1>
+    <button id="logoutBtn">Logout</button>
+  </header>
+
+  <nav class="tabs">
+    <button class="tab" data-tab="chat">Chat Setup</button>
+    <button class="tab" data-tab="profile">Remote Profile</button>
+    <button class="tab" data-tab="health">Backend Health</button>
+    <button class="tab active" data-tab="run">Run Blind Test</button>
+    <button class="tab" data-tab="history">Run History</button>
+    <button class="tab" data-tab="compare">Compare</button>
+  </nav>
+
+  <section id="chat" class="tabpane">
+    <h2>Chat Setup</h2>
+    <textarea id="chatMsg" rows="4" placeholder="Ask SARA to help set up your next test run..."></textarea>
+    <button id="chatSend">Send</button>
+    <pre id="chatOut"></pre>
+  </section>
+
+  <section id="profile" class="tabpane">
+    <h2>Remote Credentials Profile</h2>
+    <input id="profileUser" placeholder="remote username" />
+    <input id="profilePass" type="password" placeholder="remote password" />
+    <label class="row">
+      <input id="profileBypass" type="checkbox" checked />
+      Local browser bypass (locked off in current security mode)
+    </label>
+    <button id="loadProfileBtn">Load Profile</button>
+    <button id="saveProfileBtn">Save Profile</button>
+    <pre id="profileOut"></pre>
+  </section>
+
+  <section id="health" class="tabpane">
+    <h2>Backend Health</h2>
+    <button id="healthBtn">Check Connectors</button>
+    <pre id="healthOut"></pre>
+  </section>
+
+  <section id="run" class="tabpane active">
+    <h2>Run Blind Test</h2>
+    <textarea id="prompt" rows="6" placeholder="Enter your CartiGene proof prompt..."></textarea>
+    <label class="row">
+      <input id="blindMode" type="checkbox" checked />
+      Blind mode on (agent names hidden)
+    </label>
+    <button id="runBtn">Run 4 Agents</button>
+    <pre id="runOut"></pre>
+  </section>
+
+  <section id="history" class="tabpane">
+    <h2>Run History</h2>
+    <button id="refreshRuns">Refresh</button>
+    <pre id="runsOut"></pre>
+  </section>
+
+  <section id="compare" class="tabpane">
+    <h2>Compare and Reveal</h2>
+    <input id="runId" placeholder="run-xxxx" />
+    <button id="loadRun">Load Run</button>
+    <button id="compareBtn">Compare</button>
+    <input id="revealPassword" type="password" placeholder="password for reveal" />
+    <button id="revealBtn">Reveal Agent Names</button>
+    <pre id="compareOut"></pre>
+  </section>
+
+  <script>
+    const tabs = document.querySelectorAll('.tab');
+    const panes = document.querySelectorAll('.tabpane');
+    tabs.forEach(t => t.addEventListener('click', () => {
+      tabs.forEach(x => x.classList.remove('active'));
+      panes.forEach(x => x.classList.remove('active'));
+      t.classList.add('active');
+      document.getElementById(t.dataset.tab).classList.add('active');
+    }));
+
+    document.getElementById('logoutBtn').addEventListener('click', async () => {
+      await fetch('/api/logout', {method:'POST'});
+      location.href = '/login';
+    });
+
+    document.getElementById('chatSend').addEventListener('click', async () => {
+      const message = document.getElementById('chatMsg').value.trim();
+      if (!message) return;
+      const res = await fetch('/api/chat/setup', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({message})
+      });
+      const data = await res.json();
+      document.getElementById('chatOut').textContent = JSON.stringify(data, null, 2);
+    });
+
+    document.getElementById('loadProfileBtn').addEventListener('click', async () => {
+      const res = await fetch('/api/profile/remote-credentials');
+      const data = await res.json();
+      document.getElementById('profileOut').textContent = JSON.stringify(data, null, 2);
+      if (data.success && data.profile) {
+        document.getElementById('profileUser').value = data.profile.remote_username || '';
+        document.getElementById('profileBypass').checked = !!data.profile.local_bypass;
+        document.getElementById('profileBypass').disabled = !!data.profile.local_bypass_locked;
+      }
+    });
+
+    document.getElementById('saveProfileBtn').addEventListener('click', async () => {
+      const username = document.getElementById('profileUser').value.trim();
+      const password = document.getElementById('profilePass').value;
+      const local_bypass = document.getElementById('profileBypass').checked;
+      const res = await fetch('/api/profile/remote-credentials', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({username, password, local_bypass})
+      });
+      const data = await res.json();
+      document.getElementById('profileOut').textContent = JSON.stringify(data, null, 2);
+    });
+
+    document.getElementById('healthBtn').addEventListener('click', async () => {
+      const res = await fetch('/api/health');
+      const data = await res.json();
+      document.getElementById('healthOut').textContent = JSON.stringify(data, null, 2);
+    });
+
+    document.getElementById('runBtn').addEventListener('click', async () => {
+      const prompt = document.getElementById('prompt').value;
+      const blind_mode = document.getElementById('blindMode').checked;
+      const res = await fetch('/api/run', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({prompt, blind_mode})
+      });
+      const data = await res.json();
+      document.getElementById('runOut').textContent = JSON.stringify(data, null, 2);
+      if (data.run_id) document.getElementById('runId').value = data.run_id;
+    });
+
+    document.getElementById('refreshRuns').addEventListener('click', async () => {
+      const res = await fetch('/api/runs');
+      const data = await res.json();
+      document.getElementById('runsOut').textContent = JSON.stringify(data, null, 2);
+    });
+
+    document.getElementById('loadRun').addEventListener('click', async () => {
+      const runId = document.getElementById('runId').value.trim();
+      if (!runId) return;
+      const res = await fetch('/api/run/' + encodeURIComponent(runId));
+      const data = await res.json();
+      document.getElementById('compareOut').textContent = JSON.stringify(data, null, 2);
+    });
+
+    document.getElementById('compareBtn').addEventListener('click', async () => {
+      const runId = document.getElementById('runId').value.trim();
+      if (!runId) return;
+      const res = await fetch('/api/compare/' + encodeURIComponent(runId));
+      const data = await res.json();
+      document.getElementById('compareOut').textContent = JSON.stringify(data, null, 2);
+    });
+
+    document.getElementById('revealBtn').addEventListener('click', async () => {
+      const runId = document.getElementById('runId').value.trim();
+      const password = document.getElementById('revealPassword').value;
+      if (!runId) return;
+      const res = await fetch('/api/reveal/' + encodeURIComponent(runId), {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({password})
+      });
+      const data = await res.json();
+      document.getElementById('compareOut').textContent = JSON.stringify(data, null, 2);
+    });
+  </script>
+</body>
+</html>

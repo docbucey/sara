@@ -1,0 +1,16 @@
+[
+	{"name": "security_shunt_entrypoint", "start_line": 19, "end_line": 44, "parameters": ["command", "payload"], "docstring_or_comment": "Single entrypoint for all cross-pillar actions. Applies header validation and routes to FSM.", "internal_calls": ["validate_shunt_header", "audit_gate", "quarantine", "scan", "noop_action"], "external_dependencies": [], "side_effects": []},
+	{"name": "audit_gate", "start_line": 46, "end_line": 48, "parameters": ["payload"], "docstring_or_comment": null, "internal_calls": [], "external_dependencies": [], "side_effects": []},
+	{"name": "quarantine", "start_line": 50, "end_line": 52, "parameters": ["payload"], "docstring_or_comment": null, "internal_calls": [], "external_dependencies": [], "side_effects": []},
+	{"name": "scan", "start_line": 54, "end_line": 56, "parameters": ["payload"], "docstring_or_comment": null, "internal_calls": [], "external_dependencies": [], "side_effects": []},
+	{"name": "noop_action", "start_line": 58, "end_line": 60, "parameters": ["payload"], "docstring_or_comment": null, "internal_calls": [], "external_dependencies": [], "side_effects": []},
+	{"name": "validate_shunt_header", "start_line": 62, "end_line": 69, "parameters": ["payload"], "docstring_or_comment": "Enforces shunt header contract on inbound/outbound actions.", "internal_calls": [], "external_dependencies": [], "side_effects": []}
+	,
+	{"name": "_default_trust_policy_sec", "start_line": 109, "end_line": 116, "parameters": [], "docstring_or_comment": null, "internal_calls": [], "external_dependencies": [], "side_effects": []},
+	{"name": "_load_trust_policy_sec", "start_line": 119, "end_line": 139, "parameters": [], "docstring_or_comment": null, "internal_calls": ["_default_trust_policy_sec"], "external_dependencies": ["os", "json"], "side_effects": []},
+	{"name": "_iso_now_sec", "start_line": 142, "end_line": 144, "parameters": [], "docstring_or_comment": null, "internal_calls": ["datetime.now", "timezone.utc"], "external_dependencies": ["datetime", "timezone"], "side_effects": []},
+	{"name": "_json_safe_sec", "start_line": 147, "end_line": 157, "parameters": ["value"], "docstring_or_comment": null, "internal_calls": ["_json_safe_sec"], "external_dependencies": [], "side_effects": []},
+	{"name": "_stables_now_ts_sec", "start_line": 160, "end_line": 162, "parameters": [], "docstring_or_comment": null, "internal_calls": ["datetime.now", "timezone.utc"], "external_dependencies": ["datetime", "timezone"], "side_effects": []},
+	{"name": "_get_stables_sessions_sec", "start_line": 165, "end_line": 172, "parameters": [], "docstring_or_comment": null, "internal_calls": [], "external_dependencies": [], "side_effects": []},
+	{"name": "_stables_extract_context_sec", "start_line": 175, "end_line": 222, "parameters": ["shunt_envelope=None", "amip_request=None", "context=None"], "docstring_or_comment": null, "internal_calls": [], "external_dependencies": [], "side_effects": []}
+]

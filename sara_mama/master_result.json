@@ -1,0 +1,16 @@
+{
+  "pillar": "sara_mama",
+  "final_status": "UNKNOWN",
+  "local": {
+    "file": "sara_mama.py",
+    "status": "UNKNOWN",
+    "reached": false,
+    "reason": "pre-prep scaffold created"
+  },
+  "distant": {
+    "file": "sara_mama.py",
+    "status": "UNKNOWN",
+    "reached": false,
+    "note": "distant-end scaffold created"
+  }
+}

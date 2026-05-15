@@ -1,0 +1,66 @@
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~ HEADER
+~ file=ShannonAI.slam
+~ generation=0
+~ language=SLAM
+~ description="ShannonAI: chess search + CartiGene scoring"
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+<shannon_mdbp> puppy%(
+  mdbp:{
+    vendor:"MD",
+    model:"ShannonAI",
+    version:"0.2",
+    flags:[search_engine,cartigene_bound],
+    capabilities:[generate_moves,make_move,undo_move,heuristic,
+                  extract_features,perft,score_with_cartigene]
+  }
+)%
+
+<shannon_feature_map> puppy%(
+  nexus:[
+    {field:"feature_names", value:[
+      "material","mobility","king_safety","pawn_structure",
+      "center_control","piece_activity","tempo","padding"
+    ]},
+    {field:"vector_length", value:8}
+  ]
+)%
+
+<shannon_cartigene> puppy%(
+  nexus:[
+    {name:"grain",  expr:"abs(len(state) - expected_size)"},
+    {name:"laggy",  expr:"runtime / expected_runtime"},
+    {name:"shi",    expr:"(memory + footprint) / (runtime + 1)"},
+    {name:"osc",    expr:"abs(current - previous) > threshold"},
+    {name:"rot",    expr:"(d1 * d2) < 0"},
+    {name:"bucey",  expr:"value / (1 + abs(noise))"}
+  ]
+)%
+
+<shannon_policy> puppy%(
+  nexus:[
+    {field:"alpha", value:1.0},
+    {field:"beta", value:0.5},
+    {field:"gamma", value:0.8}
+  ]
+)%
+
+<shannon_exports> puppy%(
+  nexus:[
+    {name:"generate_moves", type:"fn", signature:"(state) -> [move]"},
+    {name:"make_move", type:"fn", signature:"(state,move) -> state"},
+    {name:"undo_move", type:"fn", signature:"() -> void"},
+    {name:"heuristic", type:"fn", signature:"(state) -> float"},
+    {name:"extract_features", type:"fn", signature:"(state) -> [float]"},
+    {name:"perft", type:"fn", signature:"(depth) -> int"},
+    {name:"score_with_cartigene", type:"fn", signature:"(state,metrics_out) -> float"}
+  ]
+)%
+
+# score_with_cartigene:
+#   f = extract_features(state)
+#   metrics = APPLY_CARTIGENE(f)
+#   h = heuristic(state)
+#   composite = alpha*h + beta*metrics.shi - gamma*metrics.osc
+#   return metrics.bucey(composite, metrics.noise)

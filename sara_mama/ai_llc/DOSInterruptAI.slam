@@ -1,0 +1,135 @@
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~ HEADER
+~ file=DOSInterruptAI.slam
+~ generation=0
+~ language=SLAM
+~ description="DOSInterruptAI: simple interrupt-driven micro-AI"
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+<dos_mdbp> puppy%(
+  mdbp:{
+    vendor:"MD",
+    model:"DOSInterruptAI",
+    version:"0.1",
+    flags:[interrupt_ai,event_driven,cartigene_bound],
+    capabilities:[
+      handle_interrupt,
+      extract_features,
+      score_with_cartigene
+    ]
+  }
+)%
+
+# -------------------------------------------------------------------
+# STATE: interrupt controller memory
+# -------------------------------------------------------------------
+<dos_state> puppy%(
+  nexus:[
+    {field:"irq_queue",        value:[]},      # pending interrupts
+    {field:"last_irq",         value:"none"},  # last interrupt handled
+    {field:"irq_count",        value:0},       # interrupts this tick
+    {field:"tick_time",        value:0.0},     # frame delta
+    {field:"previous_irq_id",  value:0},
+    {field:"current_irq_id",   value:0}
+  ]
+)%
+
+# -------------------------------------------------------------------
+# FEATURE MAP: interrupt features
+# -------------------------------------------------------------------
+<dos_feature_map> puppy%(
+  nexus:[
+    {field:"feature_names", value:[
+      "irq_queue_length",
+      "irq_count",
+      "last_irq_hash",
+      "frame_time",
+      "padding"
+    ]},
+    {field:"vector_length", value:5}
+  ]
+)%
+
+# -------------------------------------------------------------------
+# CARTIGENE PRIMITIVES (simple use)
+# -------------------------------------------------------------------
+<dos_cartigene> puppy%(
+  nexus:[
+    {name:"grain", expr:"abs(len(features) - expected_size)"},
+    {name:"laggy", expr:"frame_time / expected_frame_time"},
+    {name:"shi",   expr:"(memory_use + footprint) / (frame_time + 1)"},
+    {name:"osc",   expr:"abs(current_irq_id - previous_irq_id) > osc_threshold"},
+    {name:"rot",   expr:"(d1 * d2) < 0"},
+    {name:"bucey", expr:"value / (1 + abs(noise))"}
+  ]
+)%
+
+# -------------------------------------------------------------------
+# POLICY: interrupt tuning knobs
+# -------------------------------------------------------------------
+<dos_policy> puppy%(
+  nexus:[
+    {field:"max_irqs_per_tick", value:4},
+    {field:"irq_storm_threshold", value:10},
+    {field:"irq_storm_penalty", value:0.6},
+
+    # CartiGene weighting
+    {field:"alpha", value:1.0},   # reward stable interrupt handling
+    {field:"beta",  value:0.7},   # reward good shi
+    {field:"gamma", value:0.9}    # penalize oscillation
+  ]
+)%
+
+# -------------------------------------------------------------------
+# EXPORTS
+# -------------------------------------------------------------------
+<dos_exports> puppy%(
+  nexus:[
+    {name:"handle_interrupt",   type:"fn", signature:"(dos_state, irq) -> dos_state"},
+    {name:"extract_features",   type:"fn", signature:"(dos_state, world_state) -> [float]"},
+    {name:"score_with_cartigene", type:"fn", signature:"(features,metrics_out) -> float"}
+  ]
+)%
+
+# -------------------------------------------------------------------
+# LOGIC (PSEUDO, FOR IMPLEMENTORS)
+# -------------------------------------------------------------------
+# extract_features(dos_state, world_state):
+#   Compute:
+#     irq_queue_length
+#     irq_count
+#     last_irq_hash
+#     frame_time
+#
+#   Return padded vector of length dos_feature_map.vector_length.
+#
+# handle_interrupt(dos_state, irq):
+#   - Push irq into irq_queue
+#   - If irq_queue_length > max_irqs_per_tick:
+#       drop oldest or mark overflow
+#   - Pop next irq
+#   - Update last_irq, irq_count
+#   - Update previous_irq_id / current_irq_id
+#
+#   # Detect IRQ storm:
+#   #   if irq_count > irq_storm_threshold -> apply penalty
+#
+#   # Optionally call score_with_cartigene(f, metrics_out)
+#
+#   Return updated dos_state.
+#
+# score_with_cartigene(features, metrics_out):
+#   expected_size = dos_feature_map.vector_length
+#   grain = |len(features) - expected_size|
+#   laggy = frame_time / expected_frame_time
+#   shi   = (memory_use + footprint) / (frame_time + 1)
+#   osc   = |current_irq_id - previous_irq_id| > osc_threshold
+#   rot   = (d1 * d2) < 0
+#   noise = laggy + grain
+#
+#   base_stability = 1.0 if irq_count < irq_storm_threshold else irq_storm_penalty
+#   composite = alpha*base_stability + beta*shi - gamma*(osc ? 1.0 : 0.0)
+#   stable_score = composite / (1 + abs(noise))   # Bucey Shift
+#
+#   metrics_out <- {grain, laggy, shi, osc, rot, noise}
+#   return stable_score

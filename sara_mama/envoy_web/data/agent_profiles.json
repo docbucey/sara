@@ -1,0 +1,60 @@
+{
+  "notes": "Traditional AI profiles for blind proof testing. Edit variables to alter test conditions without changing SARA code.",
+  "agents": [
+    {
+      "id": "ollama_statistical",
+      "label": "Ollama Statistical",
+      "profile": "ollama_default",
+      "backend": "ollama",
+      "allow_ollama_backup": true,
+      "endpoint": "http://127.0.0.1:11434/api/generate",
+      "model": "llama3",
+      "variables": {
+        "temperature": 0.3,
+        "top_p": 0.9,
+        "max_tokens": 300
+      }
+    },
+    {
+      "id": "gpt4all_local",
+      "label": "DeepSeek Coder via Ollama (Temp GPT4All Slot)",
+      "profile": "deepseeker_coder_local",
+      "backend": "ollama",
+      "allow_ollama_backup": true,
+      "endpoint": "http://127.0.0.1:11434/api/generate",
+      "model": "deepseek-coder:6.7b",
+      "variables": {
+        "temperature": 0.2,
+        "top_p": 0.95,
+        "max_tokens": 300
+      }
+    },
+    {
+      "id": "ollama_heuristic",
+      "label": "Ollama Heuristic",
+      "profile": "ollama_default",
+      "backend": "ollama",
+      "allow_ollama_backup": false,
+      "endpoint": "http://127.0.0.1:11434/api/generate",
+      "model": "mistral",
+      "variables": {
+        "temperature": 0.12,
+        "top_p": 0.82,
+        "max_tokens": 280
+      }
+    },
+    {
+      "id": "scientific_baseline",
+      "label": "Scientific Baseline",
+      "profile": "plainjain_native",
+      "backend": "heuristic",
+      "endpoint": "local",
+      "model": "deterministic-baseline",
+      "variables": {
+        "temperature": 0.0,
+        "top_p": 1.0,
+        "max_tokens": 180
+      }
+    }
+  ]
+}

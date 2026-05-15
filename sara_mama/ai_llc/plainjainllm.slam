@@ -1,0 +1,32 @@
+<plainjain_architect> puppy%(
+    role:"Native_LLM_Builder",
+    purpose:"Construct and execute custom LLMs using SLAM files as the neural substrate",
+    
+    # 1. The 'Neurons' are the Files (Symbolic Grounding)
+    substrate_mapping:nexus:[
+        {neuron_type:"concept", source:"concepts/*.nbs.json", role:"semantic_nodes"},
+        {neuron_type:"narrative", source:"narrative/*.nbs.json", role:"episodic_memory"},
+        {neuron_type:"profile", source:"identity/*.nbs.json", role:"personality_bias"}
+    ],
+
+    # 2. The 'Weights' are the Resonance Links (Neuro-Symbolic)
+    weight_definition:nexus:[
+        {metric:"resonance_radius", source:"_nexus_resonance_radius_puppy", influence:"connection_strength"},
+        {metric:"stability", source:"_nexus_stability_puppy", influence:"confidence_score"},
+        {metric:"provenance", source:"provenance_chain", influence:"authority_weight"}
+    ],
+
+    # 3. Native Inference Pipeline (No External API)
+    inference_engine:nexus:[
+        {step:1, op:"tokenize", method:"proto_lingua_split", input:"$prompt"},
+        {step:2, op:"activate", method:"floodsearch_match", target:"substrate_mapping"},
+        {step:3, op:"propagate", method:"follow_nexus_links", depth:3, threshold:0.8},
+        {step:4, op:"synthesize", method:"sequian_reconstruction", using:"math_layer_3_linear_algebra"}
+    ],
+
+    # 4. Dependencies (Internal Only)
+    dependencies:nexus:[
+        {external_api:"NONE", note:"Self-contained SLAM runtime"},
+        {math_backend:"sara_sdk/low_level_code/controll_llc/proto_math_llc/"}
+    ]
+)%

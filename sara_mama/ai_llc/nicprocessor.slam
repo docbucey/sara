@@ -1,0 +1,613 @@
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~ HEADER (strict, machine-verified)                        ~
+~ kennel=substrate                                          ~
+~ generation=0                                              ~
+~ evolution=alpha                                           ~
+~ version=0.1                                               ~
+~ date=                                                     ~
+~ location=                                                 ~
+~ language=SLAM                                             ~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+============================================================
+NICPROCESSOR — MICRO AI NETWORK PROCESSOR (GEN-0)
+============================================================
+
+# Based on nicrails.slam + soundprocessor.slam template
+# Main role: SYSTEM SECURITY for network operations
+# Reference soundprocessor.slam for architecture pattern
+
+# ============================================================
+# MDBP — Most Direct Binary Path
+# ============================================================
+
+<nicprocessor_mdbp> puppy%(
+    mdbp:{
+        vendor:"SARA",
+        model:"NICProcessor_MicroAI",
+        version:"0.1",
+        type:"network_micro_ai",
+        role:"system_security_network_processor",
+        base_spec:"nicrails.slam soundprocessor.slam",
+        benchmark_ref:"claywork_benchmark_engine.slam",
+        flags:[network, wireless, ethernet, wifi, bluetooth, micro_ai, floodsearch, backup_capable, shunt_enabled, security],
+        capabilities:[packet_processing, firewall, vlan, intrusion_detection, floodsearch_files, backup_processor, load_shunt, security_monitoring, ethernet_processing, wifi_processing, bluetooth_processing, wireless_rf_management, antenna_control, wol_awake],
+        primary_master:"CPU",
+        secondary_master:"GPU",
+        tertiary_master:"NPU",
+        preferred_residence:"NPU"
+    }
+)%
+
+
+# ============================================================
+# 2x10 (20-PIN) NIC PROCESSOR HEADER
+# ============================================================
+
+<nicprocessor_header_2x10> puppy%(
+    nexus:[
+        {header:"2x10 (20-pin) NIC Processor Header"},
+        {pinout:[
+            {row:"J1", pins:[
+                {pin:1, name:"TXD0", description:"Transmit data bit 0"},
+                {pin:3, name:"TXD1", description:"Transmit data bit 1"},
+                {pin:5, name:"TXD2", description:"Transmit data bit 2"},
+                {pin:7, name:"TXD3", description:"Transmit data bit 3"},
+                {pin:9, name:"TX_EN", description:"Transmit enable"},
+                {pin:11, name:"RXD0", description:"Receive data bit 0"},
+                {pin:13, name:"RXD1", description:"Receive data bit 1"},
+                {pin:15, name:"RXD2", description:"Receive data bit 2"},
+                {pin:17, name:"RXD3", description:"Receive data bit 3"},
+                {pin:19, name:"RX_DV", description:"Receive data valid"}
+            ]},
+            {row:"J2", pins:[
+                {pin:2, name:"GND", description:"Ground"},
+                {pin:4, name:"GND", description:"Ground"},
+                {pin:6, name:"MDIO", description:"Management data input/output"},
+                {pin:8, name:"MDC", description:"Management clock"},
+                {pin:10, name:"TXCLK", description:"Transmit clock"},
+                {pin:12, name:"RXCLK", description:"Receive clock"},
+                {pin:14, name:"COL", description:"Collision detect"},
+                {pin:16, name:"CRS", description:"Carrier sense"},
+                {pin:18, name:"INT_N", description:"Interrupt output (active low)"},
+                {pin:20, name:"RST_N", description:"Reset (active low)"}
+            ]}
+        ]},
+        {interface_mapping:"MII/RMII/RGMII/SGMII to MAC-PHY"},
+        {required_signals:["TXD[0:3]", "TX_EN", "RXD[0:3]", "RX_DV", "MDIO", "MDC"]},
+        {optional_signals:["TXCLK", "RXCLK", "COL", "CRS", "INT_N", "RST_N"]}
+    ]
+)%
+
+
+# ============================================================
+# NIC HARDWARE SPECIFICATIONS
+# ============================================================
+
+<nicprocessor_hardware_specs> puppy%(
+    nexus:[
+        {link_speeds:["10Mbps", "100Mbps", "1Gbps", "2.5Gbps", "5Gbps", "10Gbps"]},
+        {mac_phy_interfaces:["MII", "RMII", "GMII", "RGMII", "SGMII", "SerDes"]},
+        {management:"MDIO/MDC for PHY register access and autonegotiation"},
+        {clocking:[
+            {speed:"25MHz", interface:"MII", for:"100Mbps"},
+            {speed:"125MHz", interface:"RGMII/SGMII", for:"GigE"},
+            {external:"25/50/125MHz oscillators or PLL-derived"}
+        ]},
+        {magnetics:"RJ-45 with transformers or integrated magnetics"},
+        {poe:"PoE variants require additional power and isolation"},
+        {voltage:"3.3V I/O typical, 1.8V core for some PHY cores"}
+    ]
+)%
+
+
+# ============================================================
+# SYSTEM SECURITY USE CASES
+# ============================================================
+
+<nicprocessor_security_use_cases> puppy%(
+    nexus:[
+        {use_case:"firewall", pipeline:"Packet → Header Parse → Rule Match → Allow/Block"},
+        {use_case:"intrusion_detection", pipeline:"Packet → Anomaly Detection → Alert/Block"},
+        {use_case:"vlan_tagging", pipeline:"Packet → VLAN Add/Strip → Forward"},
+        {use_case:"traffic_monitoring", pipeline:"Packet → Log/Analyze → Continuity Update"},
+        {use_case:"packet_filtering", pipeline:"Packet → ACL Check → Forward/Drop"}
+    ]
+)%
+
+
+# ============================================================
+# NETWORK & WIRELESS USE CASES (ALL NETWORK FUNCTIONS)
+# ============================================================
+
+<nicprocessor_network_use_cases> puppy%(
+    nexus:[
+        {use_case:"ethernet_processing", pipeline:"Ethernet Frame → MAC → Parse → Forward/Process"},
+        {use_case:"wifi_processing", pipeline:"WiFi Frame → MAC → Parse → Forward/Process"},
+        {use_case:"bluetooth_processing", pipeline:"BT Frame → Baseband → Parse → Forward/Process"},
+        {use_case:"wireless_rf_management", pipeline:"RF Signal → Antenna → Transceiver → Process"},
+        {use_case:"antenna_control", pipeline:"MIMO/Diversity → Antenna Switch → Signal Routing"},
+        {use_case:"wol_awake", pipeline:"Wake-on-LAN → Magic Packet → Wake System"},
+        {use_case:"packet_routing", pipeline:"Packet → Routing Table → Forward to Destination"},
+        {use_case:"qos_management", pipeline:"Packet → Priority → QoS Scheduling → Transmit"},
+        {use_case:"traffic_shaping", pipeline:"Traffic → Rate Limit → Shaped Output"},
+        {use_case:"link_aggregation", pipeline:"Multiple Links → LACP → Combined Bandwidth"}
+    ]
+)%
+
+
+# ============================================================
+# MASTER/SLAVE CONFIGURATION
+# ============================================================
+
+<nicprocessor_master_config> puppy%(
+    nexus:[
+        {role:"preferred_residence", master:"NPU", description:"NPU is preferred residence when available - best performance per watt"},
+        {role:"primary_master", master:"CPU", description:"CPU handles primary network processing and security decisions"},
+        {role:"secondary_master", master:"GPU", description:"GPU handles heavy security analysis (deep packet inspection)"},
+        {role:"tertiary_master", master:"NPU", description:"NPU handles lightweight inference when available"},
+        {role:"os_driver_slave", master:"OS_DRIVERS", description:"Slaves to OS network drivers when available"},
+        {role:"security_software_slave", master:"LOCAL_SECURITY", description:"Slaves to local security software and protocols"},
+        {role:"protocol_slave", master:"SECURITY_PROTOCOLS", description:"Slaves to security protocols (TLS, IPSec, etc.)"},
+        {behavior:"nicprocessor runs on NPU when available, otherwise falls back to CPU/GPU - acts as slave to all"}
+    ]
+)%
+
+
+# ============================================================
+# OS DRIVER INTEGRATION
+# ============================================================
+
+<nicprocessor_os_driver_integration> puppy%(
+    nexus:[
+        {capability:"os_driver_access", description:"NICProcessor is SLAVE to OS and drivers - they can access its abilities"},
+        {behavior:"OS and its drivers can use nicprocessor capabilities when they need network processing"},
+        {detection:"Check for OS network driver availability on init"},
+        {os_drivers:[
+            {os:"Windows", driver:"NDIS", access:"full", benefit:"Network driver interface - Windows can use nicprocessor"},
+            {os:"Linux", driver:"Linux_Networking", access:"full", benefit:"Kernel networking - Linux can use nicprocessor"},
+            {os:"macOS", driver:"NetworkExtension", access:"full", benefit:"Network framework - Mac can use nicprocessor"},
+            {os:"Android", driver:"ConnectivityService", access:"full", benefit:"Android network stack"},
+            {os:"iOS", driver:"NetworkExtension", access:"full", benefit:"iOS network framework"}
+        ]},
+        {grant_access:"OS and drivers can call nicprocessor functions when they need network"},
+        {fallback:"If OS doesn't use nicprocessor, use internal processing"},
+        {buffer_impact:"Zero - uses OS driver buffers, not internal"}
+    ]
+)%
+
+
+# ============================================================
+# BACKUP PROCESSOR CAPABILITY
+# ============================================================
+
+<nicprocessor_backup_capability> puppy%(
+    nexus:[
+        {capability:"backup_processor", description:"Can become backup when higher systems need processing redistribution"},
+        {triggers:[
+            "CPU overloaded - nicprocessor takes packet processing",
+            "GPU overloaded - nicprocessor handles security analysis",
+            "NPU unavailable - nicprocessor handles on CPU/GPU"
+        ]},
+        {activation:"receive backup_signal from primary_master"},
+        {handshake:"confirm_backup_mode to primary_master"},
+        {resources:"dedicated buffer allocation for backup mode"}
+    ]
+)%
+
+
+# ============================================================
+# LOAD SHUNT CAPABILITY
+# ============================================================
+
+<nicprocessor_load_shunt> puppy%(
+    nexus:[
+        {capability:"load_shunt", description:"Redistribute load to CPU/GPU/NPU when system needs faster redistribution"},
+        {shunt_triggers:[
+            "network latency exceeds threshold",
+            "processing queue backs up",
+            "security threat detected",
+            "strain policy violation (3% + 0.5%)"
+        ]},
+        {shunt_targets:[
+            {target:"CPU", when:"basic packet processing"},
+            {target:"GPU", when:"deep packet inspection needed"},
+            {target:"NPU", when:"lightweight inference needed"}
+        ]},
+        {shunt_protocol:[
+            "1. Detect shunt condition",
+            "2. Calculate optimal target",
+            "3. Send shunt_request to target",
+            "4. Transfer processing context",
+            "5. Confirm shunt_complete"
+        ]},
+        {strain_policy:"enforce 3% strain with ±0.5% tolerance per post.slam"}
+    ]
+)%
+
+
+# ============================================================
+# CARTIGENE STABILITY METRICS
+# ============================================================
+
+<nicprocessor_cartigene> puppy%(
+    nexus:[
+        {metric:"grain", purpose:"packet shape stability", formula:"|len(packet_buffer) - expected_size|"},
+        {metric:"laggy", purpose:"packet timing efficiency", formula:"runtime / expected_runtime"},
+        {metric:"shi", purpose:"security analysis quality", formula:"(memory + footprint) / (runtime + 1)"},
+        {metric:"osc", purpose:"network glitch detection", formula:"|current_packet - previous_packet| > threshold"},
+        {metric:"rot", purpose:"packet pattern detection", formula:"(delta1 * delta2) < 0"},
+        {metric:"bucey", purpose:"traffic noise stabilization", formula:"value / (1 + |noise|)"}
+    ]
+)%
+
+
+# ============================================================
+# SYSTEMS SCIENCE (ENGINEERING DECISION RESONANCE)
+# ============================================================
+
+<nicprocessor_systems_science> puppy%(
+    nexus:[
+        {module:"systems_science", purpose:"Engineering decision resonance for network security design"},
+        {functions:[
+            "extract_components - split network pipeline into components",
+            "identify_constraints - find latency/bandwidth/security constraints",
+            "identify_requirements - find throughput/security requirements",
+            "evaluate_tradeoffs - evaluate security vs latency tradeoffs",
+            "detect_failure_modes - detect network attack/failure modes"
+        ]}
+    ]
+)%
+
+
+# ============================================================
+# TACTICAL TACTICS (IMMEDIATE ACTION RESONANCE)
+# ============================================================
+
+<nicprocessor_tactical_tactics> puppy%(
+    nexus:[
+        {module:"tactical_tactics", purpose:"Real-time security action optimization"},
+        {detects:[
+            "immediate_actions - packet drop/allow response",
+            "local_optimization - traffic shaping, rate limiting",
+            "situational_responses - intrusion response, firewall rule activation"
+        ]},
+        {keywords:[
+            {action_indicators:["block", "allow", "alert", "quarantine"]},
+            {optimization_terms:["maximize_throughput", "minimize_latency", "improve_security"]},
+            {situational_keywords:["threat", "attack", "breach", "intrusion"]}
+        ]}
+    ]
+)%
+
+
+# ============================================================
+# AGGRESSIVE SECURITY RESONANCE (THREAT CARVING)
+# ============================================================
+
+<nicprocessor_aggressive_security> puppy%(
+    nexus:[
+        {module:"aggressive_defense", purpose:"Permanent threat neutralization"},
+        {target_attacks:[
+            "DDoS attacks",
+            "Port scanning",
+            "SQL injection attempts",
+            "Brute force login attempts",
+            "Phishing packets",
+            "Malware payloads",
+            "Identity theft attempts",
+            "Man-in-the-middle attacks",
+            "ARP spoofing",
+            "DNS poisoning"
+        ]},
+        {trigger_condition:"CartiGene.osc > threshold OR CartiGene.shi < 0.2"},
+        {actions:[
+            "1. PROACTIVE_BLOCK: Immediately drop all packets from the HexShape signature",
+            "2. CONTINUITY_CARVE: Perform 40% HDD-Direct lock to write IP/MAC to the permanent blacklist",
+            "3. SIGNAL_SHUNT: Redirect attack traffic to a Black Hole expansion rail",
+            "4. QUARANTINE: Latch the NIC into a Safety-Only mode until human review"
+        ]},
+        {continuity_sync:"Append threat_signature + timestamp to daily_continuity.snf"},
+        {persistence_rule:"Rule 3: All blocked signatures are IMMUTABLE and APPEND_ONLY"}
+    ]
+)%
+
+
+# ============================================================
+# PHOENIX PROTOCOL INTEGRATION
+# ============================================================
+
+<nicprocessor_phoenix_protocol> puppy%(
+    nexus:[
+        {module:"phoenix_recovery", purpose:"Extreme emergency system recovery via Phoenix protocol"},
+        {phoenix_components:[
+            {component:"phoenixash", description:"Backup of lifeboat files - .ssf compressed restore file"},
+            {component:"phoenixspark", description:"Auto-recovery boot sector file - hidden in boot sector"}
+        ]},
+        {trigger_conditions:[
+            "System compromised beyond recovery",
+            "Malware infection at boot sector level",
+            "Kernel-level rootkit detected",
+            "Human trigger via 'phoenix' command"
+        ]},
+        {execution_flow:[
+            "1. DETECT: Nicprocessor detects extreme compromise",
+            "2. ALERT: Send emergency alert to King class (security_llc)",
+            "3. LOCKDOWN: King class initiates lockdown",
+            "4. PHOENIX_COMMAND: Execute 'phoenix' terminal command",
+            "5. PHOENIXSPARK: Connects to web/cloud storage",
+            "6. RETRIEVE: Retrieves phoenixash backup files",
+            "7. RESTORE: Rebuilds system from phoenixash files"
+        ]},
+        {storage_locations:[
+            {primary:"Cloud storage"},
+            {secondary:"Cloud storage secondary"},
+            {tertiary:"Isolated USB hard drive"}
+        ]},
+        {characteristics:[
+            "One-time use only",
+            "Tandem operation: phoenixash + phoenixspark together",
+            "Never direct bootable - phoenixash",
+            "Bootable on USB thumb drive - phoenixspark",
+            "After use: new phoenixash and phoenixspark must be created"
+        ]},
+        {self_destruct_option:[
+            "Optional: Zero hard drive except phoenixspark",
+            "Then rebuild from phoenixash",
+            "EXTREME EMERGENCY ONLY"
+        ]},
+        {king_integration:"Nicprocessor reports to King class, King triggers phoenix protocol"}
+    ]
+)%
+
+
+# ============================================================
+# QUARANTINE & BATTLEFIELD SCANNING (EXTERNAL DATA)
+# ============================================================
+
+<nicprocessor_quarantine_system> puppy%(
+    nexus:[
+        {module:"external_data_quarantine", purpose:"All external data must be scanned before release"},
+        {rule:"ALL external network data → QUARANTINE → BATTLEFIELD_SCAN → APPROVED/REJECTED"},
+        {external_sources:[
+            "Internet traffic (WAN)",
+            "External network traffic",
+            "Downloaded files",
+            "Email attachments",
+            "Web content",
+            "Cloud sync data",
+            "Remote file transfers"
+        ]},
+        {quarantine_pipeline:[
+            "1. INTERCEPT: All external data routed to quarantine buffer",
+            "2. BATTLEFIELD_SCAN: Send to battlefield.slam for threat analysis",
+            "3. SCAN_MODES:[
+                {mode:"hexscan", purpose:"HexShape pattern matching for known malware"},
+                {mode:"entropy_scan", purpose:"Detect packed/encrypted executables"},
+                {mode:"signature_scan", purpose:"Match against threat database"},
+                {mode:"behavioral_scan", purpose:"Sandbox execution analysis"}
+            ]},
+            "4. DECISION: APPROVED → release to system | REJECTED → permanent blacklist + quarantine"
+        ]},
+        {downloaded_files:[
+            "ALL downloaded files → mandatory battlefield scan",
+            "File types: EXE, DLL, ZIP, RAR, 7Z, PDF, DOC, DOCX, XLS, XLSX, JS, PS1, BAT, CMD, SCR",
+            "Scan result: CLEAN → allow | INFECTED → quarantine + human review"
+        ]},
+        {battlefield_integration:[
+            {file:"continuity.slam battlefield domain", purpose:"Threat intelligence repository"},
+            {action:"Append scan_results + threat_signatures to battlefield.snf"},
+            {sync:"Real-time sync with continuity battlefield domain"}
+        ]},
+        {safety_modes:[
+            {mode:"full_quarantine", description:"Block all external data until scanned"},
+            {mode:"partial_quarantine", description:"Block executables, allow text/images"},
+            {mode:"whitelist_mode", description:"Allow known-good, quarantine unknown"}
+        ]},
+        {persistence:"All scanned data signatures stored in battlefield - IMMUTABLE APPEND_ONLY"}
+    ]
+)%
+
+
+# ============================================================
+# MATH LAYER PER NETWORK TYPE (No Audio - Network Optimized)
+# ============================================================
+
+<nicprocessor_math_layers> puppy%(
+    nexus:[
+        {network_type:"firewall", primary_math:"layer_3_linear_algebra", secondary_math:"layer_1_power_roots", description:"ACL processing + rule evaluation"},
+        {network_type:"intrusion_detection", primary_math:"layer_4_random_generators", secondary_math:"layer_2_calculus_operations", description:"Anomaly detection + pattern matching"},
+        {network_type:"vlan", primary_math:"layer_3_linear_algebra", secondary_math:"layer_1_power_roots", description:"Tag processing + routing"},
+        {network_type:"encryption", primary_math:"layer_1_power_roots", secondary_math:"layer_3_linear_algebra", description:"Crypto operations + key management"},
+        {network_type:"default", primary_math:"layer_3_linear_algebra", secondary_math:"layer_2_calculus_operations", description:"General network processing"},
+        {network_type:"enhanced_security", primary_math:"layer_4_random_generators", secondary_math:"layer_1_power_roots", description:"On-demand advanced security - encryption focus"},
+        {network_type:"wifi_processing", primary_math:"layer_3_linear_algebra", secondary_math:"layer_4_random_generators", description:"WiFi frame processing + security"},
+        {network_type:"bluetooth_processing", primary_math:"layer_3_linear_algebra", secondary_math:"layer_4_random_generators", description:"BT frame processing + security"},
+        {network_type:"packet_routing", primary_math:"layer_3_linear_algebra", secondary_math:"layer_1_power_roots", description:"Routing table + prefix matching"}
+    ]
+)%
+
+
+# ============================================================
+# RAIL ACCESS POLICY (ALL PROCESSORS READ ALL RAILS)
+# ============================================================
+
+<nicprocessor_rail_access> puppy%(
+    nexus:[
+        {rule:"ALL_PROCESSORS_READ_ALL_RAILS"},
+        {monitors:[
+            "nicrails - Network traffic status",
+            "soundrails - Audio over IP status",
+            "graphicsrail - GPU frame status for network-video sync",
+            "videorails - Video streaming status",
+            "modemrails - Modem connectivity",
+            "raidrails - Storage access for network logs",
+            "usbrails - USB network device status"
+        ]},
+        {read_pattern:"Continuous background monitoring of all rail signal states"},
+        {write_pattern:"Only primary master (CPU) can write to network rail normally"}
+    ]
+)%
+
+
+# ============================================================
+# RUNTIME TIMING CHAIN
+# ============================================================
+
+<nicprocessor_runtime_chain> puppy%(
+    nexus:[
+        {chain:"puppy → dogtag → collar → latch → lead → handle → post"},
+        {timing_sources:["BIOS", "PLL", "RC_derived", "effective_timing"]},
+        {strain_enforcement:"3% target with ±0.5% tolerance enforced at SYSTEM.RUNTIME_MAP"},
+        {sync_to:"dogtag.Rolex_Network_v1"}
+    ]
+)%
+
+
+# ============================================================
+# CLAYWORK BENCHMARK REFERENCE
+# ============================================================
+
+<nicprocessor_claywork_reference> puppy%(
+    nexus:[
+        {reference:"claywork_benchmark_engine.slam", role:"benchmark_tool_not_mainframe"},
+        {use_for:[
+            "Buffer size benchmarking",
+            "CartiGene stability testing",
+            "Security performance profiling",
+            "Latency measurement",
+            "Network throughput testing",
+            "Math layer validation - NO AUDIO PHYSICS"
+        ]},
+        {not_for:"Running as a mainframe - this is a standalone network processor"}
+    ]
+)%
+
+
+# ============================================================
+# BUFFER SIZES
+# ============================================================
+
+<nicprocessor_buffer_sizes> puppy%(
+    nexus:[
+        {buffer:"packet_capture", size:"8KB", description:"DMA packet buffer - hardware fixed"},
+        {buffer:"packet_header", size:"~256_bytes", description:"Parsed headers - minimal"},
+        {buffer:"cartigene_state", size:"48_bytes", description:"6 stability metrics - fixed"},
+        {buffer:"math_layer", size:"~256_bytes", description:"Active math layer - minimal"},
+        {buffer:"floodsearch", size:"~128_bytes", description:"Config search - on demand only"},
+        {buffer:"security_rules", size:"~512_bytes", description:"Firewall/ACL rules cache"},
+        {buffer:"total_estimated", size:"~9.2KB", description:"Network security processing stack"}
+    ]
+)%
+
+
+# ============================================================
+# CONTINUITY INTEGRATION
+# ============================================================
+
+<nicprocessor_continuity> puppy%(
+    nexus:[
+        {records:["cartigene_snapshot", "processing_context", "network_timestamp"]},
+        {retention:"Permanent in daily continuity file"},
+        {trigger:"On each security PREPARE/EXEC record"}
+    ]
+)%
+
+
+# ============================================================
+# WEB DATA PARSING & CONTINUITY
+# ============================================================
+
+<nicprocessor_web_continuity> puppy%(
+    nexus:[
+        {module:"web_data_parser", purpose:"Parse all web data into daily continuity"},
+        {behavior:"ALL web traffic parsed and logged to continuity"},
+        {parsed_data:[
+            "URLs accessed",
+            "HTTP headers",
+            "Cookies and sessions",
+            "Form submissions",
+            "API calls",
+            "Websocket data",
+            "Downloaded content metadata"
+        ]},
+        {continuity_sync:"Append parsed_web_data + timestamp to daily_continuity.snf"},
+        {frequency:"Per request or batched per epoch"},
+        {privacy:"Parse metadata only, not full content unless flagged"}
+    ]
+)%
+
+
+# ============================================================
+# NIC PROCESSOR ACTIVITY REPORTING
+# ============================================================
+
+<nicprocessor_activity_reporting> puppy%(
+    nexus:[
+        {module:"activity_reporting", purpose:"Report all NIC processor activity to machine profile"},
+        {reported_data:[
+            "packet_count",
+            "bytes_transferred",
+            "threats_blocked",
+            "quarantine_events",
+            "connection_status",
+            "performance_metrics",
+            "cartigene_state",
+            "security_events"
+        ]},
+        {sync_target:"machine_profile (doc_bucey_profile_gen0_1.0_nbs.json)"},
+        {sync_frequency:"per_epoch_or_on_change"},
+        {flow:"nicprocessor_activity → machine_profile_update → continuity_append"}
+    ]
+)%
+
+
+# ============================================================
+# MACHINE PROFILE INTEGRATION (Constant Update)
+# ============================================================
+
+<nicprocessor_machine_profile> puppy%(
+    nexus:[
+        {source:"identity/machine/doc_bucey_profile_gen0_1.0_nbs.json", destination:"nicprocessor_state"},
+        {behavior:"CONSTANT_UPDATE - continuously sync to machine profile"},
+        {update_frequency:"per_epoch_or_on_change"},
+        {sync_target:"continuity.snf"},
+        {profile_location:"sara_sdk/nbs_projects/sara_core_system/identity/machine/"},
+        {updates:[
+            "network_capabilities",
+            "security_config",
+            "firewall_rules",
+            "performance_metrics",
+            "buffer_allocation",
+            "cartigene_state"
+        ]},
+        {role:"ALWAYS_SLAVE_TO_MACHINE_PROFILE"},
+        {master:"machine_profile"},
+        {flow:"machine_profile → nicprocessor_state_sync → continuity_append"}
+    ]
+)%
+
+
+# ============================================================
+# STATUS
+# ============================================================
+
+<nicprocessor_status> puppy%(
+    nexus:[
+        {status:"ready"},
+        {base:"nicrails.slam"},
+        {main_role:"system_security"},
+        {floodsearch:"available_on_demand"},
+        {backup_capability:"enabled"},
+        {load_shunt:"enabled"},
+        {benchmark_tool:"claywork_benchmark_engine.slam"},
+        {primary_master:"CPU"},
+        {secondary_master:"GPU"},
+        {tertiary_master:"NPU"},
+        {preferred_residence:"NPU"}
+    ]
+)%
+
+
+============================================================
+END OF NICPROCESSOR — Micro AI Network Processor
+============================================================

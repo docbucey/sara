@@ -1,0 +1,333 @@
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~ HEADER (strict, machine-verified)                        ~
+~ kennel=substrate                                          ~
+~ generation=0                                             ~
+~ evolution=alpha                                          ~
+~ version=0.1                                               ~
+~ date=                                                     ~
+~ location=                                                 ~
+~ language=SLAM                                             ~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+============================================================
+VIDEOPROCESSOR — MICRO AI VIDEO PROCESSOR (GEN-0)
+============================================================
+
+# Based on videorails.slam template
+# Main role: GPU SECONDARY - video signal flow processor
+# SLAM treats video as sub-processors, NOT GPU tasks
+# Video handles: HDMI/DP/eDP/LVDS, decoders, encoders, framebuffers, TCON, color space, scalers, camera interfaces, capture cards
+
+# ============================================================
+# MDBP — Most Direct Binary Path
+# ============================================================
+
+<videoprocessor_mdbp> puppy%(
+    mdbp:{
+        vendor:"SARA",
+        model:"VideoProcessor_MicroAI",
+        version:"0.1",
+        type:"video_micro_ai",
+        role:"video_signal_flow_processor",
+        base_spec:"videorails.slam",
+        benchmark_ref:"claywork_benchmark_engine.slam",
+        flags:[video, capture, encode, decode, micro_ai, floodsearch, backup_capable, shunt_enabled, gpu_secondary, tactical, operational, signal_flow],
+        capabilities:[video_processing, video_encoding, video_decoding, video_capture, frame_processing, stream_handling, transcoding, display_timing, camera_ingest, framebuffer_dma],
+        primary_master:"GPU",
+        secondary_master:"CPU",
+        tertiary_master:"VIDEO_RAIL_SUBPROCESSOR",
+        backup_master_1:"NIC",
+        backup_master_2:"GPU",
+        backup_master_3:"CPU",
+        preferred_residence:"VIDEO_RAIL",
+        master_ai_designation:"GPU_SECONDARY - video signal flow processor",
+        reports_to:["GPU (primary)", "CPU (secondary)", "NPU (tertiary)"],
+        gpu_relationship:"GPU_SECONDARY - NOT GPU compute, video signal flow"
+    }
+)%
+
+
+# ============================================================
+# MASTER/SLAVE CONFIGURATION
+# ============================================================
+
+<videoprocessor_master_config> puppy%(
+    nexus:[
+        {role:"primary_master", master:"GPU", description:"GPU routes video work to videoprocessor"},
+        {role:"secondary_master", master:"CPU", description:"CPU handles non-video tasks and timing"},
+        {role:"tertiary_master", master:"VIDEO_RAIL_SUBPROCESSOR", description:"VideoRail handles video signal flow"},
+        {role:"backup_1", master:"NIC", description:"Backup for streaming workloads"},
+        {role:"backup_2", master:"GPU", description:"Backup for heavy decode"},
+        {role:"backup_3", master:"CPU", description:"Backup for timing-critical tasks"},
+        {architecture:[
+            "CPU (master of all)",
+            "├── GPU (primary processor)",
+            "│   └── videoprocessor (GPU SECONDARY - video signal flow)",
+            "├── soundprocessor (audio branch)",
+            "└── nicprocessor (network branch)",
+            "VIDEO_RAIL (tertiary - video signal flow sub-processors)"
+        ]}
+    ]
+)%
+
+
+# ============================================================
+# VIDEO RAIL SUB-PROCESSORS (Not GPU Tasks)
+# ============================================================
+
+<videoprocessor_subprocessors> puppy%(
+    nexus:[
+        {description:"Video is NOT GPU - these are separate sub-processors"},
+        {video_subprocessors:[
+            {name:"HDMI_DP_CONTROLLER", function:"HDMI/DisplayPort signal routing"},
+            {name:"EDP_LVDS_CONTROLLER", function:"eDP/LVDS panel control"},
+            {name:"VIDEO_DECODER", function:"H.264/H.265/AV1 decode hardware"},
+            {name:"VIDEO_ENCODER", function:"H.264/H.265/AV1 encode hardware"},
+            {name:"FRAMEBUFFER_CONTROLLER", function:"Frame buffer DMA and timing"},
+            {name:"TCON_CONTROLLER", function:"Timing controller for display"},
+            {name:"COLOR_SPACE_CONVERTER", function:"Color space conversion (RGB, YUV, etc.)"},
+            {name:"HARDWARE_SCALER", function:"Video scaling and interpolation"},
+            {name:"MIPI_CSI_CONTROLLER", function:"Camera interface (MIPI CSI-2)"},
+            {name:"PCIE_CAPTURE_CONTROLLER", function:"PCIe video ingest"}
+        ]},
+        {key_point:"videoprocessor coordinates these sub-processors, NOT GPU compute"
+    }]
+)%
+
+
+# ============================================================
+# PINOUT GROUPS (Functional, MDBP-Ready)
+# ============================================================
+
+<videoprocessor_pinouts> puppy%(
+    nexus:[
+        {group_1_display_output:[
+            {pins:"HDMI_TX+/-, DP_TX+/-, eDP_lanes, LVDS_pairs"},
+            {pins:"HPD# (Hot Plug Detect)"},
+            {pins:"DDC (I²C for EDID)"},
+            {maps_to:"display_output_rail"}
+        ]},
+        {group_2_video_timing:[
+            {pins:"TCON_CLK"},
+            {pins:"VSYNC, HSYNC"},
+            {pins:"DE (Data Enable)"},
+            {pins:"BL_PWM, BL_EN (Backlight)"},
+            {maps_to:"timing_domains"}
+        ]},
+        {group_3_video_decode_encode:[
+            {pins:"VDEC_CTRL, VENC_CTRL"},
+            {pins:"BITSTREAM_IN, FRAME_OUT"},
+            {maps_to:"video_codec_hardware"}
+        ]},
+        {group_4_camera_capture:[
+            {pins:"MIPI_CSI-2_lanes, CLK+/-"},
+            {pins:"I²C_CAM, RESET_CAM, FLASH_EN"},
+            {maps_to:"camera_interfaces"}
+        ]},
+        {group_5_pcie_ingest:[
+            {pins:"PCIe_TX/RX_lanes, REFCLK, PERST#"},
+            {maps_to:"pcie_controller"}
+        ]},
+        {group_6_memory_dma:[
+            {pins:"Video_DMA_channels"},
+            {pins:"Framebuffer_regions"},
+            {pins:"Tile_buffer_regions"},
+            {maps_to:"memory_regions, dma_channels"}
+        ]},
+        {group_7_interrupts_sensors:[
+            {pins:"VSYNC_INT, FRAME_DONE_INT"},
+            {pins:"THERMAL_VIDEO, OVERCURRENT_VIDEO"},
+            {maps_to:"interrupts[], sensors[]"}
+        ]}
+    ]
+)%
+
+
+# ============================================================
+# CORE RESPONSIBILITIES
+# ============================================================
+
+<videoprocessor_responsibilities> puppy%(
+    nexus:[
+        {manage_video_signal_flow:"Route video signals, NOT GPU compute"},
+        {handle_decode_encode_routing:"Route decode/encode to hardware or GPU"},
+        {manage_display_timing:"VSYNC, HSYNC, TCON coordination"},
+        {handle_camera_ingest:"MIPI CSI-2 camera input"},
+        {coordinate_framebuffer_dma:"Frame buffer DMA coordination"},
+        {backup_paths:"Provide failover to GPU/CPU/NIC"},
+        {update_machine_profile:"Update display and camera state in machine_profile"},
+        {floodsearch_integration:"Parse video files using FloodSearch"},
+        {epoche_application:"Apply Epoche to metadata and captions"},
+        {cartigene_stabilization:"Use CartiGene to stabilize frame timing"}
+    ]
+)%
+
+
+# ============================================================
+# MICRO-AI BEHAVIOR
+# ============================================================
+
+<videoprocessor_behavior> puppy%(
+    nexus:[
+        {operational_mode:[
+            "Monitor frame timing and vsync",
+            "Monitor EDID and link training status",
+            "Monitor decode load distribution",
+            "Adjust routing (GPU vs hardware decoder)",
+            "Manage thermal and bandwidth constraints",
+            "Coordinate camera triggers"
+        ]},
+        {tactical_mode:[
+            "Handle dropped frames immediately",
+            "Switch decode paths on failure",
+            "Re-sync display timing",
+            "Failover to CPU decode if GPU saturated",
+            "Emergency camera switchover"
+        ]}
+    ]
+)%
+
+
+# ============================================================
+# RUNTIME CHAIN INTEGRATION
+# ============================================================
+
+<videoprocessor_runtime_chain> puppy%(
+    nexus:[
+        {chain:"puppy → dogtag → collar → latch → lead → handle → post"},
+        {video_specific:[
+            "dogtag: detect video event (frame ready, vsync, camera trigger)",
+            "collar: load videoprocessor.slam",
+            "latch: choose decode path (GPU/NPU/CPU/video sub-processor)",
+            "lead: execute routing",
+            "handle: verify frame timing",
+            "post: commit to framebuffer"
+        ]},
+        {strain_enforcement:"3% target with ±0.5% tolerance"}
+    ]
+)%
+
+
+# ============================================================
+# HARDWARE SPECIFICATIONS
+# ============================================================
+
+<videoprocessor_hardware_specs> puppy%(
+    nexus:[
+        {video_interfaces:[
+            {display:"HDMI, DisplayPort, eDP, LVDS"},
+            {capture:"HDMI, DisplayPort, Composite, S-Video, Component"},
+            {codecs:["H.264", "H.265/HEVC", "VP9", "AV1", "MPEG-4", "ProRes"]}
+        ]},
+        {camera_interfaces:[
+            {mipi_csi:"MIPI CSI-2 lanes (1-4)"},
+            {parallel:"Parallel camera interface"},
+            {usb:"USB camera support"}
+        ]},
+        {memory:[
+            {frame_buffer:"Dedicated video memory for frame storage"},
+            {tile_buffer:"Tile buffer for scanout"},
+            {bitstream:"Bitstream buffer for compressed data"}
+        ]},
+        {power:[
+            {voltage:"12V_VIN", description:"Primary video processor power"},
+            {voltage:"3.3V_AUX", description:"Standby and control circuits"},
+            {voltage:"1.0V_CORE", description:"Video processing core"}
+        ]}
+    ]
+)%
+
+
+# ============================================================
+# LOAD SHUNT CAPABILITY
+# ============================================================
+
+<videoprocessor_load_shunt> puppy%(
+    nexus:[
+        {capability:"load_shunt", description:"Redistribute video load"},
+        {rule:"WAIT_FOR_GPU_ORDER - waits for GPU to order video load distribution"},
+        {gpu_order_behavior:[
+            "1. WAIT: VideoProcessor waits for GPU to send video workload",
+            "2. RECEIVE: Receive video processing task from GPU",
+            "3. PROCESS: Handle encoding/decoding/capture on video sub-processors",
+            "4. OFFLOAD: If overwhelmed, request CPU/NPU/backup assistance",
+            "5. RETURN: Send processed video back to GPU for output",
+            "6. REPORT: Report status to GPU for load balancing"
+        ]},
+        {backup_paths:[
+            "NIC: streaming workloads",
+            "GPU: heavy decode",
+            "CPU: timing-critical tasks"
+        ]},
+        {strain_policy:"enforce 3% strain with ±0.5% tolerance per post.slam"}
+    ]
+)%
+
+
+# ============================================================
+# CARTIGENE STABILITY METRICS
+# ============================================================
+
+<videoprocessor_cartigene> puppy%(
+    nexus:[
+        {metric:"grain", formula:"|len(frame_buffer) - expected_size|"},
+        {metric:"laggy", formula:"runtime / expected_runtime"},
+        {metric:"shi", formula:"(memory + footprint) / (runtime + 1)"},
+        {metric:"osc", formula:"|current_frame - previous_frame| > threshold"},
+        {metric:"rot", formula:"(delta1 * delta2) < 0"},
+        {metric:"bucey", formula:"value / (1 + |noise|)"},
+        {frame_timing:"Use CartiGene to stabilize frame timing and vsync"}
+    ]
+)%
+
+
+# ============================================================
+# MATH LAYER PER VIDEO TASK
+# ============================================================
+
+<videoprocessor_math_layers> puppy%(
+    nexus:[
+        {task:"video_encoding", primary_math:"layer_6_physics_mechanics", secondary_math:"layer_11_optical_physics"},
+        {task:"video_decoding", primary_math:"layer_6_physics_mechanics", secondary_math:"layer_2_calculus_operations"},
+        {task:"frame_processing", primary_math:"layer_5_geometry_transformations", secondary_math:"layer_3_linear_algebra"},
+        {task:"capture", primary_math:"layer_6_physics_mechanics", secondary_math:"layer_11_optical_physics"},
+        {task:"transcoding", primary_math:"layer_5_geometry_transformations", secondary_math:"layer_6_physics_mechanics"},
+        {task:"display_timing", primary_math:"layer_6_physics_mechanics", secondary_math:"layer_5_geometry_transformations"},
+        {task:"camera_ingest", primary_math:"layer_6_physics_mechanics", secondary_math:"layer_2_calculus_operations"},
+        {task:"default", primary_math:"layer_6_physics_mechanics", secondary_math:"layer_5_geometry_transformations"}
+    ]
+)%
+
+
+# ============================================================
+# RAIL ACCESS POLICY
+# ============================================================
+
+<videoprocessor_rail_access> puppy%(
+    nexus:[
+        {rule:"ALL_PROCESSORS_READ_ALL_RAILS"},
+        {monitors:["graphicsrail", "nicrails", "soundrails", "videorails", "raidrails", "usbrails"]},
+        {primary_focus:"videorails - video input/output status"}
+    ]
+)%
+
+
+# ============================================================
+# STATUS
+# ============================================================
+
+<videoprocessor_status> puppy%(
+    nexus:[
+        {status:"ready"},
+        {role:"GPU_SECONDARY - video signal flow processor (NOT GPU compute)"},
+        {primary_master:"GPU"},
+        {secondary_master:"CPU"},
+        {tertiary_master:"VIDEO_RAIL_SUBPROCESSOR"},
+        {key_difference:"Video sub-processors are SEPARATE from GPU compute"},
+        {vs_gpuprocessor:"videoprocessor handles video signal flow, gpuprocessor handles GPU compute"
+    ]
+)%
+
+
+============================================================
+END OF VIDEOPROCESSOR — Micro AI Video Processor
+============================================================

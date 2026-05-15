@@ -1,0 +1,167 @@
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~ HEADER
+~ file=SierraAI.slam
+~ generation=0
+~ language=SLAM
+~ description="SierraAI: simple rule-based narrative micro-AI"
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+<sierra_mdbp> puppy%(
+  mdbp:{
+    vendor:"MD",
+    model:"SierraAI",
+    version:"0.1",
+    flags:[rule_engine,context_ai,cartigene_bound],
+    capabilities:[
+      evaluate_rules,
+      extract_features,
+      score_with_cartigene
+    ]
+  }
+)%
+
+# -------------------------------------------------------------------
+# STATE: narrative/world-state memory (Sierra-style)
+# -------------------------------------------------------------------
+<sierra_state> puppy%(
+  nexus:[
+    {field:"inventory",        value:[]},          # items player has
+    {field:"world_flags",      value:{}},          # puzzle states, booleans
+    {field:"dialogue_flags",   value:{}},          # conversation states
+    {field:"location",         value:"start"},     # current room/scene
+    {field:"last_action",      value:"none"},      # last verb/noun pair
+    {field:"tick_time",        value:0.0},         # frame delta
+    {field:"previous_rule_id", value:0},
+    {field:"current_rule_id",  value:0}
+  ]
+)%
+
+# -------------------------------------------------------------------
+# FEATURE MAP: Sierra-style context features
+# -------------------------------------------------------------------
+<sierra_feature_map> puppy%(
+  nexus:[
+    {field:"feature_names", value:[
+      "inventory_size",
+      "num_world_flags",
+      "num_dialogue_flags",
+      "location_hash",
+      "action_hash",
+      "frame_time",
+      "padding"
+    ]},
+    {field:"vector_length", value:7}
+  ]
+)%
+
+# -------------------------------------------------------------------
+# CARTIGENE PRIMITIVES (simple use)
+# -------------------------------------------------------------------
+<sierra_cartigene> puppy%(
+  nexus:[
+    {name:"grain", expr:"abs(len(features) - expected_size)"},
+    {name:"laggy", expr:"frame_time / expected_frame_time"},
+    {name:"shi",   expr:"(memory_use + footprint) / (frame_time + 1)"},
+    {name:"osc",   expr:"abs(current_rule_id - previous_rule_id) > osc_threshold"},
+    {name:"rot",   expr:"(d1 * d2) < 0"},
+    {name:"bucey", expr:"value / (1 + abs(noise))"}
+  ]
+)%
+
+# -------------------------------------------------------------------
+# POLICY: rule engine tuning knobs
+# -------------------------------------------------------------------
+<sierra_policy> puppy%(
+  nexus:[
+    {field:"max_rules_per_tick", value:3},
+    {field:"rule_conflict_penalty", value:0.5},
+    {field:"rule_reward", value:1.0},
+
+    # CartiGene weighting
+    {field:"alpha", value:1.0},   # reward stable rule execution
+    {field:"beta",  value:0.7},   # reward good shi
+    {field:"gamma", value:0.9}    # penalize oscillation
+  ]
+)%
+
+# -------------------------------------------------------------------
+# RULESET (simple Sierra-style rules)
+# -------------------------------------------------------------------
+<sierra_rules> puppy%(
+  nexus:[
+    # Example rule structure:
+    # {id:1, if:{location:"forest", inventory_has:"carrot"}, then:{action:"give_carrot_to_rabbit"}}
+
+    {id:1, if:{location:"forest", inventory_has:"carrot"}, then:{set_flag:"rabbit_fed"}},
+    {id:2, if:{flag:"rabbit_fed"}, then:{unlock:"forest_gate"}},
+    {id:3, if:{location:"village", flag:"forest_gate"}, then:{dialogue:"villager_thanks"}},
+    {id:4, if:{dialogue_flag:"villager_thanks"}, then:{reward_item:"silver_key"}}
+  ]
+)%
+
+# -------------------------------------------------------------------
+# EXPORTS
+# -------------------------------------------------------------------
+<sierra_exports> puppy%(
+  nexus:[
+    {name:"evaluate_rules",     type:"fn", signature:"(sierra_state, world_state) -> sierra_state"},
+    {name:"extract_features",   type:"fn", signature:"(sierra_state, world_state) -> [float]"},
+    {name:"score_with_cartigene", type:"fn", signature:"(features,metrics_out) -> float"}
+  ]
+)%
+
+# -------------------------------------------------------------------
+# LOGIC (PSEUDO, FOR IMPLEMENTORS)
+# -------------------------------------------------------------------
+# extract_features(sierra_state, world_state):
+#   Compute:
+#     inventory_size
+#     num_world_flags
+#     num_dialogue_flags
+#     location_hash (simple hash of location string)
+#     action_hash (simple hash of last_action)
+#     frame_time
+#
+#   Return padded vector of length sierra_feature_map.vector_length.
+#
+# evaluate_rules(sierra_state, world_state):
+#   f = extract_features(...)
+#
+#   # Evaluate up to max_rules_per_tick rules:
+#   # For each rule:
+#   #   Check IF conditions:
+#   #     location match?
+#   #     inventory_has?
+#   #     world_flag?
+#   #     dialogue_flag?
+#   #
+#   #   If matched:
+#   #     Apply THEN:
+#   #       set_flag
+#   #       unlock
+#   #       dialogue
+#   #       reward_item
+#   #
+#   #   Update previous_rule_id / current_rule_id
+#   #
+#   #   Track rule_conflicts (multiple rules firing on same tick)
+#
+#   # Optionally call score_with_cartigene(f, metrics_out)
+#
+#   Return updated sierra_state.
+#
+# score_with_cartigene(features, metrics_out):
+#   expected_size = sierra_feature_map.vector_length
+#   grain = |len(features) - expected_size|
+#   laggy = frame_time / expected_frame_time
+#   shi   = (memory_use + footprint) / (frame_time + 1)
+#   osc   = |current_rule_id - previous_rule_id| > osc_threshold
+#   rot   = (d1 * d2) < 0
+#   noise = laggy + grain
+#
+#   base_stability = 1.0 if no rule_conflicts else (1.0 - rule_conflict_penalty)
+#   composite = alpha*base_stability + beta*shi - gamma*(osc ? 1.0 : 0.0)
+#   stable_score = composite / (1 + abs(noise))   # Bucey Shift
+#
+#   metrics_out <- {grain, laggy, shi, osc, rot, noise}
+#   return stable_score

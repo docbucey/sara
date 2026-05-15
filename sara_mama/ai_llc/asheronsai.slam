@@ -1,0 +1,171 @@
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~ HEADER
+~ file=AsheronAI.slam
+~ generation=0
+~ language=SLAM
+~ description="AsheronAI: live-world event manager, dynamic spawner, social engine, persistence controller; CartiGene-stabilized"
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+<asheron_mdbp> puppy%(
+  mdbp:{
+    vendor:"MD",
+    model:"AsheronAI",
+    version:"0.1",
+    flags:[live_world,event_driven,cartigene_bound,persistent_state],
+    capabilities:[
+      handle_world_event,
+      dynamic_spawn,
+      social_state_update,
+      persistence_sync,
+      score_with_cartigene
+    ]
+  }
+)%
+
+# -------------------------------------------------------------------
+# STATE: world manager memory
+# -------------------------------------------------------------------
+<asheron_state> puppy%(
+  nexus:[
+    {field:"active_events",      value:[]},        # list of running event descriptors
+    {field:"spawn_queues",       value:{}},        # sector_id -> queue
+    {field:"sector_loads",       value:{}},        # sector_id -> load metric
+    {field:"player_profiles",    value:{}},        # player_id -> short profile (pos, recent_actions)
+    {field:"social_graph",       value:{}},        # faction/allegiance state
+    {field:"persistence_flags",  value:{}},        # long-term world flags
+    {field:"tick_time",          value:0.0},       # frame delta
+    {field:"previous_state_id",  value:0},
+    {field:"current_state_id",   value:0}
+  ]
+)%
+
+# -------------------------------------------------------------------
+# FEATURE MAP: live-world features
+# -------------------------------------------------------------------
+<asheron_feature_map> puppy%(
+  nexus:[
+    {field:"feature_names", value:[
+      "sector_load",
+      "player_density",
+      "recent_deaths",
+      "spawn_queue_length",
+      "event_activity_score",
+      "avg_player_velocity",
+      "frame_time",
+      "padding"
+    ]},
+    {field:"vector_length", value:8}
+  ]
+)%
+
+# -------------------------------------------------------------------
+# CARTIGENE PRIMITIVES (local use)
+# -------------------------------------------------------------------
+<asheron_cartigene> puppy%(
+  nexus:[
+    {name:"grain", expr:"abs(len(features) - expected_size)"},
+    {name:"laggy", expr:"frame_time / expected_frame_time"},
+    {name:"shi",   expr:"(memory_use + footprint) / (frame_time + 1)"},
+    {name:"osc",   expr:"abs(current_state_id - previous_state_id) > osc_threshold"},
+    {name:"rot",   expr:"(d1 * d2) < 0"},
+    {name:"bucey", expr:"value / (1 + abs(noise))"}
+  ]
+)%
+
+# -------------------------------------------------------------------
+# POLICY: tuning knobs for live events and spawns
+# -------------------------------------------------------------------
+<asheron_policy> puppy%(
+  nexus:[
+    {field:"max_spawns_per_tick",      value:6},
+    {field:"spawn_backoff_base",       value:1.5},
+    {field:"event_cooldown_seconds",   value:300},
+    {field:"player_density_threshold", value:0.6},
+    {field:"spawn_storm_threshold",    value:12},
+    {field:"persistence_sync_interval",value:60},
+
+    # CartiGene weighting
+    {field:"alpha", value:1.0},   # reward stable event pacing
+    {field:"beta",  value:0.9},   # reward good shi
+    {field:"gamma", value:1.0}    # penalize oscillation strongly
+  ]
+)%
+
+# -------------------------------------------------------------------
+# EXPORTS
+# -------------------------------------------------------------------
+<asheron_exports> puppy%(
+  nexus:[
+    {name:"handle_world_event", type:"fn", signature:"(asheron_state, event) -> asheron_state"},
+    {name:"dynamic_spawn",     type:"fn", signature:"(asheron_state, sector_id, spawn_request) -> asheron_state"},
+    {name:"social_state_update",type:"fn", signature:"(asheron_state, interaction) -> asheron_state"},
+    {name:"persistence_sync",  type:"fn", signature:"(asheron_state) -> asheron_state"},
+    {name:"score_with_cartigene",type:"fn", signature:"(features,metrics_out) -> float"}
+  ]
+)%
+
+# -------------------------------------------------------------------
+# LOGIC (PSEUDO, FOR IMPLEMENTORS)
+# -------------------------------------------------------------------
+# extract_features(asheron_state, world_state):
+#   Compute:
+#     sector_load (for target sector)
+#     player_density (players per area)
+#     recent_deaths (in sector/time window)
+#     spawn_queue_length
+#     event_activity_score (sum of active event weights)
+#     avg_player_velocity (for predictive placement)
+#     frame_time
+#   Return padded vector length asheron_feature_map.vector_length.
+#
+# handle_world_event(asheron_state, event):
+#   - Validate event (type, sector, required_flags)
+#   - If event conflicts with persistence_flags or recent events, apply cooldown
+#   - Compute features for event sector
+#   - Call score_with_cartigene(features, metrics_out) -> stability_score
+#   - If stability_score < threshold:
+#       - Delay or scale down event (reduce spawn counts, increase cooldown)
+#     Else:
+#       - Activate event, enqueue spawns into spawn_queues[sector]
+#   - Update active_events, persistence_flags as needed
+#   - Return updated asheron_state
+#
+# dynamic_spawn(asheron_state, sector_id, spawn_request):
+#   - Compute sector features (load, density, recent_deaths)
+#   - Predict player positions using avg_player_velocity and recent paths
+#   - Use predictive heuristics to place spawns where players will be, but:
+#       - Gate spawn count by max_spawns_per_tick and CartiGene stability_score
+#       - If spawn_queue_length > spawn_storm_threshold, apply exponential backoff:
+#           backoff = spawn_backoff_base ^ (spawn_queue_length - threshold)
+#           reduce spawn intensity by 1/backoff
+#   - Enqueue or drop spawns accordingly
+#   - Update sector_loads and spawn_queues
+#   - Return updated asheron_state
+#
+# social_state_update(asheron_state, interaction):
+#   - Update social_graph (allegiances, vassal/patron links, reputation deltas)
+#   - If social changes trigger world events (e.g., faction war), call handle_world_event
+#   - Persist important social flags into persistence_flags for monthly updates
+#   - Return updated asheron_state
+#
+# persistence_sync(asheron_state):
+#   - Periodically flush persistence_flags and important event state to durable store
+#   - On monthly update hooks, reconcile incoming patches with local persistence_flags
+#   - Use CartiGene scoring to detect inconsistent patches (drift) and flag for manual review
+#   - Return updated asheron_state
+#
+# score_with_cartigene(features, metrics_out):
+#   expected_size = asheron_feature_map.vector_length
+#   grain = |len(features) - expected_size|
+#   laggy = frame_time / expected_frame_time
+#   shi   = (memory_use + footprint) / (frame_time + 1)
+#   osc   = |current_state_id - previous_state_id| > osc_threshold
+#   rot   = (d1 * d2) < 0
+#   noise = laggy + grain + (spawn_queue_length * 0.1)
+#
+#   base_stability = 1.0 if player_density < player_density_threshold and recent_deaths < 10 else 0.5
+#   composite = alpha*base_stability + beta*shi - gamma*(osc ? 1.0 : 0.0)
+#   stable_score = composite / (1 + abs(noise))   # Bucey Shift
+#
+#   metrics_out <- {grain, laggy, shi, osc, rot, noise}
+#   return stable_score

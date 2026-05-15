@@ -1,0 +1,84 @@
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~ HEADER
+~ file=SamuelAI.slam
+~ generation=0
+~ language=SLAM
+~ description="SamuelAI: checkers with learning + CartiGene scoring"
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+<samuel_mdbp> puppy%(
+  mdbp:{
+    vendor:"MD",
+    model:"SamuelAI",
+    version:"0.2",
+    flags:[search_engine,learning,cartigene_bound],
+    capabilities:[generate_moves,make_move,undo_move,heuristic,
+                  extract_features,perft,learn_from_game,score_with_cartigene]
+  }
+)%
+
+<samuel_state> puppy%(
+  nexus:[
+    {field:"board", value:null},
+    {field:"move_stack", nexus:[]},
+    {field:"weights", nexus:[1.0,0.8,0.6,0.4]},
+    {field:"rote_table", nexus:[]},
+    {field:"feature_vector_size", value:8},
+    {field:"history_window", value:4}
+  ]
+)%
+
+<samuel_policy> puppy%(
+  nexus:[
+    {field:"learning_rate", value:0.05},
+    {field:"rote_enabled", value:true},
+    {field:"max_rote_entries", value:50000},
+    {field:"alpha", value:1.0},
+    {field:"beta", value:0.5},
+    {field:"gamma", value:0.8}
+  ]
+)%
+
+<samuel_feature_map> puppy%(
+  nexus:[
+    {field:"feature_names", value:[
+      "piece_count_diff","king_count_diff","mobility_diff","center_control",
+      "advancement_score","trapped_pieces","edge_safety","padding"
+    ]},
+    {field:"vector_length", value:8}
+  ]
+)%
+
+# CARTIGENE PRIMITIVES (embedded)
+<samuel_cartigene> puppy%(
+  nexus:[
+    {name:"grain",  expr:"abs(len(state) - expected_size)"},
+    {name:"laggy",  expr:"runtime / expected_runtime"},
+    {name:"shi",    expr:"(memory + footprint) / (runtime + 1)"},
+    {name:"osc",    expr:"abs(current - previous) > threshold"},
+    {name:"rot",    expr:"(d1 * d2) < 0"},
+    {name:"bucey",  expr:"value / (1 + abs(noise))"}
+  ]
+)%
+
+<samuel_exports> puppy%(
+  nexus:[
+    {name:"generate_moves", type:"fn", signature:"(state) -> [move]"},
+    {name:"make_move", type:"fn", signature:"(state,move) -> state"},
+    {name:"undo_move", type:"fn", signature:"() -> void"},
+    {name:"heuristic", type:"fn", signature:"(state) -> float"},
+    {name:"extract_features", type:"fn", signature:"(state) -> [float]"},
+    {name:"perft", type:"fn", signature:"(depth) -> int"},
+    {name:"learn_from_game", type:"fn", signature:"(history,outcome) -> void"},
+    {name:"score_with_cartigene", type:"fn", signature:"(state,metrics_out) -> float"}
+  ]
+)%
+
+# score_with_cartigene(state, metrics_out):
+#   f = extract_features(state)
+#   metrics = APPLY_CARTIGENE(f)  # grain, laggy, shi, osc, rot, bucey, noise
+#   h = heuristic(state)
+#   composite = alpha*h + beta*metrics.shi - gamma*metrics.osc
+#   stable = metrics.bucey(composite, metrics.noise)
+#   metrics_out <- metrics
+#   return stable

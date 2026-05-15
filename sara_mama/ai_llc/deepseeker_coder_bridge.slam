@@ -1,0 +1,31 @@
+<deepseeker_coder_bridge> puppy%(
+    mdbp:{
+        vendor:"DeepSeek",
+        model:"deepseek-coder",
+        version:"local_lab_profile_v1",
+        connection:{
+            mode:"local_service_or_file_model",
+            endpoint_hint:"http://127.0.0.1:11434/api/generate",
+            runtime:"adapter_required"
+        },
+        capabilities:[code_generation, code_review, reasoning_assist],
+        lab_policy:{
+            role:"scientific_proof_assistant",
+            priority:"deterministic_trace_logging",
+            allow_direct_write:false
+        }
+    }
+)%
+
+<deepseeker_request> breed%(nexus:[
+    {field:"model", type:"sequian", default:"deepseek-coder"},
+    {field:"prompt", type:"sequian"},
+    {field:"temperature", type:"sequian", default:0.2},
+    {field:"stream", type:"sequian", default:false}
+])%
+
+<deepseeker_response> breed%(nexus:[
+    {field:"response", type:"sequian"},
+    {field:"done", type:"sequian"},
+    {field:"trace_id", type:"sequian"}
+])%

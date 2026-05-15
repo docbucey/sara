@@ -1,0 +1,7 @@
+{
+  "pillar": "sara_security",
+  "file": "sara_security.py",
+  "status": "UNKNOWN",
+  "reached": false,
+  "reason": "pre-prep scaffold created"
+}

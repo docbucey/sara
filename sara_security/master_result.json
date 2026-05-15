@@ -1,0 +1,16 @@
+{
+  "pillar": "sara_security",
+  "final_status": "UNKNOWN",
+  "local": {
+    "file": "sara_security.py",
+    "status": "UNKNOWN",
+    "reached": false,
+    "reason": "pre-prep scaffold created"
+  },
+  "distant": {
+    "file": "sara_security.py",
+    "status": "UNKNOWN",
+    "reached": false,
+    "note": "distant-end scaffold created"
+  }
+}

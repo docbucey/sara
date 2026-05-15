@@ -1,0 +1,165 @@
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~ HEADER
+~ file=DoomAI.slam
+~ generation=0
+~ language=SLAM
+~ description="DoomAI: simple Doom-style sector micro-AI"
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+<doom_mdbp> puppy%(
+  mdbp:{
+    vendor:"MD",
+    model:"DoomAI",
+    version:"0.1",
+    flags:[fps_ai,hardware_aware,cartigene_bound],
+    capabilities:[
+      update_enemy,
+      extract_features,
+      score_with_cartigene
+    ]
+  }
+)%
+
+# -------------------------------------------------------------------
+# STATE: Doom-style FSM + short-term memory
+# -------------------------------------------------------------------
+<doom_state> puppy%(
+  nexus:[
+    {field:"state", value:"idle"},          # idle, alerted, chasing, attacking, pain
+    {field:"sector_id", value:0},
+    {field:"last_seen_player", nexus:[0,0]},
+    {field:"last_sound_sector", value:0},
+    {field:"pain_timer", value:0.0},
+    {field:"fire_cooldown", value:0.0},
+    {field:"tick_time", value:0.0},         # frame delta
+    {field:"previous_state_id", value:0},
+    {field:"current_state_id", value:0}
+  ]
+)%
+
+# -------------------------------------------------------------------
+# FEATURE MAP: Doom-style perception
+# -------------------------------------------------------------------
+<doom_feature_map> puppy%(
+  nexus:[
+    {field:"feature_names", value:[
+      "distance_to_player",
+      "angle_to_player",
+      "los_flag",               # BSP/geometry LOS
+      "occlusion_score",        # 0..1
+      "heard_sound",            # 0/1
+      "sound_path_length",      # sectors traversed
+      "player_velocity_x",
+      "player_velocity_y",
+      "frame_time",
+      "padding"
+    ]},
+    {field:"vector_length", value:10}
+  ]
+)%
+
+# -------------------------------------------------------------------
+# CARTIGENE PRIMITIVES (simple use)
+# -------------------------------------------------------------------
+<doom_cartigene> puppy%(
+  nexus:[
+    {name:"grain", expr:"abs(len(features) - expected_size)"},
+    {name:"laggy", expr:"frame_time / expected_frame_time"},
+    {name:"shi",   expr:"(memory_use + footprint) / (frame_time + 1)"},
+    {name:"osc",   expr:"abs(current_state_id - previous_state_id) > osc_threshold"},
+    {name:"rot",   expr:"(d1 * d2) < 0"},
+    {name:"bucey", expr:"value / (1 + abs(noise))"}
+  ]
+)%
+
+# -------------------------------------------------------------------
+# POLICY: Doom-style tuning knobs
+# -------------------------------------------------------------------
+<doom_policy> puppy%(
+  nexus:[
+    {field:"sound_radius",        value:14.0},
+    {field:"pain_duration",       value:0.5},
+    {field:"fire_cooldown_time",  value:0.7},
+    {field:"los_angle_limit_deg", value:75.0},
+    {field:"max_chase_distance",  value:28.0},
+
+    # CartiGene weighting
+    {field:"alpha", value:1.0},   # aggression
+    {field:"beta",  value:0.6},   # reward good shi
+    {field:"gamma", value:0.8}    # penalize oscillation
+  ]
+)%
+
+# -------------------------------------------------------------------
+# EXPORTS
+# -------------------------------------------------------------------
+<doom_exports> puppy%(
+  nexus:[
+    {name:"update_enemy",        type:"fn", signature:"(enemy_state, world_state) -> enemy_state"},
+    {name:"extract_features",    type:"fn", signature:"(enemy_state, world_state) -> [float]"},
+    {name:"score_with_cartigene",type:"fn", signature:"(features,metrics_out) -> float"}
+  ]
+)%
+
+# -------------------------------------------------------------------
+# LOGIC (PSEUDO, FOR IMPLEMENTORS)
+# -------------------------------------------------------------------
+# extract_features(enemy_state, world_state):
+#   Compute:
+#     distance_to_player
+#     angle_to_player
+#     los_flag (BSP/geometry LOS)
+#     occlusion_score (0..1)
+#     heard_sound (1 if sound propagated through sector portals)
+#     sound_path_length (# of sectors traversed)
+#     player_velocity_x/y
+#     frame_time
+#
+#   Return padded vector of length doom_feature_map.vector_length.
+#
+# update_enemy(enemy_state, world_state):
+#   f = extract_features(...)
+#
+#   # FSM:
+#   # idle:
+#   #   if heard_sound or los_flag -> alerted
+#   #
+#   # alerted:
+#   #   move toward sound source or last_seen_player
+#   #   if los_flag -> chasing
+#   #
+#   # chasing:
+#   #   predict player position using velocity
+#   #   move toward predicted position
+#   #   if in range and fire_cooldown <= 0 -> attacking
+#   #   if occlusion_score high or distance > max_chase_distance -> alerted
+#   #
+#   # attacking:
+#   #   fire, set fire_cooldown
+#   #   return to chasing if los_flag else alerted
+#   #
+#   # pain:
+#   #   stagger for pain_duration
+#   #   then return to previous state
+#
+#   # Decrement timers (pain_timer, fire_cooldown) by frame_time.
+#
+#   # Optionally call score_with_cartigene(f, metrics_out).
+#
+#   Return updated enemy_state.
+#
+# score_with_cartigene(features, metrics_out):
+#   expected_size = doom_feature_map.vector_length
+#   grain = |len(features) - expected_size|
+#   laggy = frame_time / expected_frame_time
+#   shi   = (memory_use + footprint) / (frame_time + 1)
+#   osc   = |current_state_id - previous_state_id| > osc_threshold
+#   rot   = (d1 * d2) < 0
+#   noise = laggy + grain
+#
+#   base_aggression = 1.0 if state in {chasing, attacking} else 0.2
+#   composite = alpha*base_aggression + beta*shi - gamma*(osc ? 1.0 : 0.0)
+#   stable_score = composite / (1 + abs(noise))   # Bucey Shift
+#
+#   metrics_out <- {grain, laggy, shi, osc, rot, noise}
+#   return stable_score

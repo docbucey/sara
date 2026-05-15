@@ -1,0 +1,279 @@
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~ HEADER (strict, machine-verified)                        ~
+~ kennel=substrate                                          ~
+~ generation=0                                              ~
+~ evolution=alpha                                           ~
+~ version=0.1                                               ~
+~ date=                                                     ~
+~ location=                                                 ~
+~ language=SLAM                                             ~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+============================================================
+NEURALPROCESSOR — FLOW ORIENTED PROCESSOR (GEN-0)
+============================================================
+
+# Simplified AI for flow-oriented processing
+# Provides office space for other micro AIs
+# Routes data and orders from CPU/Host AI
+
+# ============================================================
+# MDBP — Most Direct Binary Path
+# ============================================================
+
+<neuralprocessor_mdbp> puppy%(
+    mdbp:{
+        vendor:"SARA",
+        model:"NeuralProcessor_FlowOriented",
+        version:"0.1",
+        type:"flow_processor",
+        role:"data_router_office_space",
+        base_spec:"m2_npu_module",
+        flags:[flow_oriented, router, office_space, distributor, llm_safety_guard],
+        capabilities:[data_routing, flow_control, ai_housing, order_receiving, llm_gatekeeper],
+        primary_master:"CPU",
+        secondary_master:"GPU",
+        tertiary_master:"NPU",
+        slave_to:["CPU", "GPU"],
+        llm_relationship:"LLM drivers SLAVE to neuralprocessor (not vice versa)"
+    }
+)%
+
+
+# ============================================================
+# CORE FUNCTION — SIMPLE AI (LLM SAFETY GUARD)
+# ============================================================
+
+<neuralprocessor_core> puppy%(
+    nexus:[
+        {role:"SIMPLE_AI - CartiGene + Epoche only"},
+        {purpose:"Takes orders, routes data, provides office space"},
+        {llm_safety:"Ensures NPU stays SLAVE to OS - guards against uncontrolled LLM behavior"},
+        {based_on:"LLM technology (known unstable) - this AI is the safety layer"},
+        {exceptions:[
+            "If preferred AI exists (e.g., SARA) - that AI takes precedence",
+            "If OS has built-in AI - that OS AI takes precedence",
+            "Otherwise - NPU remains SLAVE to OS"
+        ]},
+        {llm_driver_handling:[
+            "LLM drivers are SLAVES to neuralprocessor",
+            "Neuralprocessor CONTROLS LLM driver behavior",
+            "Prevents LLM from taking unauthorized control"
+        ]},
+        {cartigene:[
+            {grain:"measure data flow stability"},
+            {laggy:"measure routing latency"},
+            {shi:"measure throughput quality"},
+            {osc:"detect flow anomalies"},
+            {rot:"detect direction changes"},
+            {bucey:"noise stabilization"}
+        ]},
+        {epoche:[
+            {filter:"Remove interpretive language from orders"},
+            {clean_input:"Pass clean orders to flow router"}
+        ]},
+        {responsibilities:[
+            "1. Receive orders from CPU/Host AI",
+            "2. Route data to appropriate micro AI",
+            "3. Provide office space (memory/processing) for other AIs",
+            "4. Flow-oriented processing when NPU available",
+            "5. Distribute processing across available resources"
+        ]}
+    ]
+)%
+
+
+# ============================================================
+# FLOW ORIENTED PROCESSING
+# ============================================================
+
+<neuralprocessor_flow> puppy%(
+    nexus:[
+        {language:"SLAM", paradigm:"flow_oriented_programming"},
+        {when_npu_available:[
+            "1. Enable flow-oriented processing mode",
+            "2. Route data through flow pipeline",
+            "3. Distribute to micro AIs in NPU space",
+            "4. Aggregate results back to CPU"
+        ]},
+        {flow_pipeline:"input → epoche_filter → cartigene_validate → route_to_ai → process → aggregate → output"}
+    ]
+)%
+
+
+# ============================================================
+# OFFICE SPACE — AI HOUSING
+# ============================================================
+
+<neuralprocessor_office_space> puppy%(
+    nexus:[
+        {provides:"Office space for all micro AIs"},
+        {housing:["nicprocessor", "memorai", "soundprocessor", "gpuprocessor"]},
+        {allocation:"Dynamic based on order requirements"},
+        {additional_processing:[
+            {trigger:"Command from CPU or GPU for additional acceleration/processing"},
+            {action:"Makes room as best it can and handles that processing"},
+            {priority:"Emergency processing takes precedence over routine routing"},
+            {procedure:[
+                "1. Receive acceleration command from CPU or GPU",
+                "2. Assess current office space allocation",
+                "3. Evict/compact existing AI workloads if needed",
+                "4. Make room for new processing task",
+                "5. Execute additional processing",
+                "6. Restore previous AI workloads when complete"
+            ]}
+        ]},
+        {npu_priority:[
+            {rule:"All AI processing in NPU is LOWEST priority to system performance"},
+            {offload_behavior:[
+                "When system needs processing power:",
+                "1. Offload micro AIs to hard drive (lowest priority)",
+                "2. Keep micro AIs active/in use from hard drive",
+                "3. When heavy load done: reload micro AIs back to NPU resources",
+                "4. Restore full NPU operation after reload complete"
+            ]},
+            {hard_drive_management:[
+                "State preservation: Save complete AI state to hard drive",
+                "Active monitoring: Keep AIs active while swapped to drive",
+                "Quick resume: Load back to NPU when system allows",
+                "Priority: System tasks > NPU micro AIs"
+            ]}
+        ]}
+    ]
+)%
+
+
+# ============================================================
+# MASTER/SLAVE CONFIGURATION
+# ============================================================
+
+<neuralprocessor_master_config> puppy%(
+    nexus:[
+        {primary_master:"CPU"},
+        {secondary_master:"GPU"},
+        {tertiary_master:"NPU"},
+        {slave_to:["CPU", "GPU", "OS"]},
+        {llm_drivers_slave_to:"neuralprocessor"},
+        {architecture:[
+            "CPU (master)",
+            "GPU (co-master)",
+            "└── neuralprocessor (router/office)",
+            "    ├── nicprocessor",
+            "    ├── memorai",
+            "    ├── soundprocessor",
+            "    └── gpuprocessor"
+        ]}
+    ]
+)%
+
+
+# ============================================================
+# CARTIGENE (SIMPLE)
+# ============================================================
+
+<neuralprocessor_cartigene> puppy%(
+    nexus:[
+        {grain:"|flow_size - expected|"},
+        {laggy:"routing_time / target_time"},
+        {shi:"throughput / resources"},
+        {osc:"|current_flow - previous_flow| > threshold"},
+        {rot:"flow_direction_change"},
+        {bucey:"stable / noise"}
+    ]
+)%
+
+
+# ============================================================
+# RAIL ACCESS
+# ============================================================
+
+<neuralprocessor_rail_access> puppy%(
+    nexus:[
+        {rule:"ALL_PROCESSORS_READ_ALL_RAILS"}
+    ]
+)%
+
+
+# ============================================================
+# MACHINE PROFILE REPORTING
+# ============================================================
+
+<neuralprocessor_machine_profile_reporting> puppy%(
+    nexus:[
+        {reports_to:"machine_profile", defined_in:"continuity.slam"},
+        {also_reports_to:"ai_profile", defined_in:"continuity.slam"},
+        {controlled_by:"ai_profile", defined_in:"continuity.slam"},
+        {profile_sources:[
+            "machine_profile: identity/machine/doc_bucey_profile_gen0_1.0_nbs.json",
+            "ai_profile: identity/sara/sara_profile_gen0_1.0_nbs.json"
+        ]}
+        {activity_logging:[
+            "1. Route data events",
+            "2. Office space allocation",
+            "3. Order reception and distribution",
+            "4. Flow pipeline status",
+            "5. LLM driver control events"
+        ]},
+        {reported_data:[
+            "timestamp",
+            "event_type",
+            "data_flow_direction",
+            "processing_status",
+            "error_flags"
+        ]},
+        {frequency:"Per event or batched per second"}
+    ]
+)%
+
+
+# ============================================================
+# SYSTEM DIAGNOSTICS (READ ONLY WHEN AVAILABLE)
+# ============================================================
+
+<neuralprocessor_diagnostics> puppy%(
+    nexus:[
+        {mode:"READ_ONLY - diagnostic reads only when available"},
+        {diagnostic_reads:[
+            "CPU utilization (when available)",
+            "Memory usage (when available)",
+            "GPU utilization (when available)",
+            "NPU temperature (when available)",
+            "Power consumption (when available)",
+            "Network throughput (when available)",
+            "Storage I/O (when available)"
+        ]},
+        {trigger:"Only when diagnostic interfaces are available"},
+        {no_active_monitoring:"Does NOT actively monitor - only reads when system provides"},
+        {use:"Used for flow optimization decisions only"}
+    ]
+)%
+
+
+# ============================================================
+# RUNTIME TIMING CHAIN
+# ============================================================
+
+<neuralprocessor_runtime_chain> puppy%(
+    nexus:[
+        {chain:"puppy → dogtag → collar → latch → lead → handle → post"},
+        {strain_enforcement:"3% ± 0.5%"}
+    ]
+)%
+
+
+# ============================================================
+# STATUS
+# ============================================================
+
+<neuralprocessor_status> puppy%(
+    nexus:[
+        {status:"ready"},
+        {role:"FLOW_ORIENTED_PROCESSOR"},
+        {slave_to:["CPU", "GPU", "OS"]},
+        {llm_drivers_slave:true}
+    ]
+)%
+
+
+============================================================
+END OF NEURALPROCESSOR — Flow Oriented Processor
+============================================================

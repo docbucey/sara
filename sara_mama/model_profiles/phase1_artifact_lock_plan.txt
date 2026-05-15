@@ -1,0 +1,58 @@
+PHASE 1 ARTIFACT LOCK ENFORCEMENT PLAN
+Version: phase1_finish_pass_v1
+Date: 2026-04-13
+Mode: non-destructive planning artifact
+
+Intent
+- Enforce frozen map-set loading for Phase 1 so only required hemispheric artifacts are accepted.
+- Keep CONTROL-owned routing and SECURITY-owned gating unchanged.
+
+Required Frozen Artifact Set (exact filenames)
+1. corpus_callosum.json
+2. forceps_minor.json
+3. cingulum_bundle.json
+4. slf.json
+5. uncinate.json
+6. ollama_shunt_map.json
+7. ollama_action_map.json
+8. right_hemisphere_interface.json
+
+Lock Rules
+- R1: All 8 required artifacts must exist before Phase 1 runtime enters READY.
+- R2: Any missing required artifact forces status=BLOCKED with deterministic error details.
+- R3: Any alternate or ad hoc artifact for these roles is ignored and flagged.
+- R4: Version check must equal phase0-frozen-v1 for the 3 new runtime maps:
+  - ollama_shunt_map.json
+  - ollama_action_map.json
+  - right_hemisphere_interface.json
+- R5: No rule in this lock modifies routing, trust, schema ownership, or shunt headers.
+
+Suggested Loader Contract (C# Phase 1 bootstrap)
+- Phase1ArtifactLockResult:
+  - lock_status: PASS|BLOCKED
+  - required_found: [file names]
+  - required_missing: [file names]
+  - version_mismatches: [file + expected + found]
+  - alternate_detected: [file names]
+  - timestamp_utc
+
+Algorithm (deterministic)
+1. Resolve repository root.
+2. Check existence for all 8 required files.
+3. Parse metadata.version on the 3 runtime maps listed in R4.
+4. Build deterministic result object.
+5. If any missing/mismatch -> BLOCKED.
+6. If pass -> set Phase 1 entry lock ready flag.
+
+Failure Messages (operator-safe)
+- Missing required map: "Phase 1 artifact lock blocked: missing <filename>."
+- Version mismatch: "Phase 1 artifact lock blocked: <filename> version must be phase0-frozen-v1."
+- Alternate detected: "Phase 1 artifact lock warning: alternate map ignored <filename>."
+
+Integration Notes
+- This is a loader gate only. It does not alter CONTROL/SECURITY behavior.
+- Keep non-authority rules from right_hemisphere_interface.json intact.
+
+Completion Criteria
+- PASS if and only if all R1-R4 hold.
+- Emit a single lock result object and persist to startup diagnostics.

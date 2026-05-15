@@ -1,0 +1,151 @@
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~ HEADER
+~ file=SmallTownAI.slam
+~ generation=0
+~ language=SLAM
+~ description="SmallTownAI: simple systems-simulation micro-AI"
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+<smalltown_mdbp> puppy%(
+  mdbp:{
+    vendor:"MD",
+    model:"SmallTownAI",
+    version:"0.1",
+    flags:[systems_ai,resource_balancer,cartigene_bound],
+    capabilities:[
+      update_systems,
+      extract_features,
+      score_with_cartigene
+    ]
+  }
+)%
+
+# -------------------------------------------------------------------
+# STATE: system-level memory (SimCity-style)
+# -------------------------------------------------------------------
+<smalltown_state> puppy%(
+  nexus:[
+    {field:"population",      value:50},
+    {field:"jobs",            value:40},
+    {field:"traffic_load",    value:0.2},
+    {field:"power_usage",     value:0.3},
+    {field:"budget",          value:1000},
+    {field:"happiness",       value:0.5},
+    {field:"tick_time",       value:0.0},     # frame delta
+    {field:"previous_state_id", value:0},
+    {field:"current_state_id",  value:0}
+  ]
+)%
+
+# -------------------------------------------------------------------
+# FEATURE MAP: systems simulation features
+# -------------------------------------------------------------------
+<smalltown_feature_map> puppy%(
+  nexus:[
+    {field:"feature_names", value:[
+      "population",
+      "jobs",
+      "traffic_load",
+      "power_usage",
+      "budget",
+      "happiness",
+      "frame_time",
+      "padding"
+    ]},
+    {field:"vector_length", value:8}
+  ]
+)%
+
+# -------------------------------------------------------------------
+# CARTIGENE PRIMITIVES (simple use)
+# -------------------------------------------------------------------
+<smalltown_cartigene> puppy%(
+  nexus:[
+    {name:"grain", expr:"abs(len(features) - expected_size)"},
+    {name:"laggy", expr:"frame_time / expected_frame_time"},
+    {name:"shi",   expr:"(memory_use + footprint) / (frame_time + 1)"},
+    {name:"osc",   expr:"abs(current_state_id - previous_state_id) > osc_threshold"},
+    {name:"rot",   expr:"(d1 * d2) < 0"},
+    {name:"bucey", expr:"value / (1 + abs(noise))"}
+  ]
+)%
+
+# -------------------------------------------------------------------
+# POLICY: systems tuning knobs
+# -------------------------------------------------------------------
+<smalltown_policy> puppy%(
+  nexus:[
+    {field:"growth_rate",          value:0.02},
+    {field:"job_creation_rate",    value:0.015},
+    {field:"traffic_sensitivity",  value:0.4},
+    {field:"power_sensitivity",    value:0.3},
+    {field:"budget_drift_rate",    value:0.01},
+    {field:"happiness_decay",      value:0.005},
+
+    # CartiGene weighting
+    {field:"alpha", value:1.0},   # reward stable systems
+    {field:"beta",  value:0.8},   # reward good shi
+    {field:"gamma", value:0.9}    # penalize oscillation
+  ]
+)%
+
+# -------------------------------------------------------------------
+# EXPORTS
+# -------------------------------------------------------------------
+<smalltown_exports> puppy%(
+  nexus:[
+    {name:"update_systems",      type:"fn", signature:"(smalltown_state, world_state) -> smalltown_state"},
+    {name:"extract_features",    type:"fn", signature:"(smalltown_state, world_state) -> [float]"},
+    {name:"score_with_cartigene",type:"fn", signature:"(features,metrics_out) -> float"}
+  ]
+)%
+
+# -------------------------------------------------------------------
+# LOGIC (PSEUDO, FOR IMPLEMENTORS)
+# -------------------------------------------------------------------
+# extract_features(smalltown_state, world_state):
+#   Compute:
+#     population
+#     jobs
+#     traffic_load
+#     power_usage
+#     budget
+#     happiness
+#     frame_time
+#
+#   Return padded vector of length smalltown_feature_map.vector_length.
+#
+# update_systems(smalltown_state, world_state):
+#   f = extract_features(...)
+#
+#   # Simple systems simulation:
+#   # population += growth_rate * population
+#   # jobs += job_creation_rate * jobs
+#   #
+#   # traffic_load increases with population/jobs mismatch
+#   # power_usage increases with population and jobs
+#   #
+#   # budget drifts based on population and jobs
+#   # happiness decays unless systems are stable
+#
+#   # Update previous_state_id / current_state_id
+#
+#   # Optionally call score_with_cartigene(f, metrics_out)
+#
+#   Return updated smalltown_state.
+#
+# score_with_cartigene(features, metrics_out):
+#   expected_size = smalltown_feature_map.vector_length
+#   grain = |len(features) - expected_size|
+#   laggy = frame_time / expected_frame_time
+#   shi   = (memory_use + footprint) / (frame_time + 1)
+#   osc   = |current_state_id - previous_state_id| > osc_threshold
+#   rot   = (d1 * d2) < 0
+#   noise = laggy + grain
+#
+#   base_stability = 1.0 if traffic_load < 0.7 and power_usage < 0.8 else 0.4
+#   composite = alpha*base_stability + beta*shi - gamma*(osc ? 1.0 : 0.0)
+#   stable_score = composite / (1 + abs(noise))   # Bucey Shift
+#
+#   metrics_out <- {grain, laggy, shi, osc, rot, noise}
+#   return stable_score

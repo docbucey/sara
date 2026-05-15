@@ -1,0 +1,170 @@
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~ HEADER
+~ file=WolfAI.slam
+~ generation=0
+~ language=SLAM
+~ description="WolfAI: simple Wolf3D-style enemy micro-AI"
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+<wolf_mdbp> puppy%(
+  mdbp:{
+    vendor:"MD",
+    model:"WolfAI",
+    version:"0.1",
+    flags:[fps_ai,hardware_aware,cartigene_bound],
+    capabilities:[
+      update_enemy,
+      extract_features,
+      score_with_cartigene
+    ]
+  }
+)%
+
+# -------------------------------------------------------------------
+# STATE: minimal FSM + short-term memory
+# -------------------------------------------------------------------
+<wolf_state> puppy%(
+  nexus:[
+    {field:"state", value:"idle"},          # idle, alerted, chasing, attacking
+    {field:"last_seen_player", nexus:[0,0]},
+    {field:"last_sound_pos",   nexus:[0,0]},
+    {field:"chase_timer",      value:0.0},
+    {field:"fire_cooldown",    value:0.0},
+    {field:"room_id",          value:0},
+    {field:"tick_time",        value:0.0}   # last frame time (for laggy)
+  ]
+)%
+
+# -------------------------------------------------------------------
+# FEATURE MAP: what WolfAI "sees" each tick
+# -------------------------------------------------------------------
+<wolf_feature_map> puppy%(
+  nexus:[
+    {field:"feature_names", value:[
+      "distance_to_player",   # scalar
+      "angle_to_player",      # scalar
+      "has_line_of_sight",    # 0/1
+      "heard_sound",          # 0/1
+      "time_since_seen",      # scalar
+      "time_since_sound",     # scalar
+      "frame_time",           # scalar (for laggy)
+      "padding"
+    ]},
+    {field:"vector_length", value:8}
+  ]
+)%
+
+# -------------------------------------------------------------------
+# CARTIGENE PRIMITIVES (simple, local use)
+# -------------------------------------------------------------------
+<wolf_cartigene> puppy%(
+  nexus:[
+    # 1. Grain: shape stability of feature vector
+    {name:"grain", expr:"abs(len(features) - expected_size)"},
+
+    # 2. Laggy: frame timing mismatch
+    {name:"laggy", expr:"frame_time / expected_frame_time"},
+
+    # 3. Shi: crude 'quality' of this enemy's behavior vs. cost
+    {name:"shi", expr:"(memory_use + footprint) / (frame_time + 1)"},
+
+    # 4. Osc: unstable state flipping (e.g., idle<->alerted every tick)
+    {name:"osc", expr:"abs(current_state_id - previous_state_id) > osc_threshold"},
+
+    # 5. Rot: cyclical behavior (chase->idle->chase loops)
+    {name:"rot", expr:"(d1 * d2) < 0"},
+
+    # 6. Bucey: stabilize noisy aggression score
+    {name:"bucey", expr:"value / (1 + abs(noise))"}
+  ]
+)%
+
+# -------------------------------------------------------------------
+# POLICY: tuning knobs for behavior
+# -------------------------------------------------------------------
+<wolf_policy> puppy%(
+  nexus:[
+    {field:"sound_radius",        value:10.0},
+    {field:"chase_timeout",       value:5.0},
+    {field:"fire_cooldown_time",  value:0.8},
+    {field:"los_angle_limit_deg", value:60.0},
+    {field:"max_chase_distance",  value:20.0},
+
+    # CartiGene weighting for final score
+    {field:"alpha", value:1.0},   # base aggression
+    {field:"beta",  value:0.5},   # reward good shi
+    {field:"gamma", value:0.7}    # penalize oscillation
+  ]
+)%
+
+# -------------------------------------------------------------------
+# EXPORTS
+# -------------------------------------------------------------------
+<wolf_exports> puppy%(
+  nexus:[
+    {name:"update_enemy",        type:"fn", signature:"(enemy_state, world_state) -> enemy_state"},
+    {name:"extract_features",    type:"fn", signature:"(enemy_state, world_state) -> [float]"},
+    {name:"score_with_cartigene",type:"fn", signature:"(features,metrics_out) -> float"}
+  ]
+)%
+
+# -------------------------------------------------------------------
+# LOGIC (PSEUDO, FOR IMPLEMENTORS)
+# -------------------------------------------------------------------
+# extract_features(enemy_state, world_state):
+#   - Compute:
+#       distance_to_player
+#       angle_to_player
+#       has_line_of_sight (raycast on grid/map)
+#       heard_sound (1 if recent sound within sound_radius)
+#       time_since_seen
+#       time_since_sound
+#       frame_time (delta since last tick)
+#   - Return [f0..f7] padded to vector_length
+#
+# update_enemy(enemy_state, world_state):
+#   f = extract_features(enemy_state, world_state)
+#
+#   # Simple FSM:
+#   # idle:
+#   #   if heard_sound or has_line_of_sight -> alerted
+#   # alerted:
+#   #   move toward last_sound_pos or player
+#   #   if has_line_of_sight -> chasing
+#   # chasing:
+#   #   move toward player while distance < max_chase_distance
+#   #   if in range and fire_cooldown <= 0 -> attacking
+#   #   if time_since_seen > chase_timeout -> idle
+#   # attacking:
+#   #   fire, set fire_cooldown = fire_cooldown_time
+#   #   remain chasing if player still visible, else alerted/idle
+#
+#   # Decrement timers (chase_timer, fire_cooldown) by frame_time.
+#   # Update last_seen_player / last_sound_pos when appropriate.
+#
+#   # Optionally call score_with_cartigene(f, metrics_out) to get
+#   # a stability/aggression score for debugging or tuning.
+#
+#   # Return updated enemy_state.
+#
+# score_with_cartigene(features, metrics_out):
+#   - expected_size = wolf_feature_map.vector_length
+#   - grain = |len(features) - expected_size|
+#   - laggy = frame_time / expected_frame_time
+#   - shi   = (memory_use + footprint) / (frame_time + 1)
+#   - osc   = |current_state_id - previous_state_id| > osc_threshold
+#   - rot   = (d1 * d2) < 0   # based on recent state transitions
+#   - noise = laggy + grain   # simple composite noise term
+#
+#   - base_aggression = 1.0 if state in {chasing, attacking} else 0.3
+#   - composite = alpha*base_aggression + beta*shi - gamma*(osc ? 1.0 : 0.0)
+#   - stable_score = composite / (1 + abs(noise))   # Bucey Shift
+#
+#   - metrics_out <- {grain, laggy, shi, osc, rot, noise}
+#   - return stable_score
+#
+# This is the "simple primitive" Wolf AI:
+# - no learning
+# - small FSM
+# - basic raycast/sound awareness
+# - CartiGene only used as a lightweight stability/aggression meter.

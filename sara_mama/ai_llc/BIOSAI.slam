@@ -1,0 +1,120 @@
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~ HEADER
+~ file=BIOSAI.slam
+~ generation=0
+~ language=SLAM
+~ description="BIOSAI: hardware identity and POST micro-AI; low-level bring-up, secure identity, capability attestation, CartiGene baseline"
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+<bios_mdbp> puppy%(
+  mdbp:{
+    vendor:"MD",
+    model:"BIOSAI",
+    version:"0.1",
+    flags:[hardware_identity,post,attestation,cartigene_ready,provenance_emitter],
+    capabilities:[
+      run_post,
+      attestation_report,
+      capability_attest,
+      compute_cartigene_identity,
+      emit_bios_events
+    ]
+  }
+)%
+
+# STATE
+<bios_state> puppy%(
+  nexus:[
+    {field:"bios_stage", value:"idle"},            # idle|post|attested|error
+    {field:"hardware_ids", value:{}},              # serials, macs, TPM_id
+    {field:"firmware_versions", value:{}},
+    {field:"attestation_token", value:null},
+    {field:"capability_vector", value:[]},
+    {field:"cartigene_identity", value:null},
+    {field:"expected_post_time", value:0.5}
+  ]
+)%
+
+# FEATURE MAP
+<bios_feature_map> puppy%(
+  nexus:[
+    {field:"feature_names", value:[
+      "num_ids",
+      "post_latency",
+      "firmware_mismatch_count",
+      "capability_entropy",
+      "padding"
+    ]},
+    {field:"vector_length", value:5}
+  ]
+)%
+
+# POLICY
+<bios_policy> puppy%(
+  nexus:[
+    {field:"post_timeout_seconds", value:5},
+    {field:"require_attestation", value:true},
+    {field:"cartigene_alpha", value:1.0},
+    {field:"cartigene_beta", value:0.9},
+    {field:"cartigene_gamma", value:1.2},
+    {field:"exec_threshold", value:0.75}
+  ]
+)%
+
+# EXPORTS
+<bios_exports> puppy%(
+  nexus:[
+    {name:"run_post", type:"fn", signature:"(bios_state) -> bios_state"},
+    {name:"attestation_report", type:"fn", signature:"(bios_state) -> {token, report}"},
+    {name:"capability_attest", type:"fn", signature:"(bios_state) -> {capabilities, signature}"},
+    {name:"compute_cartigene_identity", type:"fn", signature:"(bios_state) -> metrics"},
+    {name:"emit_bios_events", type:"fn", signature:"(bios_state, event_bus) -> ack"}
+  ]
+)%
+
+# LOGIC (PSEUDO)
+# run_post(bios_state):
+#   - bios_stage <- "post"
+#   - collect hardware_ids (serials, macs, TPM)
+#   - collect firmware_versions
+#   - measure post_latency
+#   - capability_vector <- build from hardware capabilities and firmware flags
+#   - bios_state.capability_vector = capability_vector
+#   - metrics = compute_cartigene_identity(features)
+#   - bios_state.cartigene_identity = metrics
+#   - if metrics.stable_score >= bios_policy.exec_threshold and bios_policy.require_attestation:
+#       - bios_stage <- "attested"
+#       - attestation_token = generate_attestation(hardware_ids, capability_vector)
+#       - bios_state.attestation_token = attestation_token
+#     else:
+#       - bios_stage <- "error" or "attest_warn"
+#   - provenance = {hardware_ids_hash, firmware_versions_hash, metrics, ts}
+#   - write attestation and provenance to NBS if allowed
+#   - return bios_state
+#
+# attestation_report(bios_state):
+#   - report = {hardware_ids, firmware_versions, capability_vector, cartigene_identity}
+#   - token = sign(report)
+#   - return {token, report}
+#
+# capability_attest(bios_state):
+#   - capabilities = map capability_vector to named features
+#   - signature = sign(capabilities + hardware_ids)
+#   - return {capabilities, signature}
+#
+# compute_cartigene_identity(features):
+#   - expected_size = bios_feature_map.vector_length
+#   - grain = abs(len(features) - expected_size)
+#   - laggy = features[1] / bios_state.expected_post_time
+#   - shi = (sum(capability_vector) + capability_entropy) / (laggy + 1)
+#   - osc = detect_repeated_post_failures()
+#   - noise = laggy + grain + (features[2] * 0.1)
+#   - base_stability = 1.0 if features[2] == 0 else 0.3
+#   - composite = bios_policy.cartigene_alpha*base_stability + bios_policy.cartigene_beta*shi - bios_policy.cartigene_gamma*(osc ? 1.0 : 0.0)
+#   - stable_score = composite / (1 + abs(noise))
+#   - return {grain, laggy, shi, osc, noise, stable_score}
+#
+# emit_bios_events(bios_state, event_bus):
+#   - event = {type:"bios.attest", attestation_token, cartigene_identity, provenance}
+#   - publish to event_bus
+#   - return ack

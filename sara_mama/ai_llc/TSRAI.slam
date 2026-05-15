@@ -1,0 +1,131 @@
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~ HEADER
+~ file=TSRAI.slam
+~ generation=0
+~ language=SLAM
+~ description="TSRAI: resident hook/daemon micro-AI; hook registry, event interception, eviction, CartiGene-stabilized actions, provenance"
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+<tsr_mdbp> puppy%(
+  mdbp:{
+    vendor:"MD",
+    model:"TSRAI",
+    version:"0.1",
+    flags:[resident,hook_manager,cartigene_ready,provenance_emitter],
+    capabilities:[
+      register_hook,
+      unregister_hook,
+      intercept_event,
+      resident_heartbeat,
+      eviction_check,
+      score_with_cartigene
+    ]
+  }
+)%
+
+# STATE
+<tsr_state> puppy%(
+  nexus:[
+    {field:"hooks", value:{}},               # hook_id -> {event_type, rule, priority, provenance}
+    {field:"resident_footprint", value:0.0}, # memory footprint
+    {field:"last_eviction_check", value:0},
+    {field:"provenance_log", value:[]},
+    {field:"eviction_threshold", value:0.8},
+    {field:"expected_runtime", value:0.01}
+  ]
+)%
+
+# FEATURE MAP
+<tsr_feature_map> puppy%(
+  nexus:[
+    {field:"feature_names", value:[
+      "num_hooks",
+      "avg_hook_latency",
+      "resident_footprint",
+      "recent_evictions",
+      "padding"
+    ]},
+    {field:"vector_length", value:5}
+  ]
+)%
+
+# POLICY
+<tsr_policy> puppy%(
+  nexus:[
+    {field:"max_hooks_per_tenant", value:16},
+    {field:"eviction_check_interval", value:60},
+    {field:"eviction_memory_threshold", value:0.9},
+    {field:"cartigene_alpha", value:1.0},
+    {field:"cartigene_beta", value:0.8},
+    {field:"cartigene_gamma", value:1.1},
+    {field:"exec_threshold", value:0.7},
+    {field:"scale_threshold", value:0.5}
+  ]
+)%
+
+# EXPORTS
+<tsr_exports> puppy%(
+  nexus:[
+    {name:"register_hook", type:"fn", signature:"(tsr_state, hook_spec) -> {hook_id, ack}"},
+    {name:"unregister_hook", type:"fn", signature:"(tsr_state, hook_id) -> ack"},
+    {name:"intercept_event", type:"fn", signature:"(tsr_state, event) -> event_or_modified"},
+    {name:"resident_heartbeat", type:"fn", signature:"(tsr_state) -> tsr_state"},
+    {name:"eviction_check", type:"fn", signature:"(tsr_state) -> {evicted_hooks}"},
+    {name:"score_with_cartigene", type:"fn", signature:"(features) -> metrics"}
+  ]
+)%
+
+# LOGIC (PSEUDO)
+# register_hook(tsr_state, hook_spec):
+#   - if len(hooks) >= tsr_policy.max_hooks_per_tenant: reject
+#   - hook_id = uuid()
+#   - hooks[hook_id] = {event_type, rule, priority, provenance:hook_spec.provenance}
+#   - provenance_log.append({ts, action:"register", hook_id, provenance})
+#   - return {hook_id, ack:true}
+#
+# unregister_hook(tsr_state, hook_id):
+#   - remove hook if exists, log provenance
+#   - return ack
+#
+# intercept_event(tsr_state, event):
+#   - matched_hooks = find hooks matching event.type ordered by priority
+#   - for each hook in matched_hooks:
+#       - features = extract_features_for_hook(tsr_state, hook, event)
+#       - metrics = score_with_cartigene(features)
+#       - if metrics.stable_score >= tsr_policy.exec_threshold:
+#           - action = apply_hook_rule(hook.rule, event)
+#           - provenance = {hook_id, metrics, ts}
+#           - emit tsr.action event with provenance
+#           - if action modifies persistent state: require provenance and optionally NBS write
+#       - elif metrics.stable_score >= tsr_policy.scale_threshold:
+#           - apply scaled action (e.g., annotate event, lower priority)
+#       - else:
+#           - defer or flag for review
+#   - return possibly modified event
+#
+# resident_heartbeat(tsr_state):
+#   - update resident_footprint, avg_hook_latency, recent_evictions
+#   - if resident_footprint > tsr_policy.eviction_memory_threshold:
+#       - call eviction_check
+#   - log heartbeat with CartiGene metrics
+#   - return tsr_state
+#
+# eviction_check(tsr_state):
+#   - compute features = [num_hooks, avg_hook_latency, resident_footprint, recent_evictions, padding]
+#   - metrics = score_with_cartigene(features)
+#   - if metrics.stable_score < tsr_policy.exec_threshold:
+#       - select low-priority hooks to evict until stable_score rises
+#       - log evicted hooks with provenance
+#   - return {evicted_hooks}
+#
+# score_with_cartigene(features):
+#   - expected_size = tsr_feature_map.vector_length
+#   - grain = abs(len(features) - expected_size)
+#   - laggy = features[1] / tsr_state.expected_runtime
+#   - shi = (features[2] + features[3]) / (laggy + 1)
+#   - osc = detect_repeated_hook_flipflop()
+#   - noise = laggy + grain + (features[3] * 0.1)
+#   - base_stability = 1.0 if features[2] < tsr_policy.eviction_memory_threshold else 0.4
+#   - composite = tsr_policy.cartigene_alpha*base_stability + tsr_policy.cartigene_beta*shi - tsr_policy.cartigene_gamma*(osc ? 1.0 : 0.0)
+#   - stable_score = composite / (1 + abs(noise))
+#   - return {grain, laggy, shi, osc, noise, stable_score}

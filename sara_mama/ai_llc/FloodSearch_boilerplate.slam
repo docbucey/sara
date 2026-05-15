@@ -1,0 +1,60 @@
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~ HEADER                                                   ~
+~ kennel=substrate                                         ~
+~ language=SLAM                                            ~
+~ role=boilerplate                                         ~
+~ system=FloodSearch                                       ~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+<floodsearch_system> kennel%(
+    role:"semantic_discovery_engine",
+    principle:"flood_fill_graph_traversal",
+    seed_source:"MDBP_blocks",
+    integration:"Tagger + HexShape"
+)%
+
+#= FLOOD_SEARCH_SEEDING =#
+# Each SLAM file (puppy, dog, breed, kennel, trainer)
+# contains an MDBP block. These MDBPs act as pre-connected
+# seed nodes for Flood-Search.
+
+<floodsearch_seeding> puppy%(
+    purpose:nexus:[
+        "accelerate_initialization",
+        "provide_immediate_context",
+        "reduce_search_depth",
+        "enable_tagger_mirroring"
+    ],
+    behavior:nexus:[
+        "read_mdbps_before_scan",
+        "establish_identity_anchors",
+        "pre_connect_routing_graph"
+    ],
+    participating_files:nexus:[
+        "puppy.slam",
+        "dog.slam",
+        "breed.slam",
+        "kennel.slam",
+        "trainer.slam"
+    ]
+)%
+
+#= FLOOD_SEARCH_PIPELINE =#
+# FloodSearch uses HexShape for fast lookup and Format Handler
+# for decoding found regions.
+
+<floodsearch_pipeline> dog%(
+    input:"search_query_or_context",
+    process:nexus:[
+        "1_floodsearch_finds_hexshape_candidates",
+        "2_format_handler_resolves_addresses",
+        "3_normalizer_decodes_regions",
+        "4_filter_by_tagger_metadata"
+    ],
+    output:"structured_results_graph"
+)%
+
+<floodsearch_format_integration> puppy%(
+    rule:"fast_filter_then_deep_decode",
+    mechanism:"hexshape_addressing"
+)%

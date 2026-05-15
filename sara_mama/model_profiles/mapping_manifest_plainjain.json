@@ -1,0 +1,271 @@
+{
+  "manifest_version": "0.1",
+  "manifest_name": "plainjain_control_proto_math_mapping",
+  "status": "PHASE0_DORMANT",
+  "generated_at": "2026-04-13",
+  "non_destructive": true,
+  "runtime_execution_enabled": false,
+  "source_paths": [
+    "claywork/saragen0finish/sara_mama/proto_math/layer_1_power_roots.py",
+    "claywork/saragen0finish/sara_mama/proto_math/layer_2_calculus_operations.py",
+    "claywork/saragen0finish/sara_mama/proto_math/layer_3_linear_algebra.py",
+    "claywork/saragen0finish/sara_mama/proto_math/layer_4_random_generators.py",
+    "claywork/saragen0finish/sara_mama/proto_math/layer_5_geometry_transformations.py",
+    "claywork/saragen0finish/sara_mama/proto_math/layer_6_physics_mechanics.py",
+    "claywork/saragen0finish/sara_mama/proto_math/layer_7_chemistry.py",
+    "claywork/saragen0finish/sara_mama/proto_math/layer_8_biology_ecology.py",
+    "claywork/saragen0finish/sara_mama/proto_math/layer_9_astrophysics.py",
+    "claywork/saragen0finish/sara_mama/proto_math/layer_10_business_economics.py",
+    "claywork/saragen0finish/sara_mama/proto_math/layer_11_optical_physics.py",
+    "claywork/saragen0finish/sara_mama/proto_math/layer12_accustic_physics.py",
+    "claywork/saragen0finish/sara_mama/proto_math/mathengine.py",
+    "claywork/saragen0finish/sara_mama/ai_llc/plainjainllm.slam",
+    "claywork/saragen0finish/sara_mama/ai_llc/FloodSearch_boilerplate.slam",
+    "claywork/saragen0finish/sara_mama/ai_llc/memorai.slam",
+    "claywork/saragen0finish/sara_mama/ai_llc/gpuprocessor.slam",
+    "claywork/saragen0finish/sara_mama/ai_llc/ollama_bridge.slam",
+    "claywork/saragen0finish/sara_mama/ai_llc/deepseeker_coder_bridge.slam",
+    "claywork/saragen0finish/sara_control/sara_controlgen1.py",
+    "claywork/saragen0finish/sara_core/sara_coregen1.py",
+    "claywork/saragen0finish/sara_mama/sara_mamagen1.py",
+    "SPEC_SHEET_GEN0_CSHARP_EXTENDED.md"
+  ],
+  "proto_math_index": [
+    {
+      "math_layer_name": "layer_1_power_roots",
+      "file": "claywork/saragen0finish/sara_mama/proto_math/layer_1_power_roots.py",
+      "exported_symbol": "pow",
+      "lines": "5-5"
+    },
+    {
+      "math_layer_name": "layer_2_calculus_operations",
+      "file": "claywork/saragen0finish/sara_mama/proto_math/layer_2_calculus_operations.py",
+      "exported_symbol": "second_derivative",
+      "lines": "5-5"
+    },
+    {
+      "math_layer_name": "layer_3_linear_algebra",
+      "file": "claywork/saragen0finish/sara_mama/proto_math/layer_3_linear_algebra.py",
+      "exported_symbol": "mat_transpose",
+      "lines": "5-5"
+    },
+    {
+      "math_layer_name": "layer_4_random_generators",
+      "file": "claywork/saragen0finish/sara_mama/proto_math/layer_4_random_generators.py",
+      "exported_symbol": "rand",
+      "lines": "14-14"
+    },
+    {
+      "math_layer_name": "layer_5_geometry_transformations",
+      "file": "claywork/saragen0finish/sara_mama/proto_math/layer_5_geometry_transformations.py",
+      "exported_symbol": "distance",
+      "lines": "8-8"
+    },
+    {
+      "math_layer_name": "layer_6_physics_mechanics",
+      "file": "claywork/saragen0finish/sara_mama/proto_math/layer_6_physics_mechanics.py",
+      "exported_symbol": "kin_position",
+      "lines": "8-8"
+    },
+    {
+      "math_layer_name": "layer_7_chemistry",
+      "file": "claywork/saragen0finish/sara_mama/proto_math/layer_7_chemistry.py",
+      "exported_symbol": "moles",
+      "lines": "8-8"
+    },
+    {
+      "math_layer_name": "layer_8_biology_ecology",
+      "file": "claywork/saragen0finish/sara_mama/proto_math/layer_8_biology_ecology.py",
+      "exported_symbol": "reaction_enthalpy",
+      "lines": "9-9"
+    },
+    {
+      "math_layer_name": "layer_9_astrophysics",
+      "file": "claywork/saragen0finish/sara_mama/proto_math/layer_9_astrophysics.py",
+      "exported_symbol": "gravitational_force",
+      "lines": "8-8"
+    },
+    {
+      "math_layer_name": "layer_10_business_economics",
+      "file": "claywork/saragen0finish/sara_mama/proto_math/layer_10_business_economics.py",
+      "exported_symbol": "percentage_change",
+      "lines": "25-25"
+    },
+    {
+      "math_layer_name": "layer_11_optical_physics",
+      "file": "claywork/saragen0finish/sara_mama/proto_math/layer_11_optical_physics.py",
+      "exported_symbol": "focal_length_from_fov",
+      "lines": "22-22"
+    },
+    {
+      "math_layer_name": "layer_12_accustic_physics",
+      "file": "claywork/saragen0finish/sara_mama/proto_math/layer12_accustic_physics.py",
+      "exported_symbol": "wavelength",
+      "lines": "26-26"
+    }
+  ],
+  "slam_index": [
+    {
+      "slam_op": "tokenize",
+      "param_names": ["method", "input"],
+      "resource_paths": ["substrate_mapping"],
+      "file": "claywork/saragen0finish/sara_mama/ai_llc/plainjainllm.slam",
+      "lines": "21-21"
+    },
+    {
+      "slam_op": "floodsearch_match",
+      "param_names": ["target"],
+      "resource_paths": ["substrate_mapping"],
+      "file": "claywork/saragen0finish/sara_mama/ai_llc/plainjainllm.slam",
+      "lines": "22-22"
+    },
+    {
+      "slam_op": "follow_nexus_links",
+      "param_names": ["depth", "threshold"],
+      "resource_paths": [],
+      "file": "claywork/saragen0finish/sara_mama/ai_llc/plainjainllm.slam",
+      "lines": "23-23"
+    },
+    {
+      "slam_op": "sequian_reconstruction",
+      "param_names": ["using"],
+      "resource_paths": ["math_layer_3_linear_algebra"],
+      "file": "claywork/saragen0finish/sara_mama/ai_llc/plainjainllm.slam",
+      "lines": "24-24"
+    },
+    {
+      "slam_op": "weight_definition",
+      "param_names": ["resonance_radius", "stability", "provenance"],
+      "resource_paths": ["_nexus_resonance_radius_puppy", "_nexus_stability_puppy", "provenance_chain"],
+      "file": "claywork/saragen0finish/sara_mama/ai_llc/plainjainllm.slam",
+      "lines": "14-16"
+    },
+    {
+      "slam_op": "floodsearch_pipeline",
+      "param_names": ["process"],
+      "resource_paths": ["hexshape_addressing", "MDBP_blocks", "tagger_metadata"],
+      "file": "claywork/saragen0finish/sara_mama/ai_llc/FloodSearch_boilerplate.slam",
+      "lines": "46-59"
+    }
+  ],
+  "control_context_index": [
+    {
+      "field_name": "mode",
+      "file": "claywork/saragen0finish/sara_control/sara_controlgen1.py",
+      "lines": "4031-4033"
+    },
+    {
+      "field_name": "strain",
+      "file": "claywork/saragen0finish/sara_control/sara_controlgen1.py",
+      "lines": "1959-2030"
+    },
+    {
+      "field_name": "profile_ref",
+      "file": "claywork/saragen0finish/sara_control/sara_controlgen1.py",
+      "lines": "4034-4036"
+    },
+    {
+      "field_name": "environment",
+      "file": "claywork/saragen0finish/sara_control/sara_controlgen1.py",
+      "lines": "4079-4079"
+    },
+    {
+      "field_name": "persona",
+      "file": "claywork/saragen0finish/sara_control/sara_controlgen1.py",
+      "lines": "4104-4104"
+    },
+    {
+      "field_name": "doc_scope",
+      "file": "claywork/saragen0finish/sara_control/sara_controlgen1.py",
+      "lines": "4103-4103"
+    }
+  ],
+  "context_to_slam_bindings": [
+    {
+      "when": {
+        "mode": "interactive",
+        "strain": "normal"
+      },
+      "set": {
+        "resonance_radius": 0.6,
+        "stability_threshold": 0.85,
+        "provenance_weight": 0.9,
+        "propagation_depth": 3
+      }
+    },
+    {
+      "when": {
+        "mode": "interactive",
+        "strain": "pressure"
+      },
+      "set": {
+        "resonance_radius": 0.5,
+        "stability_threshold": 0.88,
+        "provenance_weight": 0.95,
+        "propagation_depth": 2
+      }
+    },
+    {
+      "when": {
+        "mode": "night_shift",
+        "strain": "constrained"
+      },
+      "set": {
+        "resonance_radius": 0.4,
+        "stability_threshold": 0.92,
+        "provenance_weight": 0.98,
+        "propagation_depth": 1
+      }
+    }
+  ],
+  "slam_to_math_refs": {
+    "sequian_reconstruction": "proto_math::layer_3_linear_algebra.mat_inverse",
+    "follow_nexus_links": "proto_math::layer_2_calculus_operations.gradient",
+    "floodsearch_match": "proto_math::layer_1_power_roots.poly_eval",
+    "stochastic_sampling": "proto_math::layer_4_random_generators.rand"
+  },
+  "floodsearch_resource_bindings": {
+    "hexshape_index_path": "nbs/index/hexshape.idx",
+    "mdbp_seed_path": "nbs/mdbp/",
+    "tagger_metadata_path": "nbs/tagger/"
+  },
+  "governance": {
+    "store_in_mama": true,
+    "mama_path": "model_profiles/mapping_manifest_plainjain.json",
+    "external_api_allowed": false,
+    "dry_run_default": true,
+    "phase0_constraint_refs": [
+      "SPEC_SHEET_GEN0_CSHARP_EXTENDED.md:218",
+      "SPEC_SHEET_GEN0_CSHARP_EXTENDED.md:366"
+    ]
+  },
+  "phase_tags": {
+    "PHASE0_DORMANT": [
+      "manifest metadata",
+      "proto_math_index string references",
+      "slam_index declarations",
+      "context_to_slam_bindings",
+      "slam_to_math_refs"
+    ],
+    "PHASE1_RUNTIME_CANDIDATE": [
+      "AMIPI plainjain_executor target activation",
+      "runtime slam executor hookup",
+      "runtime math dispatch bridge"
+    ],
+    "BLOCKED_BY_MISSING": [
+      "SLAM parser/executor in Python not found",
+      "context-to-weight runtime bridge not implemented",
+      "mathengine layers package mismatch"
+    ]
+  },
+  "pre_claywork_adapter": {
+    "required": "YES",
+    "path": "claywork/saragen0finish/sara_mama/model_profiles/adapters/plainjain_mapping_adapter.py",
+    "api_contract": [
+      "load_manifest(path)",
+      "validate_manifest_schema(manifest)",
+      "get_binding_preview(context)"
+    ],
+    "log_path": "claywork/saragen0finish/sara_mama/logs/"
+  }
+}

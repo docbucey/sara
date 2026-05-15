@@ -1,0 +1,84 @@
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~ HEADER
+~ file=kentuckybaby.slam
+~ generation=0
+~ language=SLAM
+~ description="Minimal Manchester-Baby style micro-AI using CartiGene"
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+# HARDWARE METADATA
+<ai_kentucky_mdbp> puppy%(
+  mdbp:{
+    vendor:"MD",
+    model:"KENTUCKY_BABY",
+    version:"0.1",
+    flags:[proto_ai,deterministic,low_footprint],
+    capabilities:[sample,cartigene_eval,tag,route,report],
+    notes:"LLC-level micro-AI; stored-program runtime; ephemeral state"
+  }
+)%
+
+# NEXUS STATE (runtime buffers and metrics)
+<ai_kentucky_state> puppy%(
+  nexus:[
+    {field:"pc", value:0},
+    {field:"acc", value:0},
+    {field:"samples", nexus:[]},                # circular buffer of state vectors
+    {field:"last_metrics", nexus:{grain:0,laggy:0,shi:0,osc:0,rot:0,bucey:0}},
+    {field:"health", value:"unknown"},
+    {field:"escalate", value:"none"},
+    {field:"program_loaded", value:false}
+  ]
+)%
+
+# STORED PROGRAM (Manchester-Baby style control loop)
+# Keep program short and editable by Trainer
+<ai_kentucky_program> puppy%(
+  nexus:[
+    "00: SAMPLE sensor_queue_depth -> samples",
+    "01: PUSH_STATE samples",
+    "02: APPLY_CARTIGENE samples -> last_metrics",
+    "03: TAGGER last_metrics -> features",
+    "04: POST features -> summary",
+    "05: CMP last_metrics.shi, 1.25 -> escalate_yes, escalate_no",
+    "06: IF escalate_yes ROUTE task:diagnose capability:gpu",
+    "07: REPORT health, last_metrics",
+    "08: SLEEP 1",
+    "09: JMP 00"
+  ]
+)%
+
+# CONNECTORS
+%(ai_kentucky_state)%    <router> %(ai_kentucky_program)%
+%(ai_kentucky_state)%    <router> %(cartigene_lib)%
+%(ai_kentucky_state)%    <router> %(tagger_module)%
+%(ai_kentucky_state)%    <router> %(post_module)%
+%(ai_kentucky_state)%    <router> %(floodsearch_module)%
+%(ai_kentucky_state)%    <router> %(memanagement_module)%
+
+# SHUTDOWN CONTRACT
+<ai_kentucky_shutdown> puppy%(
+  nexus:[
+    {action:"flush_state"},
+    {action:"checkpoint_summary_optional"},
+    {action:"zero_buffers"},
+    {action:"ack_clean"}
+  ]
+)%
+
+%(handle_shutdown_contract)% <router> %(ai_kentucky_shutdown)%
+
+# DEFAULT THRESHOLDS (editable)
+<ai_kentucky_policy> puppy%(
+  nexus:[
+    {field:"shi_escalate_threshold", value:1.25},
+    {field:"osc_threshold", value:0.2},
+    {field:"grain_expected_size", value:8},
+    {field:"checkpoint_on_critical", value:false}
+  ]
+)%
+
+# NOTES
+# - The CartiGene primitives are expected to be provided by cartigene_lib.slam
+# - tagger/post/floodsearch/memanagement are pluggable modules
+# - Program lines are human-readable ops; Trainer will lower them to SXF ops

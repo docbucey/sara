@@ -1,0 +1,101 @@
+:root {
+  --title-bg: #002F6C;
+  --title-fg: #FFFFFF;
+  --accent: #FFB81C;
+  --accent-hover: #FFD45A;
+  --panel-bg: #F5F5F5;
+  --panel-fg: #002F6C;
+  --editor-bg: #FFFFFF;
+  --editor-fg: #002F6C;
+  --line-number: #7A8CA5;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+  background: var(--editor-bg);
+  color: var(--editor-fg);
+}
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 18px;
+  background: var(--title-bg);
+  color: var(--title-fg);
+}
+.panel {
+  max-width: 520px;
+  margin: 60px auto;
+  padding: 20px;
+  background: var(--panel-bg);
+  border: 1px solid var(--line-number);
+  border-radius: 12px;
+}
+.login input, button, textarea {
+  width: 100%;
+}
+button {
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 8px;
+  border: 1px solid var(--accent);
+  background: var(--accent);
+  color: var(--title-bg);
+  cursor: pointer;
+  font-weight: 600;
+}
+button:hover { background: var(--accent-hover); }
+.tabs {
+  display: flex;
+  gap: 8px;
+  padding: 12px;
+  background: var(--panel-bg);
+}
+.tab {
+  width: auto;
+  margin: 0;
+  background: var(--panel-bg);
+  color: var(--panel-fg);
+  border-color: var(--line-number);
+}
+.tab.active {
+  background: var(--title-bg);
+  color: var(--title-fg);
+  border-bottom: 3px solid var(--accent);
+}
+.tabpane {
+  display: none;
+  padding: 12px;
+  background: var(--editor-bg);
+}
+.tabpane.active {
+  display: block;
+}
+textarea, input {
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid var(--line-number);
+  margin: 6px 0;
+  color: var(--editor-fg);
+  background: var(--editor-bg);
+}
+pre {
+  background: var(--panel-bg);
+  color: var(--editor-fg);
+  padding: 10px;
+  border-radius: 8px;
+  overflow-x: auto;
+  border: 1px solid var(--line-number);
+}
+.row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.row input[type="checkbox"] { width: auto; }
+.status { min-height: 18px; color: var(--panel-fg); }
+@media (max-width: 700px) {
+  .tabs { flex-wrap: wrap; }
+}

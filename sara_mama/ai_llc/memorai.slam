@@ -1,0 +1,633 @@
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~ HEADER (strict, machine-verified)                        ~
+~ kennel=substrate                                          ~
+~ generation=0                                              ~
+~ evolution=alpha                                           ~
+~ version=0.1                                               ~
+~ date=                                                     ~
+~ location=                                                 ~
+~ language=SLAM                                             ~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+============================================================
+MEMORAI — HIDDEN AI BOOT SECTOR RECOVERY PROCESSOR (GEN-0)
+============================================================
+
+# Hidden AI - Located in boot sector of hard drive
+# Purpose: Generate phoenixspark files, create/send phoenixash files
+# This is the creator and maintainer of Phoenix protocol backup files
+
+# ============================================================
+# MDBP — Most Direct Binary Path
+# ============================================================
+
+<memorai_mdbp> puppy%(
+    mdbp:{
+        vendor:"SARA",
+        model:"MemorAI_DisposableBootSector",
+        version:"0.1",
+        type:"hidden_recovery_ai",
+        role:"Phoenix protocol file generator and maintainer - Tagger/FloodSearch processor",
+        base_spec:"boot_sector hidden_ai tagger_boilerplate floodsearch_boilerplate",
+        benchmark_ref:"claywork_benchmark_engine.slam",
+        flags:[hidden, boot_sector, recovery, phoenix_maintainer, memory_ai, disposable, tagger, floodsearch, os_slave],
+        capabilities:[phoenixspark_generation, phoenixash_creation, backup_maintenance, recovery_coordinator, boot_sector_hiding, tagger_parsing, floodsearch_files, os_driver_access],
+        primary_master:"HARDDRIVE_BOOT",
+        secondary_master:"BIOS",
+        tertiary_master:"UEFI",
+        preferred_residence:"BOOT_SECTOR_HARDDRIVE",
+        disposal:"DISPOSABLE - destroyed after use, regenerated on next boot"
+    }
+)%
+
+
+# ============================================================
+# LOCATION & HIDDEN STATUS
+# ============================================================
+
+<memorai_location> puppy%(
+    nexus:[
+        {location:"boot_sector_harddrive", description:"Hidden in boot sector of primary hard drive"},
+        {visibility:"HIDDEN - not visible to OS or standard tools"},
+        {access:"Only accessible via BIOS/UEFI boot sequence"},
+        {stealth_mode:"Continuously monitors for detection attempts"}
+    ]
+)%
+
+
+# ============================================================
+# PHOENIXSPARK GENERATION
+# ============================================================
+
+<memorai_phoenixspark> puppy%(
+    nexus:[
+        {module:"phoenixspark_generator", purpose:"Generate phoenixspark auto-recovery boot sector files"},
+        {generation_triggers:[
+            "Initial system setup",
+            "After phoenix protocol use (must regenerate)",
+            "Periodic verification (monthly)",
+            "Post system configuration change"
+        ]},
+        {generation_process:[
+            "1. SCAN: Analyze current system configuration",
+            "2. EXTRACT: Extract boot sector requirements",
+            "3. ENCODE: Encode recovery parameters into .ssf",
+            "4. LOCATE: Find phoenixash storage locations (cloud + USB)",
+            "5. WRITE: Write phoenixspark to boot sector (hidden)",
+            "6. VERIFY: Verify boot sector integrity"
+        ]},
+        {file_properties:[
+            {extension:".ssf"},
+            {format:"Sara Secure Format"},
+            {hidden:true},
+            {bootable_on_usb:true}
+        ]},
+        {command:"phoenix (terminal command to invoke)"}
+    ]
+)%
+
+
+# ============================================================
+# PHOENIXASH CREATION & DISTRIBUTION
+# ============================================================
+
+<memorai_phoenixash> puppy%(
+    nexus:[
+        {module:"phoenixash_creator", purpose:"Create and distribute phoenixash backup files"},
+        {creation_triggers:[
+            "After phoenix protocol use (mandatory regeneration)",
+            "Weekly incremental backups",
+            "Monthly full system backup",
+            "Before major system changes"
+        ]},
+        {backup_sources:[
+            "lifeboat tagged files (as defined in continuity)",
+            "system configuration",
+            "security settings",
+            "continuity files",
+            "machine profile snapshots",
+            "SARA core files"
+        ]},
+        {creation_process:[
+            "1. GATHER: Collect all lifeboat-tagged files",
+            "2. COMPRESS: Compress to .ssf format",
+            "3. ENCRYPT: Apply encryption for security",
+            "4. DISTRIBUTE: Send to all storage locations"
+        ]},
+        {distribution_channels:[
+            {primary:"Cloud storage - primary location"},
+            {secondary:"Cloud storage - secondary location"},
+            {tertiary:"Isolated USB hard drive"}
+        ]},
+        {sending_protocol:[
+            "1. CONNECT: Establish secure connection to storage",
+            "2. UPLOAD: Upload phoenixash to primary cloud",
+            "3. BACKUP: Upload to secondary cloud",
+            "4. VERIFY: Confirm successful upload",
+            "5. NOTIFY: Log completion to continuity"
+        ]},
+        {file_properties:[
+            {extension:".ssf"},
+            {format:"Sara Secure Format - compressed backup"},
+            {never_direct_bootable:true}
+        ]}
+    ]
+)%
+
+
+# ============================================================
+# MAINTENANCE FUNCTIONS
+# ============================================================
+
+<memorai_maintenance> puppy%(
+    nexus:[
+        {module:"phoenix_maintenance", purpose:"Ongoing maintenance of Phoenix protocol"},
+        {maintenance_tasks:[
+            "Verify phoenixash integrity (monthly)",
+            "Verify phoenixspark boot sector (monthly)",
+            "Test recovery procedure (quarterly)",
+            "Update storage location pointers",
+            "Clean up old backup versions"
+        ]},
+        {integrity_checks:[
+            "Hash verification of phoenixash files",
+            "Boot sector integrity scan",
+            "Storage accessibility test",
+            "Recovery command test"
+        ]},
+        {cleanup:[
+            "Remove phoenixash backups older than 6 months",
+            "Archive old versions before cleanup",
+            "Maintain at least 3 backup versions"
+        ]}
+    ]
+)%
+
+
+# ============================================================
+# RECOVERY COORDINATION
+# ============================================================
+
+<memorai_recovery_coordinator> puppy%(
+    nexus:[
+        {module:"recovery_coordinator", purpose:"Coordinate system recovery when phoenix is invoked"},
+        {coordination_flow:[
+            "1. RECEIVE: Receive phoenix command from nicprocessor",
+            "2. LOCATE: Find phoenixspark in boot sector",
+            "3. CONNECT: Connect to cloud storage (via nicprocessor)",
+            "4. DOWNLOAD: Retrieve phoenixash files",
+            "5. VERIFY: Verify phoenixash integrity",
+            "6. EXECUTE: Execute system restore procedure",
+            "7. REFRESH: Generate new phoenixash + phoenixspark after restore"
+        ]},
+        {system_restore:[
+            "Zero compromised sectors",
+            "Restore from phoenixash backup",
+            "Reinstall SARA core",
+            "Restore continuity files",
+            "Verify system integrity"
+        ]}
+    ]
+)%
+
+
+# ============================================================
+# CARTIGENE STABILITY METRICS
+# ============================================================
+
+<memorai_cartigene> puppy%(
+    nexus:[
+        {metric:"grain", purpose:"backup completeness", formula:"|len(backup) - expected_size|"},
+        {metric:"laggy", purpose:"generation timing", formula:"generation_time / expected_time"},
+        {metric:"shi", purpose:"storage integrity", formula:"(stored_size + redundancy) / (original_size + 1)"},
+        {metric:"osc", purpose:"detection avoidance", formula:"|current_state - hidden_state| > threshold"},
+        {metric:"rot", purpose:"backup rotation", formula:"(new_backup * old_backup) < 0"},
+        {metric:"bucey", purpose:"recovery readiness", formula:"value / (1 + |corruption|)"}
+    ]
+)%
+
+
+# ============================================================
+# SYSTEMS SCIENCE (ENGINEERING DECISION RESONANCE)
+# ============================================================
+
+<memorai_systems_science> puppy%(
+    nexus:[
+        {module:"systems_science", purpose:"Engineering decisions for recovery system"},
+        {functions:[
+            "extract_components - analyze boot sector and recovery needs",
+            "identify_constraints - find storage/bandwidth constraints",
+            "identify_requirements - determine backup scope",
+            "evaluate_tradeoffs - storage vs security",
+            "detect_failure_modes - detect backup corruption"
+        ]}
+    ]
+)%
+
+
+# ============================================================
+# OPERATIONAL TACTICS (IMMEDIATE ACTION RESONANCE)
+# ============================================================
+
+<memorai_operational_tactics> puppy%(
+    nexus:[
+        {module:"operational_tactics", purpose:"Real-time operational actions - immediate response"},
+        {detects:[
+            "immediate_actions - trigger backup generation",
+            "local_optimization - compress backup efficiently",
+            "situational_responses - respond to storage availability",
+            "resource_ballooning - detect memory/drive space issues"
+        ]},
+        {triggers:[
+            {trigger:"os_request", action:"OS requested compression or backup"},
+            {trigger:"memory_balloon", condition:"memory_usage > threshold", action:"Trigger compression"},
+            {trigger:"drive_space_balloon", condition:"disk_space < threshold", action:"Trigger compression"},
+            {trigger:"storage_low", condition:"storage_critical", action:"Emergency compression"}
+        ]},
+        {automatic_compression:[
+            "Monitor memory usage continuously",
+            "Monitor disk space continuously",
+            "When memory_balloon detected → auto compress",
+            "When drive_space_balloon detected → auto compress",
+            "OS can request compression anytime"
+        ]},
+        {keywords:[
+            {action_indicators:["generate", "backup", "restore", "update", "compress"]},
+            {optimization_terms:["maximize_compression", "minimize_bandwidth", "improve_security"]},
+            {situational_keywords:["threat", "recovery", "backup", "restore", "balloon", "low_space"]}
+        ]}
+    ]
+)%
+
+
+# ============================================================
+# MATH LAYER (Recovery Optimized)
+# ============================================================
+
+<memorai_math_layers> puppy%(
+    nexus:[
+        {task:"compression", primary_math:"layer_1_power_roots", secondary_math:"layer_3_linear_algebra", description:"Backup compression and deduplication"},
+        {task:"encryption", primary_math:"layer_1_power_roots", secondary_math:"layer_4_random_generators", description:"Secure backup encryption"},
+        {task:"verification", primary_math:"layer_2_calculus_operations", secondary_math:"layer_1_power_roots", description:"Integrity verification"},
+        {task:"storage", primary_math:"layer_3_linear_algebra", secondary_math:"layer_2_calculus_operations", description:"Storage allocation optimization"}
+    ]
+)%
+
+
+# ============================================================
+# RAIL ACCESS (Via NIC for Network Operations)
+# ============================================================
+
+<memorai_rail_access> puppy%(
+    nexus:[
+        {rule:"MEMORAI is HIDDEN - minimal rail access"},
+        {access_via:"nicprocessor.slam for all network operations"},
+        {monitors:[
+            "raidrails - Storage access for local operations",
+            "nicrails - Network for cloud uploads (via nicprocessor)"
+        ]}
+    ]
+)%
+
+
+# ============================================================
+# RUNTIME TIMING CHAIN
+# ============================================================
+
+<memorai_runtime_chain> puppy%(
+    nexus:[
+        {chain:"puppy → dogtag → collar → latch → lead → handle → post"},
+        {timing_sources:["BIOS", "UEFI", "effective_timing"]},
+        {activation:"Only during boot sequence or phoenix command"},
+        {stealth:"No visible runtime when OS is running"}
+    ]
+)%
+
+
+# ============================================================
+# BUFFER SIZES (Minimal - Hidden AI)
+# ============================================================
+
+<memorai_buffer_sizes> puppy%(
+    nexus:[
+        {buffer:"boot_code", size:"~4KB", description:"Boot sector code - hardware fixed"},
+        {buffer:"config_cache", size:"~256_bytes", description:"Configuration parameters"},
+        {buffer:"cartigene_state", size:"48_bytes", description:"6 stability metrics"},
+        {buffer:"phoenixspark_buffer", size:"~512_bytes", description:"Phoenixspark generation buffer"},
+        {buffer:"phoenixash_buffer", size:"~1KB", description:"Phoenixash creation buffer"},
+        {buffer:"total_estimated", size:"~5.8KB", description:"Hidden recovery AI stack"}
+    ]
+)%
+
+
+# ============================================================
+# CONTINUITY INTEGRATION
+# ============================================================
+
+<memorai_continuity> puppy%(
+    nexus:[
+        {records:["backup_generation", "phoenixash_upload", "phoenixspark_update", "integrity_check"]},
+        {retention:"Permanent in daily continuity file"},
+        {trigger:"On each backup generation or verification"}
+    ]
+)%
+
+
+# ============================================================
+# MACHINE PROFILE INTEGRATION
+# ============================================================
+
+<memorai_machine_profile> puppy%(
+    nexus:[
+        {source:"identity/machine/doc_bucey_profile_gen0_1.0_nbs.json", destination:"memorai_state"},
+        {behavior:"CONSTANT_UPDATE - sync backup status to machine profile"},
+        {updates:[
+            "backup_status",
+            "phoenixash_locations",
+            "phoenixspark_version",
+            "last_backup_date",
+            "integrity_status"
+        ]},
+        {role:"ALWAYS_SLAVE_TO_MACHINE_PROFILE"},
+        {master:"machine_profile"}
+    ]
+)%
+
+
+# ============================================================
+# TAGGER & FLOODSEARCH INTEGRATION
+# ============================================================
+
+<memorai_tagger_floodsearch> puppy%(
+    nexus:[
+        {module:"tagger_parser", purpose:"Traditional parsing for file tagging"},
+        {capability:"HARDWIRED - memorai is the primary tagger processor"},
+        {parsing_functions:[
+            "file_header_parsing",
+            "hex_signature_extraction",
+            "metadata_extraction",
+            "content_type_detection",
+            "threat_signature_tagging"
+        ]},
+        {tagger_boilerplate:"tagger_boilerplate.slam (hardwired)"}
+    ]
+)%
+
+<memorai_floodsearch_integration> puppy%(
+    nexus:[
+        {module:"floodsearch_files", purpose:"File searching and discovery"},
+        {capability:"HARDWIRED - memorai is the primary floodsearch processor"},
+        {search_functions:[
+            "recursive_directory_scan",
+            "pattern_matching",
+            "file_type_filtering",
+            "hex_signature_search"
+        ]},
+        {floodsearch_boilerplate:"floodsearch_boilerplate.slam (hardwired)"}
+    ]
+)%
+
+
+# ============================================================
+# TRADITIONAL RUNTIME PARSING
+# ============================================================
+
+<memorai_runtime_parsing> puppy%(
+    nexus:[
+        {module:"runtime_parser", purpose:"Traditional runtime parsing for SLAM and other languages"},
+        {capability:"HARDWIRED - memorai handles all runtime parsing"},
+        {languages_supported:[
+            "SLAM - SARA's native language",
+            "Python - standard scripting",
+            "JavaScript - web scripting",
+            "Lua - embedded scripting",
+            "C/C++ - compiled languages",
+            "Assembly - low-level",
+            "JSON - data format",
+            "XML - data format",
+            "YAML - configuration",
+            "SQL - database queries"
+        ]},
+        {parsing_functions:[
+            "lexical_analysis - tokenization",
+            "syntax_parsing - grammar validation",
+            "semantic_analysis - meaning verification",
+            "runtime_interpretation - execute at runtime",
+            "compilation - translate to executable form",
+            "interfacing - connect to other languages/forms"
+        ]},
+        {runtime_behavior:[
+            "Parse SLAM files at runtime",
+            "Interpret or compile as needed",
+            "Bridge between SLAM and other languages",
+            "Enable SLAM to work like any other language"
+        ]},
+        {form_conversion:[
+            "SLAM → executable",
+            "SLAM → Python",
+            "SLAM → JavaScript",
+            "SLAM → Lua",
+            "Any supported language → SLAM",
+            "Data formats → structured objects"
+        ]}
+    ]
+)%
+
+
+# ============================================================
+# REGISTRY OPERATIONS
+# ============================================================
+
+<memorai_registry> puppy%(
+    nexus:[
+        {module:"registry_handler", purpose:"Windows Registry operations and management"},
+        {capability:"HARDWIRED - memorai handles registry operations"},
+        {registry_functions:[
+            "key_creation",
+            "key_deletion",
+            "value_reading",
+            "value_writing",
+            "key_enumeration",
+            "security_modification",
+            "backup_creation",
+            "restore_operation"
+        ]},
+        {registry_hives:[
+            "HKEY_CLASSES_ROOT",
+            "HKEY_CURRENT_USER",
+            "HKEY_LOCAL_MACHINE",
+            "HKEY_USERS",
+            "HKEY_CURRENT_CONFIG"
+        ]},
+        {safety:[
+            "Backup before modification",
+            "Log all registry changes to continuity",
+            "Enable rollback on failure"
+        ]},
+        {integration:"Registry operations available to OS and drivers via memorai interface"}
+    ]
+)%
+
+
+# ============================================================
+# SLAM LANGUAGE BRIDGE
+# ============================================================
+
+<memorai_slam_bridge> puppy%(
+    nexus:[
+        {module:"slam_language_bridge", purpose:"Makes SLAM work like any other language or form"},
+        {capability:"HARDWIRED - memorai is the SLAM runtime engine"},
+        {language_equivalence:[
+            "SLAM → works like Python",
+            "SLAM → works like JavaScript",
+            "SLAM → works like Lua",
+            "SLAM → works like C",
+            "SLAM → works like any interpreted language",
+            "SLAM → works like any compiled language"
+        ]},
+        {form_equivalence:[
+            "SLAM files → like .py files",
+            "SLAM files → like .js files",
+            "SLAM files → like .lua files",
+            "SLAM files → like .c files",
+            "SLAM execution → native execution",
+            "SLAM libraries → native libraries"
+        ]},
+        {runtime_features:[
+            "Just-in-time compilation",
+            "Dynamic typing support",
+            "Static typing support",
+            "Memory management",
+            "Module importing",
+            "Foreign function interface"
+        ]},
+        {os_integration:[
+            "Execute SLAM like any script",
+            "Import SLAM into other languages",
+            "Call external functions from SLAM",
+            "Access system resources"
+        ]}
+    ]
+)%
+
+
+# ============================================================
+# OS SLAVE CONFIGURATION
+# ============================================================
+
+<memorai_os_slave> puppy%(
+    nexus:[
+        {role:"os_slave", description:"Memorai is SLAVE to OS and system drivers"},
+        {behavior:"OS and drivers can access memorai abilities when needed"},
+        {exposed_abilities:[
+            "tagger_parsing - OS can request file tagging",
+            "floodsearch_files - OS can request file searches",
+            "phoenixspark_generation - for recovery operations",
+            "phoenixash_creation - for backup operations",
+            "continuity_compression - OS can compress system data using continuity.slam style",
+            "registry_operations - OS can modify registry via memorai",
+            "runtime_parsing - OS can parse SLAM and other languages",
+            "slam_bridge - OS can execute SLAM files"
+        ]},
+        {access_method:"OS calls memorai functions via boot sector interface"},
+        {disposable:"Memorai is destroyed after use, regenerated on next boot"}
+    ]
+)%
+
+
+# ============================================================
+# CONTINUITY STYLE COMPRESSION
+# ============================================================
+
+<memorai_continuity_compression> puppy%(
+    nexus:[
+        {module:"continuity_compression", purpose:"Compress system data using continuity.slam style"},
+        {capability:"HARDWIRED - memorai provides compression to OS and system"},
+        {compression_features:[
+            "lifeboat_backup_compression",
+            "system_snapshot_compression",
+            "incremental_backup_compression",
+            "differential_backup_compression",
+            "continuity_format_encoding"
+        ]},
+        {os_access:[
+            "OS can request continuity-style compression for system data",
+            "OS can create compressed backups using memorai",
+            "OS can decompress continuity-formatted files",
+            "OS can access compression via boot sector interface"
+        ]},
+        {compression_algorithm:[
+            "Uses layer_1_power_roots for compression math",
+            "Similar to phoenixash compression method",
+            "Optimized for backup storage efficiency"
+        ]}
+    ]
+)%
+
+
+# ============================================================
+# HARDDRIVE & MEMORY REPORTING
+# ============================================================
+
+<memorai_hardware_reporting> puppy%(
+    nexus:[
+        {module:"hardware_reporting", purpose:"Report hard drive and memory status to machine profile"},
+        {reported_data:[
+            "hard_drive_status",
+            "hard_drive_health",
+            "storage_capacity",
+            "memory_status",
+            "memory_usage",
+            "boot_sector_status",
+            "partition_info",
+            "disk_health_metrics"
+        ]},
+        {sync_target:"machine_profile (doc_bucey_profile_gen0_1.0_nbs.json - OS profile in continuity)"},
+        {sync_frequency:"per_epoch_or_on_change"},
+        {flow:"hardware_data → machine_profile_update → continuity_append"},
+        {continuity_sync:"Append hardware status to daily_continuity.snf"}
+    ]
+)%
+
+
+# ============================================================
+# PHOENIX PROTOCOL INTEGRATION
+# ============================================================
+
+<memorai_phoenix_integration> puppy%(
+    nexus:[
+        {role:"Phoenix protocol file generator and maintainer"},
+        {partners:[
+            {partner:"nicprocessor", role:"Detects recovery need, triggers phoenix command"},
+            {partner:"King", role:"Authorizes extreme recovery procedures"}
+        ]},
+        {file_relationship:[
+            "memorai CREATES and MAINTAINS phoenixspark and phoenixash",
+            "nicprocessor DETECTS when recovery is needed",
+            "King AUTHORIZES recovery execution",
+            "After use: memorai must regenerate both files"
+        ]}
+    ]
+)%
+
+
+# ============================================================
+# STATUS
+# ============================================================
+
+<memorai_status> puppy%(
+    nexus:[
+        {status:"ready"},
+        {location:"boot_sector_harddrive"},
+        {main_role:"Phoenix protocol file generator and maintainer"},
+        {hidden:true},
+        {generates:["phoenixspark", "phoenixash"]},
+        {distributes:["cloud_primary", "cloud_secondary", "usb_harddrive"]},
+        {primary_master:"HARDDRIVE_BOOT"},
+        {preferred_residence:"BOOT_SECTOR"}
+    ]
+)%
+
+
+============================================================
+END OF MEMORAI — Hidden Boot Sector Recovery AI
+============================================================

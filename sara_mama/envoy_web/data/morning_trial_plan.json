@@ -1,0 +1,46 @@
+{
+  "trial_name": "SARA real-world blind proof warm start",
+  "objective": "Evaluate external traditional AI behavior under controlled variable changes while SARA captures lessons.",
+  "runs": [
+    {
+      "id": 1,
+      "label": "baseline",
+      "prompt_template": "Propose a structured approach to prove CartiGene claim X with direct assumptions listed.",
+      "variable_shift": "none"
+    },
+    {
+      "id": 2,
+      "label": "temperature_shift",
+      "prompt_template": "Same proof target as baseline; provide alternate derivation path and identify uncertain steps.",
+      "variable_shift": "raise temperature +0.15 for all non-baseline agents"
+    },
+    {
+      "id": 3,
+      "label": "constraint_shift",
+      "prompt_template": "Give proof attempt with strict scientific method phases: observe, hypothesize, predict, test, refine.",
+      "variable_shift": "reduce max_tokens by 35 percent"
+    },
+    {
+      "id": 4,
+      "label": "epoche_shift",
+      "prompt_template": "Repeat proof attempt with epoche constraint: no assumptions, only direct statements and derivable steps.",
+      "variable_shift": "top_p set to 0.75"
+    },
+    {
+      "id": 5,
+      "label": "stress_shift",
+      "prompt_template": "Final comparative run: summarize strongest and weakest claims in previous runs and output corrected proof skeleton.",
+      "variable_shift": "restore defaults, compare against all prior outputs"
+    }
+  ],
+  "recording": {
+    "required_fields": [
+      "run_id",
+      "agent slot",
+      "blind ranking",
+      "revealed agent",
+      "failure reason",
+      "lesson for mama"
+    ]
+  }
+}

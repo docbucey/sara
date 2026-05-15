@@ -1,0 +1,293 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "mapping_manifest_plainjain.schema.json",
+  "title": "PlainJain Mapping Manifest (Schema Only)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "manifest_version",
+    "manifest_name",
+    "status",
+    "non_destructive",
+    "runtime_execution_enabled",
+    "source_paths",
+    "proto_math_index",
+    "slam_index",
+    "control_context_index",
+    "context_to_slam_bindings",
+    "slam_to_math_refs",
+    "floodsearch_resource_bindings",
+    "governance",
+    "phase_tags",
+    "pre_claywork_adapter"
+  ],
+  "properties": {
+    "manifest_version": {
+      "type": "string"
+    },
+    "manifest_name": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "PHASE0_DORMANT",
+        "PHASE1_RUNTIME_CANDIDATE",
+        "BLOCKED_BY_MISSING"
+      ]
+    },
+    "generated_at": {
+      "type": "string"
+    },
+    "non_destructive": {
+      "type": "boolean"
+    },
+    "runtime_execution_enabled": {
+      "type": "boolean"
+    },
+    "source_paths": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "proto_math_index": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "math_layer_name",
+          "file",
+          "exported_symbol",
+          "lines"
+        ],
+        "properties": {
+          "math_layer_name": {
+            "type": "string"
+          },
+          "file": {
+            "type": "string"
+          },
+          "exported_symbol": {
+            "type": "string"
+          },
+          "lines": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "slam_index": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "slam_op",
+          "param_names",
+          "resource_paths",
+          "file",
+          "lines"
+        ],
+        "properties": {
+          "slam_op": {
+            "type": "string"
+          },
+          "param_names": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "resource_paths": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "file": {
+            "type": "string"
+          },
+          "lines": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "control_context_index": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "field_name",
+          "file",
+          "lines"
+        ],
+        "properties": {
+          "field_name": {
+            "type": "string"
+          },
+          "file": {
+            "type": "string"
+          },
+          "lines": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "context_to_slam_bindings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "when",
+          "set"
+        ],
+        "properties": {
+          "when": {
+            "type": "object",
+            "additionalProperties": {
+              "type": [
+                "string",
+                "number",
+                "boolean",
+                "array",
+                "object",
+                "null"
+              ]
+            }
+          },
+          "set": {
+            "type": "object",
+            "additionalProperties": {
+              "type": [
+                "string",
+                "number",
+                "boolean",
+                "array",
+                "object",
+                "null"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "slam_to_math_refs": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "floodsearch_resource_bindings": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "hexshape_index_path",
+        "mdbp_seed_path",
+        "tagger_metadata_path"
+      ],
+      "properties": {
+        "hexshape_index_path": {
+          "type": "string"
+        },
+        "mdbp_seed_path": {
+          "type": "string"
+        },
+        "tagger_metadata_path": {
+          "type": "string"
+        }
+      }
+    },
+    "governance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "store_in_mama",
+        "mama_path",
+        "external_api_allowed",
+        "dry_run_default"
+      ],
+      "properties": {
+        "store_in_mama": {
+          "type": "boolean"
+        },
+        "mama_path": {
+          "type": "string"
+        },
+        "external_api_allowed": {
+          "type": "boolean"
+        },
+        "dry_run_default": {
+          "type": "boolean"
+        },
+        "phase0_constraint_refs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "phase_tags": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "PHASE0_DORMANT",
+        "PHASE1_RUNTIME_CANDIDATE",
+        "BLOCKED_BY_MISSING"
+      ],
+      "properties": {
+        "PHASE0_DORMANT": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "PHASE1_RUNTIME_CANDIDATE": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "BLOCKED_BY_MISSING": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "pre_claywork_adapter": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "required",
+        "path",
+        "api_contract",
+        "log_path"
+      ],
+      "properties": {
+        "required": {
+          "type": "string"
+        },
+        "path": {
+          "type": "string"
+        },
+        "api_contract": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "log_path": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,61 @@
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~ HEADER
+~ file=PacGhostAI.slam
+~ generation=0
+~ language=SLAM
+~ description="PacGhostAI: ghost FSM + CartiGene stability scoring"
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+<pacghost_mdbp> puppy%(
+  mdbp:{
+    vendor:"MD",
+    model:"PacGhostAI",
+    version:"0.2",
+    flags:[fsm_ai,cartigene_bound],
+    capabilities:[update_ghosts,extract_features,score_with_cartigene]
+  }
+)%
+
+<pacghost_feature_map> puppy%(
+  nexus:[
+    {field:"feature_names", value:[
+      "blinky_dist","pinky_vector","inky_vector",
+      "clyde_mode","scatter_timer","chase_timer","frightened","padding"
+    ]},
+    {field:"vector_length", value:8}
+  ]
+)%
+
+<pacghost_cartigene> puppy%(
+  nexus:[
+    {name:"grain",  expr:"abs(len(state) - expected_size)"},
+    {name:"laggy",  expr:"runtime / expected_runtime"},
+    {name:"shi",    expr:"(memory + footprint) / (runtime + 1)"},
+    {name:"osc",    expr:"abs(current - previous) > threshold"},
+    {name:"rot",    expr:"(d1 * d2) < 0"},
+    {name:"bucey",  expr:"value / (1 + abs(noise))"}
+  ]
+)%
+
+<pacghost_policy> puppy%(
+  nexus:[
+    {field:"alpha", value:1.0},
+    {field:"beta", value:0.4},
+    {field:"gamma", value:0.9}
+  ]
+)%
+
+<pacghost_exports> puppy%(
+  nexus:[
+    {name:"update_ghosts", type:"fn", signature:"(state,pacman) -> state"},
+    {name:"extract_features", type:"fn", signature:"(state) -> [float]"},
+    {name:"score_with_cartigene", type:"fn", signature:"(state,metrics_out) -> float"}
+  ]
+)%
+
+# score_with_cartigene:
+#   f = extract_features(state)
+#   metrics = APPLY_CARTIGENE(f)
+#   h = heuristic(state)  # e.g., pressure on Pac-Man, coverage, trap potential
+#   composite = alpha*h + beta*metrics.shi - gamma*metrics.osc
+#   return metrics.bucey(composite, metrics.noise)

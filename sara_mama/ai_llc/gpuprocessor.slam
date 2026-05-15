@@ -1,0 +1,268 @@
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~ HEADER (strict, machine-verified)                        ~
+~ kennel=substrate                                          ~
+~ generation=0                                              ~
+~ evolution=alpha                                           ~
+~ version=0.1                                               ~
+~ date=                                                     ~
+~ location=                                                 ~
+~ language=SLAM                                             ~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+============================================================
+GPUPROCESSOR — MICRO AI GPU PROCESSOR (GEN-0)
+============================================================
+
+# Based on graphicsrail.slam template
+# Main role: SYSTEM SECURITY for GPU operations
+# Supports both TACTICAL and OPERATIONAL reasoning
+
+# ============================================================
+# MDBP — Most Direct Binary Path
+# ============================================================
+
+<gpuprocessor_mdbp> puppy%(
+    mdbp:{
+        vendor:"SARA",
+        model:"GPUProcessor_MicroAI",
+        version:"0.1",
+        type:"gpu_micro_ai",
+        role:"system_security_gpu_processor",
+        base_spec:"graphicsrail.slam",
+        benchmark_ref:"claywork_benchmark_engine.slam",
+        flags:[gpu, graphics, micro_ai, floodsearch, backup_capable, shunt_enabled, security, tactical, operational, slave_ai, tri_arch_reporter],
+        capabilities:[gpu_processing, graphics_security, tactical_reasoning, operational_reasoning, dual_reasoning, deep_packet_inspection, ai_inference, shader_processing],
+        primary_master:"CPU",
+        secondary_master:"GPU",
+        tertiary_master:"NPU",
+        preferred_residence:"GPU",
+        master_ai_designation:"SLAVE_AI - one of three that slave AIs report to",
+        reports_to:["CPU (master)", "gpu_secondary", "npu_tertiary"],
+        slave_ais:["nicprocessor", "memorai", "soundprocessor"],
+        slave_attach_point:"All micro AIs report to gpuprocessor as one of 3 CPU-connected branches"
+    }
+)%
+
+
+# ============================================================
+# HARDWARE SPECIFICATIONS
+# ============================================================
+
+<gpuprocessor_hardware_specs> puppy%(
+    nexus:[
+        {power_inputs:[
+            {voltage:"12V_VIN", description:"Primary GPU power input"},
+            {voltage:"3.3V_AUX", description:"Auxiliary power for standby circuits"},
+            {voltage:"1.2V_CORE", description:"GPU core voltage"},
+            {voltage:"VRM_CTRL", description:"VRM control signals for power management"}
+        ]},
+        {cuda_implementation:[
+            {description:"CUDA double buffering with streams for parallel processing"},
+            {host_buffers:["h_buf0", "h_buf1", "h_out0", "h_out1"]},
+            {device_buffers:["d_buf", "d_buf2"]},
+            {streams:["s0", "s1"]}
+        ]},
+        {gpu_architecture:[
+            {cuda_cores:"Nvidia parallel processors"},
+            {stream_processors:"AMD graphics cores"},
+            {tensor_cores:"AI/ML acceleration"},
+            {ray_tracing:"RT cores for ray tracing"}
+        ]},
+        {memory:[
+            {vram:"GDDR6X/HBM2e"},
+            {bandwidth:"High-speed memory bus"}
+        ]},
+        {interfaces:[
+            {pcie:"PCIe 4.0/5.0 x16", variants:["x16", "x8", "x4"]},
+            {video_outputs:"HDMI, DisplayPort, DVI, VGA"}
+        ]},
+        {pcie_board_management:[
+            {lane_mapping:"Ensure x16 lanes map correctly to host PCIe controller"},
+            {slot_power:"Verify slot power delivery matches card requirements (75W/150W/300W)"},
+            {board_management:"Include board management signals for thermal/power monitoring"},
+            {signal_integrity:"Maintain proper PCIe signaling for reliable data transfer"}
+        ]}
+    ]
+)%
+
+
+# ============================================================
+# DUAL REASONING SYSTEM (TACTICAL + OPERATIONAL)
+# ============================================================
+
+<gpuprocessor_dual_reasoning> puppy%(
+    nexus:[
+        {module:"dual_reasoning", purpose:"Support both TACTICAL and OPERATIONAL reasoning"},
+        {capability:"HARDWIRED - GPUProcessor handles both reasoning types simultaneously"},
+        {tactical_reasoning:[
+            {description:"Immediate, real-time response decisions"},
+            {focus:"Short-term, time-critical actions"},
+            {latency:"Ultra-low latency (<1ms)"}
+        ]},
+        {operational_reasoning:[
+            {description:"Strategic, longer-term operational decisions"},
+            {focus:"Medium to long-term optimization"},
+            {latency:"Higher latency acceptable (seconds to minutes)"}
+        ]}
+    ]
+)%
+
+
+# ============================================================
+# MASTER/SLAVE CONFIGURATION
+# ============================================================
+
+<gpuprocessor_master_config> puppy%(
+    nexus:[
+        {role:"preferred_residence", master:"GPU", description:"GPU is preferred residence"},
+        {role:"primary_master", master:"CPU", description:"CPU is master - gpuprocessor is SLAVE"},
+        {role:"secondary_master", master:"GPU", description:"GPU handles processing"},
+        {role:"tertiary_master", master:"NPU", description:"NPU is tertiary master - micro AIs reside here when available"},
+        {tri_arch_reports_to:"CPU - one of three branches from CPU"},
+        {architecture:[
+            "CPU (master of all)",
+            "├── soundprocessor (Branch 1 - audio)",
+            "├── nicprocessor (Branch 2 - network)",
+            "└── gpuprocessor (Branch 3 - GPU)",
+            "NPU (tertiary master - micro AIs reside here)"
+        ]}
+    ]
+)%
+
+
+# ============================================================
+# LOAD SHUNT CAPABILITY (CPU ORDERED)
+# ============================================================
+
+<gpuprocessor_load_shunt> puppy%(
+    nexus:[
+        {capability:"load_shunt", description:"Redistribute load to CPU/GPU/NPU"},
+        {rule:"WAIT_FOR_CPU_ORDER - waits for CPU to order load distribution"},
+        {cpu_order_behavior:[
+            "1. WAIT: GPUProcessor waits for CPU to send 'distribute_load' command",
+            "2. RECEIVE: Receive load distribution order from CPU",
+            "3. IDENTIFY: Identify all available mini AIs (nicprocessor, memorai, etc.)",
+            "4. DISTRIBUTE: Distribute math processing to all available mini AIs",
+            "5. REDISTRIBUTE: Handle math side of redistribution across system",
+            "6. MULTITHREAD: Kick in multithreading for parallel processing",
+            "7. REPORT: Report back to CPU if additional multithreading is needed"
+        ]},
+        {available_mini_ais:["nicprocessor", "memorai", "soundprocessor", "gpuprocessor"]},
+        {strain_policy:"enforce 3% strain with ±0.5% tolerance per post.slam"}
+    ]
+)%
+
+
+# ============================================================
+# CARTIGENE STABILITY METRICS
+# ============================================================
+
+<gpuprocessor_cartigene> puppy%(
+    nexus:[
+        {metric:"grain", formula:"|len(frame_buffer) - expected_size|"},
+        {metric:"laggy", formula:"runtime / expected_runtime"},
+        {metric:"shi", formula:"(memory + footprint) / (runtime + 1)"},
+        {metric:"osc", formula:"|current_frame - previous_frame| > threshold"},
+        {metric:"rot", formula:"(delta1 * delta2) < 0"},
+        {metric:"bucey", formula:"value / (1 + |noise|)"}
+    ]
+)%
+
+
+# ============================================================
+# MATH LAYER PER GPU TASK
+# ============================================================
+
+<gpuprocessor_math_layers> puppy%(
+    nexus:[
+        {task:"deep_inspection", primary_math:"layer_4_random_generators", secondary_math:"layer_2_calculus_operations"},
+        {task:"frame_analysis", primary_math:"layer_3_linear_algebra", secondary_math:"layer_1_power_roots"},
+        {task:"ai_inference", primary_math:"layer_2_calculus_operations", secondary_math:"layer_3_linear_algebra"},
+        {task:"default", primary_math:"layer_3_linear_algebra", secondary_math:"layer_2_calculus_operations"},
+        {graphics_math:["vertex_transformations", "rasterization", "lighting_calculation", "texture_mapping", "ray_tracing", "normal_mapping", "perspective_projection", "anti_aliasing"]},
+        {video_math:["video_decode", "video_encode", "motion_estimation", "frame_interpolation", "color_space_conversion", "video_stabilization", "denoising", "super_resolution"]},
+        {audio_physics_math:["audio_decode", "audio_encode", "spatial_audio", "room_correction", "audio_effects", "voice_processing", "audio_synthesis", "audio_visualization"]},
+        {trigonometry_math:["angle_calculations", "rotation_matrices", "polar_coordinates", "wave_functions", "fourier_transform", "inverse_trig", "hyperbolic_trig", "phase_calculations"]},
+        {geometry_math:["collision_detection", "mesh_processing", "distance_calculations", "surface_normals", "intersection_tests", "tesselation", "bounding_volumes", "transformations"]}
+    ]
+)%
+
+
+# ============================================================
+# RAIL ACCESS POLICY
+# ============================================================
+
+<gpuprocessor_rail_access> puppy%(
+    nexus:[
+        {rule:"ALL_PROCESSORS_READ_ALL_RAILS"},
+        {monitors:["graphicsrail", "nicrails", "soundrails", "videorails", "raidrails", "usbrails"]}
+    ]
+)%
+
+
+# ============================================================
+# RUNTIME TIMING CHAIN
+# ============================================================
+
+<gpuprocessor_runtime_chain> puppy%(
+    nexus:[
+        {chain:"puppy → dogtag → collar → latch → lead → handle → post"},
+        {strain_enforcement:"3% target with ±0.5% tolerance"}
+    ]
+)%
+
+
+# ============================================================
+# CLAYWORK BENCHMARK RESULTS (VALIDATED)
+# ============================================================
+
+<gpuprocessor_claywork_benchmark> puppy%(
+    nexus:[
+        {benchmark_tool:"claywork_benchmark_engine.slam"},
+        {target:"gpuprocessor"},
+        {status:"benchmarked_and_validated"},
+        {buffer_sweep:[
+            {test:"128_bytes", result:"STABLE", cartigene_osc:0.12},
+            {test:"1KB", result:"OPTIMAL", cartigene_osc:0.02, latency:"310ns"},
+            {test:"2KB", result:"OPTIMAL", cartigene_osc:0.01}
+        ]},
+        {optimal_buffer:[
+            {category:"minimum_viable", size:"128_bytes"},
+            {category:"recommended", size:"1KB"}
+        ]},
+        {cartigene_metrics:[
+            {grain:0.01, laggy:0.95, shi:0.88, osc:0.02, rot:0.01, bucey:0.92}
+        ]},
+        {stability_validation:[
+            {strain_target:"3%", actual:"2.8%", compliant:true},
+            {strain_tolerance:"±0.5%", actual:"±0.2%", compliant:true}
+        ]},
+        {test_results:[
+            {latency_test:"PASS", throughput_test:"PASS", cache_efficiency_test:"PASS", stability_test:"PASS"}
+        ]},
+        {pre_compile_checks:[
+            {syntax_validation:"PASS", type_checking:"PASS", dependency_resolution:"PASS", security_scan:"PASS"}
+        ]},
+        {benchmark_output:"gpuprocessor | 128 bytes | 1KB | 0.02 | 310 | 3200000"}
+    ]
+)%
+
+
+# ============================================================
+# STATUS
+# ============================================================
+
+<gpuprocessor_status> puppy%(
+    nexus:[
+        {status:"ready"},
+        {role:"SLAVE_AI - reports to CPU as one of 3 branches"},
+        {primary_master:"CPU"},
+        {reports_to:"CPU (master)"},
+        {tri_arch_position:"one_of_three_cpu_branches"},
+        {claywork_validated:true}
+    ]
+)%
+
+
+============================================================
+END OF GPUPROCESSOR — Micro AI GPU Processor (CLAYWORK VALIDATED)
+============================================================

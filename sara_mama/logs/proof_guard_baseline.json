@@ -1,0 +1,11 @@
+{
+  "ts": "2026-03-13T01:00:08.689690+00:00",
+  "mode": "proof",
+  "hashes": {
+    "sara_mamagen1.py": "d7dcaa23d90d670fc033a21bdf37755f543e86181968698be50a0a4ea877ed36",
+    "sara_pillar_control_io_entrygen1.py": "766772ddb303e737051998bfeaa11a0eca4852b91232724aab847fbe4b0c10d3",
+    "sara_mama_spec_sheet.mak": "1761f4359f1d47d442ea56a4bd7c8e030060fe85e7c8f841bb4633a2947dae5b",
+    "ai_llc/plainjainllm.slam": "e83c482d3a8a2e5269da0ae4b3ecbcdb92abfaa7aa29a995b6da6e3247b99ded",
+    "ai_llc/deepseeker_coder_bridge.slam": "ab06f28644ee355821d8441b76afd027f31696409b4d21d52dee71457068f6b3"
+  }
+}

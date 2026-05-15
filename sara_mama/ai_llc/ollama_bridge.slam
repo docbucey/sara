@@ -1,0 +1,25 @@
+<ollama_bridge> puppy%(
+    mdbp:{
+        vendor:"Ollama",
+        model:"Local_Service",
+        version:"API_v1",
+        connection:{
+            protocol:"http",
+            host:"127.0.0.1",
+            port:11434,
+            endpoint:"/api/generate"
+        },
+        capabilities:[text_generation, embeddings]
+    }
+)%
+
+<ollama_request> breed%(nexus:[
+    {field:"model", type:"sequian", default:"llama3"},
+    {field:"prompt", type:"sequian"},
+    {field:"stream", type:"sequian", default:false}
+])%
+
+<ollama_response> breed%(nexus:[
+    {field:"response", type:"sequian"},
+    {field:"done", type:"sequian"}
+])%

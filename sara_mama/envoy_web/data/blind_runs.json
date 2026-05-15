@@ -1,0 +1,1162 @@
+[
+    {
+        "run_id":  "run-8dd21b28",
+        "ts":  "2026-03-13T02:04:26.600441+00:00",
+        "reveal_deadline_ts":  "2026-03-13T02:24:26.600450+00:00",
+        "reveal_uses":  0,
+        "prompt":  "",
+        "blind_mode":  true,
+        "revealed":  false,
+        "results":  [
+                        {
+                            "agent_id":  "ollama_statistical",
+                            "agent_label":  "Ollama Statistical",
+                            "profile":  "ollama_default",
+                            "backend":  "ollama",
+                            "source_mode":  "fallback",
+                            "score":  92.32,
+                            "status":  "PASS",
+                            "reason":  "score=92.32; source=fallback; note=timed out",
+                            "output":  "Fallback output: backend=ollama unavailable; TimeoutError",
+                            "ts":  "2026-03-13T02:04:14.583285+00:00"
+                        },
+                        {
+                            "agent_id":  "ollama_heuristic",
+                            "agent_label":  "Ollama Heuristic",
+                            "profile":  "ollama_default",
+                            "backend":  "ollama",
+                            "source_mode":  "fallback",
+                            "score":  73.41,
+                            "status":  "PASS",
+                            "reason":  "score=73.41; source=fallback; note=timed out",
+                            "output":  "Fallback output: backend=ollama unavailable; TimeoutError",
+                            "ts":  "2026-03-13T02:04:26.600209+00:00"
+                        },
+                        {
+                            "agent_id":  "gpt4all_local",
+                            "agent_label":  "DeepSeek Coder via Ollama (Temp GPT4All Slot)",
+                            "profile":  "deepseeker_coder_local",
+                            "backend":  "ollama",
+                            "source_mode":  "fallback",
+                            "score":  60.45,
+                            "status":  "PASS",
+                            "reason":  "score=60.45; source=fallback; note=timed out",
+                            "output":  "Fallback output: backend=ollama unavailable; TimeoutError",
+                            "ts":  "2026-03-13T02:04:20.584399+00:00"
+                        },
+                        {
+                            "agent_id":  "scientific_baseline",
+                            "agent_label":  "Scientific Baseline",
+                            "profile":  "plainjain_native",
+                            "backend":  "heuristic",
+                            "source_mode":  "local",
+                            "score":  21.35,
+                            "status":  "FAIL",
+                            "reason":  "score=21.35; source=local",
+                            "output":  "Heuristic baseline summary: observed proof input=\u0027empty-proof-prompt\u0027",
+                            "ts":  "2026-03-13T02:04:26.600241+00:00"
+                        }
+                    ],
+        "blind_slots":  [
+                            {
+                                "slot":  "Agent-A",
+                                "agent_id":  "ollama_heuristic",
+                                "agent_label":  "Ollama Heuristic",
+                                "profile":  "ollama_default",
+                                "score":  73.41,
+                                "status":  "PASS",
+                                "reason":  "score=73.41; source=fallback; note=timed out",
+                                "output":  "Fallback output: backend=ollama unavailable; TimeoutError"
+                            },
+                            {
+                                "slot":  "Agent-B",
+                                "agent_id":  "ollama_statistical",
+                                "agent_label":  "Ollama Statistical",
+                                "profile":  "ollama_default",
+                                "score":  92.32,
+                                "status":  "PASS",
+                                "reason":  "score=92.32; source=fallback; note=timed out",
+                                "output":  "Fallback output: backend=ollama unavailable; TimeoutError"
+                            },
+                            {
+                                "slot":  "Agent-C",
+                                "agent_id":  "scientific_baseline",
+                                "agent_label":  "Scientific Baseline",
+                                "profile":  "plainjain_native",
+                                "score":  21.35,
+                                "status":  "FAIL",
+                                "reason":  "score=21.35; source=local",
+                                "output":  "Heuristic baseline summary: observed proof input=\u0027empty-proof-prompt\u0027"
+                            },
+                            {
+                                "slot":  "Agent-D",
+                                "agent_id":  "gpt4all_local",
+                                "agent_label":  "DeepSeek Coder via Ollama (Temp GPT4All Slot)",
+                                "profile":  "deepseeker_coder_local",
+                                "score":  60.45,
+                                "status":  "PASS",
+                                "reason":  "score=60.45; source=fallback; note=timed out",
+                                "output":  "Fallback output: backend=ollama unavailable; TimeoutError"
+                            }
+                        ],
+        "auth_context":  {
+                             "remote":  "127.0.0.1",
+                             "auth_mode":  "session",
+                             "token_fingerprint":  "none",
+                             "session_auth_ts":  "2026-03-13T02:03:04.161824+00:00"
+                         }
+    },
+    {
+        "run_id":  "run-ef839a8e",
+        "ts":  "2026-03-13T02:04:26.179586+00:00",
+        "reveal_deadline_ts":  "2026-03-13T02:24:26.179595+00:00",
+        "reveal_uses":  0,
+        "prompt":  "",
+        "blind_mode":  true,
+        "revealed":  false,
+        "results":  [
+                        {
+                            "agent_id":  "ollama_statistical",
+                            "agent_label":  "Ollama Statistical",
+                            "profile":  "ollama_default",
+                            "backend":  "ollama",
+                            "source_mode":  "fallback",
+                            "score":  92.32,
+                            "status":  "PASS",
+                            "reason":  "score=92.32; source=fallback; note=timed out",
+                            "output":  "Fallback output: backend=ollama unavailable; TimeoutError",
+                            "ts":  "2026-03-13T02:04:14.149755+00:00"
+                        },
+                        {
+                            "agent_id":  "ollama_heuristic",
+                            "agent_label":  "Ollama Heuristic",
+                            "profile":  "ollama_default",
+                            "backend":  "ollama",
+                            "source_mode":  "fallback",
+                            "score":  73.41,
+                            "status":  "PASS",
+                            "reason":  "score=73.41; source=fallback; note=timed out",
+                            "output":  "Fallback output: backend=ollama unavailable; TimeoutError",
+                            "ts":  "2026-03-13T02:04:26.179410+00:00"
+                        },
+                        {
+                            "agent_id":  "gpt4all_local",
+                            "agent_label":  "DeepSeek Coder via Ollama (Temp GPT4All Slot)",
+                            "profile":  "deepseeker_coder_local",
+                            "backend":  "ollama",
+                            "source_mode":  "fallback",
+                            "score":  60.45,
+                            "status":  "PASS",
+                            "reason":  "score=60.45; source=fallback; note=timed out",
+                            "output":  "Fallback output: backend=ollama unavailable; TimeoutError",
+                            "ts":  "2026-03-13T02:04:20.164417+00:00"
+                        },
+                        {
+                            "agent_id":  "scientific_baseline",
+                            "agent_label":  "Scientific Baseline",
+                            "profile":  "plainjain_native",
+                            "backend":  "heuristic",
+                            "source_mode":  "local",
+                            "score":  21.35,
+                            "status":  "FAIL",
+                            "reason":  "score=21.35; source=local",
+                            "output":  "Heuristic baseline summary: observed proof input=\u0027empty-proof-prompt\u0027",
+                            "ts":  "2026-03-13T02:04:26.179463+00:00"
+                        }
+                    ],
+        "blind_slots":  [
+                            {
+                                "slot":  "Agent-A",
+                                "agent_id":  "scientific_baseline",
+                                "agent_label":  "Scientific Baseline",
+                                "profile":  "plainjain_native",
+                                "score":  21.35,
+                                "status":  "FAIL",
+                                "reason":  "score=21.35; source=local",
+                                "output":  "Heuristic baseline summary: observed proof input=\u0027empty-proof-prompt\u0027"
+                            },
+                            {
+                                "slot":  "Agent-B",
+                                "agent_id":  "ollama_heuristic",
+                                "agent_label":  "Ollama Heuristic",
+                                "profile":  "ollama_default",
+                                "score":  73.41,
+                                "status":  "PASS",
+                                "reason":  "score=73.41; source=fallback; note=timed out",
+                                "output":  "Fallback output: backend=ollama unavailable; TimeoutError"
+                            },
+                            {
+                                "slot":  "Agent-C",
+                                "agent_id":  "ollama_statistical",
+                                "agent_label":  "Ollama Statistical",
+                                "profile":  "ollama_default",
+                                "score":  92.32,
+                                "status":  "PASS",
+                                "reason":  "score=92.32; source=fallback; note=timed out",
+                                "output":  "Fallback output: backend=ollama unavailable; TimeoutError"
+                            },
+                            {
+                                "slot":  "Agent-D",
+                                "agent_id":  "gpt4all_local",
+                                "agent_label":  "DeepSeek Coder via Ollama (Temp GPT4All Slot)",
+                                "profile":  "deepseeker_coder_local",
+                                "score":  60.45,
+                                "status":  "PASS",
+                                "reason":  "score=60.45; source=fallback; note=timed out",
+                                "output":  "Fallback output: backend=ollama unavailable; TimeoutError"
+                            }
+                        ],
+        "auth_context":  {
+                             "remote":  "127.0.0.1",
+                             "auth_mode":  "session",
+                             "token_fingerprint":  "none",
+                             "session_auth_ts":  "2026-03-13T02:03:04.161824+00:00"
+                         }
+    },
+    {
+        "run_id":  "run-3772ce4a",
+        "ts":  "2026-03-13T02:04:24.074748+00:00",
+        "reveal_deadline_ts":  "2026-03-13T02:24:24.074753+00:00",
+        "reveal_uses":  0,
+        "prompt":  "",
+        "blind_mode":  true,
+        "revealed":  false,
+        "results":  [
+                        {
+                            "agent_id":  "ollama_statistical",
+                            "agent_label":  "Ollama Statistical",
+                            "profile":  "ollama_default",
+                            "backend":  "ollama",
+                            "source_mode":  "fallback",
+                            "score":  92.32,
+                            "status":  "PASS",
+                            "reason":  "score=92.32; source=fallback; note=timed out",
+                            "output":  "Fallback output: backend=ollama unavailable; TimeoutError",
+                            "ts":  "2026-03-13T02:04:12.045974+00:00"
+                        },
+                        {
+                            "agent_id":  "ollama_heuristic",
+                            "agent_label":  "Ollama Heuristic",
+                            "profile":  "ollama_default",
+                            "backend":  "ollama",
+                            "source_mode":  "fallback",
+                            "score":  73.41,
+                            "status":  "PASS",
+                            "reason":  "score=73.41; source=fallback; note=timed out",
+                            "output":  "Fallback output: backend=ollama unavailable; TimeoutError",
+                            "ts":  "2026-03-13T02:04:24.074630+00:00"
+                        },
+                        {
+                            "agent_id":  "gpt4all_local",
+                            "agent_label":  "DeepSeek Coder via Ollama (Temp GPT4All Slot)",
+                            "profile":  "deepseeker_coder_local",
+                            "backend":  "ollama",
+                            "source_mode":  "fallback",
+                            "score":  60.45,
+                            "status":  "PASS",
+                            "reason":  "score=60.45; source=fallback; note=timed out",
+                            "output":  "Fallback output: backend=ollama unavailable; TimeoutError",
+                            "ts":  "2026-03-13T02:04:18.059407+00:00"
+                        },
+                        {
+                            "agent_id":  "scientific_baseline",
+                            "agent_label":  "Scientific Baseline",
+                            "profile":  "plainjain_native",
+                            "backend":  "heuristic",
+                            "source_mode":  "local",
+                            "score":  21.35,
+                            "status":  "FAIL",
+                            "reason":  "score=21.35; source=local",
+                            "output":  "Heuristic baseline summary: observed proof input=\u0027empty-proof-prompt\u0027",
+                            "ts":  "2026-03-13T02:04:24.074671+00:00"
+                        }
+                    ],
+        "blind_slots":  [
+                            {
+                                "slot":  "Agent-A",
+                                "agent_id":  "ollama_heuristic",
+                                "agent_label":  "Ollama Heuristic",
+                                "profile":  "ollama_default",
+                                "score":  73.41,
+                                "status":  "PASS",
+                                "reason":  "score=73.41; source=fallback; note=timed out",
+                                "output":  "Fallback output: backend=ollama unavailable; TimeoutError"
+                            },
+                            {
+                                "slot":  "Agent-B",
+                                "agent_id":  "gpt4all_local",
+                                "agent_label":  "DeepSeek Coder via Ollama (Temp GPT4All Slot)",
+                                "profile":  "deepseeker_coder_local",
+                                "score":  60.45,
+                                "status":  "PASS",
+                                "reason":  "score=60.45; source=fallback; note=timed out",
+                                "output":  "Fallback output: backend=ollama unavailable; TimeoutError"
+                            },
+                            {
+                                "slot":  "Agent-C",
+                                "agent_id":  "scientific_baseline",
+                                "agent_label":  "Scientific Baseline",
+                                "profile":  "plainjain_native",
+                                "score":  21.35,
+                                "status":  "FAIL",
+                                "reason":  "score=21.35; source=local",
+                                "output":  "Heuristic baseline summary: observed proof input=\u0027empty-proof-prompt\u0027"
+                            },
+                            {
+                                "slot":  "Agent-D",
+                                "agent_id":  "ollama_statistical",
+                                "agent_label":  "Ollama Statistical",
+                                "profile":  "ollama_default",
+                                "score":  92.32,
+                                "status":  "PASS",
+                                "reason":  "score=92.32; source=fallback; note=timed out",
+                                "output":  "Fallback output: backend=ollama unavailable; TimeoutError"
+                            }
+                        ],
+        "auth_context":  {
+                             "remote":  "127.0.0.1",
+                             "auth_mode":  "session",
+                             "token_fingerprint":  "none",
+                             "session_auth_ts":  "2026-03-13T02:03:04.161824+00:00"
+                         }
+    },
+    {
+        "run_id":  "run-c15d8430",
+        "ts":  "2026-03-13T02:04:09.253670+00:00",
+        "reveal_deadline_ts":  "2026-03-13T02:24:09.253675+00:00",
+        "reveal_uses":  0,
+        "prompt":  "",
+        "blind_mode":  true,
+        "revealed":  false,
+        "results":  [
+                        {
+                            "agent_id":  "ollama_statistical",
+                            "agent_label":  "Ollama Statistical",
+                            "profile":  "ollama_default",
+                            "backend":  "ollama",
+                            "source_mode":  "fallback",
+                            "score":  92.32,
+                            "status":  "PASS",
+                            "reason":  "score=92.32; source=fallback; note=timed out",
+                            "output":  "Fallback output: backend=ollama unavailable; TimeoutError",
+                            "ts":  "2026-03-13T02:03:57.233524+00:00"
+                        },
+                        {
+                            "agent_id":  "ollama_heuristic",
+                            "agent_label":  "Ollama Heuristic",
+                            "profile":  "ollama_default",
+                            "backend":  "ollama",
+                            "source_mode":  "fallback",
+                            "score":  73.41,
+                            "status":  "PASS",
+                            "reason":  "score=73.41; source=fallback; note=timed out",
+                            "output":  "Fallback output: backend=ollama unavailable; TimeoutError",
+                            "ts":  "2026-03-13T02:04:09.253570+00:00"
+                        },
+                        {
+                            "agent_id":  "gpt4all_local",
+                            "agent_label":  "DeepSeek Coder via Ollama (Temp GPT4All Slot)",
+                            "profile":  "deepseeker_coder_local",
+                            "backend":  "ollama",
+                            "source_mode":  "fallback",
+                            "score":  60.45,
+                            "status":  "PASS",
+                            "reason":  "score=60.45; source=fallback; note=timed out",
+                            "output":  "Fallback output: backend=ollama unavailable; TimeoutError",
+                            "ts":  "2026-03-13T02:04:03.240751+00:00"
+                        },
+                        {
+                            "agent_id":  "scientific_baseline",
+                            "agent_label":  "Scientific Baseline",
+                            "profile":  "plainjain_native",
+                            "backend":  "heuristic",
+                            "source_mode":  "local",
+                            "score":  21.35,
+                            "status":  "FAIL",
+                            "reason":  "score=21.35; source=local",
+                            "output":  "Heuristic baseline summary: observed proof input=\u0027empty-proof-prompt\u0027",
+                            "ts":  "2026-03-13T02:04:09.253601+00:00"
+                        }
+                    ],
+        "blind_slots":  [
+                            {
+                                "slot":  "Agent-A",
+                                "agent_id":  "ollama_heuristic",
+                                "agent_label":  "Ollama Heuristic",
+                                "profile":  "ollama_default",
+                                "score":  73.41,
+                                "status":  "PASS",
+                                "reason":  "score=73.41; source=fallback; note=timed out",
+                                "output":  "Fallback output: backend=ollama unavailable; TimeoutError"
+                            },
+                            {
+                                "slot":  "Agent-B",
+                                "agent_id":  "scientific_baseline",
+                                "agent_label":  "Scientific Baseline",
+                                "profile":  "plainjain_native",
+                                "score":  21.35,
+                                "status":  "FAIL",
+                                "reason":  "score=21.35; source=local",
+                                "output":  "Heuristic baseline summary: observed proof input=\u0027empty-proof-prompt\u0027"
+                            },
+                            {
+                                "slot":  "Agent-C",
+                                "agent_id":  "ollama_statistical",
+                                "agent_label":  "Ollama Statistical",
+                                "profile":  "ollama_default",
+                                "score":  92.32,
+                                "status":  "PASS",
+                                "reason":  "score=92.32; source=fallback; note=timed out",
+                                "output":  "Fallback output: backend=ollama unavailable; TimeoutError"
+                            },
+                            {
+                                "slot":  "Agent-D",
+                                "agent_id":  "gpt4all_local",
+                                "agent_label":  "DeepSeek Coder via Ollama (Temp GPT4All Slot)",
+                                "profile":  "deepseeker_coder_local",
+                                "score":  60.45,
+                                "status":  "PASS",
+                                "reason":  "score=60.45; source=fallback; note=timed out",
+                                "output":  "Fallback output: backend=ollama unavailable; TimeoutError"
+                            }
+                        ],
+        "auth_context":  {
+                             "remote":  "127.0.0.1",
+                             "auth_mode":  "session",
+                             "token_fingerprint":  "none",
+                             "session_auth_ts":  "2026-03-13T02:03:04.161824+00:00"
+                         }
+    },
+    {
+        "run_id":  "run-8e0cf9e9",
+        "ts":  "2026-03-13T02:04:09.007610+00:00",
+        "reveal_deadline_ts":  "2026-03-13T02:24:09.007613+00:00",
+        "reveal_uses":  0,
+        "prompt":  "",
+        "blind_mode":  true,
+        "revealed":  false,
+        "results":  [
+                        {
+                            "agent_id":  "ollama_statistical",
+                            "agent_label":  "Ollama Statistical",
+                            "profile":  "ollama_default",
+                            "backend":  "ollama",
+                            "source_mode":  "fallback",
+                            "score":  92.32,
+                            "status":  "PASS",
+                            "reason":  "score=92.32; source=fallback; note=timed out",
+                            "output":  "Fallback output: backend=ollama unavailable; TimeoutError",
+                            "ts":  "2026-03-13T02:03:57.001430+00:00"
+                        },
+                        {
+                            "agent_id":  "ollama_heuristic",
+                            "agent_label":  "Ollama Heuristic",
+                            "profile":  "ollama_default",
+                            "backend":  "ollama",
+                            "source_mode":  "fallback",
+                            "score":  73.41,
+                            "status":  "PASS",
+                            "reason":  "score=73.41; source=fallback; note=timed out",
+                            "output":  "Fallback output: backend=ollama unavailable; TimeoutError",
+                            "ts":  "2026-03-13T02:04:09.007522+00:00"
+                        },
+                        {
+                            "agent_id":  "gpt4all_local",
+                            "agent_label":  "DeepSeek Coder via Ollama (Temp GPT4All Slot)",
+                            "profile":  "deepseeker_coder_local",
+                            "backend":  "ollama",
+                            "source_mode":  "fallback",
+                            "score":  60.45,
+                            "status":  "PASS",
+                            "reason":  "score=60.45; source=fallback; note=timed out",
+                            "output":  "Fallback output: backend=ollama unavailable; TimeoutError",
+                            "ts":  "2026-03-13T02:04:03.003474+00:00"
+                        },
+                        {
+                            "agent_id":  "scientific_baseline",
+                            "agent_label":  "Scientific Baseline",
+                            "profile":  "plainjain_native",
+                            "backend":  "heuristic",
+                            "source_mode":  "local",
+                            "score":  21.35,
+                            "status":  "FAIL",
+                            "reason":  "score=21.35; source=local",
+                            "output":  "Heuristic baseline summary: observed proof input=\u0027empty-proof-prompt\u0027",
+                            "ts":  "2026-03-13T02:04:09.007548+00:00"
+                        }
+                    ],
+        "blind_slots":  [
+                            {
+                                "slot":  "Agent-A",
+                                "agent_id":  "ollama_statistical",
+                                "agent_label":  "Ollama Statistical",
+                                "profile":  "ollama_default",
+                                "score":  92.32,
+                                "status":  "PASS",
+                                "reason":  "score=92.32; source=fallback; note=timed out",
+                                "output":  "Fallback output: backend=ollama unavailable; TimeoutError"
+                            },
+                            {
+                                "slot":  "Agent-B",
+                                "agent_id":  "ollama_heuristic",
+                                "agent_label":  "Ollama Heuristic",
+                                "profile":  "ollama_default",
+                                "score":  73.41,
+                                "status":  "PASS",
+                                "reason":  "score=73.41; source=fallback; note=timed out",
+                                "output":  "Fallback output: backend=ollama unavailable; TimeoutError"
+                            },
+                            {
+                                "slot":  "Agent-C",
+                                "agent_id":  "scientific_baseline",
+                                "agent_label":  "Scientific Baseline",
+                                "profile":  "plainjain_native",
+                                "score":  21.35,
+                                "status":  "FAIL",
+                                "reason":  "score=21.35; source=local",
+                                "output":  "Heuristic baseline summary: observed proof input=\u0027empty-proof-prompt\u0027"
+                            },
+                            {
+                                "slot":  "Agent-D",
+                                "agent_id":  "gpt4all_local",
+                                "agent_label":  "DeepSeek Coder via Ollama (Temp GPT4All Slot)",
+                                "profile":  "deepseeker_coder_local",
+                                "score":  60.45,
+                                "status":  "PASS",
+                                "reason":  "score=60.45; source=fallback; note=timed out",
+                                "output":  "Fallback output: backend=ollama unavailable; TimeoutError"
+                            }
+                        ],
+        "auth_context":  {
+                             "remote":  "127.0.0.1",
+                             "auth_mode":  "session",
+                             "token_fingerprint":  "none",
+                             "session_auth_ts":  "2026-03-13T02:03:04.161824+00:00"
+                         }
+    },
+    {
+        "run_id":  "run-b05563c1",
+        "ts":  "2026-03-13T02:04:08.784030+00:00",
+        "reveal_deadline_ts":  "2026-03-13T02:24:08.784034+00:00",
+        "reveal_uses":  0,
+        "prompt":  "",
+        "blind_mode":  true,
+        "revealed":  false,
+        "results":  [
+                        {
+                            "agent_id":  "ollama_statistical",
+                            "agent_label":  "Ollama Statistical",
+                            "profile":  "ollama_default",
+                            "backend":  "ollama",
+                            "source_mode":  "fallback",
+                            "score":  92.32,
+                            "status":  "PASS",
+                            "reason":  "score=92.32; source=fallback; note=timed out",
+                            "output":  "Fallback output: backend=ollama unavailable; TimeoutError",
+                            "ts":  "2026-03-13T02:03:56.766342+00:00"
+                        },
+                        {
+                            "agent_id":  "ollama_heuristic",
+                            "agent_label":  "Ollama Heuristic",
+                            "profile":  "ollama_default",
+                            "backend":  "ollama",
+                            "source_mode":  "fallback",
+                            "score":  73.41,
+                            "status":  "PASS",
+                            "reason":  "score=73.41; source=fallback; note=timed out",
+                            "output":  "Fallback output: backend=ollama unavailable; TimeoutError",
+                            "ts":  "2026-03-13T02:04:08.783939+00:00"
+                        },
+                        {
+                            "agent_id":  "gpt4all_local",
+                            "agent_label":  "DeepSeek Coder via Ollama (Temp GPT4All Slot)",
+                            "profile":  "deepseeker_coder_local",
+                            "backend":  "ollama",
+                            "source_mode":  "fallback",
+                            "score":  60.45,
+                            "status":  "PASS",
+                            "reason":  "score=60.45; source=fallback; note=timed out",
+                            "output":  "Fallback output: backend=ollama unavailable; TimeoutError",
+                            "ts":  "2026-03-13T02:04:02.768617+00:00"
+                        },
+                        {
+                            "agent_id":  "scientific_baseline",
+                            "agent_label":  "Scientific Baseline",
+                            "profile":  "plainjain_native",
+                            "backend":  "heuristic",
+                            "source_mode":  "local",
+                            "score":  21.35,
+                            "status":  "FAIL",
+                            "reason":  "score=21.35; source=local",
+                            "output":  "Heuristic baseline summary: observed proof input=\u0027empty-proof-prompt\u0027",
+                            "ts":  "2026-03-13T02:04:08.783966+00:00"
+                        }
+                    ],
+        "blind_slots":  [
+                            {
+                                "slot":  "Agent-A",
+                                "agent_id":  "gpt4all_local",
+                                "agent_label":  "DeepSeek Coder via Ollama (Temp GPT4All Slot)",
+                                "profile":  "deepseeker_coder_local",
+                                "score":  60.45,
+                                "status":  "PASS",
+                                "reason":  "score=60.45; source=fallback; note=timed out",
+                                "output":  "Fallback output: backend=ollama unavailable; TimeoutError"
+                            },
+                            {
+                                "slot":  "Agent-B",
+                                "agent_id":  "ollama_statistical",
+                                "agent_label":  "Ollama Statistical",
+                                "profile":  "ollama_default",
+                                "score":  92.32,
+                                "status":  "PASS",
+                                "reason":  "score=92.32; source=fallback; note=timed out",
+                                "output":  "Fallback output: backend=ollama unavailable; TimeoutError"
+                            },
+                            {
+                                "slot":  "Agent-C",
+                                "agent_id":  "ollama_heuristic",
+                                "agent_label":  "Ollama Heuristic",
+                                "profile":  "ollama_default",
+                                "score":  73.41,
+                                "status":  "PASS",
+                                "reason":  "score=73.41; source=fallback; note=timed out",
+                                "output":  "Fallback output: backend=ollama unavailable; TimeoutError"
+                            },
+                            {
+                                "slot":  "Agent-D",
+                                "agent_id":  "scientific_baseline",
+                                "agent_label":  "Scientific Baseline",
+                                "profile":  "plainjain_native",
+                                "score":  21.35,
+                                "status":  "FAIL",
+                                "reason":  "score=21.35; source=local",
+                                "output":  "Heuristic baseline summary: observed proof input=\u0027empty-proof-prompt\u0027"
+                            }
+                        ],
+        "auth_context":  {
+                             "remote":  "127.0.0.1",
+                             "auth_mode":  "session",
+                             "token_fingerprint":  "none",
+                             "session_auth_ts":  "2026-03-13T02:03:04.161824+00:00"
+                         }
+    },
+    {
+        "run_id":  "run-fdb79212",
+        "ts":  "2026-03-13T02:04:08.534517+00:00",
+        "reveal_deadline_ts":  "2026-03-13T02:24:08.534521+00:00",
+        "reveal_uses":  0,
+        "prompt":  "",
+        "blind_mode":  true,
+        "revealed":  false,
+        "results":  [
+                        {
+                            "agent_id":  "ollama_statistical",
+                            "agent_label":  "Ollama Statistical",
+                            "profile":  "ollama_default",
+                            "backend":  "ollama",
+                            "source_mode":  "fallback",
+                            "score":  92.32,
+                            "status":  "PASS",
+                            "reason":  "score=92.32; source=fallback; note=timed out",
+                            "output":  "Fallback output: backend=ollama unavailable; TimeoutError",
+                            "ts":  "2026-03-13T02:03:56.511783+00:00"
+                        },
+                        {
+                            "agent_id":  "ollama_heuristic",
+                            "agent_label":  "Ollama Heuristic",
+                            "profile":  "ollama_default",
+                            "backend":  "ollama",
+                            "source_mode":  "fallback",
+                            "score":  73.41,
+                            "status":  "PASS",
+                            "reason":  "score=73.41; source=fallback; note=timed out",
+                            "output":  "Fallback output: backend=ollama unavailable; TimeoutError",
+                            "ts":  "2026-03-13T02:04:08.534421+00:00"
+                        },
+                        {
+                            "agent_id":  "gpt4all_local",
+                            "agent_label":  "DeepSeek Coder via Ollama (Temp GPT4All Slot)",
+                            "profile":  "deepseeker_coder_local",
+                            "backend":  "ollama",
+                            "source_mode":  "fallback",
+                            "score":  60.45,
+                            "status":  "PASS",
+                            "reason":  "score=60.45; source=fallback; note=timed out",
+                            "output":  "Fallback output: backend=ollama unavailable; TimeoutError",
+                            "ts":  "2026-03-13T02:04:02.519050+00:00"
+                        },
+                        {
+                            "agent_id":  "scientific_baseline",
+                            "agent_label":  "Scientific Baseline",
+                            "profile":  "plainjain_native",
+                            "backend":  "heuristic",
+                            "source_mode":  "local",
+                            "score":  21.35,
+                            "status":  "FAIL",
+                            "reason":  "score=21.35; source=local",
+                            "output":  "Heuristic baseline summary: observed proof input=\u0027empty-proof-prompt\u0027",
+                            "ts":  "2026-03-13T02:04:08.534449+00:00"
+                        }
+                    ],
+        "blind_slots":  [
+                            {
+                                "slot":  "Agent-A",
+                                "agent_id":  "gpt4all_local",
+                                "agent_label":  "DeepSeek Coder via Ollama (Temp GPT4All Slot)",
+                                "profile":  "deepseeker_coder_local",
+                                "score":  60.45,
+                                "status":  "PASS",
+                                "reason":  "score=60.45; source=fallback; note=timed out",
+                                "output":  "Fallback output: backend=ollama unavailable; TimeoutError"
+                            },
+                            {
+                                "slot":  "Agent-B",
+                                "agent_id":  "scientific_baseline",
+                                "agent_label":  "Scientific Baseline",
+                                "profile":  "plainjain_native",
+                                "score":  21.35,
+                                "status":  "FAIL",
+                                "reason":  "score=21.35; source=local",
+                                "output":  "Heuristic baseline summary: observed proof input=\u0027empty-proof-prompt\u0027"
+                            },
+                            {
+                                "slot":  "Agent-C",
+                                "agent_id":  "ollama_statistical",
+                                "agent_label":  "Ollama Statistical",
+                                "profile":  "ollama_default",
+                                "score":  92.32,
+                                "status":  "PASS",
+                                "reason":  "score=92.32; source=fallback; note=timed out",
+                                "output":  "Fallback output: backend=ollama unavailable; TimeoutError"
+                            },
+                            {
+                                "slot":  "Agent-D",
+                                "agent_id":  "ollama_heuristic",
+                                "agent_label":  "Ollama Heuristic",
+                                "profile":  "ollama_default",
+                                "score":  73.41,
+                                "status":  "PASS",
+                                "reason":  "score=73.41; source=fallback; note=timed out",
+                                "output":  "Fallback output: backend=ollama unavailable; TimeoutError"
+                            }
+                        ],
+        "auth_context":  {
+                             "remote":  "127.0.0.1",
+                             "auth_mode":  "session",
+                             "token_fingerprint":  "none",
+                             "session_auth_ts":  "2026-03-13T02:03:04.161824+00:00"
+                         }
+    },
+    {
+        "run_id":  "run-8b646d47",
+        "ts":  "2026-03-13T02:04:08.117094+00:00",
+        "reveal_deadline_ts":  "2026-03-13T02:24:08.117102+00:00",
+        "reveal_uses":  0,
+        "prompt":  "",
+        "blind_mode":  true,
+        "revealed":  false,
+        "results":  [
+                        {
+                            "agent_id":  "ollama_statistical",
+                            "agent_label":  "Ollama Statistical",
+                            "profile":  "ollama_default",
+                            "backend":  "ollama",
+                            "source_mode":  "fallback",
+                            "score":  92.32,
+                            "status":  "PASS",
+                            "reason":  "score=92.32; source=fallback; note=timed out",
+                            "output":  "Fallback output: backend=ollama unavailable; TimeoutError",
+                            "ts":  "2026-03-13T02:03:56.102583+00:00"
+                        },
+                        {
+                            "agent_id":  "ollama_heuristic",
+                            "agent_label":  "Ollama Heuristic",
+                            "profile":  "ollama_default",
+                            "backend":  "ollama",
+                            "source_mode":  "fallback",
+                            "score":  73.41,
+                            "status":  "PASS",
+                            "reason":  "score=73.41; source=fallback; note=timed out",
+                            "output":  "Fallback output: backend=ollama unavailable; TimeoutError",
+                            "ts":  "2026-03-13T02:04:08.116967+00:00"
+                        },
+                        {
+                            "agent_id":  "gpt4all_local",
+                            "agent_label":  "DeepSeek Coder via Ollama (Temp GPT4All Slot)",
+                            "profile":  "deepseeker_coder_local",
+                            "backend":  "ollama",
+                            "source_mode":  "fallback",
+                            "score":  60.45,
+                            "status":  "PASS",
+                            "reason":  "score=60.45; source=fallback; note=timed out",
+                            "output":  "Fallback output: backend=ollama unavailable; TimeoutError",
+                            "ts":  "2026-03-13T02:04:02.111609+00:00"
+                        },
+                        {
+                            "agent_id":  "scientific_baseline",
+                            "agent_label":  "Scientific Baseline",
+                            "profile":  "plainjain_native",
+                            "backend":  "heuristic",
+                            "source_mode":  "local",
+                            "score":  21.35,
+                            "status":  "FAIL",
+                            "reason":  "score=21.35; source=local",
+                            "output":  "Heuristic baseline summary: observed proof input=\u0027empty-proof-prompt\u0027",
+                            "ts":  "2026-03-13T02:04:08.116993+00:00"
+                        }
+                    ],
+        "blind_slots":  [
+                            {
+                                "slot":  "Agent-A",
+                                "agent_id":  "ollama_heuristic",
+                                "agent_label":  "Ollama Heuristic",
+                                "profile":  "ollama_default",
+                                "score":  73.41,
+                                "status":  "PASS",
+                                "reason":  "score=73.41; source=fallback; note=timed out",
+                                "output":  "Fallback output: backend=ollama unavailable; TimeoutError"
+                            },
+                            {
+                                "slot":  "Agent-B",
+                                "agent_id":  "gpt4all_local",
+                                "agent_label":  "DeepSeek Coder via Ollama (Temp GPT4All Slot)",
+                                "profile":  "deepseeker_coder_local",
+                                "score":  60.45,
+                                "status":  "PASS",
+                                "reason":  "score=60.45; source=fallback; note=timed out",
+                                "output":  "Fallback output: backend=ollama unavailable; TimeoutError"
+                            },
+                            {
+                                "slot":  "Agent-C",
+                                "agent_id":  "scientific_baseline",
+                                "agent_label":  "Scientific Baseline",
+                                "profile":  "plainjain_native",
+                                "score":  21.35,
+                                "status":  "FAIL",
+                                "reason":  "score=21.35; source=local",
+                                "output":  "Heuristic baseline summary: observed proof input=\u0027empty-proof-prompt\u0027"
+                            },
+                            {
+                                "slot":  "Agent-D",
+                                "agent_id":  "ollama_statistical",
+                                "agent_label":  "Ollama Statistical",
+                                "profile":  "ollama_default",
+                                "score":  92.32,
+                                "status":  "PASS",
+                                "reason":  "score=92.32; source=fallback; note=timed out",
+                                "output":  "Fallback output: backend=ollama unavailable; TimeoutError"
+                            }
+                        ],
+        "auth_context":  {
+                             "remote":  "127.0.0.1",
+                             "auth_mode":  "session",
+                             "token_fingerprint":  "none",
+                             "session_auth_ts":  "2026-03-13T02:03:04.161824+00:00"
+                         }
+    },
+    {
+        "run_id":  "run-1aadebb6",
+        "ts":  "2026-03-13T02:04:06.032659+00:00",
+        "reveal_deadline_ts":  "2026-03-13T02:24:06.032671+00:00",
+        "reveal_uses":  0,
+        "prompt":  "",
+        "blind_mode":  true,
+        "revealed":  false,
+        "results":  [
+                        {
+                            "agent_id":  "ollama_statistical",
+                            "agent_label":  "Ollama Statistical",
+                            "profile":  "ollama_default",
+                            "backend":  "ollama",
+                            "source_mode":  "fallback",
+                            "score":  92.32,
+                            "status":  "PASS",
+                            "reason":  "score=92.32; source=fallback; note=timed out",
+                            "output":  "Fallback output: backend=ollama unavailable; TimeoutError",
+                            "ts":  "2026-03-13T02:03:54.005907+00:00"
+                        },
+                        {
+                            "agent_id":  "ollama_heuristic",
+                            "agent_label":  "Ollama Heuristic",
+                            "profile":  "ollama_default",
+                            "backend":  "ollama",
+                            "source_mode":  "fallback",
+                            "score":  73.41,
+                            "status":  "PASS",
+                            "reason":  "score=73.41; source=fallback; note=timed out",
+                            "output":  "Fallback output: backend=ollama unavailable; TimeoutError",
+                            "ts":  "2026-03-13T02:04:06.031366+00:00"
+                        },
+                        {
+                            "agent_id":  "gpt4all_local",
+                            "agent_label":  "DeepSeek Coder via Ollama (Temp GPT4All Slot)",
+                            "profile":  "deepseeker_coder_local",
+                            "backend":  "ollama",
+                            "source_mode":  "fallback",
+                            "score":  60.45,
+                            "status":  "PASS",
+                            "reason":  "score=60.45; source=fallback; note=timed out",
+                            "output":  "Fallback output: backend=ollama unavailable; TimeoutError",
+                            "ts":  "2026-03-13T02:04:00.017916+00:00"
+                        },
+                        {
+                            "agent_id":  "scientific_baseline",
+                            "agent_label":  "Scientific Baseline",
+                            "profile":  "plainjain_native",
+                            "backend":  "heuristic",
+                            "source_mode":  "local",
+                            "score":  21.35,
+                            "status":  "FAIL",
+                            "reason":  "score=21.35; source=local",
+                            "output":  "Heuristic baseline summary: observed proof input=\u0027empty-proof-prompt\u0027",
+                            "ts":  "2026-03-13T02:04:06.031401+00:00"
+                        }
+                    ],
+        "blind_slots":  [
+                            {
+                                "slot":  "Agent-A",
+                                "agent_id":  "scientific_baseline",
+                                "agent_label":  "Scientific Baseline",
+                                "profile":  "plainjain_native",
+                                "score":  21.35,
+                                "status":  "FAIL",
+                                "reason":  "score=21.35; source=local",
+                                "output":  "Heuristic baseline summary: observed proof input=\u0027empty-proof-prompt\u0027"
+                            },
+                            {
+                                "slot":  "Agent-B",
+                                "agent_id":  "ollama_statistical",
+                                "agent_label":  "Ollama Statistical",
+                                "profile":  "ollama_default",
+                                "score":  92.32,
+                                "status":  "PASS",
+                                "reason":  "score=92.32; source=fallback; note=timed out",
+                                "output":  "Fallback output: backend=ollama unavailable; TimeoutError"
+                            },
+                            {
+                                "slot":  "Agent-C",
+                                "agent_id":  "gpt4all_local",
+                                "agent_label":  "DeepSeek Coder via Ollama (Temp GPT4All Slot)",
+                                "profile":  "deepseeker_coder_local",
+                                "score":  60.45,
+                                "status":  "PASS",
+                                "reason":  "score=60.45; source=fallback; note=timed out",
+                                "output":  "Fallback output: backend=ollama unavailable; TimeoutError"
+                            },
+                            {
+                                "slot":  "Agent-D",
+                                "agent_id":  "ollama_heuristic",
+                                "agent_label":  "Ollama Heuristic",
+                                "profile":  "ollama_default",
+                                "score":  73.41,
+                                "status":  "PASS",
+                                "reason":  "score=73.41; source=fallback; note=timed out",
+                                "output":  "Fallback output: backend=ollama unavailable; TimeoutError"
+                            }
+                        ],
+        "auth_context":  {
+                             "remote":  "127.0.0.1",
+                             "auth_mode":  "session",
+                             "token_fingerprint":  "none",
+                             "session_auth_ts":  "2026-03-13T02:03:04.161824+00:00"
+                         }
+    },
+    {
+        "run_id":  "run-615baae6",
+        "ts":  "2026-03-13T01:17:06.780205+00:00",
+        "reveal_deadline_ts":  "2026-03-13T01:37:06.780212+00:00",
+        "reveal_uses":  1,
+        "prompt":  "cartigene reveal-hardening test",
+        "blind_mode":  true,
+        "revealed":  true,
+        "results":  [
+                        {
+                            "agent_id":  "plainjain_native",
+                            "agent_label":  "PlainJain Native",
+                            "profile":  "plainjain_native",
+                            "score":  94.29,
+                            "status":  "PASS",
+                            "reason":  "score=94.29",
+                            "output":  "PlainJain Native processed proof prompt with status PASS.",
+                            "ts":  "2026-03-13T01:17:06.779974+00:00"
+                        },
+                        {
+                            "agent_id":  "scientific_baseline",
+                            "agent_label":  "Scientific Baseline",
+                            "profile":  "plainjain_native",
+                            "score":  91.78,
+                            "status":  "PASS",
+                            "reason":  "score=91.78",
+                            "output":  "Scientific Baseline processed proof prompt with status PASS.",
+                            "ts":  "2026-03-13T01:17:06.779997+00:00"
+                        },
+                        {
+                            "agent_id":  "deepseeker_coder_local",
+                            "agent_label":  "DeepSeeker Coder",
+                            "profile":  "deepseeker_coder_local",
+                            "score":  55.5,
+                            "status":  "PASS",
+                            "reason":  "score=55.5",
+                            "output":  "DeepSeeker Coder processed proof prompt with status PASS.",
+                            "ts":  "2026-03-13T01:17:06.779949+00:00"
+                        },
+                        {
+                            "agent_id":  "ollama_default",
+                            "agent_label":  "Ollama Bridge",
+                            "profile":  "ollama_default",
+                            "score":  36.06,
+                            "status":  "FAIL",
+                            "reason":  "score=36.06",
+                            "output":  "Ollama Bridge processed proof prompt with status FAIL.",
+                            "ts":  "2026-03-13T01:17:06.779988+00:00"
+                        }
+                    ],
+        "blind_slots":  [
+                            {
+                                "slot":  "Agent-A",
+                                "agent_id":  "ollama_default",
+                                "agent_label":  "Ollama Bridge",
+                                "profile":  "ollama_default",
+                                "score":  36.06,
+                                "status":  "FAIL",
+                                "reason":  "score=36.06",
+                                "output":  "Ollama Bridge processed proof prompt with status FAIL."
+                            },
+                            {
+                                "slot":  "Agent-B",
+                                "agent_id":  "plainjain_native",
+                                "agent_label":  "PlainJain Native",
+                                "profile":  "plainjain_native",
+                                "score":  94.29,
+                                "status":  "PASS",
+                                "reason":  "score=94.29",
+                                "output":  "PlainJain Native processed proof prompt with status PASS."
+                            },
+                            {
+                                "slot":  "Agent-C",
+                                "agent_id":  "scientific_baseline",
+                                "agent_label":  "Scientific Baseline",
+                                "profile":  "plainjain_native",
+                                "score":  91.78,
+                                "status":  "PASS",
+                                "reason":  "score=91.78",
+                                "output":  "Scientific Baseline processed proof prompt with status PASS."
+                            },
+                            {
+                                "slot":  "Agent-D",
+                                "agent_id":  "deepseeker_coder_local",
+                                "agent_label":  "DeepSeeker Coder",
+                                "profile":  "deepseeker_coder_local",
+                                "score":  55.5,
+                                "status":  "PASS",
+                                "reason":  "score=55.5",
+                                "output":  "DeepSeeker Coder processed proof prompt with status PASS."
+                            }
+                        ],
+        "auth_context":  {
+                             "remote":  "127.0.0.1",
+                             "auth_mode":  "token",
+                             "token_fingerprint":  "ddf8f01d2253",
+                             "session_auth_ts":  null
+                         },
+        "revealed_at":  "2026-03-13T01:17:24.471211+00:00",
+        "reveal_auth_context":  {
+                                    "remote":  "127.0.0.1",
+                                    "auth_mode":  "token",
+                                    "token_fingerprint":  "ddf8f01d2253",
+                                    "session_auth_ts":  null
+                                }
+    },
+    {
+        "run_id":  "run-3f0d31c3",
+        "ts":  "2026-03-13T01:14:34.536195+00:00",
+        "prompt":  "cartigene proof blind test alpha",
+        "blind_mode":  true,
+        "revealed":  false,
+        "results":  [
+                        {
+                            "agent_id":  "deepseeker_coder_local",
+                            "agent_label":  "DeepSeeker Coder",
+                            "profile":  "deepseeker_coder_local",
+                            "score":  98.75,
+                            "status":  "PASS",
+                            "reason":  "score=98.75",
+                            "output":  "DeepSeeker Coder processed proof prompt with status PASS.",
+                            "ts":  "2026-03-13T01:14:34.534863+00:00"
+                        },
+                        {
+                            "agent_id":  "ollama_default",
+                            "agent_label":  "Ollama Bridge",
+                            "profile":  "ollama_default",
+                            "score":  89.32,
+                            "status":  "PASS",
+                            "reason":  "score=89.32",
+                            "output":  "Ollama Bridge processed proof prompt with status PASS.",
+                            "ts":  "2026-03-13T01:14:34.534887+00:00"
+                        },
+                        {
+                            "agent_id":  "scientific_baseline",
+                            "agent_label":  "Scientific Baseline",
+                            "profile":  "plainjain_native",
+                            "score":  80.74,
+                            "status":  "PASS",
+                            "reason":  "score=80.74",
+                            "output":  "Scientific Baseline processed proof prompt with status PASS.",
+                            "ts":  "2026-03-13T01:14:34.534893+00:00"
+                        },
+                        {
+                            "agent_id":  "plainjain_native",
+                            "agent_label":  "PlainJain Native",
+                            "profile":  "plainjain_native",
+                            "score":  27.72,
+                            "status":  "FAIL",
+                            "reason":  "score=27.72",
+                            "output":  "PlainJain Native processed proof prompt with status FAIL.",
+                            "ts":  "2026-03-13T01:14:34.534879+00:00"
+                        }
+                    ],
+        "blind_slots":  [
+                            {
+                                "slot":  "Agent-A",
+                                "agent_id":  "deepseeker_coder_local",
+                                "agent_label":  "DeepSeeker Coder",
+                                "profile":  "deepseeker_coder_local",
+                                "score":  98.75,
+                                "status":  "PASS",
+                                "reason":  "score=98.75",
+                                "output":  "DeepSeeker Coder processed proof prompt with status PASS."
+                            },
+                            {
+                                "slot":  "Agent-B",
+                                "agent_id":  "plainjain_native",
+                                "agent_label":  "PlainJain Native",
+                                "profile":  "plainjain_native",
+                                "score":  27.72,
+                                "status":  "FAIL",
+                                "reason":  "score=27.72",
+                                "output":  "PlainJain Native processed proof prompt with status FAIL."
+                            },
+                            {
+                                "slot":  "Agent-C",
+                                "agent_id":  "scientific_baseline",
+                                "agent_label":  "Scientific Baseline",
+                                "profile":  "plainjain_native",
+                                "score":  80.74,
+                                "status":  "PASS",
+                                "reason":  "score=80.74",
+                                "output":  "Scientific Baseline processed proof prompt with status PASS."
+                            },
+                            {
+                                "slot":  "Agent-D",
+                                "agent_id":  "ollama_default",
+                                "agent_label":  "Ollama Bridge",
+                                "profile":  "ollama_default",
+                                "score":  89.32,
+                                "status":  "PASS",
+                                "reason":  "score=89.32",
+                                "output":  "Ollama Bridge processed proof prompt with status PASS."
+                            }
+                        ]
+    }
+]

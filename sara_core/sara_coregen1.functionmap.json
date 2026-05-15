@@ -1,0 +1,143 @@
+[
+  {
+    "name": "build_vnce_shunt_envelope",
+    "start_line": 28,
+    "end_line": 54,
+    "parameters": ["command", "payload"],
+    "docstring_or_comment": "Build a CONTROL-bound VNCE shunt envelope from CORE.\nCORE does not validate VNCE content; it only wraps and forwards it.",
+    "internal_calls": [],
+    "external_dependencies": ["datetime", "timezone", "uuid"],
+    "side_effects": []
+  },
+  {
+    "name": "core_shunt_entrypoint",
+    "start_line": 57,
+    "end_line": 87,
+    "parameters": ["command", "payload"],
+    "docstring_or_comment": "Single entrypoint for all cross-pillar actions. Applies header validation and routes to FSM.",
+    "internal_calls": ["validate_shunt_header", "build_vnce_shunt_envelope", "load_identity", "load_config", "validate_state", "noop_action"],
+    "external_dependencies": [],
+    "side_effects": []
+  },
+  {
+    "name": "load_identity",
+    "start_line": 90,
+    "end_line": 91,
+    "parameters": ["payload"],
+    "docstring_or_comment": null,
+    "internal_calls": [],
+    "external_dependencies": [],
+    "side_effects": []
+  },
+  {
+    "name": "load_config",
+    "start_line": 93,
+    "end_line": 94,
+    "parameters": ["payload"],
+    "docstring_or_comment": null,
+    "internal_calls": [],
+    "external_dependencies": [],
+    "side_effects": []
+  },
+  {
+    "name": "validate_state",
+    "start_line": 96,
+    "end_line": 97,
+    "parameters": ["payload"],
+    "docstring_or_comment": null,
+    "internal_calls": [],
+    "external_dependencies": [],
+    "side_effects": []
+  },
+  {
+    "name": "noop_action",
+    "start_line": 99,
+    "end_line": 100,
+    "parameters": ["payload"],
+    "docstring_or_comment": null,
+    "internal_calls": [],
+    "external_dependencies": [],
+    "side_effects": []
+  },
+  {
+    "name": "validate_shunt_header",
+    "start_line": 103,
+    "end_line": 109,
+    "parameters": ["payload"],
+    "docstring_or_comment": "Enforces shunt header contract on inbound/outbound actions.",
+    "internal_calls": [],
+    "external_dependencies": [],
+    "side_effects": []
+  },
+  {
+    "name": "read_image_file",
+    "start_line": 113,
+    "end_line": 124,
+    "parameters": ["path"],
+    "docstring_or_comment": null,
+    "internal_calls": [],
+    "external_dependencies": ["Image"],
+    "side_effects": ["file I/O"]
+  },
+  {
+    "name": "write_image_file",
+    "start_line": 126,
+    "end_line": 134,
+    "parameters": ["path", "data", "format"],
+    "docstring_or_comment": null,
+    "internal_calls": [],
+    "external_dependencies": ["Image"],
+    "side_effects": ["file I/O"]
+  },
+  {
+    "name": "resize_image_file",
+    "start_line": 136,
+    "end_line": 144,
+    "parameters": ["path", "output_path", "size"],
+    "docstring_or_comment": null,
+    "internal_calls": [],
+    "external_dependencies": ["Image"],
+    "side_effects": ["file I/O"]
+  },
+  {
+    "name": "read_video_file",
+    "start_line": 147,
+    "end_line": 181,
+    "parameters": ["path"],
+    "docstring_or_comment": "Read video asset metadata with optional frame-level detail when cv2 is available.",
+    "internal_calls": [],
+    "external_dependencies": ["os", "cv2"],
+    "side_effects": ["file I/O"]
+  },
+  {
+    "name": "read_audio_file",
+    "start_line": 184,
+    "end_line": 218,
+    "parameters": ["path"],
+    "docstring_or_comment": "Read audio asset metadata for common office-suite media lanes.",
+    "internal_calls": [],
+    "external_dependencies": ["os", "wave"],
+    "side_effects": ["file I/O"]
+  },
+  {
+    "name": "read_3d_file",
+    "start_line": 221,
+    "end_line": 270,
+    "parameters": ["path"],
+    "docstring_or_comment": "Read 3D asset metadata for OBJ/STL files used by modern graphics workflows.",
+    "internal_calls": [],
+    "external_dependencies": ["os", "struct"],
+    "side_effects": ["file I/O"]
+  },
+  {
+    "name": "read_graphics_asset_file",
+    "start_line": 273,
+    "end_line": 287,
+    "parameters": ["path"],
+    "docstring_or_comment": "Unified reader for image/video/audio/3D assets in the office graphics lane.",
+    "internal_calls": ["read_image_file", "read_video_file", "read_audio_file", "read_3d_file"],
+    "external_dependencies": ["os"],
+    "side_effects": []
+  },
+  // ...existing code, more functions follow in the same structure ...
+]

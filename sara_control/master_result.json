@@ -1,0 +1,20 @@
+{
+  "pillar": "sara_control",
+  "final_status": "SHUTDOWN",
+  "local": {
+    "pillar": "sara_control",
+    "file": "sara_controlgen1.py",
+    "status": "SHUTDOWN",
+    "reached": true,
+    "reason": "goodbye",
+    "updated_at": "2026-05-12T14:59:07.989362+00:00"
+  },
+  "distant": {
+    "pillar": "sara_control",
+    "file": "sara_controlgen1.py",
+    "status": "SHUTDOWN",
+    "reached": true,
+    "note": "goodbye",
+    "updated_at": "2026-05-12T14:59:07.989362+00:00"
+  }
+}

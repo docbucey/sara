@@ -1,0 +1,117 @@
+{
+  "ts": "2026-03-13T00:51:27.215966+00:00",
+  "entry_pillar": "mama",
+  "routing_authority": "control_io",
+  "route_count": 1,
+  "overall_status": "PASS",
+  "routes": [
+    {
+      "route_id": 1,
+      "route": [
+        "mama",
+        "control",
+        "core",
+        "security"
+      ],
+      "status": "PASS",
+      "steps": [
+        {
+          "pillar": "mama",
+          "status": "PASS",
+          "reason": "PASS shunt(text=100.00,binary=100.00,thumb=on,delta=3.00) memreadiness:PASS codemissingfails:none",
+          "details": {
+            "success": true,
+            "status": "PASS",
+            "process_exit_code": 0,
+            "target": "C:\\Users\\mdbuc\\Documents\\coding projects\\MODLES\\NBS\\claywork\\saragen0finish\\sara_mama\\sara_mamagen1.py",
+            "local": {
+              "file": "C:\\Users\\mdbuc\\Documents\\coding projects\\MODLES\\NBS\\claywork\\saragen0finish\\sara_mama\\sara_mamagen1.py",
+              "language": "python",
+              "status": "PASS",
+              "reached": true,
+              "reason": "PASS shunt(text=100.00,binary=100.00,thumb=on,delta=3.00) memreadiness:PASS codemissingfails:none"
+            },
+            "distant": {
+              "file": "C:\\Users\\mdbuc\\Documents\\coding projects\\MODLES\\NBS\\claywork\\saragen0finish\\sara_mama\\sara_mamagen1.py",
+              "status": "PASS",
+              "reached": true,
+              "note": "loopback recovery=100.00%"
+            }
+          }
+        },
+        {
+          "pillar": "control",
+          "status": "PASS",
+          "reason": "PASS shunt(text=100.00,binary=100.00,thumb=on,delta=3.00) memreadiness:PASS codemissingfails:none",
+          "details": {
+            "success": true,
+            "status": "PASS",
+            "process_exit_code": 0,
+            "target": "C:\\Users\\mdbuc\\Documents\\coding projects\\MODLES\\NBS\\claywork\\saragen0finish\\sara_control\\sara_controlgen1.py",
+            "local": {
+              "file": "C:\\Users\\mdbuc\\Documents\\coding projects\\MODLES\\NBS\\claywork\\saragen0finish\\sara_control\\sara_controlgen1.py",
+              "language": "python",
+              "status": "PASS",
+              "reached": true,
+              "reason": "PASS shunt(text=100.00,binary=100.00,thumb=on,delta=3.00) memreadiness:PASS codemissingfails:none"
+            },
+            "distant": {
+              "file": "C:\\Users\\mdbuc\\Documents\\coding projects\\MODLES\\NBS\\claywork\\saragen0finish\\sara_control\\sara_controlgen1.py",
+              "status": "PASS",
+              "reached": true,
+              "note": "loopback recovery=100.00%"
+            }
+          }
+        },
+        {
+          "pillar": "core",
+          "status": "PASS",
+          "reason": "PASS shunt(text=100.00,binary=100.00,thumb=on,delta=3.00) memreadiness:PASS codemissingfails:none",
+          "details": {
+            "success": true,
+            "status": "PASS",
+            "process_exit_code": 0,
+            "target": "C:\\Users\\mdbuc\\Documents\\coding projects\\MODLES\\NBS\\claywork\\saragen0finish\\sara_core\\sara_coregn1.py",
+            "local": {
+              "file": "C:\\Users\\mdbuc\\Documents\\coding projects\\MODLES\\NBS\\claywork\\saragen0finish\\sara_core\\sara_coregn1.py",
+              "language": "python",
+              "status": "PASS",
+              "reached": true,
+              "reason": "PASS shunt(text=100.00,binary=100.00,thumb=on,delta=3.00) memreadiness:PASS codemissingfails:none"
+            },
+            "distant": {
+              "file": "C:\\Users\\mdbuc\\Documents\\coding projects\\MODLES\\NBS\\claywork\\saragen0finish\\sara_core\\sara_coregn1.py",
+              "status": "PASS",
+              "reached": true,
+              "note": "loopback recovery=100.00%"
+            }
+          }
+        },
+        {
+          "pillar": "security",
+          "status": "PASS",
+          "reason": "PASS shunt(text=100.00,binary=100.00,thumb=on,delta=3.00) memreadiness:PASS codemissingfails:none",
+          "details": {
+            "success": true,
+            "status": "PASS",
+            "process_exit_code": 0,
+            "target": "C:\\Users\\mdbuc\\Documents\\coding projects\\MODLES\\NBS\\claywork\\saragen0finish\\sara_security\\sara_securitygn1.py",
+            "local": {
+              "file": "C:\\Users\\mdbuc\\Documents\\coding projects\\MODLES\\NBS\\claywork\\saragen0finish\\sara_security\\sara_securitygn1.py",
+              "language": "python",
+              "status": "PASS",
+              "reached": true,
+              "reason": "PASS shunt(text=100.00,binary=100.00,thumb=on,delta=3.00) memreadiness:PASS codemissingfails:none"
+            },
+            "distant": {
+              "file": "C:\\Users\\mdbuc\\Documents\\coding projects\\MODLES\\NBS\\claywork\\saragen0finish\\sara_security\\sara_securitygn1.py",
+              "status": "PASS",
+              "reached": true,
+              "note": "loopback recovery=100.00%"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

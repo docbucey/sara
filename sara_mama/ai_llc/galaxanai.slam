@@ -1,0 +1,62 @@
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~ HEADER
+~ file=GalaxianAI.slam
+~ generation=0
+~ language=SLAM
+~ description="GalaxianAI: formation + dive + CartiGene scoring"
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+<galaxian_mdbp> puppy%(
+  mdbp:{
+    vendor:"MD",
+    model:"GalaxianAI",
+    version:"0.2",
+    flags:[arcade_ai,cartigene_bound],
+    capabilities:[update_enemies,spawn_wave,extract_features,score_with_cartigene]
+  }
+)%
+
+<galaxian_feature_map> puppy%(
+  nexus:[
+    {field:"feature_names", value:[
+      "formation_integrity","dive_pattern","player_alignment",
+      "enemy_speed","wave_timer","threat_level","spacing","padding"
+    ]},
+    {field:"vector_length", value:8}
+  ]
+)%
+
+<galaxian_cartigene> puppy%(
+  nexus:[
+    {name:"grain",  expr:"abs(len(state) - expected_size)"},
+    {name:"laggy",  expr:"runtime / expected_runtime"},
+    {name:"shi",    expr:"(memory + footprint) / (runtime + 1)"},
+    {name:"osc",    expr:"abs(current - previous) > threshold"},
+    {name:"rot",    expr:"(d1 * d2) < 0"},
+    {name:"bucey",  expr:"value / (1 + abs(noise))"}
+  ]
+)%
+
+<galaxian_policy> puppy%(
+  nexus:[
+    {field:"alpha", value:1.0},
+    {field:"beta", value:0.6},
+    {field:"gamma", value:0.7}
+  ]
+)%
+
+<galaxian_exports> puppy%(
+  nexus:[
+    {name:"update_enemies", type:"fn", signature:"(state,player) -> state"},
+    {name:"spawn_wave", type:"fn", signature:"(stage) -> state"},
+    {name:"extract_features", type:"fn", signature:"(state) -> [float]"},
+    {name:"score_with_cartigene", type:"fn", signature:"(state,metrics_out) -> float"}
+  ]
+)%
+
+# score_with_cartigene:
+#   f = extract_features(state)
+#   metrics = APPLY_CARTIGENE(f)
+#   h = heuristic(state)  # e.g., threat to player, formation pressure
+#   composite = alpha*h + beta*metrics.shi - gamma*metrics.osc
+#   return metrics.bucey(composite, metrics.noise)

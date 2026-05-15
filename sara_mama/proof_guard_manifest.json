@@ -1,0 +1,9 @@
+{
+  "proof_files": [
+    "sara_mamagen1.py",
+    "sara_pillar_control_io_entrygen1.py",
+    "sara_mama_spec_sheet.mak",
+    "ai_llc/plainjainllm.slam",
+    "ai_llc/deepseeker_coder_bridge.slam"
+  ]
+}

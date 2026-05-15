@@ -1,0 +1,121 @@
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~ HEADER
+~ file=BootloaderAI.slam
+~ generation=0
+~ language=SLAM
+~ description="BootloaderAI: session bring-up, hardware probe, initial priors, CartiGene baseline, provenance seed"
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+<boot_mdbp> puppy%(
+  mdbp:{
+    vendor:"MD",
+    model:"BootloaderAI",
+    version:"0.1",
+    flags:[bringup,session_priors,cartigene_ready,provenance_seed],
+    capabilities:[
+      start_boot,
+      run_post_checks,
+      publish_session_priors,
+      compute_cartigene_baseline,
+      emit_boot_events
+    ]
+  }
+)%
+
+# STATE
+<boot_state> puppy%(
+  nexus:[
+    {field:"boot_stage", value:"idle"},            # idle|probing|post|complete|failed
+    {field:"capability_vector", value:[]},         # floats describing subsystems
+    {field:"health_flags", value:{}},              # key->ok|warn|fail
+    {field:"session_id", value:null},
+    {field:"cartigene_baseline", value:null},
+    {field:"provenance_seed", value:null},
+    {field:"expected_runtime", value:1.0}
+  ]
+)%
+
+# FEATURE MAP
+<boot_feature_map> puppy%(
+  nexus:[
+    {field:"feature_names", value:[
+      "num_subsystems",
+      "avg_probe_latency",
+      "failed_checks",
+      "capability_entropy",
+      "padding"
+    ]},
+    {field:"vector_length", value:5}
+  ]
+)%
+
+# POLICY
+<boot_policy> puppy%(
+  nexus:[
+    {field:"post_timeout_seconds", value:10},
+    {field:"required_subsystems", value:["network","storage","cpu","memory"]},
+    {field:"cartigene_alpha", value:1.0},
+    {field:"cartigene_beta", value:0.8},
+    {field:"cartigene_gamma", value:1.2},
+    {field:"exec_threshold", value:0.7}
+  ]
+)%
+
+# EXPORTS
+<boot_exports> puppy%(
+  nexus:[
+    {name:"start_boot", type:"fn", signature:"(boot_state) -> boot_state"},
+    {name:"run_post_checks", type:"fn", signature:"(boot_state) -> boot_state"},
+    {name:"publish_session_priors", type:"fn", signature:"(boot_state) -> {session_id, priors_written}"},
+    {name:"compute_cartigene_baseline", type:"fn", signature:"(boot_state) -> metrics"},
+    {name:"emit_boot_events", type:"fn", signature:"(boot_state, event_bus) -> ack"}
+  ]
+)%
+
+# LOGIC (PSEUDO)
+# start_boot(boot_state):
+#   - boot_stage <- "probing"
+#   - session_id <- uuid()
+#   - probe subsystems: for each expected subsystem run quick probe, measure latency, record ok/warn/fail
+#   - capability_vector <- normalize([subsystem_scores...])
+#   - health_flags <- map of subsystem->status
+#   - boot_state.capability_vector = capability_vector
+#   - boot_state.health_flags = health_flags
+#   - return boot_state
+#
+# run_post_checks(boot_state):
+#   - start timer
+#   - run POST checks (storage mount, network handshake, memory test)
+#   - record failed_checks count and avg_probe_latency
+#   - compute features = [num_subsystems, avg_probe_latency, failed_checks, capability_entropy, padding]
+#   - metrics = compute_cartigene_baseline(features)
+#   - boot_state.cartigene_baseline = metrics
+#   - if metrics.stable_score >= boot_policy.exec_threshold and failed_checks == 0:
+#       boot_stage <- "complete"
+#     else:
+#       boot_stage <- "failed" or "complete_with_warnings"
+#   - provenance_seed <- {session_id, ts, capability_vector_hash, metrics}
+#   - boot_state.provenance_seed = provenance_seed
+#   - return boot_state
+#
+# publish_session_priors(boot_state):
+#   - priors = {session_id, capability_vector, health_flags, baseline_metrics, policy_defaults}
+#   - write priors to NBS with provenance_seed
+#   - return {session_id, priors_written:true}
+#
+# compute_cartigene_baseline(features):
+#   - expected_size = boot_feature_map.vector_length
+#   - grain = abs(len(features) - expected_size)
+#   - laggy = features[1] / boot_state.expected_runtime
+#   - shi = (sum(capability_vector) + entropy) / (laggy + 1)
+#   - osc = false (no previous decisions at boot) or detect if repeated boot attempts
+#   - noise = laggy + grain + (features[2] * 0.1)
+#   - base_stability = 1.0 if features[2] == 0 else 0.4
+#   - composite = boot_policy.cartigene_alpha*base_stability + boot_policy.cartigene_beta*shi - boot_policy.cartigene_gamma*(osc ? 1.0 : 0.0)
+#   - stable_score = composite / (1 + abs(noise))
+#   - return {grain, laggy, shi, osc, noise, stable_score}
+#
+# emit_boot_events(boot_state, event_bus):
+#   - event = {type:"boot.complete", session_id, health_flags, baseline_metrics, provenance_seed}
+#   - publish to event_bus
+#   - return ack

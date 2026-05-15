@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SARA Envoy Login</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <main class="panel login">
+    <h1>SARA Envoy</h1>
+    <p>Authenticate to run blind proof tests from browser, phone, or remote terminal.</p>
+    <form id="loginForm">
+      <label for="username">Username</label>
+      <input id="username" type="text" required />
+      <label for="password">Password</label>
+      <input id="password" type="password" required />
+      <button type="submit">Sign In</button>
+    </form>
+    <p id="status" class="status"></p>
+  </main>
+  <script>
+    const form = document.getElementById('loginForm');
+    const statusEl = document.getElementById('status');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      statusEl.textContent = 'Signing in...';
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+      const res = await fetch('/api/login', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({username, password})
+      });
+      const data = await res.json();
+      if (data.success) {
+        window.location.href = '/dashboard';
+        return;
+      }
+      statusEl.textContent = data.error || 'Login failed';
+    });
+  </script>
+</body>
+</html>

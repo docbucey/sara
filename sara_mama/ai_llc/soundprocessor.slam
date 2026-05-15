@@ -1,0 +1,452 @@
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~ HEADER (strict, machine-verified)                        ~
+~ kennel=substrate                                          ~
+~ generation=0                                              ~
+~ evolution=alpha                                           ~
+~ version=0.1                                               ~
+~ date=                                                     ~
+~ location=                                                 ~
+~ language=SLAM                                             ~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+============================================================
+SOUNDPROCESSOR — MICRO AI AUDIO PROCESSOR (GEN-0)
+============================================================
+
+# Based on soundrails.slam + FloodSearch_boilerplate.slam
+# Reference claywork_benchmark_engine.slam for BENCHMARKING ONLY
+# NOT a mainframe - uses soundrails as hardware base
+
+# ============================================================
+# MDBP — Most Direct Binary Path
+# ============================================================
+
+<soundprocessor_mdbp> puppy%(
+    mdbp:{
+        vendor:"SARA",
+        model:"SoundProcessor_MicroAI",
+        version:"0.1",
+        type:"audio_micro_ai",
+        role:"audio_processing_backup_shunt",
+        base_spec:"soundrails.slam floodsearch_boilerplate.slam",
+        benchmark_ref:"claywork_benchmark_engine.slam",
+        flags:[audio, micro_ai, floodsearch, backup_capable, shunt_enabled],
+        capabilities:[audio_processing, voice_capture, beamforming, asr, keyword_spotting, floodsearch_files, backup_processor, load_shunt],
+        primary_master:"GPU",
+        secondary_master:"CPU",
+        tertiary_master:"NIC"
+    }
+)%
+
+
+# ============================================================
+# BASE: SOUNDRAILS REFERENCE (Hardware Base)
+# ============================================================
+
+<soundprocessor_soundrails_base> puppy%(
+    nexus:[
+        {reference:"soundrails.slam", role:"hardware_audio_pipeline_base"},
+        {components:[
+            "DAC - Digital to Analog Converter",
+            "ADC - Analog to Digital Converter",
+            "I2S Bus - 3.072MHz audio data transfer",
+            "Playback Buffer - 8KB DMA",
+            "Record Buffer - 8KB DMA",
+            "Gain Stages - Input/Output amplification",
+            "MIDI Interface - 16 channel MIDI"
+        ]},
+        {timing_reference:"dogtag.Rolex_Audio_v1"},
+        {cold_start:"soundrails_cold_start_sequence"}
+    ]
+)%
+
+
+# ============================================================
+# FLOODSEARCH INTEGRATION
+# ============================================================
+
+<soundprocessor_floodsearch> puppy%(
+    nexus:[
+        {capability:"floodsearch_files", description:"Parse and search for audio files when needed"},
+        {activation:"triggered_when_audio_file_needed"},
+        {search_targets:["audio_files", "model_weights", "config_files", "continuity_files"]},
+        {floodsearch_logic:[
+            "1. Scan target folder for audio file patterns",
+            "2. Match header signature (WAV, MP3, FLAC, OGG)",
+            "3. Return file path if found",
+            "4. Fallback to default audio path if not found"
+        ]},
+        {fallback_seed:"proto_audio/default_sample.wav"}
+    ]
+)%
+
+
+# ============================================================
+# AUDIO CODEC SPECIFICATIONS
+# ============================================================
+
+<soundprocessor_codec_specs> puppy%(
+    nexus:[
+        {sample_rates:[8000, 16000, 44100, 48000, 96000, 192000]},
+        {bit_depth:[16, 24, 32]},
+        {snr_range:"90_to_120_dB"},
+        {thd_plus_n:"-80_to_-110_dB"},
+        {input_types:["single_ended_mic", "differential_mic", "pdm_mic"]},
+        {output_types:["differential_line", "headphone_driver", "class_d_speaker"]},
+        {interfaces:["i2s", "tdm", "spdif", "i2c", "spi"]},
+        {clocking:"low_jitter_mclk_required_for_high_quality"}
+    ]
+)%
+
+
+# ============================================================
+# I2S SIGNALS (BCLK, LRCLK, SD, MCLK)
+# ============================================================
+
+<soundprocessor_i2s_signals> puppy%(
+    nexus:[
+        {signal:"BCLK", description:"Bit clock - driven by controller", frequency:"64x_sample_rate"},
+        {signal:"LRCLK", description:"Left/Right clock - word select", frequency:"sample_rate"},
+        {signal:"SD", description:"Serial data - audio samples", protocol:"i2s_standard"},
+        {signal:"MCLK", description:"Master clock - for DAC/ADC internal PLLs", required:true, purpose:"low_jitter_clock"}
+    ]
+)%
+
+
+# ============================================================
+# MICRO-AI SOFTWARE INTEGRATION PATTERN
+# ============================================================
+
+<soundprocessor_micro_ai_pipeline> puppy%(
+    nexus:[
+        {step:1, name:"CAPTURE", description:"DMA fills audio buffer - DMA completion triggers INT_N"},
+        {step:2, name:"PREPROCESS", description:"VAD/feature extraction on audio frames"},
+        {step:3, name:"SCORE", description:"Compute CartiGene metrics (grain, laggy, shi) to decide local vs cloud"},
+        {step:4, name:"INFER", description:"Run distilled model via ONNX Runtime or TVM compiled kernel"},
+        {step:5, name:"VERIFY_ACT", description:"For state changes, require verification before executing"},
+        {step:6, name:"AUDIT", description:"Append PREPARE/EXEC records with CartiGene snapshot to continuity"}
+    ]
+)%
+
+
+# ============================================================
+# VOICE CAPTURE USE CASES
+# ============================================================
+
+<soundprocessor_voice_use_cases> puppy%(
+    nexus:[
+        {use_case:"voice_capture", pipeline:"ADC → VAD → MFCC → micro-AI inference"},
+        {use_case:"beamforming", pipeline:"synchronized multi-channel ADCs → DOA → beamforming kernels"},
+        {use_case:"low_latency_effects", pipeline:"DSP chains (EQ, AGC, echo cancellation) on codec DSP or host"},
+        {use_case:"asr_keyword", pipeline:"tiny distilled models (5-50M params) run on micro-AI nodes"},
+        {use_case:"playback_monitoring", pipeline:"DAC → headphone amp with volume/safety limits"}
+    ]
+)%
+
+
+# ============================================================
+# HARDWARE DESIGN GUIDANCE
+# ============================================================
+
+<soundprocessor_hw_guidance> puppy%(
+    nexus:[
+        {category:"clocking", guidance:"Provide low-jitter MCLK (crystal/oscillator) for target sample rates"},
+        {category:"power_analog", guidance:"Separate analog/digital power planes, use LDOs and ferrite beads, decoupling caps within 2-3mm"},
+        {category:"i2s_routing", guidance:"Route BCLK/LRCLK as matched traces with series termination, keep short for high sample rates"},
+        {category:"analog_front_end", guidance:"Use differential inputs, place anti-alias filters close to ADC pins"},
+        {category:"dma_buffering", guidance:"Use DMA with double/ring buffers sized for worst-case latency"},
+        {category:"interrupts_timing", guidance:"Use INT_N for data-ready events, timestamp buffers at DMA completion"},
+        {category:"esd_protection", guidance:"Add TVS diodes on connectors, pop-suppression for headphone jacks"}
+    ]
+)%
+
+
+# ============================================================
+# MASTER/SLAVE CONFIGURATION
+# ============================================================
+
+<soundprocessor_master_config> puppy%(
+    nexus:[
+        {role:"preferred_residence", master:"NPU", description:"NPU is preferred residence when available - best performance per watt"},
+        {role:"primary_slave", master:"GPU", description:"GPU handles primary audio processing (encoding/decoding)"},
+        {role:"secondary_master", master:"CPU", description:"CPU handles fallback processing and control"},
+        {role:"tertiary_master", master:"NIC", description:"NIC handles network audio streaming when needed"},
+        {role:"os_driver_slave", master:"OS_DRIVERS", description:"Slaves to OS audio drivers when available for better performance"},
+        {role:"npu_slave", master:"NPU", description:"Soundprocessor is SLAVE to NPU when NPU is available"},
+        {behavior:"soundprocessor runs on NPU when available, otherwise falls back to GPU/CPU/NIC - acts as slave to all"}
+    ]
+)%
+
+# ============================================================
+# OS DRIVER INTEGRATION (Performance Optimization)
+# ============================================================
+
+<soundprocessor_os_driver_integration> puppy%(
+    nexus:[
+        {capability:"os_driver_access", description:"Soundprocessor is SLAVE to OS and drivers - they can access its abilities"},
+        {behavior:"OS and its drivers can use soundprocessor capabilities when they need audio processing"},
+        {detection:"Check for OS audio driver availability on init"},
+        {os_drivers:[
+            {os:"Windows", driver:"WASAPI", access:"full", benefit:"Low latency direct mode - Windows can use soundprocessor for audio"},
+            {os:"Linux", driver:"ALSA/PulseAudio", access:"full", benefit:"Hardware acceleration - Linux can use soundprocessor for audio"},
+            {os:"macOS", driver:"CoreAudio", access:"full", benefit:"High quality mixing - Mac can use soundprocessor for audio"},
+            {os:"Android", driver:"Oboe/AAudio", access:"full", benefit:"Low latency path - Android can use soundprocessor for audio"},
+            {os:"iOS", driver:"AVAudioEngine", access:"full", benefit:"DSP offload - iOS can use soundprocessor for audio"}
+        ]},
+        {grant_access:"OS and drivers can call soundprocessor functions when they need audio"},
+        {fallback:"If OS doesn't use soundprocessor, use internal processing"},
+        {performance_gain:"OS drivers can offload to soundprocessor for better performance"},
+        {buffer_impact:"Zero - uses OS driver buffers, not internal"}
+    ]
+)%
+
+
+# ============================================================
+# BACKUP PROCESSOR CAPABILITY
+# ============================================================
+
+<soundprocessor_backup_capability> puppy%(
+    nexus:[
+        {capability:"backup_processor", description:"Can become backup when higher systems need processing redistribution"},
+        {triggers:[
+            "GPU overloaded - soundprocessor takes audio encoding",
+            "CPU overloaded - soundprocessor handles voice preprocessing",
+            "NIC overloaded - soundprocessor buffers audio streams"
+        ]},
+        {activation:"receive backup_signal from primary_master"},
+        {handshake:"confirm_backup_mode to primary_master"},
+        {resources:"dedicated buffer allocation for backup mode"}
+    ]
+)%
+
+
+# ============================================================
+# LOAD SHUNT CAPABILITY
+# ============================================================
+
+<soundprocessor_load_shunt> puppy%(
+    nexus:[
+        {capability:"load_shunt", description:"Redistribute load to GPU/CPU/NIC when system needs faster redistribution"},
+        {shunt_triggers:[
+            "audio latency exceeds threshold",
+            "processing queue backs up",
+            "thermal limits approached",
+            "strain policy violation (3% + 0.5%)"
+        ]},
+        {shunt_targets:[
+            {target:"GPU", when:"heavy encoding needed"},
+            {target:"CPU", when:"complex ASR needed"},
+            {target:"NIC", when:"network streaming needed"}
+        ]},
+        {shunt_protocol:[
+            "1. Detect shunt condition",
+            "2. Calculate optimal target",
+            "3. Send shunt_request to target",
+            "4. Transfer processing context",
+            "5. Confirm shunt_complete"
+        ]},
+        {strain_policy:"enforce 3% strain with ±0.5% tolerance per post.slam"}
+    ]
+)%
+
+
+# ============================================================
+# CARTIGENE STABILITY METRICS
+# ============================================================
+
+<soundprocessor_cartigene> puppy%(
+    nexus:[
+        {metric:"grain", purpose:"audio shape stability", formula:"|len(audio_buffer) - expected_size|"},
+        {metric:"laggy", purpose:"audio timing efficiency", formula:"runtime / expected_runtime"},
+        {metric:"shi", purpose:"audio resonance quality", formula:"(memory + footprint) / (runtime + 1)"},
+        {metric:"osc", purpose:"audio glitch detection", formula:"|current_sample - previous_sample| > threshold"},
+        {metric:"rot", purpose:"audio pattern detection", formula:"(delta1 * delta2) < 0"},
+        {metric:"bucey", purpose:"audio noise stabilization", formula:"value / (1 + |noise|)"}
+    ]
+)%
+
+
+# ============================================================
+# SYSTEMS SCIENCE (ENGINEERING DECISION RESONANCE)
+# ============================================================
+
+<soundprocessor_systems_science> puppy%(
+    nexus:[
+        {module:"systems_science", purpose:"Engineering decision resonance for audio system design"},
+        {functions:[
+            "extract_components - split audio pipeline into components",
+            "identify_constraints - find latency/memory/bandwidth constraints",
+            "identify_requirements - find sample rate/bit depth requirements",
+            "evaluate_tradeoffs - evaluate quality vs latency tradeoffs",
+            "detect_failure_modes - detect audio glitch/failure modes"
+        ]}
+    ]
+)%
+
+
+# ============================================================
+# TACTICAL TACTICS (IMMEDIATE ACTION RESONANCE)
+# ============================================================
+
+<soundprocessor_tactical_tactics> puppy%(
+    nexus:[
+        {module:"tactical_tactics", purpose:"Real-time action optimization"},
+        {detects:[
+            "immediate_actions - buffer underrun/overrun response",
+            "local_optimization - gain adjustment, noise reduction",
+            "situational_responses - beamforming direction, echo cancellation"
+        ]},
+        {keywords:[
+            {action_indicators:["adjust", "respond", "execute", "route"]},
+            {optimization_terms:["maximize", "minimize", "improve", "refine"]},
+            {situational_keywords:["threat", "opportunity", "risk", "advantage"]}
+        ]}
+    ]
+)%
+
+
+# ============================================================
+# MATH LAYER PER AUDIO TYPE
+# ============================================================
+
+<soundprocessor_math_layers> puppy%(
+    nexus:[
+        {audio_type:"voice", primary_math:"layer_2_calculus_operations", secondary_math:"layer_4_random_generators", description:"Signal processing + noise generation"},
+        {audio_type:"music", primary_math:"layer_5_geometry_transformations", secondary_math:"layer_12_accustic_physics", description:"Spatial audio + acoustics"},
+        {audio_type:"beamforming", primary_math:"layer_3_linear_algebra", secondary_math:"layer_6_physics_mechanics", description:"Array processing + spatial physics"},
+        {audio_type:"asr", primary_math:"layer_2_calculus_operations", secondary_math:"layer_1_power_roots", description:"Feature extraction + computation"},
+        {audio_type:"default", primary_math:"layer_12_accustic_physics", secondary_math:"layer_2_calculus_operations", description:"General audio physics"},
+        {audio_type:"enhanced_audio", primary_math:"layer_12_accustic_physics", secondary_math:"layer_5_geometry_transformations", description:"On-demand audio physics for better sound quality - light load"}
+    ]
+)%
+
+
+# ============================================================
+# RAIL ACCESS POLICY (ALL PROCESSORS READ ALL RAILS)
+# ============================================================
+
+<soundprocessor_rail_access> puppy%(
+    nexus:[
+        {rule:"ALL_PROCESSORS_READ_ALL_RAILS"},
+        {monitors:[
+            "graphicsrail - GPU frame status for video-audio sync",
+            "nicrails - Network traffic for streaming audio",
+            "soundrails - Audio pipeline status",
+            "videorails - Video sync for AV workflows",
+            "modemrails - Modem audio for communication",
+            "raidrails - Storage for audio file access",
+            "usbrails - USB audio device status"
+        ]},
+        {read_pattern:"Continuous background monitoring of all rail signal states"},
+        {write_pattern:"Only primary master (GPU) can write to audio rail normally"}
+    ]
+)%
+
+
+# ============================================================
+# RUNTIME TIMING CHAIN
+# ============================================================
+
+<soundprocessor_runtime_chain> puppy%(
+    nexus:[
+        {chain:"puppy → dogtag → collar → latch → lead → handle → post"},
+        {timing_sources:["BIOS", "PLL", "RC_derived", "effective_timing"]},
+        {strain_enforcement:"3% target with ±0.5% tolerance enforced at SYSTEM.RUNTIME_MAP"},
+        {sync_to:"dogtag.Rolex_Audio_v1"}
+    ]
+)%
+
+
+# ============================================================
+# CLAYWORK BENCHMARK REFERENCE
+# ============================================================
+
+<soundprocessor_claywork_reference> puppy%(
+    nexus:[
+        {reference:"claywork_benchmark_engine.slam", role:"benchmark_tool_not_mainframe"},
+        {use_for:[
+            "Buffer size benchmarking",
+            "CartiGene stability testing",
+            "Performance profiling",
+            "Latency measurement"
+        ]},
+        {not_for:"Running as a mainframe - this is a standalone audio processor"}
+    ]
+)%
+
+
+# ============================================================
+# BUFFER SIZES
+# ============================================================
+
+<soundprocessor_buffer_sizes> puppy%(
+    nexus:[
+        {buffer:"audio_capture", size:"8KB", purpose:"DMA audio buffer - hardware fixed"},
+        {buffer:"feature_vector", size:"~64_bytes", purpose:"MFCC features - minimal"},
+        {buffer:"cartigene_state", size:"48_bytes", purpose:"6 stability metrics - fixed"},
+        {buffer:"math_layer", size:"~256_bytes", purpose:"Active math layer - minimal"},
+        {buffer:"floodsearch", size:"~128_bytes", purpose:"File search - on demand only"},
+        {buffer:"total_estimated", size:"~8.5KB", description:"Minimal audio processing stack"}
+    ]
+)%
+
+
+# ============================================================
+# CONTINUITY INTEGRATION
+# ============================================================
+
+<soundprocessor_continuity> puppy%(
+    nexus:[
+        {records:["cartigene_snapshot", "processing_context", "audio_timestamp"]},
+        {retention:"Permanent in daily continuity file"},
+        {trigger:"On each audio PREPARE/EXEC record"}
+    ]
+)%
+
+# ============================================================
+# MACHINE PROFILE INTEGRATION (Constant Update)
+# ============================================================
+
+<soundprocessor_machine_profile> puppy%(
+    nexus:[
+        {source:"identity/machine/doc_bucey_profile_gen0_1.0_nbs.json", destination:"soundprocessor_state"},
+        {behavior:"CONSTANT_UPDATE - continuously sync to machine profile"},
+        {update_frequency:"per_epoch_or_on_change"},
+        {sync_target:"continuity.snf"},
+        {profile_location:"sara_sdk/nbs_projects/sara_core_system/identity/machine/"},
+        {updates:[
+            "audio_capabilities",
+            "hardware_config",
+            "driver_status",
+            "performance_metrics",
+            "buffer_allocation",
+            "cartigene_state"
+        ]},
+        {role:"ALWAYS_SLAVE_TO_MACHINE_PROFILE"},
+        {master:"machine_profile"},
+        {flow:"machine_profile → soundprocessor_state_sync → continuity_append"}
+    ]
+)%
+
+
+# ============================================================
+# STATUS
+# ============================================================
+
+<soundprocessor_status> puppy%(
+    nexus:[
+        {status:"ready"},
+        {base:"soundrails.slam"},
+        {floodsearch:"available_on_demand"},
+        {backup_capability:"enabled"},
+        {load_shunt:"enabled"},
+        {benchmark_tool:"claywork_benchmark_engine.slam"},
+        {primary_slave:"GPU"},
+        {secondary_master:"CPU"},
+        {tertiary_master:"NIC"}
+    ]
+)%
+
+
+============================================================
+END OF SOUNDPROCESSOR — Micro AI Audio Processor
+============================================================
