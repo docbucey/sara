@@ -1,0 +1,12 @@
+{
+  "pillar": "CONTROL",
+  "functions": [
+    "validate_shunt_header",
+    "protocol_enforcement",
+    "FSM (protocol state/transition management)",
+    "reasoning_math_engine_selection_execution_management",
+    "audit_authorization_launch_routines",
+    "protocol_extension_authority (new codes/lanes)",
+    "ada_accessibility_mapping_initialization_enforcement"
+  ]
+}

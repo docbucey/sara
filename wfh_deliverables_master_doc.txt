@@ -1,0 +1,64 @@
+WFH_DELIVERABLES_MASTER_DOC_V1
+
+Purpose
+- Practical deliverable set for a WFH architecture/spec-first workflow.
+- Conditioning is treated as post phase after architecture/spec MD completion and baseline AI build readiness.
+
+Workstream Split
+- Main workstream:
+  1) Architecture review
+  2) Spec sheet reconciliation
+  3) Build/gate evidence capture
+- Side workstream (optional):
+  1) Research notes
+  2) Dataset concepting/prep
+  3) Personal external research notes (non-authoritative)
+
+Core Deliverables (DOC-style)
+1) Architecture Review Narrative
+- File: wfh_architecture_review_template.doc.txt
+- Goal: summarize current architecture state, authority boundaries, and unresolved risks.
+
+2) Spec Reconciliation Narrative
+- File: wfh_spec_reconciliation_template.doc.txt
+- Goal: map what is implemented vs required by spec and define decisions.
+
+3) Post-Phase Conditioning Plan
+- File: wfh_post_phase_conditioning_plan.doc.txt
+- Goal: define Process-1 sequence and post-phase entry criteria.
+
+4) Weekly Executive Summary
+- File: wfh_weekly_exec_summary_template.doc.txt
+- Goal: simple non-technical summary for progress, risks, next actions.
+
+Core Deliverables (XLS-style / sheet-ready CSV)
+1) Deliverable Tracker
+- File: wfh_deliverables_tracker.csv
+- Tracks owner/status/due date/evidence.
+
+2) Architecture-Spec Gap Register
+- File: wfh_arch_spec_gap_register.csv
+- Tracks each gap, severity, decision, and closure evidence.
+
+3) Risk and Controls Register
+- File: wfh_risk_register.csv
+- Tracks risk probability/impact/mitigation/residual risk.
+
+4) Research and Dataset Log
+- File: wfh_research_dataset_log.csv
+- Tracks optional side-work ideas, data source, readiness, policy notes.
+
+5) Business and Financial Planning Sheet
+- File: wfh_business_financial_planning_sheet.csv
+- Tracks plan assumptions, runway model inputs, scenario notes.
+
+Suggested Weekly Output Cadence
+- Monday: architecture and spec delta capture
+- Wednesday: gap/risk update and evidence links
+- Friday: executive summary + next-week plan
+
+Definition of Done (Per Week)
+- At least one architecture narrative update
+- At least one spec reconciliation update
+- Gap register and risk register refreshed
+- Executive summary published

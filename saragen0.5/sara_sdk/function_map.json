@@ -1,0 +1,10 @@
+{
+  "pillar": "SDK",
+  "functions": [
+    "adapter_wrapper_modules (targets, compilers, external systems)",
+    "ai_plugin_extension_scaffolding",
+    "integration_lanes (AI/model adapters)",
+    "protocol_extension_points (new codes/lanes)",
+    "security_audit_inherited"
+  ]
+}

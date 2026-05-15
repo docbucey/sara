@@ -1,0 +1,33 @@
+WFH_SPEC_RECONCILIATION_TEMPLATE
+
+Document Owner:
+Week Of:
+Spec Version:
+
+1. Scope Reviewed
+- Spec sections reviewed:
+- Runtime files reviewed:
+
+2. Implemented vs Required
+- Requirement ID:
+- Required behavior:
+- Current implementation:
+- Status: PASS | PARTIAL | FAIL
+- Evidence:
+
+3. Gaps
+- Gap ID:
+- Description:
+- Severity:
+- Proposed fix path:
+
+4. Non-Negotiable Constraints Validation
+- CONTROL-routed path intact: YES/NO
+- SECURITY-gated outcomes intact: YES/NO
+- Non-authority contract intact: YES/NO
+- OSH stage visibility intact: YES/NO
+
+5. Signoff
+- Reviewer:
+- Date:
+- Recommendation: READY | CONDITIONAL | BLOCKED

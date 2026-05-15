@@ -1,0 +1,323 @@
+{
+  "generated_on": "2026-04-10",
+  "summary": {
+    "vnce_server_role": "The final C# Office Suite is the VNCE server.",
+    "vnce_node_role": "A remote laptop acts as a VNCE node/envoy.",
+    "current_repo_state": "CONTROL and SECURITY already contain VNCE lifecycle and attestation scaffolding, but SDK transport and remote trust remain mostly stubbed or local-only.",
+    "overall_assessment": "VNCE is conceptually shared across pillars, with CONTROL owning routing, SECURITY owning attestation/hardening, MAMA owning low-strain presentation, CORE wrapping envelopes, and SDK expected to supply adapter transport."
+  },
+  "required_amip_fields": [
+    {
+      "field": "amip_version",
+      "required": true,
+      "reason": "SECURITY validates version 0.1 and rejects mismatches.",
+      "evidence": ["amip_v0_1_schema.json", "sara_security/sara_securitygen1.py:975-1006"]
+    },
+    {
+      "field": "mode",
+      "required": true,
+      "reason": "MAMA pacing and CONTROL/SDK automation behavior depend on interactive versus night_shift.",
+      "evidence": ["amip_v0_1_schema.json", "sara_mama/sara_mamagen1.py:1155-1194"]
+    },
+    {
+      "field": "routing_intent",
+      "required": true,
+      "reason": "CONTROL uses it to infer the VNCE workflow lane and internal route class.",
+      "recommended_values": ["session.start", "session.resume", "vnce.start", "vnce.resume", "remote.display", "remote.input"],
+      "evidence": ["amip_v0_1_schema.json", "sara_control/sara_controlgen1.py:1035-1061", "sara_control/sara_controlgen1.py:4147-4155"]
+    },
+    {
+      "field": "resource_budget",
+      "required": true,
+      "reason": "Remote VNCE must carry pacing/strain limits for ADA-friendly behavior and bounded work.",
+      "evidence": ["amip_v0_1_schema.json", "sara_control/sara_controlgen1.py:4048-4049", "sara_mama/sara_mamagen1.py:1158-1164"]
+    },
+    {
+      "field": "payload",
+      "required": true,
+      "reason": "The VNCE node-specific remote session data lives inside payload.",
+      "required_payload_fields": [
+        "protocol=vnce",
+        "workflow_lane=vnce",
+        "session_id",
+        "host or envoy_host",
+        "envoy_instance_id or envoy_id",
+        "device_identity or device_fingerprint",
+        "environment or environment_link"
+      ],
+      "evidence": ["sara_control/sara_controlgen1.py:1119-1130", "sara_security/sara_securitygen1.py:223-287"]
+    },
+    {
+      "field": "machine_profile",
+      "required": true,
+      "reason": "Profile identity is used as fallback device identity and for routing context.",
+      "evidence": ["amip_v0_1_schema.json", "sara_security/sara_securitygen1.py:223-250"]
+    },
+    {
+      "field": "correlation_id",
+      "required": true,
+      "reason": "Remote session continuity, audit, and resume logic depend on stable cross-request correlation.",
+      "evidence": ["amip_v0_1_schema.json", "sara_security/sara_securitygen1.py:1031-1041", "sara_control/sara_controlgen1.py:4051-4052"]
+    },
+    {
+      "field": "payload.resume_requested",
+      "required": true,
+      "required_when": ["resume", "reconnect"],
+      "reason": "STABLES resume handling distinguishes start versus resume from this flag.",
+      "evidence": ["sara_control/sara_controlgen1.py:1130-1141", "sara_security/sara_securitygen1.py:275-290"]
+    },
+    {
+      "field": "payload.stables_token or payload.rotation_token",
+      "required": true,
+      "required_when": ["resume", "rotation validation", "hardened remote sessions"],
+      "reason": "SECURITY/STABLES rotation and resume validation consume these tokens.",
+      "evidence": ["sara_control/sara_controlgen1.py:1129", "sara_security/sara_securitygen1.py:262-269", "sara_security/sara_securitygen1.py:479-524"]
+    },
+    {
+      "field": "auth_token",
+      "required": true,
+      "required_when": ["production remote VNCE approval"],
+      "reason": "Without sovereign auth, SECURITY cannot fully approve remote VNCE attestation.",
+      "evidence": ["sara_control/sara_controlgen1.py:1109-1144", "sara_security/sara_securitygen1.py:670-721", "sara_security/sara_securitygen1.py:1403-1459"]
+    }
+  ],
+  "required_amipi_fields": [
+    {
+      "field": "action",
+      "required": true,
+      "reason": "SDK AMIPI dispatch records require an action derived from routing_intent.",
+      "evidence": ["sara_control/sara_controlgen1.py:4076-4081", "sara_sdk/Sara_sdk.gen1.py:79-97"]
+    },
+    {
+      "field": "target_ami_id or ami_id or payload.backend",
+      "required": true,
+      "reason": "CONTROL must resolve an internal AI target before calling the SDK AMIPI layer.",
+      "evidence": ["sara_control/sara_controlgen1.py:4056-4067"]
+    },
+    {
+      "field": "correlation_id",
+      "required": true,
+      "reason": "Internal AI dispatch records and remote session continuity depend on correlation.",
+      "evidence": ["sara_control/sara_controlgen1.py:4078-4081", "sara_sdk/Sara_sdk.gen1.py:79-97"]
+    },
+    {
+      "field": "machine_profile",
+      "required": true,
+      "reason": "Internal routing preserves machine/profile context for pacing and identity continuity.",
+      "evidence": ["sara_control/sara_controlgen1.py:4080-4081", "sara_sdk/Sara_sdk.gen1.py:79-97"]
+    },
+    {
+      "field": "mode",
+      "required": true,
+      "reason": "SDK AMIPI dispatch records already carry mode for remote interaction behavior.",
+      "evidence": ["sara_control/sara_controlgen1.py:4081", "sara_sdk/Sara_sdk.gen1.py:79-97"]
+    },
+    {
+      "field": "payload",
+      "required": true,
+      "reason": "Once the request reaches CONTROL, payload must continue carrying VNCE session, input, and frame operation data.",
+      "recommended_inner_fields": ["session_id", "device_identity", "host", "envoy_instance_id", "frame or input command", "resume_requested"],
+      "evidence": ["sara_control/sara_controlgen1.py:4078-4081", "sara_sdk/Sara_sdk.gen1.py:79-97"]
+    },
+    {
+      "field": "backend_ami",
+      "required": true,
+      "required_when": ["VNCE request escalates to internal AI or AMIPI lane"],
+      "reason": "The SDK AMIPI surface is keyed by backend AMI identity.",
+      "evidence": ["sara_sdk/Sara_sdk.gen1.py:79-123"]
+    }
+  ],
+  "required_shunt_header_bits": [
+    {
+      "bit": "BYTE0.shunt_mode_enable",
+      "required_value": "enabled",
+      "reason": "Remote VNCE traffic must be shunt-wrapped to remain compliant with cross-pillar routing.",
+      "evidence": ["shunt_map_descriptor.updated.json#header_spec.byte_map.BYTE0"]
+    },
+    {
+      "bit": "BYTE1.routing_bits",
+      "required_value": "SECURITY_GATE_FIRST for intake/resume, CONTROL_FIRST_STANDARD after approval",
+      "reason": "VNCE remote ingress must not bypass SECURITY or CONTROL.",
+      "evidence": ["shunt_map_descriptor.updated.json#header_spec.byte_map.BYTE1.bit_fields.routing_bits", "sara_control/sara_controlgen1.py:4094-4171"]
+    },
+    {
+      "bit": "BYTE1.authority_bits",
+      "required_value": "VALIDATE_GATE during handshake, CONTROL_EXECUTE only after approval",
+      "reason": "Remote VNCE sessions must be gated before any live operation is allowed.",
+      "evidence": ["shunt_map_descriptor.updated.json#header_spec.byte_map.BYTE1.bit_fields.authority_bits"]
+    },
+    {
+      "bit": "BYTE2.envoy_resonator_switch",
+      "required_value": "envoy_or_resonator_lane",
+      "reason": "VNCE is explicitly treated as an envoy-style remote lane in CONTROL and SECURITY.",
+      "evidence": ["shunt_map_descriptor.updated.json#header_spec.byte_map.BYTE2", "sara_security/sara_securitygen1.py:234-236"]
+    },
+    {
+      "bit": "BYTE3.lane_bits",
+      "required_value": "security_or_stables_lane during attestation, core_control_lane after approval, mama_presentation_lane for return summaries",
+      "reason": "The remote node needs a secure ingress lane plus an ADA-friendly return surface.",
+      "evidence": ["shunt_map_descriptor.updated.json#lane_routing_map", "sara_mama/sara_mamagen1.py:1197-1214"]
+    },
+    {
+      "bit": "BYTE5.shunt_authority_bits and shunt_lock_bits",
+      "required_value": "validate_or_route with security_gate_lock at intake; control_owned_lock after approval",
+      "reason": "Remote VNCE should stay locked behind SECURITY until attested.",
+      "evidence": ["shunt_map_descriptor.updated.json#header_spec.byte_map.BYTE5", "shunt_map_descriptor.updated.json#authority_map"]
+    }
+  ],
+  "required_vnce_capabilities": [
+    {
+      "capability": "VNCE envoy record validation",
+      "requirements": ["type='envoy'", "protocol='vnce'", "host", "port", "token", "caps includes 'frame' and 'input'"],
+      "evidence": ["sara_security/sara_securitygen1.py:1354-1390"]
+    },
+    {
+      "capability": "CONTROL-owned session lifecycle",
+      "requirements": ["start", "resume", "checkpoint", "close"],
+      "evidence": ["sara_control/sara_controlgen1.py:1151-1188"]
+    },
+    {
+      "capability": "SECURITY/STABLES hardening",
+      "requirements": ["session validation", "rotation token handling", "resume challenge handling", "quarantine on mismatch"],
+      "evidence": ["sara_security/sara_securitygen1.py:331-530", "sara_control/sara_controlgen1.py:1109-1144"]
+    },
+    {
+      "capability": "device and envoy identity propagation",
+      "requirements": ["session_id", "device_identity", "envoy_instance_id", "host", "environment"],
+      "evidence": ["sara_security/sara_securitygen1.py:237-287"]
+    },
+    {
+      "capability": "ADA/low-strain return shaping",
+      "requirements": ["voice_first", "low_click", "no animations", "guided or reduced cognitive load"],
+      "evidence": ["sara_mama/sara_mamagen1.py:1155-1214", "shunt_map_descriptor.updated.json#profile_gate_map.WFH_OPERATOR"]
+    },
+    {
+      "capability": "CONTROL-only routing",
+      "requirements": ["all remote VNCE ingress flows route through CONTROL before pillar execution"],
+      "evidence": ["actionmap.updated.json", "shunt_map_descriptor.updated.json#metadata.audit_validation.control_only_routing_required"]
+    }
+  ],
+  "optional_vnce_capabilities": [
+    {
+      "field_or_capability": "policy list on envoy_record",
+      "status": "optional now",
+      "reason": "SECURITY allows it but does not require it to be present.",
+      "evidence": ["sara_security/sara_securitygen1.py:1386-1389"]
+    },
+    {
+      "field_or_capability": "profile_version",
+      "status": "optional now",
+      "reason": "The AMIP schema only requires profile_id.",
+      "evidence": ["amip_v0_1_schema.json#$defs.machine_profile_ref"]
+    },
+    {
+      "field_or_capability": "envoy_mode hint",
+      "status": "optional hint",
+      "reason": "SECURITY and CONTROL can infer envoy/vnce from workflow_lane, protocol, or tags.",
+      "evidence": ["sara_security/sara_securitygen1.py:234-236"]
+    },
+    {
+      "field_or_capability": "stables_token on initial session start",
+      "status": "optional for first start, required for hardened resume/rotation",
+      "reason": "STABLES can initialize without a token but resume validation becomes stricter once the session exists.",
+      "evidence": ["sara_security/sara_securitygen1.py:334-368", "sara_security/sara_securitygen1.py:479-524"]
+    },
+    {
+      "field_or_capability": "extra capabilities beyond frame/input",
+      "status": "optional future expansion",
+      "examples": ["clipboard", "file transfer", "audio", "health"],
+      "reason": "Current validator only requires frame and input.",
+      "evidence": ["sara_security/sara_securitygen1.py:1379-1384"]
+    },
+    {
+      "field_or_capability": "kernel acceleration hooks",
+      "status": "not required in current repo",
+      "reason": "Kernel adapters and reference kernels are stubs/vendor drops rather than live VNCE protocol surfaces.",
+      "evidence": ["sara_sdk/kernels/linux_kernel_hooks.py", "sara_sdk/kernels/arm_kernel_adapter.py", "sara_sdk/kernels/reference_kernel/**"]
+    }
+  ],
+  "required_protocol_expansions": [
+    {
+      "name": "Remote network trust model",
+      "needed_for": ["LAN", "internet"],
+      "why": "SECURITY currently trusts only localhost/local_only/trusted_local environments.",
+      "required_new_or_expanded_fields": ["environment values for lan and internet", "network_scope", "trusted_remote_host or allowlist policy", "tls_required or equivalent transport security flag"],
+      "evidence": ["sara_security/sara_securitygen1.py:541-546"]
+    },
+    {
+      "name": "Remote shunt transport policy",
+      "needed_for": ["LAN", "internet"],
+      "why": "SDK shunt client is explicitly local_only today.",
+      "required_new_or_expanded_fields": ["transport_policy.local_only=false support", "remote_endpoint", "server_host", "server_port", "node_role"],
+      "evidence": ["sara_sdk/common/shunt_client.py:29-41"]
+    },
+    {
+      "name": "Explicit VNCE/AMIPI internal contract",
+      "needed_for": ["CONTROL to SDK", "remote session AI assists"],
+      "why": "AMIPI is present as behavior but not as a formal versioned schema for VNCE remote routing.",
+      "required_new_or_expanded_fields": ["amipi_version", "backend_ami", "target_ami_id", "resource_budget passthrough", "error_code", "result_status"],
+      "evidence": ["sara_control/sara_controlgen1.py:4070-4090", "sara_sdk/Sara_sdk.gen1.py:79-123"]
+    },
+    {
+      "name": "Byte-level VNCE header enforcement",
+      "needed_for": ["secure remote ingress"],
+      "why": "The updated shunt map defines lane, authority, and lock bits that are richer than the live VNCE runtime checks.",
+      "required_new_or_expanded_fields": ["BYTE1 routing and authority decode", "BYTE2 envoy lane enforcement", "BYTE3 lane_bits decode", "BYTE5 lock and authority enforcement"],
+      "evidence": ["shunt_map_descriptor.updated.json#header_spec", "shunt_map_descriptor.updated.json#lane_routing_map", "shunt_map_descriptor.updated.json#authority_map"]
+    },
+    {
+      "name": "Remote-friendly correlation and session strictness",
+      "needed_for": ["resume", "internet reconnection"],
+      "why": "Current fallback session/correlation generation is sufficient for local staging but should be normalized for long-lived remote nodes.",
+      "required_new_or_expanded_fields": ["strict UUID correlation_id everywhere", "canonical session_id format", "resume_nonce or challenge_id"],
+      "evidence": ["amip_v0_1_schema.json", "sara_control/sara_controlgen1.py:1119-1169"]
+    }
+  ],
+  "recommended_surgical_changes": [
+    {
+      "priority": "high",
+      "change": "Keep VNCE ingress CONTROL-owned and require SECURITY attestation before any remote display or input action becomes active.",
+      "owner": "CONTROL"
+    },
+    {
+      "priority": "high",
+      "change": "Extend the AMIP contract for VNCE payload fields (protocol, workflow_lane, session_id, host, envoy_instance_id, device_identity, environment) while keeping the schema additive.",
+      "owner": "shared"
+    },
+    {
+      "priority": "high",
+      "change": "Create a formal internal AMIPI/VNCE dispatch schema so backend_ami, target_ami_id, mode, machine_profile, and correlation_id are standardized once CONTROL hands off internally.",
+      "owner": "shared"
+    },
+    {
+      "priority": "high",
+      "change": "Add remote-safe transport fields and trust tiers for LAN/internet because current SDK transport_policy and SECURITY trust posture are effectively local-only.",
+      "owner": "shared"
+    },
+    {
+      "priority": "medium",
+      "change": "Implement SDK node adapters that can advertise frame/input caps, package VNCE envoy records, and send shunt-wrapped requests without taking routing authority away from CONTROL.",
+      "owner": "SDK"
+    },
+    {
+      "priority": "medium",
+      "change": "Use the updated Bucey Shunt lane and lock bits explicitly for VNCE handshake, resume, and approved session traffic.",
+      "owner": "CONTROL"
+    },
+    {
+      "priority": "low",
+      "change": "Leave kernel-level work optional unless future latency or input-injection requirements justify real platform hooks; the current kernel folders do not yet carry VNCE logic.",
+      "owner": "SDK"
+    }
+  ],
+  "recommended_protocol_owner": "shared",
+  "risks_or_constraints": [
+    "Current SECURITY trust posture treats only localhost/local_only/trusted_local as trusted, so LAN and internet VNCE will challenge or block without explicit expansion.",
+    "Current SDK shunt transport is local_only and stubbed; remote VNCE cannot be production-ready until transport is expanded.",
+    "CONTROL-only routing must be preserved; remote nodes must not call CORE, SECURITY, MAMA, or SDK directly.",
+    "STABLES token rotation and resume checks can challenge, quarantine, or require human verification if resume or token flows mismatch.",
+    "ADA and pacing constraints must remain active remotely: low-click, voice-first, reduced animations, and reduced cognitive load when needed.",
+    "The updated shunt map is more expressive than current runtime VNCE enforcement, so expansion must stay additive and not break existing local routes.",
+    "Kernel/reference-kernel folders do not currently provide live VNCE support, so relying on them now would create false confidence about low-level readiness."
+  ]
+}

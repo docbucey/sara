@@ -1,0 +1,17 @@
+{
+  "pillar": "MAMA",
+  "original_gen1_mappings": "See sara_mamagen1.functionmap.json for full function/class list.",
+  "legacy_features": [
+    "AdaptiveJargonLexicon (domain-specific learning)",
+    "MamaLedger (persistent memory)",
+    "Calculator and protocol routing"
+  ],
+  "mapped_improvements": [
+    "Modularize jargon/ledger logic",
+    "Cleaner separation of calculators and protocol dispatch"
+  ],
+  "likely_intended_future": [
+    "Generalize learning overlays",
+    "Integrate with CONTROL for adaptive orchestration"
+  ]
+}

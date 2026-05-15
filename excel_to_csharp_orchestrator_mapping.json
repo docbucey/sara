@@ -1,0 +1,64 @@
+{
+  "excel_to_csharp_orchestrator_mapping": [
+    {
+      "tab": "quick_reference",
+      "orchestrator_section": "notes",
+      "description": "Quick reference for navigation and usage; aligns with orchestrator notes and general workflow guidance."
+    },
+    {
+      "tab": "problem_intake",
+      "orchestrator_section": "startup_state",
+      "description": "Tracks issues and requirements; informs orchestrator startup and plugin needs."
+    },
+    {
+      "tab": "research_and_source",
+      "orchestrator_section": "generative_ai_mode",
+      "description": "Research and sources support generative AI tasks and fallback logic."
+    },
+    {
+      "tab": "constraints",
+      "orchestrator_section": "pillar_activation",
+      "description": "Constraints inform pillar activation, handoff logic, and fallback conditions."
+    },
+    {
+      "tab": "state_machine",
+      "orchestrator_section": "pillar_activation",
+      "description": "State machine logic maps to orchestrator's pillar activation and routing."
+    },
+    {
+      "tab": "authority",
+      "orchestrator_section": "authority_and_handoff",
+      "description": "Authority tab aligns with orchestrator handoff, governance, and CONTROL logic."
+    },
+    {
+      "tab": "outcome_viability",
+      "orchestrator_section": "fallback_and_recovery",
+      "description": "Outcome viability informs fallback and recovery strategies."
+    },
+    {
+      "tab": "narrative_and_monetize",
+      "orchestrator_section": "generative_ai_mode",
+      "description": "Narrative and monetization strategies support generative AI and user engagement."
+    },
+    {
+      "tab": "activation",
+      "orchestrator_section": "pillar_activation",
+      "description": "Activation tab directly maps to orchestrator's pillar activation and plugin management."
+    },
+    {
+      "tab": "math_rules",
+      "orchestrator_section": "generative_ai_mode",
+      "description": "Math rules support analytics, calculations, and generative AI logic."
+    },
+    {
+      "tab": "fsm_pillar_map",
+      "orchestrator_section": "pillar_activation",
+      "description": "FSM pillar map visualizes and supports orchestrator's pillar routing and state management."
+    },
+    {
+      "tab": "amip_contracts",
+      "orchestrator_section": "plugin_management",
+      "description": "AMIP contracts tab tracks interface/protocol contracts for plugin management."
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+~kennel=type of program~
+~gen=  is a type of version but usely an int input or would be an int and string input for most systems~
+~eveolution= who is making this~
+~version= computer version of the build~ 
+~date=(20260128) yea literal date the work on the file was done however they like doing the date`~
+~location= where they want it to be located foulder path or when we get to making sara an os what we will call the pound 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????#
+#? the human can put what ever he wants in this section from a paragraph, write it like a song or poem, or a simple outline would work?#
+#? or if they need to they can  just drope the <system\path> to where they have created a file of some kind ?txt,md,csv,doc,docx,etc.?#
+#? or like this file begin with a basic suggestion of how they are working on it with maybe they have examples of how it looks in there head space?#
+#? with rules like in a final conversion even this file is following rules like no tabs/indents no spaces between systems get converted to that hard set rule  as part of the pree normalioization removing any boms or what evers and bringthe file to easey machen mode?#
+#? and on any machine side yes parantheticals require a framing like this bus a singline#?
+must be closed out or opened
+#? or the system thinks it is actual code wich goes to the next line because this shows general format of sara_linga(s) body structure In-process-out?#
+#? only hard rule is how you begin is how you end a funk and how the first line after a funk is started os how all funks in between must be done?#
+#? as long as you remeber an open with extra type filers like the question mark in this block are joind to enders of it all others are ignored and for user readability?#
+#??#
+@@
+@it can work because all *.slm files follow this as Input or connection -P and/or S- output or conection where conections are two ways between files or devices in sistem@
+@Even if they write or just pass the code there is a simple llm ai in the protolingua that acts as the final assembler and compiler to convert to machine language that converts the slam files for sara over from simple text like this file or whats in this files input section@
+
+and thats why saras smart builder as long as it knows some where at the bottom of the file the system creates what language your doing it in it becomes the bootom are your different types of output files 

@@ -1,0 +1,23 @@
+
+
+{
+  "summary": {
+    "total_tests": 384,
+    "stable_tests": 0,
+    "unstable_tests": 384,
+    "unexpected_stable_tests": 0,
+    "error_tests": 0
+  },
+  "top_configurations": {
+    "square": [],
+    "octagon": [],
+    "hexagon": [],
+    "round": []
+  },
+  "input_data_ranges": {
+    "square": [],
+    "octagon": [],
+    "hexagon": [],
+    "round": []
+  }
+}

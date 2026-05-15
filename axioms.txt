@@ -1,0 +1,137 @@
+
+
+# ============================================================
+#  SEQUIAN NUMERIC AXIOMS
+#  The Laws Governing CartiGene, Douglas, and Galasvi
+# ============================================================
+#
+#  These axioms define the mathematical universe of the Sequian
+#  numeric substrate. They govern how numbers exist, transform,
+#  stabilize, and interact inside the SARA SDK.
+#
+#  They are the foundation of:
+#     - SequianCartiGene (state carrier)
+#     - Douglas (operator layer)
+#     - Galasvi (container layer)
+#     - Proto-Lingua (_puppy, _breed, _dog_array)
+#     - Gen1 SARA cognition
+#
+#  These axioms MUST be followed by all numeric logic in the SDK.
+#  No imports, no external math libraries, no hidden state.
+#
+# ============================================================
+#  AXIOM 0 — Scientific Notation Is The Only Numeric Form
+# ------------------------------------------------------------
+#  All numeric values MUST be represented as:
+#       sign ∈ {+1, -1}
+#       mantissa ∈ ℝ
+#       exponent ∈ ℤ
+#
+#  The canonical form is:
+#       value = sign * mantissa * (10 ** exponent)
+#
+#  No other numeric substrate is permitted inside the SDK.
+#
+# ============================================================
+#  AXIOM 1 — Normalization Law
+# ------------------------------------------------------------
+#  All SequianCartiGene instances MUST normalize such that:
+#       - mantissa is in the range [1.0, 10.0), OR exactly 0
+#       - exponent adjusts to preserve the numeric value
+#
+#  Zero is a special stable state:
+#       mantissa = 0
+#       exponent = 0
+#       sign = +1
+#
+# ============================================================
+#  AXIOM 2 — No Negative Zero
+# ------------------------------------------------------------
+#  The representation (-0) MUST NOT exist.
+#  Zero always normalizes to:
+#       sign = +1
+#       mantissa = 0
+#       exponent = 0
+#
+# ============================================================
+#  AXIOM 3 — Immutability of Numeric State
+# ------------------------------------------------------------
+#  SequianCartiGene instances MUST be immutable.
+#  Operators MUST return NEW instances.
+#  No mutation of mantissa, exponent, or sign is allowed.
+#
+# ============================================================
+#  AXIOM 4 — Operator Purity (Douglas Law)
+# ------------------------------------------------------------
+#  All Douglas operators MUST:
+#       - be pure functions
+#       - have no side effects
+#       - not store state
+#       - not mutate inputs
+#       - return new SequianCartiGene instances
+#
+#  Operators include:
+#       add, sub, mul, div, sqrt, power
+#
+# ============================================================
+#  AXIOM 5 — Manual Arithmetic Only
+# ------------------------------------------------------------
+#  All math MUST be performed using:
+#       +, -, *, /, **
+#
+#  No imports.
+#  No math library.
+#  No shortcuts.
+#
+# ============================================================
+#  AXIOM 6 — Stability Under Iteration
+# ------------------------------------------------------------
+#  Repeated application of Douglas operators MUST NOT:
+#       - drift
+#       - accumulate floating-point noise
+#       - produce unstable oscillations
+#
+#  This axiom is validated by the CSV experimental data.
+#
+# ============================================================
+#  AXIOM 7 — Container Purity (Galasvi Law)
+# ------------------------------------------------------------
+#  Galasvi MUST:
+#       - store structured data
+#       - perform no math
+#       - apply no transforms
+#       - remain a pure container
+#
+# ============================================================
+#  AXIOM 8 — Shape Supremacy (Proto-Lingua Law)
+# ------------------------------------------------------------
+#  All numeric values entering Proto-Lingua MUST be wrapped in:
+#       _puppy  → SequianCartiGene
+#
+#  All structured values MUST be wrapped in:
+#       _breed  → Galasvi
+#
+#  All sequences MUST be wrapped in:
+#       _dog_array → NexusData (or equivalent)
+#
+# ============================================================
+#  AXIOM 9 — Hardware-Agnostic Behavior
+# ------------------------------------------------------------
+#  Sequian numeric behavior MUST NOT depend on:
+#       - CPU architecture
+#       - GPU architecture
+#       - floating-point hardware quirks
+#
+#  Scientific notation ensures cross-hardware stability.
+#
+# ============================================================
+#  AXIOM 10 — Legacy Compatibility
+# ------------------------------------------------------------
+#  The legacy CartiGene.py file MAY be used by the reasoning
+#  layer, but MUST NOT define the future numeric substrate.
+#
+#  All new math MUST use SequianCartiGene + Douglas.
+#
+# ============================================================
+#  END OF AXIOMS
+# ============================================================

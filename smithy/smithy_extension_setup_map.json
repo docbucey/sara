@@ -1,0 +1,44 @@
+{
+  "steps": [
+    {
+      "id": 1,
+      "task": "Scaffold VS Code extension structure (smithy/core-extension)",
+      "status": "completed"
+    },
+    {
+      "id": 2,
+      "task": "Add package.json, tsconfig.json, and extension entry point (extension.ts)",
+      "status": "completed"
+    },
+    {
+      "id": 3,
+      "task": "Create commands folder and stub files for all Smithy commands",
+      "status": "completed"
+    },
+    {
+      "id": 4,
+      "task": "Create devices folder and stubs for G13, HOTAS, mouse, voice integration",
+      "status": "completed"
+    },
+    {
+      "id": 5,
+      "task": "Implement registerCommands to wire up all commands centrally",
+      "status": "pending"
+    },
+    {
+      "id": 6,
+      "task": "Add device input normalization and mapping logic (profile system)",
+      "status": "pending"
+    },
+    {
+      "id": 7,
+      "task": "Stub out Blender/SARA bridge logic for later integration",
+      "status": "pending"
+    },
+    {
+      "id": 8,
+      "task": "Document all extension features and mapping in README.md",
+      "status": "pending"
+    }
+  ]
+}

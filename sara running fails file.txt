@@ -1,0 +1,89 @@
+
+
+PS C:\Users\mdbuc\sara personal assist> python saraAIgen0.py
+🏰 THE KEEP: Connected to SARA CONTROL.
+Started recording on device: Microsoft Sound Mapper - Input
+Started recording on device: Microphone (Depstech webcam MIC
+Started recording on device: Microphone (Logitech USB Headse
+⚠️ Could not start recording on device Microphone Array (Senary Audio): Multiple input devices found for 'Microphone Array (Senary Audio)':
+[3] Microphone Array (Senary Audio), MME
+[14] Microphone Array (Senary Audio), Windows DirectSound
+[27] Microphone Array (Senary Audio), Windows WASAPI
+Started recording on device: Microphone Array (AMD Audio Dev
+⚠️ Ingest Error: Object of type float32 is not JSON serializable
+⚠️ Ingest Error: Object of type float32 is not JSON serializable
+Started recording on device: Microphone (2- USB Audio Device
+⚠️ JSON Validation Error: Expecting value: line 167 column 29 (char 5452)
+⚠️ JSON Validation Error: Expecting value: line 167 column 29 (char 5452)
+Started recording on device: Primary Sound Capture Driver
+⚠️ Could not start recording on device Microphone (Depstech webcam MIC): Multiple input devices found for 'Microphone (Depstech webcam MIC)':
+[12] Microphone (Depstech webcam MIC), Windows DirectSound
+[29] Microphone (Depstech webcam MIC), Windows WASAPI
+[39] Microphone (Depstech webcam MIC), Windows WDM-KS
+⚠️ Could not start recording on device Microphone (Logitech USB Headset): Multiple input devices found for 'Microphone (Logitech USB Headset)':
+[13] Microphone (Logitech USB Headset), Windows DirectSound
+[26] Microphone (Logitech USB Headset), Windows WASAPI
+[37] Microphone (Logitech USB Headset), Windows WDM-KS
+⚠️ Could not start recording on device Microphone Array (Senary Audio): Multiple input devices found for 'Microphone Array (Senary Audio)':
+[3] Microphone Array (Senary Audio), MME
+[14] Microphone Array (Senary Audio), Windows DirectSound
+[27] Microphone Array (Senary Audio), Windows WASAPI
+⚠️ Could not start recording on device Microphone Array (AMD Audio Device): Multiple input devices found for 'Microphone Array (AMD Audio Device)':
+[15] Microphone Array (AMD Audio Device), Windows DirectSound
+[28] Microphone Array (AMD Audio Device), Windows WASAPI
+⚠️ Could not start recording on device Microphone (2- USB Audio Device): Multiple input devices found for 'Microphone (2- USB Audio Device)':
+[16] Microphone (2- USB Audio Device), Windows DirectSound
+[30] Microphone (2- USB Audio Device), Windows WASAPI
+⚠️ Could not start recording on device Microphone (Logitech USB Headset): Multiple input devices found for 'Microphone (Logitech USB Headset)':
+[13] Microphone (Logitech USB Headset), Windows DirectSound
+[26] Microphone (Logitech USB Headset), Windows WASAPI
+[37] Microphone (Logitech USB Headset), Windows WDM-KS
+⚠️ Could not start recording on device Microphone Array (Senary Audio): Multiple input devices found for 'Microphone Array (Senary Audio)':
+[3] Microphone Array (Senary Audio), MME
+[14] Microphone Array (Senary Audio), Windows DirectSound
+[27] Microphone Array (Senary Audio), Windows WASAPI
+⚠️ JSON Validation Error: Expecting value: line 167 column 29 (char 5452)
+⚠️ Could not start recording on device Microphone Array (AMD Audio Device): Multiple input devices found for 'Microphone Array (AMD Audio Device)':
+[15] Microphone Array (AMD Audio Device), Windows DirectSound
+[28] Microphone Array (AMD Audio Device), Windows WASAPI
+⚠️ Could not start recording on device Microphone (Depstech webcam MIC): Multiple input devices found for 'Microphone (Depstech webcam MIC)':
+[12] Microphone (Depstech webcam MIC), Windows DirectSound
+[29] Microphone (Depstech webcam MIC), Windows WASAPI
+[39] Microphone (Depstech webcam MIC), Windows WDM-KS
+⚠️ Could not start recording on device Microphone (2- USB Audio Device): Multiple input devices found for 'Microphone (2- USB Audio Device)':
+[16] Microphone (2- USB Audio Device), Windows DirectSound
+[30] Microphone (2- USB Audio Device), Windows WASAPI
+⚠️ Could not start recording on device Microphone Array (Senary Audio capture): Error opening InputStream: Invalid device [PaErrorCode -9996]
+⚠️ Could not start recording on device Microphone Array 1 (AMDAfdInstall Wave Microphone - 1): Error opening InputStream: Invalid device [PaErrorCode -9996]
+⚠️ Could not start recording on device Microphone Array 2 (AMDAfdInstall Wave Microphone - 1): Error opening InputStream: Invalid device [PaErrorCode -9996]
+⚠️ Could not start recording on device Microphone Array 3 (AMDAfdInstall Wave Microphone - 1): Error opening InputStream: Invalid device [PaErrorCode -9996]
+⚠️ Could not start recording on device Microphone (Logitech USB Headset): Multiple input devices found for 'Microphone (Logitech USB Headset)':
+[13] Microphone (Logitech USB Headset), Windows DirectSound
+[26] Microphone (Logitech USB Headset), Windows WASAPI
+[37] Microphone (Logitech USB Headset), Windows WDM-KS
+⚠️ Could not start recording on device Microphone (Depstech webcam MIC): Multiple input devices found for 'Microphone (Depstech webcam MIC)':
+[12] Microphone (Depstech webcam MIC), Windows DirectSound
+[29] Microphone (Depstech webcam MIC), Windows WASAPI
+[39] Microphone (Depstech webcam MIC), Windows WDM-KS
+⚠️ Could not start recording on device Microphone (USB Audio Device): Error opening InputStream: Invalid device [PaErrorCode -9996]
+
+🚀 SARA ONLINE [SARA_CORE] - AUDIO RECORDING ACTIVE
+Master: ⚠️ JSON Validation Error: Expecting value: line 167 column 29 (char 5452)
+⚠️ JSON Validation Error: Expecting value: line 167 column 29 (char 5452)
+⚠️ JSON Validation Error: Expecting value: line 167 column 29 (char 5452)
+⚠️ JSON Validation Error: Expecting value: line 167 column 29 (char 5452)
+⚠️ JSON Validation Error: Expecting value: line 167 column 29 (char 5452)
+⚠️ JSON Validation Error: Expecting value: line 167 column 29 (char 5452)
+⚠️ JSON Validation Error: Expecting value: line 167 column 29 (char 5452)
+⚠️ JSON Validation Error: Expecting value: line 167 column 29 (char 5452)
+⚠️ JSON Validation Error: Expecting value: line 167 column 29 (char 5452)
+⚠️ JSON Validation Error: Expecting value: line 167 column 29 (char 5452)
+⚠️ JSON Validation Error: Expecting value: line 167 column 29 (char 5452)
+⚠️ JSON Validation Error: Expecting value: line 167 column 29 (char 5452)
+⚠️ JSON Validation Error: Expecting value: line 167 column 29 (char 5452)
+⚠️ JSON Validation Error: Expecting value: line 167 column 29 (char 5452)
+⚠️ JSON Validation Error: Expecting value: line 167 column 29 (char 5452)
+⚠️ JSON Validation Error: Expecting value: line 167 column 29 (char 5452)
+⚠️ JSON Validation Error: Expecting value: line 167 column 29 (char 5452)
+⚠️ JSON Validation Error: Expecting value: line 167 column 29 (char 5452)
+⚠️ JSON Validation Error: Expecting value: line 167 column 29 (char 5452)

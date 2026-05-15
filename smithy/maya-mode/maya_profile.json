@@ -1,0 +1,9 @@
+{
+  "name": "maya-mode",
+  "mappings": {
+    "G13.G1": "maya_mode.run_alias:extrude",
+    "G13.G2": "maya_mode.run_alias:insert_edge_loop",
+    "HOTAS.B1": "maya_mode.enable",
+    "HOTAS.B2": "maya_mode.disable"
+  }
+}

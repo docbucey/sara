@@ -1,0 +1,54 @@
+INITIAL_CONDITIONING_DISCOVERY_PASS_V2
+
+Objective
+- Redefine Initial Conditioning as a post phase that starts only after architecture/spec MD completion and baseline AI build readiness.
+- Align execution to a WFH-first delivery model focused on architecture and spec review, with optional research/dataset work tracked separately.
+
+Phase Positioning
+- Phase A: Architecture + spec MD completion (primary).
+- Phase B: Baseline AI build verification (primary).
+- Phase C: Initial Conditioning / Process-1 (post phase).
+
+Post-Phase Entry Gate (must all be true)
+1) Architecture and spec documentation set is complete and frozen for the current cycle.
+2) Baseline AI build path is runnable and route/gate authority is intact.
+3) Phase 1 route/security invariants are still passing.
+4) Workstream boundary is explicit: main track = architecture/spec; side track = optional research and dataset generation.
+
+Process-1 Canonical Sequence (Post-Phase)
+1) Canonical lock
+- Reconfirm frozen artifact set and route constraints before conditioning starts.
+
+2) CORE context conditioning
+- Build AMIP payload with deterministic mode/resource/profile context.
+- Build Bucey Shunt envelope with correlation/request identity.
+
+3) SECURITY session conditioning
+- Run STABLES validate/init semantics for the active session context.
+- Challenge or quarantine on resume/token/hard-enforcement violations.
+
+4) CONTROL policy conditioning
+- Normalize AMIP payload.
+- Apply SHI governor and generation profile policy.
+- Enforce route guard invariants (pillar integrity, self.evolve dry-run).
+
+5) OSH stage conditioning
+- Emit deterministic stage progression and outcome class.
+- Preserve non-authority guarantees at acceptance.
+
+6) MAMA conditioning surface
+- Render low-strain, operator-readable phase states.
+- Preserve phase1_outcome and osh_pipeline for all downstream UI views.
+
+7) C# post-phase display
+- Render backend truth states only.
+- Do not mutate or recompute gate outcomes in the UI layer.
+
+WFH Operating Mode
+- Main work: architecture and spec sheet review, reconciliation, and signoff.
+- Side work (optional): research notes and dataset preparation logs.
+- Personal health-related research remains outside the system authority path and should be treated as separate non-authoritative reference work.
+
+Outcome
+- Initial Conditioning is now defined as a post phase, not a front-loaded phase.
+- The execution order and deliverable model are compatible with WFH architecture/spec-first operations.

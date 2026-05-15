@@ -1,0 +1,63 @@
+CSHARP_MICRO_AI_VERIFICATION_V1
+
+Scope
+- Verify current C# micro-AI boundary behavior against extended spec intent for Phase 2 preparation.
+
+Verification Targets
+- VT1: C# uses CONTROL-routed boundary rather than direct model authority.
+- VT2: C# response model can represent security outputs.
+- VT3: C# readiness path is route-based.
+- VT4: C# contains (or does not yet contain) spec-expected personality micro-layer classes.
+
+Results
+
+VT1 PASS (boundary transport)
+- Evidence:
+  - POST /control/route call exists.
+  - POST /mama/dispatch call exists.
+  - auth_token and is_envoy flags are attached on outbound payloads.
+- File anchors:
+  - saragen0/SARA.Gen0.Client/SARAClient.cs:22
+  - saragen0/SARA.Gen0.Client/SARAClient.cs:31
+  - saragen0/SARA.Gen0.Client/SARAClient.cs:58
+
+VT2 PARTIAL PASS (response shape)
+- Evidence:
+  - ControlResponse includes Success, Status, Reason, Result, SecurityAudit.
+- Limitation:
+  - No strongly typed phase1_outcome/osh_pipeline fields in C# model yet.
+- File anchors:
+  - saragen0/SARA.Gen0.Models/ControlResponse.cs:3
+  - saragen0/SARA.Gen0.Models/ControlResponse.cs:13
+
+VT3 PASS (readiness through CONTROL)
+- Evidence:
+  - MainWindow readiness check posts command identity_resolve via CONTROL.
+- File anchor:
+  - saragen0/SARA.Gen0.UI/MainWindow.xaml.cs:33
+
+VT4 NOT MET (spec-named personality micro-layer)
+- Spec expects module family containing PersonalityEngine / PersonalityPresentationLayer / UserPersonaPreference.
+- Current C# source set scan did not find concrete implementations of these class names.
+- Impact:
+  - Phase 2 persona/tone micro-AI layer appears not fully materialized in C# yet.
+
+Additional Observations
+- Acceptance harness uses route-based probes, including route_io graphics check.
+  - saragen0/SARA.Gen0.UI/AcceptanceTestHarness.cs:21
+- Current UI accessibility toggle is present and local (font/contrast), which is consistent with presentation-only scope.
+  - saragen0/SARA.Gen0.UI/MainWindow.xaml.cs:51
+
+Compliance Position (current)
+- Boundary compliance: acceptable baseline.
+- Phase 2 micro-AI personality readiness: incomplete due to missing spec-named class surfaces and typed pipeline-state bindings.
+
+Required To Reach Phase-2-Ready C# Micro-AI Surface
+1) Add presentation-only personality layer classes (no routing authority).
+2) Bind UI tone/persona states to backend gate outcomes and osh_pipeline truth-state.
+3) Add deterministic fallback templates for constrain/deny/schema-fail/boundary-blocked.
+4) Keep CONTROL/SECURITY as sole authorities and preserve non-authority messaging.
+
+Verdict
+- C# micro-AI boundary is safely routed today.
+- C# micro-AI personality layer is partially prepared and requires explicit Phase 2 class/state implementation to satisfy full spec intent.

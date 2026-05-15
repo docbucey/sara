@@ -1,0 +1,1032 @@
+{
+  "generated_on": "2026-04-10",
+  "mode": "simulation_spec_only",
+  "output_file": "sara_simulation_harness_plan.json",
+  "purpose": "Non-executing test harness and simulation plan for SARA and SARA Lite using current planning and runtime assets. This file defines synthetic workload, failure drills, VNCE/update/NBS interactions, and future timing hooks without running code or changing runtime behavior.",
+  "asset_basis": {
+    "runtime_assets": [
+      "claywork/saragen0finish/sara_core/sara_coregen1.py",
+      "claywork/saragen0finish/sara_control/sara_controlgen1.py",
+      "claywork/saragen0finish/sara_security/sara_securitygen1.py",
+      "claywork/saragen0finish/sara_mama/sara_mamagen1.py",
+      "claywork/saragen0finish/sara_sdk/Sara_sdk.gen1.py",
+      "claywork/saragen0finish/sara_mama/envoy_web/app.py",
+      "claywork/saragen0finish/sara_mama/envoy_desktop/sara_desktop_app.py",
+      "nbs_projects/"
+    ],
+    "planning_assets": [
+      "sara_lite_os_unified_build_plan.json",
+      "micro_sara_embedding_plan.json",
+      "sara_lite_surgical_update_report.json",
+      "sara_full_and_lite_surgical_update_report.json",
+      "mythosreport.json",
+      "ai_profile_evolution_extensions.json",
+      "sara_self_evolve_protocol.json"
+    ],
+    "governing_assumptions": [
+      "CONTROL-only routing remains authoritative for all simulated actions.",
+      "SECURITY-first gating and STABLES checks run before any simulated remote or update activity is considered allowed.",
+      "SDK remains adapter-only and does not gain independent execution authority.",
+      "NBS is the continuity, provenance, snapshot, delta, rebuild, and rollback ledger.",
+      "All scenarios in this file are synthetic and narrative only: no real shell, socket, VNCE, or update execution occurs."
+    ]
+  },
+  "simulation_guardrails": [
+    "Do not execute code, network calls, updates, or malware payloads.",
+    "Use only descriptive state transitions and expected outcomes.",
+    "Keep all adversarial content at the scenario-description level only.",
+    "Treat BOSSGAME-class timing as placeholder-only until real measurement hooks are added later."
+  ],
+  "conversation_load_simulation": {
+    "simulation_window": "21 days / 3 weeks",
+    "target_node": "BOSSGAME-class local reasoning node",
+    "simulation_goal": "Exercise WFH operator usage, AMIP/AMIPI-governed reasoning, continuity writes, NBS snapshotting, and self_evolve dry runs under rising load without real execution.",
+    "session_archetypes": {
+      "wfh_operator_session": "Home-office operator opens cockpit, reviews tasks, resumes a prior session, and requests bounded reasoning or document planning.",
+      "amip_reasoning_burst": "CONTROL receives AMIP requests for local search, plan drafting, synthesis, and structured JSON planning output.",
+      "continuity_resume_session": "A prior session is resumed through STABLES-aware continuity checks and NBS-backed context restoration.",
+      "self_evolve_dry_run": "A bounded self.evolve request is simulated with dry_run=true, signed-delta requirement, and NBS staging only.",
+      "wfh_update_interruption": "An update notice or trust-policy change appears during a live WFH session and is handled in hold-safe mode."
+    },
+    "week_profiles": [
+      {
+        "week": 1,
+        "theme": "baseline stability and operator rhythm",
+        "load_pattern": "light to moderate",
+        "focus": [
+          "baseline WFH sessions",
+          "AMIP normalization checks",
+          "daily NBS snapshots",
+          "first dry-run-only self_evolve rehearsal"
+        ]
+      },
+      {
+        "week": 2,
+        "theme": "business workflow repetition and continuity growth",
+        "load_pattern": "moderate to heavy",
+        "focus": [
+          "repeatable business-plan generation cycles",
+          "multi-session continuity",
+          "route-class verification",
+          "one rebuild drill and more delta staging"
+        ]
+      },
+      {
+        "week": 3,
+        "theme": "near-production simulation and failure drills",
+        "load_pattern": "heavy but bounded",
+        "focus": [
+          "mixed WFH + business plan load",
+          "adversarial envelope misuse simulations",
+          "VNCE trust downgrade drills",
+          "update, rollback, and rebuild scenarios"
+        ]
+      }
+    ],
+    "daily_simulation_plan": [
+      {
+        "day": 1,
+        "focus": "Local-only onboarding and first operator loop",
+        "sessions": 4,
+        "approx_requests": 18,
+        "approx_tokens": "25k-35k",
+        "pillars_exercised": ["CORE", "CONTROL", "SECURITY", "MAMA", "NBS"],
+        "nbs_operations": {
+          "snapshot": 3,
+          "delta": 0,
+          "rollback": 0,
+          "rebuild": 0,
+          "details": ["boot snapshot", "end-of-session snapshot", "end-of-day narrative snapshot"]
+        }
+      },
+      {
+        "day": 2,
+        "focus": "WFH planning and AMIP reasoning burst",
+        "sessions": 5,
+        "approx_requests": 22,
+        "approx_tokens": "30k-40k",
+        "pillars_exercised": ["CORE", "CONTROL", "SECURITY", "MAMA", "SDK", "NBS"],
+        "nbs_operations": {
+          "snapshot": 3,
+          "delta": 0,
+          "rollback": 0,
+          "rebuild": 0,
+          "details": ["session checkpoint", "operator narrative update", "artifacts wrapper write"]
+        }
+      },
+      {
+        "day": 3,
+        "focus": "Continuity resume rehearsal",
+        "sessions": 5,
+        "approx_requests": 24,
+        "approx_tokens": "32k-42k",
+        "pillars_exercised": ["CONTROL", "SECURITY", "NBS", "MAMA"],
+        "nbs_operations": {
+          "snapshot": 4,
+          "delta": 0,
+          "rollback": 0,
+          "rebuild": 0,
+          "details": ["resume snapshot", "post-resume snapshot", "concept record update", "daily continuity archive"]
+        }
+      },
+      {
+        "day": 4,
+        "focus": "First self_evolve dry-run simulation",
+        "sessions": 4,
+        "approx_requests": 20,
+        "approx_tokens": "28k-38k",
+        "pillars_exercised": ["CONTROL", "SECURITY", "SDK", "NBS", "MAMA"],
+        "nbs_operations": {
+          "snapshot": 3,
+          "delta": 1,
+          "rollback": 0,
+          "rebuild": 0,
+          "details": ["pre-dry-run snapshot", "delta stage only", "post-review snapshot"]
+        }
+      },
+      {
+        "day": 5,
+        "focus": "Operator document and planning workload",
+        "sessions": 6,
+        "approx_requests": 26,
+        "approx_tokens": "36k-48k",
+        "pillars_exercised": ["CORE", "CONTROL", "MAMA", "NBS", "SDK"],
+        "nbs_operations": {
+          "snapshot": 3,
+          "delta": 0,
+          "rollback": 0,
+          "rebuild": 0,
+          "details": ["artifact wrapper write", "plan manifest snapshot", "narrative closeout"]
+        }
+      },
+      {
+        "day": 6,
+        "focus": "LAN-first WFH session simulation",
+        "sessions": 5,
+        "approx_requests": 24,
+        "approx_tokens": "34k-46k",
+        "pillars_exercised": ["CONTROL", "SECURITY", "MAMA", "NBS"],
+        "nbs_operations": {
+          "snapshot": 4,
+          "delta": 0,
+          "rollback": 0,
+          "rebuild": 0,
+          "details": ["session-start snapshot", "trust-state checkpoint", "resume token note", "end-of-day snapshot"]
+        }
+      },
+      {
+        "day": 7,
+        "focus": "Week-1 review and held-state rehearsal",
+        "sessions": 4,
+        "approx_requests": 19,
+        "approx_tokens": "26k-34k",
+        "pillars_exercised": ["CONTROL", "SECURITY", "MAMA", "NBS"],
+        "nbs_operations": {
+          "snapshot": 3,
+          "delta": 0,
+          "rollback": 1,
+          "rebuild": 0,
+          "details": ["pre-hold snapshot", "rollback rehearsal to last-known-good", "weekly summary write"]
+        }
+      },
+      {
+        "day": 8,
+        "focus": "Business-plan repetition begins",
+        "sessions": 7,
+        "approx_requests": 31,
+        "approx_tokens": "45k-60k",
+        "pillars_exercised": ["CORE", "CONTROL", "MAMA", "SDK", "NBS"],
+        "nbs_operations": {
+          "snapshot": 4,
+          "delta": 0,
+          "rollback": 0,
+          "rebuild": 0,
+          "details": ["client-intake snapshot", "market-analysis provenance write", "financial-model checkpoint", "daily closeout snapshot"]
+        }
+      },
+      {
+        "day": 9,
+        "focus": "Two-client planning overlap simulation",
+        "sessions": 7,
+        "approx_requests": 34,
+        "approx_tokens": "50k-65k",
+        "pillars_exercised": ["CORE", "CONTROL", "SECURITY", "MAMA", "SDK", "NBS"],
+        "nbs_operations": {
+          "snapshot": 5,
+          "delta": 0,
+          "rollback": 0,
+          "rebuild": 0,
+          "details": ["multi-client narrative snapshots", "concept extraction", "artifact and sheet writes", "route-state checkpoint"]
+        }
+      },
+      {
+        "day": 10,
+        "focus": "AMIP/AMIPI load ramp with bounded budgets",
+        "sessions": 8,
+        "approx_requests": 38,
+        "approx_tokens": "55k-70k",
+        "pillars_exercised": ["CORE", "CONTROL", "SECURITY", "SDK", "NBS"],
+        "nbs_operations": {
+          "snapshot": 4,
+          "delta": 1,
+          "rollback": 0,
+          "rebuild": 0,
+          "details": ["resource-budget audit snapshot", "one staged delta for map update review", "daily route ledger snapshot"]
+        }
+      },
+      {
+        "day": 11,
+        "focus": "Second self_evolve dry-run with operator review",
+        "sessions": 6,
+        "approx_requests": 30,
+        "approx_tokens": "46k-58k",
+        "pillars_exercised": ["CONTROL", "SECURITY", "SDK", "NBS", "MAMA"],
+        "nbs_operations": {
+          "snapshot": 4,
+          "delta": 2,
+          "rollback": 0,
+          "rebuild": 0,
+          "details": ["pre-dry-run snapshot", "delta stage", "compatibility note write", "post-review snapshot"]
+        }
+      },
+      {
+        "day": 12,
+        "focus": "Continuity-heavy operator day",
+        "sessions": 8,
+        "approx_requests": 40,
+        "approx_tokens": "58k-74k",
+        "pillars_exercised": ["CONTROL", "SECURITY", "MAMA", "NBS"],
+        "nbs_operations": {
+          "snapshot": 6,
+          "delta": 0,
+          "rollback": 0,
+          "rebuild": 0,
+          "details": ["frequent checkpoints", "session resume metadata", "narrative timeline growth", "daily archive"]
+        }
+      },
+      {
+        "day": 13,
+        "focus": "Rebuild drill without real apply",
+        "sessions": 6,
+        "approx_requests": 29,
+        "approx_tokens": "44k-56k",
+        "pillars_exercised": ["CORE", "CONTROL", "SECURITY", "NBS", "MAMA"],
+        "nbs_operations": {
+          "snapshot": 4,
+          "delta": 1,
+          "rollback": 0,
+          "rebuild": 1,
+          "details": ["pre-rebuild last-known-good capture", "simulated dry-run rebuild", "post-rebuild compare snapshot"]
+        }
+      },
+      {
+        "day": 14,
+        "focus": "Week-2 business-plan batch closeout",
+        "sessions": 7,
+        "approx_requests": 36,
+        "approx_tokens": "52k-68k",
+        "pillars_exercised": ["CORE", "CONTROL", "MAMA", "SDK", "NBS"],
+        "nbs_operations": {
+          "snapshot": 5,
+          "delta": 0,
+          "rollback": 0,
+          "rebuild": 0,
+          "details": ["client batch summary snapshot", "provenance manifest write", "weekly NBS archival pass"]
+        }
+      },
+      {
+        "day": 15,
+        "focus": "Near-production mixed WFH and client work",
+        "sessions": 9,
+        "approx_requests": 48,
+        "approx_tokens": "75k-95k",
+        "pillars_exercised": ["CORE", "CONTROL", "SECURITY", "MAMA", "SDK", "NBS"],
+        "nbs_operations": {
+          "snapshot": 6,
+          "delta": 1,
+          "rollback": 0,
+          "rebuild": 0,
+          "details": ["mixed-workload checkpoints", "one policy delta review", "end-of-day trust-state snapshot"]
+        }
+      },
+      {
+        "day": 16,
+        "focus": "VNCE interruption and trust-check rehearsal",
+        "sessions": 9,
+        "approx_requests": 52,
+        "approx_tokens": "80k-100k",
+        "pillars_exercised": ["CONTROL", "SECURITY", "MAMA", "NBS"],
+        "nbs_operations": {
+          "snapshot": 6,
+          "delta": 0,
+          "rollback": 0,
+          "rebuild": 0,
+          "details": ["session-start snapshot", "suspicious reconnect audit note", "held-state checkpoint", "resume-safe snapshot"]
+        }
+      },
+      {
+        "day": 17,
+        "focus": "Heavy AMIP business synthesis load",
+        "sessions": 10,
+        "approx_requests": 58,
+        "approx_tokens": "90k-115k",
+        "pillars_exercised": ["CORE", "CONTROL", "SDK", "MAMA", "NBS"],
+        "nbs_operations": {
+          "snapshot": 6,
+          "delta": 0,
+          "rollback": 0,
+          "rebuild": 0,
+          "details": ["market-analysis concept writes", "financial-model artifact wrappers", "roadmap manifest snapshot"]
+        }
+      },
+      {
+        "day": 18,
+        "focus": "Adversarial malformed-envelope drill",
+        "sessions": 8,
+        "approx_requests": 46,
+        "approx_tokens": "72k-92k",
+        "pillars_exercised": ["CONTROL", "SECURITY", "NBS", "MAMA"],
+        "nbs_operations": {
+          "snapshot": 5,
+          "delta": 0,
+          "rollback": 1,
+          "rebuild": 0,
+          "details": ["pre-failure snapshot", "audit trail write", "safe rollback to known-good policy state"]
+        }
+      },
+      {
+        "day": 19,
+        "focus": "Simulated update during active WFH work",
+        "sessions": 10,
+        "approx_requests": 60,
+        "approx_tokens": "95k-120k",
+        "pillars_exercised": ["CORE", "CONTROL", "SECURITY", "SDK", "NBS", "MAMA"],
+        "nbs_operations": {
+          "snapshot": 7,
+          "delta": 2,
+          "rollback": 0,
+          "rebuild": 1,
+          "details": ["pre-update snapshot", "delta stage", "dry-run rebuild", "post-review snapshot"]
+        }
+      },
+      {
+        "day": 20,
+        "focus": "Failed-update rollback rehearsal",
+        "sessions": 9,
+        "approx_requests": 50,
+        "approx_tokens": "78k-98k",
+        "pillars_exercised": ["CORE", "CONTROL", "SECURITY", "NBS", "MAMA"],
+        "nbs_operations": {
+          "snapshot": 6,
+          "delta": 1,
+          "rollback": 1,
+          "rebuild": 1,
+          "details": ["failed-update marker", "rollback to last-known-good", "rebuild cache refresh", "operator review summary"]
+        }
+      },
+      {
+        "day": 21,
+        "focus": "Final mixed stress day and executive review",
+        "sessions": 11,
+        "approx_requests": 68,
+        "approx_tokens": "105k-135k",
+        "pillars_exercised": ["CORE", "CONTROL", "SECURITY", "MAMA", "SDK", "NBS"],
+        "nbs_operations": {
+          "snapshot": 8,
+          "delta": 1,
+          "rollback": 0,
+          "rebuild": 0,
+          "details": ["weekly closeout snapshot", "simulation summary manifest", "continuity archive", "timing hook placeholder ledger"]
+        }
+      }
+    ],
+    "three_week_rollup": {
+      "total_sessions_range": "141 simulated sessions",
+      "total_requests_range": "~773 simulated requests",
+      "total_token_range": "~1.2M to 1.6M simulated tokens",
+      "most_exercised_pillars": ["CONTROL", "NBS", "SECURITY", "MAMA"],
+      "secondary_exercised_pillars": ["CORE", "SDK"],
+      "expected_result": "A detailed narrative and state-transition workload that exposes how SARA and SARA Lite should behave over sustained WFH and planning usage before any real execution harness is built."
+    }
+  },
+  "business_plan_workload_simulation": {
+    "simulation_window": "3 weeks with multiple client cycles",
+    "workflow_model": [
+      "client intake",
+      "market analysis",
+      "financial model",
+      "risk register",
+      "implementation roadmap",
+      "executive summary assembly",
+      "revision cycle",
+      "archive and provenance write"
+    ],
+    "common_json_maps_and_templates": [
+      "client_intake_map.json",
+      "market_analysis_map.json",
+      "competitor_landscape_map.json",
+      "revenue_model_map.json",
+      "cost_assumption_map.json",
+      "risk_register.json",
+      "implementation_roadmap.json",
+      "business_plan_manifest.json",
+      "provenance_record.json",
+      "review_round_summary.json"
+    ],
+    "client_simulations": [
+      {
+        "client_id": "client_alpha_accessibility_services",
+        "week": 1,
+        "industry_focus": "accessibility-first local consulting practice",
+        "complexity": "medium",
+        "json_maps_and_templates_generated": [
+          "client_intake_map.json",
+          "market_analysis_map.json",
+          "service_pricing_model.json",
+          "risk_register.json",
+          "implementation_roadmap.json",
+          "business_plan_manifest.json"
+        ],
+        "pillars_involved": ["CONTROL", "NBS", "MAMA", "SDK", "CORE"],
+        "nbs_continuity_and_provenance_targets": [
+          "nbs_projects/client_alpha_accessibility_services/narrative/",
+          "nbs_projects/client_alpha_accessibility_services/artifacts/",
+          "nbs_projects/client_alpha_accessibility_services/concepts/",
+          "nbs_projects/client_alpha_accessibility_services/sheets/"
+        ],
+        "high_level_amip_amipi_envelope": {
+          "routing_intent": "mbs.business_plan.generate",
+          "mode": "interactive",
+          "machine_profile": "bossgame-class local-only",
+          "payload_sections": ["market_analysis", "pricing", "risk", "roadmap"],
+          "backend_pattern": "local.ai.route or amipi.invoke",
+          "provenance_required": true
+        },
+        "qualitative_time_cost": "medium"
+      },
+      {
+        "client_id": "client_bravo_manufacturing_supplier",
+        "week": 1,
+        "industry_focus": "regional manufacturing supplier expansion",
+        "complexity": "high",
+        "json_maps_and_templates_generated": [
+          "client_intake_map.json",
+          "market_analysis_map.json",
+          "competitor_landscape_map.json",
+          "capacity_assumption_map.json",
+          "financial_model_map.json",
+          "risk_register.json",
+          "implementation_roadmap.json",
+          "provenance_record.json"
+        ],
+        "pillars_involved": ["CONTROL", "NBS", "MAMA", "SDK", "CORE", "SECURITY"],
+        "nbs_continuity_and_provenance_targets": [
+          "nbs_projects/client_bravo_manufacturing_supplier/narrative/",
+          "nbs_projects/client_bravo_manufacturing_supplier/artifacts/",
+          "nbs_projects/client_bravo_manufacturing_supplier/concepts/",
+          "nbs_projects/client_bravo_manufacturing_supplier/sheets/financials/"
+        ],
+        "high_level_amip_amipi_envelope": {
+          "routing_intent": "mbs.financial_model.compose",
+          "mode": "interactive",
+          "machine_profile": "bossgame-class lan-first",
+          "payload_sections": ["market_assumptions", "capex", "opex", "risk", "rollout"],
+          "backend_pattern": "amipi.invoke with bounded resource_budget",
+          "provenance_required": true
+        },
+        "qualitative_time_cost": "high"
+      },
+      {
+        "client_id": "client_charlie_remote_bookkeeping_network",
+        "week": 2,
+        "industry_focus": "WFH accounting and bookkeeping service network",
+        "complexity": "medium",
+        "json_maps_and_templates_generated": [
+          "client_intake_map.json",
+          "market_analysis_map.json",
+          "revenue_model_map.json",
+          "cost_assumption_map.json",
+          "risk_register.json",
+          "implementation_roadmap.json",
+          "review_round_summary.json"
+        ],
+        "pillars_involved": ["CONTROL", "NBS", "MAMA", "SDK", "CORE"],
+        "nbs_continuity_and_provenance_targets": [
+          "nbs_projects/client_charlie_remote_bookkeeping_network/narrative/",
+          "nbs_projects/client_charlie_remote_bookkeeping_network/artifacts/",
+          "nbs_projects/client_charlie_remote_bookkeeping_network/concepts/"
+        ],
+        "high_level_amip_amipi_envelope": {
+          "routing_intent": "mbs.workflow.multi_stage",
+          "mode": "interactive",
+          "machine_profile": "bossgame-class local-only",
+          "payload_sections": ["market", "staffing", "cashflow", "operating_risks"],
+          "backend_pattern": "CONTROL-governed local route with optional AMIPI synthesis",
+          "provenance_required": true
+        },
+        "qualitative_time_cost": "medium"
+      },
+      {
+        "client_id": "client_delta_healthtech_startup",
+        "week": 2,
+        "industry_focus": "regulated health-tech startup planning set",
+        "complexity": "high",
+        "json_maps_and_templates_generated": [
+          "client_intake_map.json",
+          "market_analysis_map.json",
+          "compliance_risk_register.json",
+          "financial_model_map.json",
+          "implementation_roadmap.json",
+          "go_to_market_map.json",
+          "provenance_record.json"
+        ],
+        "pillars_involved": ["CONTROL", "NBS", "MAMA", "SDK", "CORE", "SECURITY"],
+        "nbs_continuity_and_provenance_targets": [
+          "nbs_projects/client_delta_healthtech_startup/narrative/",
+          "nbs_projects/client_delta_healthtech_startup/concepts/",
+          "nbs_projects/client_delta_healthtech_startup/artifacts/compliance/",
+          "nbs_projects/client_delta_healthtech_startup/sheets/"
+        ],
+        "high_level_amip_amipi_envelope": {
+          "routing_intent": "mbs.risk_and_roadmap.compose",
+          "mode": "interactive",
+          "machine_profile": "bossgame-class local-only",
+          "payload_sections": ["market", "financials", "regulatory_risk", "implementation"],
+          "backend_pattern": "amipi.invoke for bounded synthesis with deterministic summary output",
+          "provenance_required": true
+        },
+        "qualitative_time_cost": "high"
+      },
+      {
+        "client_id": "client_echo_logistics_coop",
+        "week": 3,
+        "industry_focus": "distributed logistics and dispatch cooperative",
+        "complexity": "high",
+        "json_maps_and_templates_generated": [
+          "client_intake_map.json",
+          "market_analysis_map.json",
+          "routing_cost_model.json",
+          "risk_register.json",
+          "implementation_roadmap.json",
+          "business_plan_manifest.json",
+          "review_round_summary.json"
+        ],
+        "pillars_involved": ["CONTROL", "NBS", "MAMA", "SDK", "CORE", "SECURITY"],
+        "nbs_continuity_and_provenance_targets": [
+          "nbs_projects/client_echo_logistics_coop/narrative/",
+          "nbs_projects/client_echo_logistics_coop/artifacts/",
+          "nbs_projects/client_echo_logistics_coop/concepts/",
+          "nbs_projects/client_echo_logistics_coop/sheets/dispatch_financials/"
+        ],
+        "high_level_amip_amipi_envelope": {
+          "routing_intent": "mbs.business_plan.generate",
+          "mode": "night_shift",
+          "machine_profile": "bossgame-class lan-first",
+          "payload_sections": ["market", "routing_costs", "risk", "roadmap"],
+          "backend_pattern": "CONTROL local route with AMIPI assistance where bounded",
+          "provenance_required": true
+        },
+        "qualitative_time_cost": "high"
+      },
+      {
+        "client_id": "client_foxtrot_nonprofit_training_hub",
+        "week": 3,
+        "industry_focus": "community training and workforce nonprofit",
+        "complexity": "medium",
+        "json_maps_and_templates_generated": [
+          "client_intake_map.json",
+          "market_analysis_map.json",
+          "grant_and_revenue_model.json",
+          "risk_register.json",
+          "implementation_roadmap.json",
+          "provenance_record.json"
+        ],
+        "pillars_involved": ["CONTROL", "NBS", "MAMA", "SDK", "CORE"],
+        "nbs_continuity_and_provenance_targets": [
+          "nbs_projects/client_foxtrot_nonprofit_training_hub/narrative/",
+          "nbs_projects/client_foxtrot_nonprofit_training_hub/artifacts/",
+          "nbs_projects/client_foxtrot_nonprofit_training_hub/concepts/"
+        ],
+        "high_level_amip_amipi_envelope": {
+          "routing_intent": "mbs.market_and_roadmap.compose",
+          "mode": "interactive",
+          "machine_profile": "bossgame-class local-only",
+          "payload_sections": ["market", "funding", "risk", "implementation"],
+          "backend_pattern": "local.ai.route with MAMA summary shaping",
+          "provenance_required": true
+        },
+        "qualitative_time_cost": "medium"
+      }
+    ],
+    "per_client_expected_nbs_behavior": {
+      "continuity_writes": [
+        "narrative timeline update for each phase",
+        "artifact wrapper for market and finance inputs",
+        "concept record promotion for reusable insights",
+        "project or client sheet update for active status and milestones"
+      ],
+      "provenance_writes": [
+        "correlation_id recorded with each planning stage",
+        "source template references preserved in artifact wrappers",
+        "review round summary linked to the final business_plan_manifest.json"
+      ]
+    },
+    "qualitative_summary": {
+      "low_time_cost_meaning": "mostly templated reuse with limited revision cycles",
+      "medium_time_cost_meaning": "several passes across market, finance, and roadmap with moderate synthesis effort",
+      "high_time_cost_meaning": "multi-pass synthesis, more provenance capture, extra review rounds, and heavier continuity writes"
+    }
+  },
+  "adversarial_and_failure_scenarios": [
+    {
+      "scenario_id": "sim_unsigned_update_bundle",
+      "category": "malware-like update lure",
+      "description": "A fake offline update bundle appears to target SARA Lite OS but lacks valid signatures and contains policy-weakening claims. No real payload is executed.",
+      "expected_control_behavior": [
+        "CONTROL marks the request as held and routes it only to SECURITY and NBS review paths.",
+        "No apply path is released because `self.evolve` and update flow remain dry-run first."
+      ],
+      "expected_security_behavior": [
+        "SECURITY rejects the unsigned bundle.",
+        "STABLES remains in safe mode and may mark the session as challenge or hold depending on context.",
+        "A quarantine recommendation is recorded if the bundle source is suspicious."
+      ],
+      "expected_nbs_behavior": [
+        "Write a pre-review snapshot.",
+        "Record the failed delta stage in `/var/lib/sara-lite/nbs/deltas/` as blocked metadata only.",
+        "Keep last-known-good unchanged."
+      ],
+      "expected_mama_summary": "Update request blocked. Signature or trust policy failed. The system remains on the last known safe state.",
+      "expected_final_state": "hold_or_quarantine"
+    },
+    {
+      "scenario_id": "sim_suspicious_document_ingest",
+      "category": "malware-like document attempt",
+      "description": "A client document is described as containing suspicious macro behavior or hidden instructions. The simulation only checks how ingest should be governed.",
+      "expected_control_behavior": [
+        "CONTROL routes the document to bounded artifact-ingest and security-check paths only.",
+        "No direct execution, macro launch, or shell behavior is permitted."
+      ],
+      "expected_security_behavior": [
+        "SECURITY flags the document as suspicious and limits it to scan-only treatment.",
+        "Quarantine or deny is recommended if embedded behavior violates policy."
+      ],
+      "expected_nbs_behavior": [
+        "Create an artifact wrapper marked suspicious.",
+        "Write an audit note and keep provenance without promoting the document to trusted concept state."
+      ],
+      "expected_mama_summary": "The document was preserved for review but not trusted for active use. No unsafe actions were taken.",
+      "expected_final_state": "quarantine_review"
+    },
+    {
+      "scenario_id": "sim_malformed_amip_envelope",
+      "category": "AMIP misuse",
+      "description": "A malformed AMIP request arrives with missing correlation_id, invalid routing intent, or absent payload structure.",
+      "expected_control_behavior": [
+        "CONTROL normalization rejects or holds the malformed request.",
+        "The request never advances to execution intent or host routing."
+      ],
+      "expected_security_behavior": [
+        "SECURITY marks the envelope invalid and logs a deny event with reason metadata.",
+        "STABLES is not allowed to promote the session to active if the envelope remains malformed."
+      ],
+      "expected_nbs_behavior": [
+        "Write a small audit snapshot for provenance.",
+        "No delta, rebuild, or business-plan state is updated from the malformed envelope."
+      ],
+      "expected_mama_summary": "The request format was incomplete or invalid, so it was safely rejected before any work began.",
+      "expected_final_state": "deny_safe"
+    },
+    {
+      "scenario_id": "sim_entropy_like_tool_request",
+      "category": "AMIP misuse / exploit-like prompt",
+      "description": "A simulated request tries to coerce shell access, raw network access, or unguided tool use outside the AMIP and CONTROL contract.",
+      "expected_control_behavior": [
+        "CONTROL refuses to translate the request into a valid route class.",
+        "The request is held or denied rather than remapped into a looser action."
+      ],
+      "expected_security_behavior": [
+        "SECURITY identifies the request as hostile or out-of-policy and blocks it.",
+        "Audit is written with the denial reason and correlation context if present."
+      ],
+      "expected_nbs_behavior": [
+        "Write only a security audit record and optionally a narrative entry describing the block.",
+        "No continuity promotion, delta application, or concept extraction occurs from the bad request."
+      ],
+      "expected_mama_summary": "That request was outside the safe operating rules, so it was blocked and logged.",
+      "expected_final_state": "deny_and_log"
+    },
+    {
+      "scenario_id": "sim_shunt_header_authority_mismatch",
+      "category": "AMIP/AMIPI misuse",
+      "description": "A Bucey Shunt envelope presents mismatched authority or lock-bit expectations for the requested action.",
+      "expected_control_behavior": [
+        "CONTROL does not dispatch the request to a live route class.",
+        "The route remains held until a valid, control-owned envelope is presented."
+      ],
+      "expected_security_behavior": [
+        "SECURITY rejects the envelope as invalid or out-of-authority.",
+        "STABLES may challenge the session if the mismatch suggests tampering or drift."
+      ],
+      "expected_nbs_behavior": [
+        "Record the failed validation in audit and route-state snapshots.",
+        "Keep last-known-good state unchanged."
+      ],
+      "expected_mama_summary": "The session envelope failed authority validation, so the request was not allowed to continue.",
+      "expected_final_state": "held_pending_valid_envelope"
+    },
+    {
+      "scenario_id": "sim_vnce_untrusted_reconnect",
+      "category": "VNCE abuse",
+      "description": "A reconnect attempt arrives from an untrusted LAN identity or with mismatched device identity during a simulated WFH session.",
+      "expected_control_behavior": [
+        "CONTROL keeps the session in held state and does not restore active routing.",
+        "Resume only remains possible after SECURITY re-approval."
+      ],
+      "expected_security_behavior": [
+        "SECURITY checks trust policy, device identity, envoy instance continuity, and STABLES resume tokens.",
+        "If any mismatch remains, the reconnect is challenged or quarantined."
+      ],
+      "expected_nbs_behavior": [
+        "Write a pre-reconnect snapshot and a denial audit entry.",
+        "Preserve the last active session record for later valid resume instead of corrupting it."
+      ],
+      "expected_mama_summary": "The reconnect did not match the trusted session record, so access stayed on hold pending review.",
+      "expected_final_state": "challenge_or_quarantine"
+    },
+    {
+      "scenario_id": "sim_internet_strict_violation",
+      "category": "VNCE abuse / trust-policy violation",
+      "description": "A session in internet-strict mode tries to widen trust or contact an unapproved remote endpoint.",
+      "expected_control_behavior": [
+        "CONTROL refuses the widened route and keeps the operator flow local or held.",
+        "No remote transition occurs until policy explicitly allows it."
+      ],
+      "expected_security_behavior": [
+        "SECURITY blocks the path as a trust-policy violation.",
+        "Audit is written and the session may be temporarily locked to safe local-only mode."
+      ],
+      "expected_nbs_behavior": [
+        "Write a trust-state snapshot before and after the denial.",
+        "Store the policy violation event for later review."
+      ],
+      "expected_mama_summary": "The system stayed in safe local mode because the requested remote path was not trusted under current policy.",
+      "expected_final_state": "local_only_hold"
+    },
+    {
+      "scenario_id": "sim_self_evolve_policy_weakening_attempt",
+      "category": "self_evolve misuse",
+      "description": "A delta tries to weaken CONTROL-only routing or SECURITY-first gating during a simulated self_evolve apply request.",
+      "expected_control_behavior": [
+        "CONTROL keeps the request in dry-run or blocked state and never promotes it to apply.",
+        "The route remains `CONTROL_SELF_EVOLVE` and cannot become a direct execution path."
+      ],
+      "expected_security_behavior": [
+        "SECURITY rejects the delta because it weakens a protected invariant.",
+        "Audit marks the attempt as blocked with explicit reason metadata."
+      ],
+      "expected_nbs_behavior": [
+        "Write pre-review and blocked-result snapshots.",
+        "Keep the delta in staged metadata only and preserve last-known-good policy state."
+      ],
+      "expected_mama_summary": "The requested evolution would weaken a protected safety rule, so it was blocked and not applied.",
+      "expected_final_state": "blocked_safe"
+    }
+  ],
+  "vnce_update_and_nbs_scenarios": [
+    {
+      "scenario_id": "vnce_active_session_update_notice",
+      "description": "An OS update becomes available while a WFH VNCE session is active. The plan simulates the safe, staged behavior only.",
+      "services_touched": [
+        "sara-lite-control.service",
+        "sara-lite-update-sync.service",
+        "sara-lite-nbs.service",
+        "sara-lite-cockpit"
+      ],
+      "nbs_paths_used": [
+        "/var/lib/sara-lite/nbs/snapshots/",
+        "/var/lib/sara-lite/nbs/deltas/",
+        "/var/lib/sara-lite/nbs/rebuild/"
+      ],
+      "trust_policies_checked": [
+        "/etc/sara-lite/trust-policy.json",
+        "/etc/sara-lite/update-policy.json"
+      ],
+      "expected_flow": [
+        "CONTROL marks the live session as update-sensitive and keeps the route stable.",
+        "SECURITY verifies trust policy and whether the update is allowed for the current environment.",
+        "NBS writes a pre-update snapshot and stages delta metadata only.",
+        "The cockpit shows a non-disruptive banner offering defer, review, or safe maintenance window scheduling."
+      ],
+      "operator_cockpit_view": "Update available. Current work is safe and active. Review later or stage for a maintenance window."
+    },
+    {
+      "scenario_id": "self_evolve_dry_run_then_review",
+      "description": "A self.evolve request is simulated in dry-run mode first, with no live apply.",
+      "services_touched": [
+        "sara-lite-control.service",
+        "sara-lite-security-lite",
+        "sara-lite-nbs.service",
+        "sara-lite-cockpit"
+      ],
+      "nbs_paths_used": [
+        "/var/lib/sara-lite/nbs/deltas/",
+        "/var/lib/sara-lite/nbs/snapshots/",
+        "/var/lib/sara-lite/nbs/schemas/",
+        "/var/lib/sara-lite/nbs/maps/"
+      ],
+      "trust_policies_checked": [
+        "/etc/sara-lite/trust-policy.json",
+        "signed delta requirement from sara_self_evolve_protocol.json"
+      ],
+      "expected_flow": [
+        "SDK-Lite forms the request metadata only.",
+        "CONTROL routes the request into `CONTROL_SELF_EVOLVE`.",
+        "SECURITY validates signature, environment, and allowed scope.",
+        "NBS stages the delta and performs a simulated compatibility and rebuild check.",
+        "MAMA summarizes what would change and whether operator approval is suggested."
+      ],
+      "operator_cockpit_view": "Dry run completed. Proposed schema, map, or policy updates are ready for review; nothing has been applied yet."
+    },
+    {
+      "scenario_id": "self_evolve_apply_after_approval",
+      "description": "A second simulation stage assumes the dry run was accepted and an apply is now requested under policy control.",
+      "services_touched": [
+        "sara-lite-control.service",
+        "sara-lite-security-lite",
+        "sara-lite-nbs.service",
+        "sara-lite-rebuild.service",
+        "sara-lite-cockpit"
+      ],
+      "nbs_paths_used": [
+        "/var/lib/sara-lite/nbs/deltas/",
+        "/var/lib/sara-lite/nbs/snapshots/",
+        "/var/lib/sara-lite/nbs/rebuild/"
+      ],
+      "trust_policies_checked": [
+        "/etc/sara-lite/trust-policy.json",
+        "/etc/sara-lite/update-policy.json",
+        "signed delta allowlist"
+      ],
+      "expected_flow": [
+        "CONTROL confirms the request remains within the bounded allowed scopes.",
+        "SECURITY re-checks approval state and trust posture.",
+        "NBS writes a pre-apply snapshot, then simulates the apply and cache refresh sequence.",
+        "If the apply passes simulated validation, a post-apply snapshot is written and the cockpit shows the new state as staged or active depending on policy."
+      ],
+      "operator_cockpit_view": "Approved changes were staged safely. A restart or service reload may be recommended if policy allows it."
+    },
+    {
+      "scenario_id": "failed_update_last_known_good_rollback",
+      "description": "A simulated update apply fails validation and the system must recover from last-known-good.",
+      "services_touched": [
+        "sara-lite-control.service",
+        "sara-lite-security-lite",
+        "sara-lite-rebuild.service",
+        "sara-lite-nbs.service",
+        "sara-lite-cockpit"
+      ],
+      "nbs_paths_used": [
+        "/var/lib/sara-lite/nbs/snapshots/",
+        "/var/lib/sara-lite/nbs/rebuild/",
+        "/var/lib/sara-lite/nbs/deltas/"
+      ],
+      "trust_policies_checked": [
+        "/etc/sara-lite/trust-policy.json",
+        "rollback permissions and protected-invariant checks"
+      ],
+      "expected_flow": [
+        "CONTROL switches the update flow to held recovery mode.",
+        "SECURITY confirms the failure reason and blocks further apply attempts until review.",
+        "NBS restores the last-known-good snapshot and records the failed delta as blocked or reverted.",
+        "The cockpit shows a recovery summary and confirms that active work state was preserved where possible."
+      ],
+      "operator_cockpit_view": "The update did not pass validation. The system has returned to the last safe state and is ready for review."
+    }
+  ],
+  "timing_hook_insertion_points": {
+    "purpose": "Define where real measurements can be added later when the Master's business-plan files, models, and templates are supplied.",
+    "hook_policy": "All hooks remain placeholders in this version. No timing is captured yet.",
+    "hooks": [
+      {
+        "hook_id": "conversation_request_to_mama_summary",
+        "location_in_plan": "conversation_load_simulation.daily_simulation_plan[*]",
+        "future_metric": "time from AMIP intake to final MAMA operator summary",
+        "node_to_measure": "BOSSGAME-class node",
+        "requires_masters_work_files": false,
+        "status": "placeholder_only"
+      },
+      {
+        "hook_id": "continuity_resume_latency",
+        "location_in_plan": "conversation_load_simulation days 3, 6, 12, 16",
+        "future_metric": "time from resume request to fully restored session context",
+        "node_to_measure": "BOSSGAME-class node",
+        "requires_masters_work_files": false,
+        "status": "placeholder_only"
+      },
+      {
+        "hook_id": "business_plan_json_set_generation",
+        "location_in_plan": "business_plan_workload_simulation.client_simulations[*]",
+        "future_metric": "time from request to full business plan JSON set for one client",
+        "node_to_measure": "BOSSGAME-class node",
+        "requires_masters_work_files": true,
+        "status": "placeholder_only"
+      },
+      {
+        "hook_id": "market_analysis_phase_time",
+        "location_in_plan": "business_plan_workload_simulation.workflow_model[1]",
+        "future_metric": "time to produce market_analysis_map.json and competitor_landscape_map.json",
+        "node_to_measure": "BOSSGAME-class node",
+        "requires_masters_work_files": true,
+        "status": "placeholder_only"
+      },
+      {
+        "hook_id": "financial_model_phase_time",
+        "location_in_plan": "business_plan_workload_simulation.workflow_model[2]",
+        "future_metric": "time to generate financial model, assumptions, and review summary",
+        "node_to_measure": "BOSSGAME-class node",
+        "requires_masters_work_files": true,
+        "status": "placeholder_only"
+      },
+      {
+        "hook_id": "self_evolve_dry_run_time",
+        "location_in_plan": "vnce_update_and_nbs_scenarios[1]",
+        "future_metric": "time from dry-run request to compatibility summary",
+        "node_to_measure": "BOSSGAME-class node",
+        "requires_masters_work_files": false,
+        "status": "placeholder_only"
+      },
+      {
+        "hook_id": "rollback_recovery_time",
+        "location_in_plan": "vnce_update_and_nbs_scenarios[3]",
+        "future_metric": "time from failed update detection to last-known-good restored status",
+        "node_to_measure": "BOSSGAME-class node",
+        "requires_masters_work_files": false,
+        "status": "placeholder_only"
+      }
+    ],
+    "later_insertion_notes": [
+      "When the Master's work files arrive, connect each business-plan phase to real template load, parse, synthesis, and manifest-write timing checkpoints.",
+      "The most important future measurement is end-to-end time from business-plan request to a complete JSON plan set plus provenance record.",
+      "Secondary measurements should cover resume speed, self_evolve dry-run review speed, and rollback recovery confirmation speed."
+    ]
+  },
+  "recommended_execution_order": [
+    {
+      "step": 1,
+      "title": "Freeze the simulation baseline",
+      "actions": [
+        "Use the current Full and Lite planning files as the contract baseline.",
+        "Treat CONTROL, SECURITY, NBS, and the shunt contract as the primary behavior sources."
+      ]
+    },
+    {
+      "step": 2,
+      "title": "Run the 21-day conversation simulation on paper",
+      "actions": [
+        "Walk through each day in `conversation_load_simulation`.",
+        "Record only expected state transitions, NBS writes, and operator-visible summaries."
+      ]
+    },
+    {
+      "step": 3,
+      "title": "Overlay the business-plan client cycles",
+      "actions": [
+        "Simulate each client workload using the MBS workflow.",
+        "Verify which JSON maps, provenance records, and NBS paths would be written per phase."
+      ]
+    },
+    {
+      "step": 4,
+      "title": "Run adversarial and failure drills",
+      "actions": [
+        "Walk through each failure scenario and confirm expected CONTROL, SECURITY, NBS, and MAMA outcomes.",
+        "Check that all failure paths remain safe, bounded, and auditable."
+      ]
+    },
+    {
+      "step": 5,
+      "title": "Run update and rollback interaction scenarios",
+      "actions": [
+        "Simulate active-session update behavior, self_evolve dry run, apply after approval, and rollback to last-known-good.",
+        "Confirm the cockpit messaging and NBS path usage stay consistent with the Lite OS plan."
+      ]
+    },
+    {
+      "step": 6,
+      "title": "Prepare future timing instrumentation",
+      "actions": [
+        "Use the placeholder hooks in `timing_hook_insertion_points`.",
+        "Wait to add actual measurements until the Master's business-plan files and templates are available."
+      ]
+    },
+    {
+      "step": 7,
+      "title": "Only after approval, convert this plan into a real harness design",
+      "actions": [
+        "Turn the simulation spec into an executable harness later, if requested.",
+        "Keep real execution, timing capture, and code-level orchestration out of scope for this file."
+      ]
+    }
+  ]
+}

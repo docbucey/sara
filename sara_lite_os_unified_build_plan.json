@@ -1,0 +1,423 @@
+{
+  "generated_on": "2026-04-10",
+  "mode": "analysis_only",
+  "output_file": "sara_lite_os_unified_build_plan.json",
+  "source_inputs": [
+    "desktop_vnce_node_iso_build_plan.json",
+    "desktop_vnce_node_iso_build_plan_with_ide.json",
+    "micro_sara_embedding_plan.json",
+    "amip_amipi_surgical_expansion_plan.json",
+    "vnce_remote_node_requirements.json",
+    "protocol_expansion_unified_patch.json"
+  ],
+  "os_identity": {
+    "description": "Bootable Linux-based SARA Lite OS image that combines VNCE Office Suite access, integrated local development tools, embedded Lite pillars, NBS-based continuity, and an ADA-first operator cockpit.",
+    "requirements": [
+      "Define the image identity as 'SARA Lite OS' rather than a generic desktop build.",
+      "Keep the image desktop-first, low-strain, operator-safe, and live-ISO capable.",
+      "Preserve CONTROL-only routing and SECURITY-first gating as non-negotiable platform invariants.",
+      "Support additive growth without breaking current local-safe behavior."
+    ],
+    "files_and_paths": [
+      "/opt/sara-vnce/sara-lite/",
+      "/etc/sara-lite/",
+      "/var/lib/sara-lite/"
+    ],
+    "dependencies": [
+      "Base Linux rootfs",
+      "Trusted SARA Lite bootstrap config",
+      "VNCE and AMIP/AMIPI schema plan"
+    ],
+    "notes": [
+      "The target identity is a SARA Lite OS workstation image, not only a remote VNCE node.",
+      "The design remains additive and staged for safer rollout."
+    ]
+  },
+  "hardware_targets": {
+    "description": "Primary deployment targets are x86_64 laptops and desktops, with future arm64 support once package and transport stability are verified.",
+    "requirements": [
+      "Support x86_64 laptop hardware for the first production-ready image.",
+      "Support x86_64 desktops used as staging, development, or operator stations.",
+      "Treat arm64 support as a later-phase target once remote endpoint and package availability are confirmed.",
+      "Ensure UEFI boot compatibility for the initial deployment set."
+    ],
+    "files_and_paths": [
+      "/boot/",
+      "/EFI/BOOT/",
+      "/live/vmlinuz",
+      "/live/initrd.img"
+    ],
+    "dependencies": [
+      "UEFI-capable boot assets",
+      "Generic desktop kernel",
+      "Supported graphics, input, and network stack"
+    ],
+    "notes": [
+      "Kernel-level acceleration remains optional and is not a phase-1 requirement.",
+      "Legacy BIOS support is optional only for fleets that still require it."
+    ]
+  },
+  "base_os_and_desktop": {
+    "description": "A Debian or Ubuntu LTS minimal base with XFCE preferred and MATE supported as a low-strain desktop shell.",
+    "requirements": [
+      "Use Debian or Ubuntu LTS minimal as the rootfs base.",
+      "Install XFCE as the preferred desktop environment or MATE as the alternate profile.",
+      "Keep reduced-motion, large-text, and low-click defaults enabled from first boot.",
+      "Include NetworkManager and systemd-based startup for predictable node behavior.",
+      "Allow Wayland if stable, with X11 fallback where needed."
+    ],
+    "files_and_paths": [
+      "/usr/share/xsessions/",
+      "/etc/xdg/",
+      "/home/operator/.config/xfce4/",
+      "/home/operator/.config/mate/"
+    ],
+    "dependencies": [
+      "Base Linux image build pipeline",
+      "ADA-friendly UI profile",
+      "Systemd service graph"
+    ],
+    "notes": [
+      "The desktop should feel calm and readable rather than visually dense.",
+      "Voice-first hints and accessibility shortcuts should remain available."
+    ]
+  },
+  "office_suite_and_vnce_integration": {
+    "description": "The image acts as a VNCE remote node that connects to the final C# Office Suite server through CONTROL-mediated AMIP/VNCE intake and SECURITY-first validation.",
+    "requirements": [
+      "Integrate a VNCE client shell for frame receive and input send.",
+      "Require envoy metadata with protocol='vnce', host, port, token, and caps including frame and input.",
+      "Route all Office-bound session start, resume, checkpoint, and close operations through CONTROL.",
+      "Ensure SECURITY validates attestation, lock bits, authority bits, and STABLES resume continuity before activation.",
+      "Treat the C# Office Suite listener, AMIP intake normalizer, shunt wrapper emitter, and audit bridge as required server-side boundary surfaces."
+    ],
+    "files_and_paths": [
+      "/opt/sara-vnce/node-config.json",
+      "/opt/sara-vnce/session-policy.json",
+      "/usr/local/bin/sara-vnce-launch",
+      "/etc/systemd/system/sara-vnce-node.service"
+    ],
+    "dependencies": [
+      "VNCE-capable Office Suite server boundary",
+      "CONTROL-Lite routing layer",
+      "SECURITY-Lite attestation and STABLES state",
+      "Shunt header support"
+    ],
+    "notes": [
+      "Current workspace evidence did not confirm a complete VNCE server boundary in the visible C# code, so this remains a required integration surface.",
+      "Remote behavior should stay LAN-first and internet-strict until trust expansion is explicitly configured."
+    ]
+  },
+  "ide_and_devtools_layer": {
+    "description": "A local development layer with VSCodium, Geany, language servers, and build tools that supports development on the SARA Lite OS image without altering routing or trust authority.",
+    "requirements": [
+      "Install VSCodium as the primary IDE with telemetry, settings sync, and remote tunnels disabled by default.",
+      "Install Geany as a lightweight fallback editor.",
+      "Bundle Python, C#, and shell language-server support from offline packages where possible.",
+      "Include git, gcc, g++, make, cmake, pkg-config, and core CLI utilities.",
+      "Include dotnet-sdk on x86_64 images if storage budget permits, or stage it as an optional offline package layer.",
+      "Register desktop entries and devtool init/audit services without creating a new authority plane."
+    ],
+    "files_and_paths": [
+      "/opt/sara-vnce/devtools/",
+      "/usr/share/applications/sara-vscodium.desktop",
+      "/usr/share/applications/sara-geany.desktop",
+      "/etc/systemd/system/sara-devtools-init.service",
+      "/etc/systemd/system/sara-devtools-audit.service"
+    ],
+    "dependencies": [
+      "XFCE or MATE desktop shell",
+      "Offline package bundle",
+      "ADA-safe editor profiles",
+      "Local-only devtools policy"
+    ],
+    "notes": [
+      "Developer tooling is allowed locally but does not imply trust bypass or remote listener approval.",
+      "Automatic remote tunnels and silent extension fetches remain blocked by default."
+    ]
+  },
+  "micro_sara_pillars": {
+    "description": "Embed a micro-SARA runtime consisting of CORE-Lite, CONTROL-Lite, SECURITY-Lite, MAMA-Lite, and SDK-Lite so the OS behaves as a true SARA Lite platform.",
+    "requirements": [
+      "Embed CORE-Lite for AMIP envelope building, workflow_state attachment, machine_profile resolution, and deterministic flag support.",
+      "Embed CONTROL-Lite as the sole routing authority for AMIP normalization, AMIPI routing, VNCE route class handling, and byte-level shunt decode.",
+      "Embed SECURITY-Lite for VNCE attestation, lock and authority bit enforcement, STABLES resume continuity, quarantine handling, and audit logging.",
+      "Embed MAMA-Lite for ADA shaping, low-strain summaries, guided prompts, and readable status feedback.",
+      "Embed SDK-Lite for AMIPI adapter packaging, VNCE wrapping, remote endpoint fields, and reconnect metadata while remaining adapter-only."
+    ],
+    "files_and_paths": [
+      "/opt/sara-vnce/sara-lite/core-lite/",
+      "/opt/sara-vnce/sara-lite/control-lite/",
+      "/opt/sara-vnce/sara-lite/security-lite/",
+      "/opt/sara-vnce/sara-lite/mama-lite/",
+      "/opt/sara-vnce/sara-lite/sdk-lite/",
+      "/var/lib/sara-lite/runtime/"
+    ],
+    "dependencies": [
+      "SARA Lite bootstrap service",
+      "AMIP/AMIPI schema definitions",
+      "Shunt maps and route maps",
+      "Trusted local state storage"
+    ],
+    "notes": [
+      "CORE-Lite builds but does not own final routing.",
+      "SDK-Lite stays wrapper-only and must remain subordinate to CONTROL-Lite and SECURITY-Lite."
+    ]
+  },
+  "nbs_lite_and_continuity": {
+    "description": "Use NBS-Lite as the local continuity, schema, map, diff, rebuild, and self-repair layer for forward-compatible SARA Lite OS operation.",
+    "requirements": [
+      "Store schemas, maps, snapshots, and deltas under /var/lib/sara-lite/nbs/ with a read-only bootstrap mirror under /opt/sara-vnce/sara-lite/.",
+      "Capture continuity snapshots at boot completion, successful session start, resume success, approved config change, pre-update staging, and clean shutdown.",
+      "Keep last-known-good and current-working snapshots side by side.",
+      "Rebuild from trusted bootstrap config plus schemas, maps, snapshots, and signed deltas.",
+      "Use diff-based reconstruction and additive self-repair rather than blind overwrite."
+    ],
+    "files_and_paths": [
+      "/var/lib/sara-lite/nbs/snapshots/",
+      "/var/lib/sara-lite/nbs/maps/",
+      "/var/lib/sara-lite/nbs/schemas/",
+      "/var/lib/sara-lite/nbs/deltas/",
+      "/var/lib/sara-lite/nbs/rebuild/"
+    ],
+    "dependencies": [
+      "NBS-Lite service",
+      "Trusted bootstrap schemas",
+      "Versioned route and profile maps",
+      "Signed update metadata"
+    ],
+    "notes": [
+      "If repair confidence is low, the OS should enter held safe mode and request operator review.",
+      "Forward compatibility should preserve unknown but well-formed fields in a compatibility extension area."
+    ]
+  },
+  "amip_amipi_and_shunt_support": {
+    "description": "Provide first-class AMIP/AMIPI handling and byte-level shunt enforcement for VNCE and local SARA Lite routing behavior.",
+    "requirements": [
+      "Support AMIP required fields including amip_version, mode, routing_intent, resource_budget, payload, machine_profile, and correlation_id.",
+      "Extend AMIP additively for source_pillar, target_pillar, deterministic, workflow_state, and transport_policy where needed.",
+      "Define or embed AMIPI support with amipi_version, backend_ami, target_ami_id, dispatch_id, result_status, and error_code support.",
+      "Enforce shunt header bits for SECURITY_GATE_FIRST intake, VALIDATE_GATE authority, envoy lane signaling, and lock-bit behavior.",
+      "Require UUID-safe correlation handling and strict session continuity for resume and reconnect flows.",
+      "Keep SDK packaging subordinate to CONTROL interpretation of the shunt header."
+    ],
+    "files_and_paths": [
+      "/opt/sara-vnce/sara-lite/schemas/amip_v0_1_schema.json",
+      "/opt/sara-vnce/sara-lite/schemas/amipi_v0_1_schema.json",
+      "/opt/sara-vnce/sara-lite/maps/shunt_map_descriptor.updated.json",
+      "/opt/sara-vnce/sara-lite/maps/actionmap.updated.json"
+    ],
+    "dependencies": [
+      "CONTROL-Lite route normalization",
+      "SECURITY-Lite attestation and lock enforcement",
+      "SDK-Lite transport metadata",
+      "Versioned schema and map store"
+    ],
+    "notes": [
+      "Schema drift already exists between strict schema and live runtime behavior, so alignment work should remain additive and staged.",
+      "The updated shunt map is richer than current live enforcement and should be activated carefully to avoid regressions."
+    ]
+  },
+  "cockpit_and_ada_profile": {
+    "description": "A minimal ADA-friendly local cockpit provides a readable SARA Lite OS control surface without direct authority override.",
+    "requirements": [
+      "Provide a single-window low-strain dashboard with large targets and reduced motion.",
+      "Show system health, workflow state, routing posture, trust state, continuity status, developer tools availability, and network environment.",
+      "Allow observational and request-based actions such as safe reconnect, held-state rebuild request, and diagnostics export.",
+      "Block direct route override, SECURITY bypass, remote tunnel activation, or blind deletion of continuity state.",
+      "Expose cockpit launch from the desktop panel once safe boot completes."
+    ],
+    "files_and_paths": [
+      "/usr/share/applications/sara-lite-cockpit.desktop",
+      "/usr/local/bin/sara-lite-cockpit",
+      "/etc/sara-lite/cockpit-profile.json"
+    ],
+    "dependencies": [
+      "MAMA-Lite summary layer",
+      "NBS-Lite continuity status",
+      "Desktop shell and panel integration",
+      "Security hold posture on startup"
+    ],
+    "notes": [
+      "The cockpit makes the image feel like a true SARA Lite OS rather than only a dev box.",
+      "Cockpit behavior remains observational or request-based, not directly authoritative."
+    ]
+  },
+  "network_and_trust_model": {
+    "description": "Use a LAN-first and internet-strict trust posture with SECURITY-first evaluation of host, token, environment, and resume continuity.",
+    "requirements": [
+      "Treat local_only and trusted_local as the closest match to current behavior.",
+      "Enable LAN support only with explicit environment='lan', transport security, host allowlist, token validation, and STABLES-aware session handling.",
+      "Treat internet paths as strict, never auto-trusted, and dependent on explicit trust policy, reconnect nonce, timeout policy, and faster quarantine on mismatch.",
+      "Require device_identity, session_id, correlation_id, and envoy_instance_id continuity for resumed sessions.",
+      "Keep routing and activation blocked whenever trust evaluation fails."
+    ],
+    "files_and_paths": [
+      "/etc/sara-lite/trust-policy.json",
+      "/opt/sara-vnce/trust-policy.json",
+      "/var/lib/sara-lite/security/stables-state.json"
+    ],
+    "dependencies": [
+      "SECURITY-Lite trust engine",
+      "VNCE and shunt metadata",
+      "CONTROL-Lite routing rules",
+      "Signed policy configuration"
+    ],
+    "notes": [
+      "LAN-first staging is the recommended rollout posture.",
+      "Internet readiness should be considered a later controlled phase, not a default capability."
+    ]
+  },
+  "iso_and_bootloader_structure": {
+    "description": "The bootable ISO includes the Linux live image, SARA Lite runtime, devtools, policy files, and minimal bootloader adjustments for safe normal, recovery, and diagnostics modes.",
+    "requirements": [
+      "Include UEFI boot assets such as BOOTX64.EFI and grubx64.efi.",
+      "Include rootfs.squashfs, kernel, and initramfs for the live environment.",
+      "Place SARA Lite runtime, schemas, maps, cockpit, and devtools under /opt/sara-vnce/ and /var/lib/sara-lite/.",
+      "Provide normal boot, safe recovery boot, and developer diagnostics boot entries.",
+      "Keep the SECURITY default-hold posture intact across all boot modes."
+    ],
+    "files_and_paths": [
+      "/EFI/BOOT/BOOTX64.EFI",
+      "/boot/grub/grub.cfg",
+      "/boot/grub/fallback.cfg",
+      "/boot/grub/devmode.cfg",
+      "/live/rootfs.squashfs",
+      "/opt/sara-vnce/",
+      "/var/lib/sara-lite/"
+    ],
+    "dependencies": [
+      "ISO build pipeline",
+      "Signed boot assets",
+      "Systemd service definitions",
+      "SARA Lite runtime layout"
+    ],
+    "notes": [
+      "IDE tooling is a userspace addition and does not require a trust-reducing boot path.",
+      "If Secure Boot is supported by the target fleet, signed kernel and initramfs are preferred."
+    ]
+  },
+  "systemd_and_service_graph": {
+    "description": "Use systemd to stage the safe boot flow, restore continuity, enable SARA Lite pillars, start the VNCE node, launch the cockpit, and optionally initialize devtools and update services.",
+    "requirements": [
+      "Seed trusted local identity and bootstrap configuration through sara-lite-bootstrap.service.",
+      "Start SECURITY-Lite and establish the hold posture before VNCE session activation is possible.",
+      "Start NBS-Lite to restore schemas, maps, and last-known-good indexes.",
+      "Start CONTROL-Lite before enabling VNCE node behavior.",
+      "Start sara-vnce-node.service only under SECURITY and CONTROL governance.",
+      "Launch the cockpit after the platform reaches safe ready state.",
+      "Initialize devtools and update sync with separate units that remain subordinate to the same policy posture."
+    ],
+    "files_and_paths": [
+      "/etc/systemd/system/sara-lite-bootstrap.service",
+      "/etc/systemd/system/sara-lite-security.service",
+      "/etc/systemd/system/sara-lite-control.service",
+      "/etc/systemd/system/sara-lite-nbs.service",
+      "/etc/systemd/system/sara-vnce-node.service",
+      "/etc/systemd/system/sara-lite-cockpit.service",
+      "/etc/systemd/system/sara-devtools-init.service",
+      "/etc/systemd/system/sara-lite-update-sync.service"
+    ],
+    "dependencies": [
+      "Systemd-based Linux rootfs",
+      "Trusted configuration files",
+      "SARA Lite binaries or scripts",
+      "Desktop session target"
+    ],
+    "notes": [
+      "Recommended sequence: bootstrap -> security -> nbs -> control -> vnce-node -> cockpit -> devtools.",
+      "Services that fail trust checks should stop in a held or degraded safe mode rather than forcing activation."
+    ]
+  },
+  "update_and_rebuild_flow": {
+    "description": "A signed delta-driven update and rebuild flow uses NBS-Lite to validate, stage, dry-run, and promote changes while protecting continuity and trust posture.",
+    "requirements": [
+      "Accept signed update manifests, schema deltas, map deltas, and optional offline update bundles.",
+      "Stage all updates in NBS delta storage before promotion.",
+      "Run a dry-run reconstruction using trusted bootstrap config and current snapshots.",
+      "Promote the rebuilt state only if validation passes and routing/trust invariants remain intact.",
+      "Revert to last-known-good and log the issue in cockpit and audit output when validation fails.",
+      "Require reboot only when kernel, boot assets, or foundational runtime layers change."
+    ],
+    "files_and_paths": [
+      "/var/lib/sara-lite/nbs/deltas/",
+      "/var/lib/sara-lite/nbs/rebuild/",
+      "/etc/sara-lite/update-policy.json",
+      "/etc/systemd/system/sara-lite-update-sync.service",
+      "/etc/systemd/system/sara-lite-update-check.timer",
+      "/etc/systemd/system/sara-lite-rebuild.service"
+    ],
+    "dependencies": [
+      "NBS-Lite service and storage roots",
+      "Signed manifests and trust policy",
+      "Snapshot retention",
+      "Cockpit and audit logging"
+    ],
+    "notes": [
+      "Background checks may look for manifest availability, but silent install is not allowed.",
+      "This flow is intended to support forward-compatible self-repair without weakening the safety posture."
+    ]
+  },
+  "acceptance_criteria": {
+    "description": "Checklist-style verification targets for calling the unified SARA Lite OS image ready for staged deployment.",
+    "requirements": [
+      "The image boots successfully on target x86_64 hardware.",
+      "XFCE or MATE loads with ADA-friendly defaults intact.",
+      "The VNCE node can stage a session request without bypassing CONTROL or SECURITY.",
+      "Failed attestation results in held or quarantined behavior rather than unsafe activation.",
+      "VSCodium and Geany launch locally without requiring network registration.",
+      "Python, C#, and shell language-server support is available from local packages.",
+      "NBS-Lite can restore a last-known-good snapshot and perform a dry-run rebuild.",
+      "The cockpit displays health, trust, continuity, and tool availability clearly.",
+      "No default IDE or service component opens unsolicited remote tunnels or listeners.",
+      "All required service units start in the intended dependency order."
+    ],
+    "files_and_paths": [
+      "/var/log/sara-vnce/node.log",
+      "/var/log/sara-vnce/audit.log",
+      "/var/log/sara-vnce/devtools.log",
+      "/var/lib/sara-lite/nbs/snapshots/",
+      "/etc/systemd/system/"
+    ],
+    "dependencies": [
+      "Bootable ISO build",
+      "Systemd service graph",
+      "Policy files",
+      "Devtools and cockpit layer",
+      "NBS-Lite continuity store"
+    ],
+    "notes": [
+      "Acceptance should be staged LAN-first before any stricter internet rollout is attempted.",
+      "The build is considered incomplete if it only works by relaxing SECURITY-first behavior."
+    ]
+  },
+  "safety_constraints": {
+    "description": "Platform safety rules that keep the unified SARA Lite OS within the intended routing, trust, accessibility, and rebuild boundaries.",
+    "requirements": [
+      "CONTROL remains the only routing authority for all remote VNCE and local SARA flows.",
+      "SECURITY-first gating must occur before any remote display or input path becomes active.",
+      "SDK-Lite and IDE tools remain non-authoritative helpers and must not bypass CONTROL or SECURITY.",
+      "NBS-Lite rebuild and self-repair must not weaken trust policy or silently override verified safe state.",
+      "Cockpit actions stay observational or request-based and never directly override routing decisions.",
+      "ADA and low-strain defaults remain enabled in normal, recovery, diagnostics, and developer modes.",
+      "Unsigned or policy-mismatched updates must not be applied.",
+      "If trust, schema, shunt, or continuity checks fail, the image must enter held safe mode, quarantine, or local-only fallback rather than risky activation."
+    ],
+    "files_and_paths": [
+      "/etc/sara-lite/trust-policy.json",
+      "/etc/sara-lite/update-policy.json",
+      "/opt/sara-vnce/session-policy.json",
+      "/var/lib/sara-lite/security/stables-state.json"
+    ],
+    "dependencies": [
+      "SECURITY-Lite",
+      "CONTROL-Lite",
+      "Signed policy files",
+      "NBS-Lite continuity and rollback support"
+    ],
+    "notes": [
+      "LAN-first staging and internet-strict trust posture remain the expected operational model.",
+      "Rollback to last-known-good remains mandatory whenever an update or rebuild threatens routing or trust invariants."
+    ]
+  }
+}

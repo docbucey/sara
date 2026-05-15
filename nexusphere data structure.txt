@@ -1,0 +1,32 @@
+
+
+nexusphere data structure
+json
+{
+  "nexusphere": {
+    "zero_state": "central attractor",
+    "deflection_trajectories": ["memory_event", "interaction", "context_update"],
+    "rotation_logic": {
+      "intake": "new data enters outer shell",
+      "compression": "mapped toward zero",
+      "integration": "merged with historical deflections"
+    },
+    "continuity_tests": {
+      "power_loss": "system shutdown and restart",
+      "recall_check": "query past interactions",
+      "hallucination_filter": "compare generated output to stored deflections"
+    }
+  }
+}
+lisp
+(nexusphere
+  (zero-state :center)
+  (deflections (memory interaction context))
+  (rotation
+    (intake :outer-layer)
+    (compression :toward-zero)
+    (integration :merge))
+  (tests
+    (power-loss :restart)
+    (recall-check :query)
+    (hallucination-filter :compare)))

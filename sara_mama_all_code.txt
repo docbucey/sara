@@ -1,0 +1,48 @@
+# SARA Mama Gen1 — All Core Code (AI/Automation/Dispatch)
+#
+# This file aggregates all code and documentation for the SARA Mama (Gen1) pillar.
+# SARA is an AI system with automation, protocol dispatch, memory, and research capabilities.
+#
+# This includes:
+# - Central dispatcher (MamaDispatcher)
+# - Model profile routing (LLM/AI integration)
+# - Adaptive jargon lexicon
+# - Memory ledger
+# - Research calculator
+# - Settings protocol (automation, night shift, bridge AI roles, training mode)
+# - Backup/restore
+# - User-facing README
+#
+# All code is from the current workspace as of March 2026.
+
+# --- sara_mamagen1.py ---
+
+[BEGIN sara_mamagen1.py]
+<PASTE FULL CONTENTS HERE>
+[END sara_mamagen1.py]
+
+# --- research_calc_gn1.py ---
+
+[BEGIN research_calc_gn1.py]
+<PASTE FULL CONTENTS HERE>
+[END research_calc_gn1.py]
+
+# --- settings_protocol.py ---
+
+[BEGIN settings_protocol.py]
+<PASTE FULL CONTENTS HERE>
+[END settings_protocol.py]
+
+# --- backup_restore.py ---
+
+[BEGIN backup_restore.py]
+<PASTE FULL CONTENTS HERE>
+[END backup_restore.py]
+
+# --- README.md (User-facing) ---
+
+[BEGIN README.md]
+<PASTE FULL CONTENTS HERE>
+[END README.md]
+
+# SARA is an AI system: This codebase includes LLM/AI backend integration, automation (night shift, batch, research), and is designed for extensible protocol and UI/CLI use. Automation and AI are first-class features.

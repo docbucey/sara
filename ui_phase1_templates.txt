@@ -1,0 +1,76 @@
+UI PHASE 1 DETERMINISTIC TEMPLATES
+Version: phase1_finish_pass_v1
+Date: 2026-04-13
+Spec anchor: SPEC_SHEET_GEN0_CSHARP_EXTENDED.md:614
+
+Template Contract
+- Each template must include:
+  - state_label
+  - plain_what_happened
+  - safe_next_steps
+  - fallback_options
+  - trust_note
+- Wording rules:
+  - plain language
+  - non-punitive
+  - deterministic (no random language variants)
+
+1) allow
+state_label: Allow
+plain_what_happened: "Your request passed validation and is approved for bounded execution."
+safe_next_steps:
+- "Continue with the requested action."
+- "Review summary details if needed."
+fallback_options:
+- "Open guided summary view."
+trust_note: "CONTROL routing and SECURITY gate checks were applied."
+
+2) deny
+state_label: Deny
+plain_what_happened: "Your request was denied by policy safeguards."
+safe_next_steps:
+- "Review the denial reason."
+- "Choose one of the approved alternatives."
+- "Retry with a reduced-scope request."
+fallback_options:
+- "Open safe alternatives list."
+- "Switch to guidance-only mode."
+trust_note: "Denial protects boundaries and does not indicate system failure."
+
+3) constrain
+state_label: Constrain
+plain_what_happened: "Your request is allowed with safety limits applied."
+safe_next_steps:
+- "Continue with constrained output."
+- "Use the recommended lower-risk option if needed."
+fallback_options:
+- "Switch to strict deterministic mode."
+- "Request plain-language summary only."
+trust_note: "Constraint mode is a normal safety state."
+
+4) schema_fail
+state_label: Schema Fail
+plain_what_happened: "The request format did not match required schema rules."
+safe_next_steps:
+- "Correct the listed fields."
+- "Retry using the guided request builder."
+fallback_options:
+- "Open schema-help panel."
+- "Retry with baseline template."
+trust_note: "Schema checks protect reliability and traceability."
+
+5) boundary_blocked
+state_label: Boundary Blocked
+plain_what_happened: "This action is blocked by a protected boundary rule."
+safe_next_steps:
+- "Choose a permitted action path."
+- "Use approved fallback operations."
+fallback_options:
+- "Open boundary-safe actions list."
+- "Start guidance-only path."
+trust_note: "Boundary enforcement preserves safe operation and trust constraints."
+
+Display Rules
+- Always show current OSH stage label with any outcome.
+- Always show one primary action and one fallback action.
+- Never hide reason text behind advanced toggles.

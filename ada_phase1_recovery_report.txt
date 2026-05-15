@@ -1,0 +1,49 @@
+ADA PHASE 1 RECOVERY REPORT
+Version: phase1_finish_pass_v1
+Date: 2026-04-13
+Spec anchor: SPEC_SHEET_GEN0_CSHARP_EXTENDED.md:616
+Method: deterministic template and state-surface verification
+
+Scope
+- constrained
+- denied
+- schema_fail
+- boundary_blocked
+
+Test Matrix
+T1 constrained_readability
+- Check: message is plain-language and non-punitive
+- Result: PASS
+- Evidence: ui_phase1_templates.txt constrain template
+
+T2 denied_recovery_guidance
+- Check: explicit next steps and approved alternatives are present
+- Result: PASS
+- Evidence: ui_phase1_templates.txt deny template
+
+T3 schema_fail_recovery
+- Check: correction guidance and retry path are present
+- Result: PASS
+- Evidence: ui_phase1_templates.txt schema_fail template
+
+T4 boundary_blocked_safety
+- Check: boundary reason shown with permitted fallback actions
+- Result: PASS
+- Evidence: ui_phase1_templates.txt boundary_blocked template
+
+T5 low_strain_profile_defaults
+- Check: low-click and voice-first surfaces remain in MAMA adaptation path
+- Result: PASS
+- Evidence: sara_mamagen1.py adapt_amip_ux_mama profile fields
+
+T6 deterministic_outcome_labels
+- Check: outcome labels include allow/deny/constrain/schema_fail/boundary_blocked
+- Result: PASS
+- Evidence: sara_controlgen1.py + sara_mamagen1.py phase1 outcome mapping
+
+Risks
+- R1: Runtime C# renderer enforcement is still implementation work; this report validates contract/template coverage.
+
+Conclusion
+- ADA Phase 1 recovery behavior is contract-complete and ready for C# renderer binding.
+- Status: PASS (contract-level)

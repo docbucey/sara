@@ -1,0 +1,88 @@
+{
+  "excel_tabs": [
+    {
+      "tab": 0,
+      "name": "quick_reference",
+      "description": "Quick reference guide for navigating the workbook and using Data Wrangler.",
+      "columns": [],
+      "sample_data": []
+    },
+    {
+      "tab": 1,
+      "name": "problem_intake",
+      "description": "Track issues, requirements, or new features.",
+      "columns": [],
+      "sample_data": []
+    },
+    {
+      "tab": 2,
+      "name": "research_and_source",
+      "description": "Document references, research, and supporting data.",
+      "columns": [],
+      "sample_data": []
+    },
+    {
+      "tab": 3,
+      "name": "constraints",
+      "description": "List technical, business, or architectural constraints.",
+      "columns": [],
+      "sample_data": []
+    },
+    {
+      "tab": 4,
+      "name": "state_machine",
+      "description": "Define states, transitions, and logic for automation or workflow.",
+      "columns": [],
+      "sample_data": []
+    },
+    {
+      "tab": 5,
+      "name": "authority",
+      "description": "Map out permissions, governance, and pillar responsibilities.",
+      "columns": [],
+      "sample_data": []
+    },
+    {
+      "tab": 6,
+      "name": "outcome_viability",
+      "description": "Assess feasibility, risks, and success criteria.",
+      "columns": [],
+      "sample_data": []
+    },
+    {
+      "tab": 7,
+      "name": "narrative_and_monetize",
+      "description": "Capture user stories, business cases, and monetization strategies.",
+      "columns": [],
+      "sample_data": []
+    },
+    {
+      "tab": 8,
+      "name": "activation",
+      "description": "Plan activation logic, triggers, and handoff points.",
+      "columns": [],
+      "sample_data": []
+    },
+    {
+      "tab": 9,
+      "name": "math_rules",
+      "description": "Specify formulas, calculations, or analytics logic.",
+      "columns": [],
+      "sample_data": []
+    },
+    {
+      "tab": 10,
+      "name": "fsm_pillar_map",
+      "description": "Visualize pillar interactions and state flows.",
+      "columns": [],
+      "sample_data": []
+    },
+    {
+      "tab": 11,
+      "name": "amip_contracts",
+      "description": "Track interface and protocol contracts.",
+      "columns": [],
+      "sample_data": []
+    }
+  ]
+}

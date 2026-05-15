@@ -1,0 +1,56 @@
+{
+  "name": "sara-ai-agent",
+  "displayName": "SARA (Systematic Adaptive Reasoning AI)",
+  "description": "A self-compiling AI runtime and coding assistant based on SLAM architecture.",
+  "version": "0.1.0",
+  "publisher": "docbucey",
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": [
+    "AI",
+    "Programming Languages",
+    "Linters"
+  ],
+  "activationEvents": [
+    "onLanguage:slam",
+    "onCommand:sara.startSession"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "languages": [
+      {
+        "id": "slam",
+        "aliases": ["SLAM", "slam"],
+        "extensions": [".slam", ".snf", ".slm"],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "commands": [
+      {
+        "command": "sara.startSession",
+        "title": "SARA: Start AI Session"
+      },
+      {
+        "command": "sara.compileKernel",
+        "title": "SARA: Rebuild Kernel from Source"
+      }
+    ],
+    "configuration": {
+      "title": "SARA AI",
+      "properties": {
+        "sara.kernelPath": {
+          "type": "string",
+          "default": "${workspaceFolder}/slamkernel_builder.exe",
+          "description": "Path to the compiled C Kernel executable."
+        },
+        "sara.trace.server": {
+          "type": "string",
+          "enum": ["off", "messages", "verbose"],
+          "default": "off",
+          "description": "Traces the communication between VS Code and the SARA Kernel."
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "sara_csharp_orchestrator": {
+    "role": "orchestrator_and_generative_ai",
+    "description": "C# SARA acts as the orchestrator and fallback generative AI for WFH setup. All actions, plugins, and UI requests are routed through SARA's CONTROL logic. NBS (memory/state) is managed by SARA. Generative AI (LLM) is available for tasks, summaries, and fallback reasoning.",
+    "startup_state": {
+      "orchestrator": true,
+      "generative_ai": true,
+      "nbs_manager": true,
+      "plugin_capable": true
+    },
+    "pillar_activation": {
+      "pillars": ["CONTROL", "MAMA", "CORE", "SECURITY", "SDK"],
+      "initial_state": "dormant",
+      "activation_method": "health_check_or_manual",
+      "handoff_logic": "When pillar is ready, route relevant actions to it; fallback to SARA if offline."
+    },
+    "fsm_pillar_map": {
+      "description": "FSM routing and pillar state transitions for orchestrator automation, derived from shunt_map_descriptor.updated.json.",
+      "fsm_routing_map": {
+        "INBOUND": {"owner": "CONTROL", "next": ["VALIDATE"]},
+        "VALIDATE": {"owner": "SECURITY", "next": ["ROUTE", "ERROR", "HALT"]},
+        "ROUTE": {"owner": "CONTROL", "next": ["EXECUTE", "RETURN"]},
+        "EXECUTE": {"owner": "CORE", "secondary_paths": ["MAMA", "SDK"], "next": ["RETURN", "ERROR"]},
+        "RETURN": {"owner": "MAMA", "next": ["COMPLETE"]},
+        "ERROR": {"owner": "SECURITY", "next": ["RETURN", "HALT"]},
+        "HALT": {"owner": "CONTROL", "next": []}
+      },
+      "pillar_map_sets": {
+        "CORE": "resolve_machine_profile_core, build_amip_payload_core, build_bucey_shunt_envelope_core",
+        "CONTROL": "route_bucey_shunt_con, _normalize_amip_request_con, dispatch_amipi_con",
+        "SECURITY": "validate_bucey_shunt_sec, validate_amip_payload_sec, king_sovereignty_check, sheriff_audit",
+        "MAMA": "adapt_amip_ux_mama, summarize_bucey_shunt_mama, present_amipi_result_mama",
+        "SDK": "SDK_INTERNAL_AMI_LANES, sdk_identity_catalog, build_local_bucey_shunt, send_bucey_shunt"
+      }
+    },
+    "generative_ai_mode": {
+      "enabled": true,
+      "use_cases": [
+        "summarization",
+        "brainstorming",
+        "creative_tasks",
+        "conversational_agent",
+        "fallback_for_missing_pillar_logic"
+      ]
+    },
+    "authority_and_handoff": {
+      "handoff_trigger": "Gen1 CONTROL fully online",
+      "actions": [
+        "transfer_nbs_and_governance_to_new_control",
+        "transition_sara_to_mama_or_ui_ux_layer"
+      ],
+      "preserve": ["actions", "memory", "audit_logs"]
+    },
+    "fallback_and_recovery": {
+      "pillar_failure": "SARA resumes orchestrator/AI duties for that pillar until restored"
+    },
+    "plugin_management": {
+      "plugin_registration": true,
+      "plugin_deregistration": true,
+      "plugin_routing": "All plugins communicate through SARA's CONTROL logic"
+    },
+    "amip_contracts": {
+      "description": "AMIP/AMIPI contract and protocol mapping for plugin management, as referenced in Excel and shunt_map_descriptor.updated.json.",
+      "contract_tracking": true,
+      "protocol_reference": "See shunt_map_descriptor.updated.json: map_sets, authority_map, and allowed_profiles for contract enforcement and plugin routing."
+    },
+    "notes": "This setup enables modular, safe, and incremental migration to Gen1, with always-on generative AI and plugin capability. SARA remains the middleware and fallback until all Gen1 pillars are stable."
+  }
+}

@@ -1,0 +1,666 @@
+{
+  "nbs_meta": {
+    "nbs_id": "20260214_shuttle_for_ai_assistants",
+    "nbs_type": "shuttle",
+    "nbs_gen": "gen0",
+    "nbs_ver": "2.5",
+    "created_at": "2026-02-14T14:36:00Z",
+    "updated_at": "2026-02-27T11:25:00Z",
+    "gen0_micro_ai_complete": true,
+    "todays_work": "videoprocessor.slam created - GPU secondary video signal flow processor (NOT GPU compute)",
+    "reload_complete": true,
+    "project_name": "sara_core_system",
+    "tags": ["shuttle", "context", "handoff", "ai_assistant", "copilot", "cline", "pacghostai", "emergency_backup", "system_recovery", "virtual_test_environment"]
+  },
+  "content": {
+    "purpose": "This file provides context to AI assistants (Copilot, Gemini, etc.) about the SARA/SLAM project. Load this FIRST before helping with code.",
+    "latest_update": {
+      "date": "2026-02-27",
+      "summary": "C# Kernel Extraction",
+      "details": "Initiated extraction of ALGOL logic into C# Kernel (SlamKernel.cs). Defined SXF structs and Rosetta Stone mapping in C#."
+    },
+    "how_to_use": "Upload this file to Copilot/Gemini as context before asking for help with SARA/SLAM code.",
+    "request_to_assistants": "Please review this file and provide your thoughts on the system architecture. Your feedback on the design would be valuable.",
+    "continuity_system": {
+      "description": "Continuity files - persistent memory and state management for SARA",
+      "location": "sara_sdk/nbs_projects/sara_core_system/continuity/",
+      "continuity_slam": {
+        "file": "continuity.slam",
+        "purpose": "Daily living record specification - defines how all continuity files work",
+        "format": "SLAM (specification)",
+        "status": "IN_DEVELOPMENT",
+        "key_components": [
+          "CartiGene Core - mathematical primitives for compression",
+          "Continuity Data Structure - daily living record format",
+          "Memory Thresholds - 20% atomic flush, 40% HDD-Direct",
+          "System Call Self-Extraction - memory efficient parsing",
+          "Pillar 6 Encoding - inverse-hex + NACISFRAG",
+          "SCF Sections - Speculative Execution Runtime"
+        ]
+      },
+      "file_types": {
+        "continuity_slam": {
+          "extension": ".slam",
+          "purpose": "Specification file - defines rules and structure",
+          "status": "IN_DEVELOPMENT",
+          "updates": "Profiles will be updated periodically"
+        },
+        "continuity_snf": {
+          "extension": ".snf",
+          "full_name": "Sara Narrative File",
+          "acronym": "SNF = Sara Narrative File",
+          "purpose": "Binary format - runtime output (NOT YET BUILT)",
+          "status": "PLANNED",
+          "note": "Will be built after SLAM specs are complete"
+        },
+        "claywork_file": {
+          "extension": ".cwk",
+          "purpose": "Build environment snapshot for compiling/refining flow-oriented code",
+          "status": "DEFINED",
+          "note": "Managed by continuity system as a special file type"
+        }
+      },
+      "scf_sara_character_files": {
+        "description": "SCF = SARA Character Files - feeds speculative execution runtime",
+        "domain": "NIC (Network Interface Card) AI domain",
+        "location": "sara_sdk/nbs_projects/sara_core_system/continuity/",
+        "storage": ["hard_drive", "memory_ram_buffer"],
+        "recording": {
+          "cloud_ai": "binary format, pending review",
+          "internet_activity": "binary format, pending review"
+        },
+        "approval": {
+          "required": true,
+          "current": "human_review",
+          "future": "security_system"
+        },
+        "relation_to_envoy": "Base to envoy protocol in sara_security"
+      },
+      "shuttle_rules": {
+        "description": "General rules for shuttle files - for passing data between AI systems",
+        "general_purpose": "Shuttle files transfer context and data between AI assistants and systems",
+        "format": "Text-based appearance with internal binary handling",
+        "approval": "Human review required before processing (current default)",
+        "security": "Security system approval mode planned for future",
+        "do_not_expose": "Internal mechanics of data transfer are not exposed in shuttle files"
+      },
+      "profiles": {
+        "description": "Profile files that update SCF and continuity - see continuity.slam for full specification",
+        "location": "sara_sdk/nbs_projects/sara_core_system/identity/",
+        "reference": "See continuity.slam SNF.1 for machine profile specification",
+        "files": [
+          "machine_profile - OS/Terminal identity (FIRST - .scf) - defined in continuity.slam",
+          "sara_profile - SARA AI identity",
+          "user_profile - User/machine identity"
+        ],
+        "update_frequency": "Will be updated periodically",
+        "role": "Inject state into SCF which updates continuity"
+      }
+    },
+    "project_overview": {
+      "name": "SARA",
+      "version": "gen0_alpha",
+      "description": "Signal Flow Programming - AI-powered distributed programming substrate",
+      "location": "C:\\Users\\mdbuc\\Documents\\coding projects\\SARA",
+      "git_origin": "https://github.com/docbucey/NewRepo.git",
+      "genetic_donor": {
+        "name": "ALGOL-68 Genie",
+        "version": "3.10.10",
+        "location": "C:\\Users\\mdbuc\\Documents\\coding projects\\SARA\\sara_sdk\\low_level_code\\compilers_llc",
+        "storage_strategy": "Compressed Archive (ZIP) - Compiler resides here",
+        "status": "Source files encapsulated in ZIP; Kernel resides alongside"
+      }
+    },
+    "deployment_target": {
+      "platform": "Visual Studio Code",
+      "type": "AI Agent / Language Server",
+      "mechanism": "LSP (Language Server Protocol) wrapping the C# Kernel",
+      "goal": "SARA runs as a local process (PlainJain Kernel), compiling and reasoning about code in real-time within the IDE using C#"
+    },
+    "epoche_theology": {
+      "removes": [
+        "maybe", "perhaps", "seems", "appears", "likely",
+        "possibly", "probably", "i think", "i feel",
+        "in my opinion", "assume", "guess", "suggests"
+      ],
+      "output": "Direct content observed - no interpretation",
+      "purpose": "Reduces AI hallucination by filtering interpretive language",
+      "philosophical_origin": "Husserl's phenomenological reduction - bracketing assumptions",
+      "how_it_works": "Epoche filters all qualifiers/assumptions, leaving only neutral observation",
+      "slams_advantage": "Combined with CartiGene metrics (grain, laggy, shi, osc, rot), outputs become measurable and deterministic"
+    },
+  "slam_core_primitives": {
+    "slam_core_primitives": {
+    "puppy": "Root primitive - universal SLAM entity, holds Sequians, acts as hardware-side primitive",
+    "sequian": "Universal value container - replaces int/float/string/list/dict/boolean",
+    "nexus": "Multi-state container - replaces arrays/lists/vectors",
+    "cartigene": "State engine - grain, laggy, shi, osc, rot, BuceyShift metrics",
+    "nexussphere": "Reasoning geometry - zero_state, deflection_trajectories, rotation_logic, continuity_tests",
+    "dog": "Logic unit (The Verb) - Input -> Process -> Output flow",
+    "breed": "Structural type (The Noun) - Ada-like rigid typing",
+    "kennel": "Execution context (The Scope) - Resource boundaries",
+    "funk": "Semantic annotation (The Vibe) - Machine-readable intent",
+    "trainer": "Host bridge (The Baby) - Python-compatible interface"
+  },
+  "mdbp_definition": {
+    "acronym": "MDBP",
+    "full_name": "Most Direct Binary Path",
+    "note": "This is the CORRECT definition - not Machine Data Base Primitive",
+    "definition": "The most direct path to execute binary code on hardware - hardware metadata container that holds vendor, model, version, flags, capabilities, pinouts, ports, buses, and flow endpoints",
+    "purpose": "Hardware metadata container for SLAM substrate, used by HAL, MAMA, and Tagger"
+  },
+  "claywork_benchmark_file": {
+    "location": "sara_clay_work/claywork_benchmark_engine.slam",
+    "purpose": "Build environment for compiling, testing, and refining SLAM code (especially non-CPU flow)",
+    "systems": [
+      "epoche - phenomenological reduction (filters interpretive language)",
+      "systems_science - engineering decision resonance",
+      "tactical_tactics - immediate action resonance",
+      "mathengine - mathematics layer discovery",
+      "cartigene - stability metrics (grain, laggy, shi, osc, rot, bucey)",
+      "post.slam - strain policy (3%), timing, runtime"
+    ],
+    "workflow": "epoche → systems_science → tactical_tactics → mathengine → cartigene → post.slam validation",
+    "rail_policy": "ALL processors read ALL rails (graphicsrail, nicrails, soundrails, videorails, modemrails, raidrails, usbrails)",
+    "processor_masters": "Primary and secondary masters to be specified by user"
+  },
+  "mdbp_usage_rules": {
+    "always_use": "MDBP = Most Direct Binary Path",
+    "never_use": "Do NOT use Machine Data Base Primitive - this is incorrect",
+    "contains": ["vendor", "model", "version", "flags", "capabilities", "pinouts", "ports", "buses", "registers", "interrupts", "sensors", "dma_channels", "memory_regions"]
+  },
+  "general_cpu_pinout_model": {
+    "description": "Universal CPU pinout model - functional groups that work for Intel, AMD, ARM, RISC-V, embedded SoCs",
+    "note": "Use functional groups instead of physical pins - works across all CPU vendors and sockets",
+    "groups": {
+      "power_ground": {
+        "pins": "VCC, VSS, VDD, GND, AVCC, AGND, VREF, VTT",
+        "maps_to": "power_regions[] in MDBP",
+        "used_by": "CartiGene for thermal/voltage anomaly detection"
+      },
+      "clock_reset": {
+        "pins": "CLK, XTAL_IN, XTAL_OUT, RESET#, INIT#, STOPCLK, PWRGOOD",
+        "maps_to": "timing_domains",
+        "used_by": "gpuprocessor.slam, neuralprocessor.slam for timing sync"
+      },
+      "memory_interface": {
+        "pins": "DQ, DQS, CK, CK#, CKE, CS#, ODT, CAS#, RAS#, WE#, A[0-n], BA[0-n]",
+        "maps_to": "memory_regions[], dma_channels[]",
+        "used_by": "memorai.slam for DDR4/DDR5/LPDDR4/LPDDR5"
+      },
+      "high_speed_io": {
+        "pins": "PCIe: TX/RX[0-n], REFCLK+, REFCLK-, NGT, PGT; NVMe: TX/RX; GPU: TDP, VDD_GFX",
+        "maps_to": "high_speed_buses[]",
+        "used_by": "gpuprocessor.slam, neuralprocessor.slam, nicprocessor.slam for lane count/bandwidth"
+      },
+      "chipset_platform_bus": {
+        "pins": "D[0-n], AD[0-n], C/BE[0-n]#, FRAME#, TRDY#, IRDY#, STOP#, LOCK#, PAR, PERR#, SERR#",
+        "maps_to": "ports[], buses[]",
+        "used_by": "All processors for platform communication"
+      },
+      "integrated_graphics": {
+        "pins": "DDI_A, DDI_B, DDI_C, eDP, LVDS, VGA, DP, HDMI, TX/RX, HPD#",
+        "maps_to": "graphicsrail",
+        "used_by": "gpuprocessor.slam for display output"
+      },
+      "usb_sata_ethernet": {
+        "pins": "USB: D+, D-, OVC, TX/RX; SATA: TX/RX, GND; ETH: TX/RX, LED",
+        "maps_to": "io_ports[]",
+        "used_by": "nicprocessor.slam, usbrails.slam"
+      },
+      "interrupts_debug": {
+        "pins": "INTR, NMI, SMI#, INIT#, JTAG: TDI, TDO, TMS, TCK, TRST#",
+        "maps_to": "interrupts[], sensors[]",
+        "used_by": "All processors for interrupt handling and debugging"
+      }
+    }
+  },
+  "sara_operators": [
+    "infer", "recall", "deflect", "rotate", "stabilize",
+    "resonate", "compress", "integrate", "filter", "continuity_check"
+  ],
+  "runtime_flow": "puppy → dogtag → collar → lead → latch → handle → post",
+  "signal_connector_syntax": "%(from)% <processor>% %(to)%",
+  "cartigene_metrics": {
+    "grain": "|len(state) - expected|",
+    "laggy": "runtime / expected_runtime",
+    "shi": "(memory + footprint) / (runtime + 1)",
+    "osc": "|current - previous| > threshold",
+    "rot": "(Δ1 * Δ2) < 0",
+    "bucey": "value / (1 + |noise|)"
+  },
+  "hardware_architecture": {
+    "description": "Puppy defines MDBP (Most Direct Binary Path) for all hardware",
+    "key_principle": "Each hardware component has its own SUB-PROCESSOR that directs signal flow - binaries (SXF) carry the actual type logic, not just data",
+    "signal_flow": "Signal flows through rails to specialized sub-processors, NOT to main CPU/GPU/NPU as primary target",
+    "main_processors_role": "CPU/GPU/NPU are HEAVY-LIFT FALLBACKS - not primary execution targets",
+    "sub_processors": "Each rail (graphicsrail, nicrails, etc.) contains primitive processors that execute binary logic locally",
+    "binary_execution": "SXF (Sara Executable Format) carries the actual computational logic that runs on sub-processors",
+    "deflection_circuits": {
+      "description": "Hardware-level circuits that route/deflect based on BINARY signals - NOT processors, but binary-controlled switches",
+      "historical_note": "These existed in 286-era and prior, many now in sockets not chips - SLAM accounts for them",
+      "circuit_types": [
+        {"type": "SerDes", "purpose": "Serializer/Deserializer - parallel to serial conversion"},
+        {"type": "PLL", "purpose": "Phase-Locked Loop - timing stabilization"},
+        {"type": "WOL_Aux", "purpose": "Wake-on-LAN auxiliary rail - standby power routing"},
+        {"type": "RF_Transceiver", "purpose": "Wireless radio signal routing"},
+        {"type": "Antenna_Switch", "purpose": "MIMO/diversity antenna routing"},
+        {"type": "RF_Power_Amp", "purpose": "Signal amplification routing"},
+        {"type": "BT_Coexistence", "purpose": "WiFi/Bluetooth coordination routing"}
+      ],
+      "example_in_nicrails": "nicrails.slam contains SerDes, PLL, WOL, RF, Antenna Switch, BT Coex circuits"
+    },
+    "components": ["pinouts", "ports", "buses", "registers", "interrupts", "sensors", "dma_channels", "memory_regions"],
+    "rails_complete": ["graphicsrail", "nicrails", "soundrails", "videorails", "modemrails", "raidrails", "usbrails"]
+  },
+  "runtime_architecture": {
+    "processor_units": "hw_cpu defined in MDBP across all SLAM files",
+    "binary_format": "SXF - Sara Executable Format (9 blocks defined)",
+    "sxf_blocks": [
+      {"id": "0x01", "name": "SXF_HEADER", "purpose": "Magic, version, identity"},
+      {"id": "0x02", "name": "SXF_BLOCK_INDEX", "purpose": "Fast lookup for all blocks"},
+      {"id": "0x03", "name": "SXF_NUMERIC", "purpose": "Sequian values in binary"},
+      {"id": "0x04", "name": "SXF_NEXUS_BLOCK", "purpose": "Nested Nexus structures"},
+      {"id": "0x05", "name": "SXF_STATE_TABLE", "purpose": "CartiGene stability metrics"},
+      {"id": "0x06", "name": "SXF_GEOMETRY", "purpose": "NexusSphere reasoning geometry"},
+      {"id": "0x07", "name": "SXF_HARDWARE_META", "purpose": "MDBP + hardware map"},
+      {"id": "0x08", "name": "SXF_ERROR_BLOCKS", "purpose": "Stubs + specs (HARD ERROR)"},
+      {"id": "0x09", "name": "SXF_ROUTING_TABLE", "purpose": "Connectors + coordinates"}
+    ],
+    "runtime_exists": "proto_runtime_executor exists in proto_utils_llc",
+    "status": "SPEC_DEFINED - implementation pending for binary SXF execution",
+    "what_is_defined": [
+      "SXF binary format (9 blocks)",
+      "proto_runtime_executor (for SLAM spec execution)",
+      "All runtime flow: puppy → dogtag → collar → latch → lead → handle → post"
+    ],
+    "what_needs_implementation": [
+      "SXF binary loader - reads SXF blocks from storage/memory",
+      "SXF execution engine - executes binary operations on sub-processors",
+      "Hardware bridge - connects SXF execution to rail deflection circuits"
+    ]
+  },
+  "ai_modules": {
+    "location": "sara_sdk/low_level_code/ai_llc/",
+    "modules": [
+      "wolfai.slam", "galagaai.slam", "pacghostai.slam", "galaxanai.slam",
+      "doomai.slam", "BIOSAI.slam", "BootloaderAI.slam", "TSRAI.slam",
+      "shannonai.slam", "kentuckybabyai.slam", "sierraai.slam",
+      "SmallTownAI.slam", "DOSInterruptAI.slam", "asheronsai.slam",
+      "plainjainllm.slam", "samcheckersai.slam",
+      "soundprocessor.slam", "nicprocessor.slam", "gpuprocessor.slam",
+      "videoprocessor.slam", "memorai.slam", "neuralprocessor.slam", "cpu.slam"
+    ],
+    "micro_ai_complete": true,
+    "micro_ai_count": 23
+  },
+  "micro_ai_domain": {
+    "description": "Micro AI processors are part of continuity.slam shuttle and battlefield domains",
+    "shuttle_domain": "soundprocessor and nicprocessor are in continuity.slam SCF shuttle domain",
+    "battlefield_domain": "soundprocessor and nicprocessor are in continuity.slam battlefield domain",
+    "files": {
+      "soundprocessor": {
+        "file": "soundprocessor.slam",
+        "domain": "audio_processing",
+        "shuttle_role": "audio micro AI shuttle",
+        "battlefield_role": "audio battlefield processor"
+      },
+      "nicprocessor": {
+        "file": "nicprocessor.slam", 
+        "domain": "network_security",
+        "shuttle_role": "network micro AI shuttle",
+        "battlefield_role": "network security battlefield processor - SYSTEM SECURITY"
+      },
+      "gpuprocessor": {
+        "file": "gpuprocessor.slam",
+        "domain": "gpu_processing",
+        "role": "GPU primary AI processor - graphics, security, inference"
+      },
+      "videoprocessor": {
+        "file": "videoprocessor.slam",
+        "domain": "video_signal_flow",
+        "role": "GPU SECONDARY - video signal flow processor (NOT GPU compute)",
+        "primary_master": "GPU",
+        "sub_processors": ["HDMI_DP_CONTROLLER", "EDP_LVDS_CONTROLLER", "VIDEO_DECODER", "VIDEO_ENCODER", "FRAMEBUFFER_CONTROLLER", "TCON_CONTROLLER", "COLOR_SPACE_CONVERTER", "HARDWARE_SCALER", "MIPI_CSI_CONTROLLER", "PCIE_CAPTURE_CONTROLLER"]
+      },
+      "memorai": {
+        "file": "memorai.slam",
+        "domain": "memory_parsing",
+        "role": "Memory/parsing micro AI processor"
+      },
+      "neuralprocessor": {
+        "file": "neuralprocessor.slam",
+        "domain": "npu_flow_oriented",
+        "role": "TERTIARY_MASTER - houses all micro AIs, routes data, provides office space",
+        "note": "Last micro AI - gen0 complete"
+      }
+    },
+    "gen0_complete": true
+  },
+  "soundprocessor_reference": {
+    "file": "soundprocessor.slam",
+    "location": "sara_sdk/low_level_code/ai_llc/soundprocessor.slam",
+    "purpose": "Micro AI Audio Processor - USE THIS AS TEMPLATE for building NIC processor",
+    "key_features": [
+      "Primary: GPU slave, Secondary: CPU, Tertiary: NIC",
+      "Backup processor capability for load redistribution",
+      "Load shunt capability to GPU/CPU/NIC",
+      "FloodSearch integration for file parsing",
+      "OS driver integration (WASAPI, ALSA, CoreAudio, Oboe, AVAudioEngine)",
+      "Machine profile constant update",
+      "Rail access policy: ALL processors read ALL rails"
+    ],
+    "base": "soundrails.slam (hardware base)",
+    "buffer_size": "~8.5KB total",
+    "master_slave_config": "GPU → CPU → NIC (primary → secondary → tertiary)",
+    "use_as_template_for": "Build NIC processor following same pattern"
+  },
+  "nic_processor_template": {
+    "based_on": "soundprocessor.slam",
+    "adapt_for": "NIC (Network Interface Card)",
+    "changes_needed": [
+      "Replace 'audio' with 'network' in capabilities",
+      "Replace soundrails base with nicrails base",
+      "Primary master: GPU, Secondary: CPU, Tertiary: NIC (same)",
+      "Add network-specific protocols (Ethernet, WiFi, Bluetooth)",
+      "Add packet processing, firewall, VLAN support",
+      "Keep FloodSearch, machine profile sync, OS driver integration",
+      "Keep backup processor and load shunt capabilities"
+    ],
+    "base_file": "nicrails.slam (hardware base)"
+  },
+  "resonance_modules": {
+    "description": "Proto-Resonance approaches across multiple domains",
+    "theology": {
+      "location": "Theology/",
+      "count": 4,
+      "approaches": ["epoche", "dogmatic", "gnostic", "heuristic"]
+    },
+    "humanities": {
+      "location": "Humanities/",
+      "count": 4,
+      "approaches": ["ethical_hum", "historical_hum", "literary_hum", "semiotic_hum"]
+    },
+    "philosophy": {
+      "location": "Philosophy/",
+      "count": 4,
+      "approaches": ["analytic_phil", "dialectical_phil", "phenomenological_phil", "pragmatic_phil"]
+    },
+    "science": {
+      "location": "Science/",
+      "count": 5,
+      "approaches": ["creative_science", "game_science", "pattern_science", "scientific_method", "systems_science"]
+    },
+    "tactics": {
+      "location": "Tactics/",
+      "count": 4,
+      "approaches": ["adaptive_tactics", "operational_tactics", "strategic_tactics", "tactical_tactics"]
+    },
+    "total_resonance_approaches": 21
+  },
+  "theology_modules": {
+    "location": "sara_sdk/low_level_code/controll_llc/proto_resonance_llc/Theology/",
+    "total_count": 4,
+    "approaches": [
+      {
+        "file": "epoche_theo.slam",
+        "name": "Epoche",
+        "philosophy": "Phenomenological reduction - suspend assumptions, bracket interpretation",
+        "purpose": "Filters interpretive language to reduce hallucination"
+      },
+      {
+        "file": "dogmatic_theo.slam",
+        "name": "Dogmatic",
+        "philosophy": "Systematic doctrine-based reasoning",
+        "purpose": "Structured belief systems for reasoning constraints"
+      },
+      {
+        "file": "gnostic_theo.slam",
+        "name": "Gnostic",
+        "philosophy": "Knowledge-based revelation - direct insight",
+        "purpose": "Knowledge acquisition and hidden pattern recognition"
+      },
+      {
+        "file": "heuristic_theo.slam",
+        "name": "Heuristic",
+        "philosophy": "Discovery-based reasoning - trial and error",
+        "purpose": "Exploratory problem-solving approach"
+      }
+    ]
+  },
+  "proto_math_layers": {
+    "location": "sara_sdk/low_level_code/controll_llc/proto_math_llc/",
+    "total_count": 12,
+    "layers": [
+      {"layer": 1, "name": "power_roots", "domain": "mathematics"},
+      {"layer": 2, "name": "calculus_operations", "domain": "mathematics"},
+      {"layer": 3, "name": "linear_algebra", "domain": "mathematics"},
+      {"layer": 4, "name": "random_generators", "domain": "probability"},
+      {"layer": 5, "name": "geometry_transformations", "domain": "geometry"},
+      {"layer": 6, "name": "physics_mechanics", "domain": "physics"},
+      {"layer": 7, "name": "chemistry", "domain": "science"},
+      {"layer": 8, "name": "biology_ecology", "domain": "science"},
+      {"layer": 9, "name": "astrophysics", "domain": "science"},
+      {"layer": 10, "name": "business_economics", "domain": "applied"},
+      {"layer": 11, "name": "optical_physics", "domain": "physics"},
+      {"layer": 12, "name": "accustic_physics", "domain": "physics"}
+    ]
+  },
+  "hardware_ai_architecture": {
+    "clarification": "AIs are HARD WIRED (hardware-based), CartiGene/XCCartigene is the BASE ENGINE",
+    "xccartigene": {
+      "type": "Hardware stability engine - Xilinx/Cartridge CartiGene",
+      "metrics": ["grain", "laggy", "shi", "osc", "rot", "BuceyShift"],
+      "formulas": {
+        "grain": "|len(state) - expected|",
+        "laggy": "runtime / expected_runtime",
+        "shi": "(memory + footprint) / (runtime + 1)",
+        "osc": "|current - previous| > threshold",
+        "rot": "(Δ1 * Δ2) < 0",
+        "bucey": "value / (1 + |noise|)"
+      },
+      "role": "BASE - all AIs wire into this for stability scoring",
+      "hardware_location": "PCIe/card edge connector or custom cartridge"
+    },
+    "ais_to_hardwire": {
+      "location": "ai_llc/",
+      "count": 21,
+      "modules": [
+        "wolfai.slam", "galagaai.slam", "pacghostai.slam", "galaxanai.slam",
+        "doomai.slam", "BIOSAI.slam", "BootloaderAI.slam", "TSRAI.slam",
+        "shannonai.slam", "kentuckybabyai.slam", "sierraai.slam",
+        "SmallTownAI.slam", "DOSInterruptAI.slam", "asheronsai.slam",
+        "plainjainllm.slam", "samcheckersai.slam"
+      ],
+      "micro_ais": {
+        "count": 5,
+        "modules": [
+          "soundprocessor.slam - audio processing (shuttle/battlefield domain)",
+          "nicprocessor.slam - network processing (shuttle/battlefield domain)",
+          "gpuprocessor.slam - GPU processing",
+          "memorai.slam - memory/parsing processing",
+          "neuralprocessor.slam - NPU flow-oriented processing (TERTIARY_MASTER)"
+        ],
+        "note": "Micro AIs are housed in neuralprocessor (NPU) when available"
+      },
+      "note": "These are the actual AIs to hardwire, NOT the resonances - micro AIs complete as of gen0"
+    },
+    "resonances_are_not_ais": {
+      "clarification": "Resonances are REASONING APPROACHES, not AIs. AIs use resonances as thinking styles.",
+      "theology": {"count": 4, "approaches": ["epoche", "dogmatic", "gnostic", "heuristic"]},
+      "humanities": {"count": 4, "approaches": ["ethical", "historical", "literary", "semiotic"]},
+      "philosophy": {"count": 4, "approaches": ["analytic", "dialectical", "phenomenological", "pragmatic"]},
+      "science": {"count": 5, "approaches": ["creative", "game", "pattern", "scientific_method", "systems"]},
+      "tactics": {"count": 4, "approaches": ["adaptive", "operational", "strategic", "tactical"]},
+      "total_resonance_approaches": 21,
+      "purpose": "These are thinking styles/reasoning frameworks the hardwired AIs apply"
+    },
+    "pacghostai_vs_cartigene": {
+      "pacghostai": {
+        "type": "Game AI - Ghost FSM with CartiGene scoring",
+        "feature_vector": "8 elements (blinky_dist, pinky_vector, inky_vector, clyde_mode, scatter_timer, chase_timer, frightened, padding)",
+        "cartigene_usage": "Uses ALL 6 metrics for stability scoring",
+        "policy_weights": {"alpha": 1.0, "beta": 0.4, "gamma": 0.9},
+        "memory_footprint": "~64 bytes (feature vector) + ~48 bytes (CartiGene state) = ~112 bytes total",
+        "cache_requirement": "L1 cache friendly - fits in single cache line"
+      },
+      "cartigene_engine": {
+        "type": "State stability engine - mathematical primitives",
+        "metrics": ["grain", "laggy", "shi", "osc", "rot", "BuceyShift"],
+        "formulas": {
+          "grain": "|len(state) - expected|",
+          "laggy": "runtime / expected_runtime",
+          "shi": "(memory + footprint) / (runtime + 1)",
+          "osc": "|current - previous| > threshold",
+          "rot": "(Δ1 * Δ2) < 0",
+          "bucey": "value / (1 + |noise|)"
+        },
+        "memory_footprint": "~48 bytes (6 float64 values)",
+        "cache_requirement": "L1 cache - extremely lightweight"
+      },
+      "comparison": "PacGhostAI APPLIES CartiGene as a scoring function. CartiGene is the ENGINE, PacGhostAI is the APPLICATION."
+    },
+    "tactical_tactics_analysis": {
+      "type": "Real-time action optimization",
+      "detects": ["immediate_actions", "local_optimization", "situational_responses"],
+      "keywords": {
+        "action_indicators": ["move", "adjust", "respond", "execute"],
+        "optimization_terms": ["maximize", "minimize", "improve", "refine"],
+        "situational_keywords": ["threat", "opportunity", "risk", "advantage"]
+      },
+      "memory_footprint": "~200 bytes (keyword lists)",
+      "cache_requirement": "L1/L2 cache - small dictionary"
+    },
+    "math_layers": {
+      "total_count": 12,
+      "layers": [
+        {"layer": 1, "name": "power_roots", "memory_estimate": "~500 bytes"},
+        {"layer": 2, "name": "calculus_operations", "memory_estimate": "~800 bytes"},
+        {"layer": 3, "name": "linear_algebra", "memory_estimate": "~1KB"},
+        {"layer": 4, "name": "random_generators", "memory_estimate": "~400 bytes"},
+        {"layer": 5, "name": "geometry_transformations", "memory_estimate": "~600 bytes"},
+        {"layer": 6, "name": "physics_mechanics", "memory_estimate": "~700 bytes"},
+        {"layer": 7, "name": "chemistry", "memory_estimate": "~500 bytes"},
+        {"layer": 8, "name": "biology_ecology", "memory_estimate": "~400 bytes"},
+        {"layer": 9, "name": "astrophysics", "memory_estimate": "~600 bytes"},
+        {"layer": 10, "name": "business_economics", "memory_estimate": "~300 bytes"},
+        {"layer": 11, "name": "optical_physics", "memory_estimate": "~500 bytes"},
+        {"layer": 12, "name": "accustic_physics", "memory_estimate": "~500 bytes"}
+      ],tes",
+        "cognitive_load": "LOW - reactive pattern matching"
+      },
+      "comparison": "Operaional is PLANNING (havy), Tactical i REACTING (light)
+    }
+  }
+  "questions_for_ai_assistant": [
+    "How does epoche (phenomenological reduction) compare to current LLM reasoning approaches?",
+    "Can filtering interpretive language actually reduce hallucination?",
+    ",
+    "operational_vs_tactical": {
+      "operational_tactics": {
+        "focus": "Constraints, requirements, tradeoffsH failure modes",
+        "memory": "~400 bytes",
+        "cognitive_load": "HIGH - analyzes system constraints"
+      },
+      "tactical_tactics": {
+        "focus": "Immediate actions, local optimization, situational responses",
+        "memory": "~200 bytes",
+        "cognitive_load": "LOW - reactive pattern matching"
+      },
+      "comparison": "Operational is PLANNING (heavy), Tactical is REACTING (light)"
+    }
+  },
+  "questions_for_ai_assistant": [
+    "How does epoche (phenomenological reduction) compare to current LLM reasoning approaches?",
+    "Can filtering interpretive language actually reduce hallucination?",
+    ",
+    "operational_vs_tactical": {
+      "operational_tactics": {
+        "focus": "Constraints, requirements, tradeoffsH failure modes",
+        "memory": "~400 bytes",
+        "cognitive_load": "HIGH - analyzes system constraints"
+      },
+      "tactical_tactics": {
+        "focus": "Immediate actions, local optimization, situational responses",
+        "memory": "~200 bytes",
+        "cognitive_load": "LOW - reactive pattern matching"
+      },
+      "comparison": "Operational is PLANNING (heavy), Tactical is REACTING (light)"
+    }
+  },
+  "questions_for_ai_assistant": [
+    "How does epoche (phenomenological reduction) compare to current LLM reasoning approaches?",
+    "Can filtering interpretive language actually reduce hallucination?",
+    "How would epoche integrate with CartiGene stability metrics?",
+    "What other philosophical approaches could enhance AI reasoning?",
+    "How does signal-flow programming differ from traditional code execution?"
+  ],
+  "nbs_envelope": {
+    "file_breed": "shuttle",
+    "provenance_chain": ["sara_core_system", "ai_handoff"],
+    "kennel_content": "Context shuttle for AI assistants - FOCUS: Epoche theology + SLAM primitives + full architecture for review"
+  }
+}ow would epoche integrate with CartiGene stability metrics?",
+    "What other philosophical approaches could enhance AI reasoning?",
+    "How does signal-flow programming differ from traditional code execution?"
+  ],
+  "nbs_envelope": {
+    "file_breed": "shuttle",
+    "provenance_chain": ["sara_core_system", "ai_handoff"],
+    "kennel_content": "Context shuttle for AI assistants - FOCUS: Epoche theology + SLAM primitives + full architecture for review"
+  }
+}ow would epoche integrate with CartiGene stability metrics?",
+    "What other philosophical approaches could enhance AI reasoning?",
+    "How does signal-flow programming differ from traditional code execution?"
+  ],
+  "nbs_envelope": {
+    "file_breed": "shuttle",
+    "provenance_chain": ["sara_core_system", "ai_handoff"],
+    "kennel_content": "Context shuttle for AI assistants - FOCUS: Epoche theology + SLAM primitives + full architecture for review"
+  }
+}
+    "What other philosophical approaches could enhance AI reasoning?",
+    "How does signal-flow programming differ from traditional code execution?"
+  ],
+  "nbs_envelope": {
+    "file_breed": "shuttle",
+    "provenance_chain": ["sara_core_system", "ai_handoff"],
+    "kennel_content": "Context shuttle for AI assistants - FOCUS: Epoche theology + SLAM primitives + full architecture for review"
+  }
+}
+      "total_memory": "~6.3KB",
+      "cache_requirement": "L2 cache for active layer, L3 for all"
+    },
+    "memory_summary": {
+      "lightest": "CartiGene engine (~48 bytes)",
+      "light": "Tactical Tactics (~200 bytes)",
+      "medium": "PacGhostAI (~112 bytes + feature vector)",
+      "heavy": "Math Layers (~6.3KB total, ~500-1000 bytes per layer)"
+    },
+    "operational_vs_tactical": {
+      "operational_tactics": {
+        "focus": "Constraints, requirements, tradeoffs, failure modes",
+        "memory": "~400 bytes",
+        "cognitive_load": "HIGH - analyzes system constraints"
+      },
+      "tactical_tactics": {
+        "focus": "Immediate actions, local optimization, situational responses",
+        "memory": "~200 bytes",
+        "cognitive_load": "LOW - reactive pattern matching"
+      },
+      "comparison": "Operational is PLANNING (heavy), Tactical is REACTING (light)"
+    }
+  },
+  "questions_for_ai_assistant": [
+    "How does epoche (phenomenological reduction) compare to current LLM reasoning approaches?",
+    "Can filtering interpretive language actually reduce hallucination?",
+    "How would epoche integrate with CartiGene stability metrics?",
+    "What other philosophical approaches could enhance AI reasoning?",
+    "How does signal-flow programming differ from traditional code execution?"
+  ],
+  "nbs_envelope": {
+    "file_breed": "shuttle",
+    "provenance_chain": ["sara_core_system", "ai_handoff"],
+    "kennel_content": "Context shuttle for AI assistants - FOCUS: Epoche theology + SLAM primitives + full architecture for review"
+  }
+}

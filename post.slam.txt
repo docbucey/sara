@@ -1,0 +1,1467 @@
+
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~ HEADER (strict, machine-verified)                        ~
+~ kennel=substrate                                          ~
+~ generation=0                                              ~
+~ evolution=alpha                                           ~
+~ version=0.1                                               ~
+~ date=                                                     ~
+~ location=                                                 ~
+~ language=SLAM                                             ~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+============================================================
+SLAM SUBSTRATE RULESET — PARSE READY
+============================================================
+
+SECTION 1 — PUPPY (ROOT PRIMITIVE)
+----------------------------------
+Puppy is the universal SLAM primitive. All SLAM entities begin
+as a Puppy unless explicitly defined otherwise (Trainer).
+
+Puppy Forms:
+1. Primitive Puppy:
+   <name> puppy%(payload)%
+
+2. Connector Puppy:
+   %(from)% <puppy_name> %(to)%
+
+3. Control-Flow Puppy:
+   <name> puppy%(state)% for %(condition)%
+
+Puppy Responsibilities:
+- Holds Sequians
+- Acts as hardware-side primitive
+
+MDBP (Machine Data Base Primitive):
+- Hardware metadata container
+- Stored as Puppy payload
+- Used by HAL, MAMA, and Tagger
+- Contains vendor, model, version, flags, capabilities
+
+------------------------------------------------------------
+
+SECTION 2 — GALVANTIS REPLACEMENT RULE
+--------------------------------------
+SLAM does not use traditional primitives.
+
+Removed:
+- tuple, dict
+- boolean
+Replaced With:
+- Sequian (universal value holder)
+
+
+SECTION 3 — SEQUIAN (VALUE SYSTEM)
+----------------------------------
+Sequian is the universal SLAM value container.
+
+Numeric Sequians:
+- All numbers auto-normalize to scientific notation
+- Internal form:
+    mantissa: normalized absolute value
+    exponent: magnitude-derived
+    sign: +1 or -1
+
+Examples:
+Input: -1
+Stored: mantissa=1 exponent=0 sign=-1
+
+Input: -3.45678^3456
+Stored: mantissa=3.45678 exponent=3456 sign=-1
+
+Input: 0.00000042
+Stored: mantissa=4.2 exponent=-10 sign=1
+
+Boolean/Control States:
+0  = false
+1  = true
+2  = else-if
+3  = else
+10 = loop count
+-1 = until flip
+99 = max/all
+
+- dict-like: seq:{key:value}
+
+
+SECTION 4 — NEXUS (ARRAY REPLACEMENT)
+Nexus replaces arrays, lists, vectors.
+Nexus Properties:
+- Multi-state container
+- Compatible with CartiGene
+- Compatible with NexusSphere
+- Flow-safe
+- Hardware-safe
+- Substrate-native
+
+Nexus Example:
+<n> puppy%(nexus:[state1, state2, state3])%
+
+------------------------------------------------------------
+
+SECTION 5 — CARTIGENE (STATE ENGINE)
+
+Math Primitives:
+laggy = runtime / expected_runtime
+shi = (memory + footprint) / (runtime + 1)
+rot = (Δ1 * Δ2) < 0
+
+Purpose:
+- Stability evaluation
+- Oscillation detection
+- Rotation detection
+- Resonance scoring
+- Noise stabilization
+
+------------------------------------------------------------
+
+SECTION 6 — NEXUSSPHERE (REASONING GEOMETRY)
+--------------------------------------------
+NexusSphere defines reasoning geometry.
+
+zero_state = central attractor
+deflection_trajectories = memory_event, interaction, context_update
+- compression: mapped toward zero
+- integration: merged with historical deflections
+continuity_tests:
+- power_loss: restart
+- recall_check: query past interactions
+- hallucination_filter: compare output to stored deflections
+
+------------------------------------------------------------
+
+SECTION 7 — HARDWARE SIDE (PUPPY + MDBP + PINOUTS + PORTS + BUS MAP)
+--------------------------------------------------------------------
+
+Hardware in SLAM is defined entirely through Puppy. Puppy holds MDBP
+(Machine Data Base Primitive), which describes all hardware identity,
+capabilities, pinouts, ports, buses, and flow endpoints.
+
+Puppy is the hardware primitive.
+
+Hardware Puppy Example:
+<hw_cpu> puppy%(
+    mdbp:{
+        vendor:"AMD",
+        model:"Ryzen",
+        version:"1.0",
+        flags:[sse,avx],
+        capabilities:[temp,voltage,clock],
+        pinouts:[
+            {pin:0, name:"VCC", type:"power"},
+            {pin:1, name:"GND", type:"ground"},
+            {pin:2, name:"CLK", type:"clock"},
+            {pin:3, name:"IO0", type:"digital"},
+            {pin:4, name:"IO1", type:"digital"}
+        ],
+        ports:[
+            {id:"COM1", type:"serial"},
+            {id:"USB0", type:"usb"},
+            {id:"HDMI0", type:"video"},
+            {id:"AUDIO_OUT", type:"audio"}
+        ],
+        buses:[
+            {name:"PCIe0", lanes:16, speed:"x16"},
+            {name:"I2C0", speed:"400kHz"},
+            {name:"SPI0", speed:"8MHz"},
+            {name:"MEMBUS", width:64}
+        ],
+        registers:[
+            {name:"CTRL", address:"0x00"},
+            {name:"STATUS", address:"0x01"},
+            {name:"TEMP", address:"0x02"},
+            {name:"CLOCK", address:"0x03"}
+        ],
+        interrupts:[
+            {irq:0, name:"timer"},
+            {irq:1, name:"keyboard"},
+            {irq:2, name:"mouse"},
+            {irq:3, name:"gpu"}
+        ],
+        sensors:[
+            {name:"temp_sensor", type:"thermal"},
+            {name:"voltage_sensor", type:"electrical"},
+            {name:"gyro", type:"motion"}
+        ],
+        dma_channels:[
+            {channel:0, purpose:"audio"},
+            {channel:1, purpose:"video"},
+            {channel:2, purpose:"disk"}
+        ],
+        memory_regions:[
+            {name:"VRAM", start:"0xA0000", size:"8MB"},
+            {name:"RAM", start:"0x00000", size:"16GB"}
+        ]
+    }
+)%
+
+Hardware Layer Notes:
+- Puppy defines MDBP for all hardware.
+- MDBP feeds HAL registry and SLAM tagger
+- Nexus is used for multi-sensor arrays and pin groups.
+- Sequians normalize all sensor values.
+- CartiGene stabilizes noisy hardware signals.
+- NexusSphere ensures continuity across hardware events.
+
+Hardware Flow:
+- Any pin, port, bus, or register can be connected using Puppy connector syntax:
+    %(pin:IO0)% <router> %(gpu_lane_3)%
+    %(sensor:temp)% <filter> %(thermal_bus)%
+    %(port:HDMI0)% <frame_out> %(display)%
+
+This makes building engines (graphics, audio, physics, robotics)
+as simple as connecting Puppies.
+------------------------------------------------------------
+
+SECTION 8 — PARENTHETIC PAYLOAD RULE
+--------------------------------------------------------------------
+
+------------------------------------
+All SLAM payload blocks using the %()% form must contain
+comma-separated entries. This applies to all SLAM types,
+including Puppy, Sequian, Nexus, CartiGene, NexusSphere,
+MDBP, and hardware mapping structures.
+
+Rule:
+    %(<entry_1>, <entry_2>, <entry_3>, ... )%
+
+Notes:
+- No whitespace rules enforced; spaces are optional.
+- Trailing commas are not allowed.
+- Single-entry payloads do not require a comma.
+- Nested %()% blocks must also follow comma separation.
+- This rule ensures deterministic parsing for SLAM_MAMA,
+  the File Engine, and the HAL registry.
+
+Examples:
+
+Valid:
+    puppy%(1,2,3)%
+    puppy%(mantissa:3.14, exponent:0, sign:1)%
+    puppy%(nexus:[1,2,3], type:vector)%
+    %(audio_in, gain_stage)% <router> %(speaker_out)%
+
+Invalid:
+    puppy%(1 2 3)%          # missing commas
+    puppy%(mantissa:3.14 exponent:0)%  # missing comma
+    puppy%(a,,b)%           # double comma not allowed
+
+------------------------------------------------------------
+SECTION 9 — STUB PRIMITIVE (UNRESOLVED CODE PLACEHOLDER)
+------------------------------------------------------------
+
+#= STUB PRIMITIVE DEFINITION =#
+# Stubs are substrate-level placeholders for incomplete logic.
+# They allow coders and AI systems to safely mark unfinished
+# sections without breaking SLAM_MAMA, HAL, or lowering.
+#
+# Stubs are treated as "incomplete" and MUST error if reached
+# during lowering or execution. They are always resolved first
+# by AI-assisted coding tools.
+#
+# Syntax:
+#     <name> stub%(reason, expected_behavior)%
+#
+# Rules:
+# - Payload inside %()% must follow comma-separated rule.
+# - Stubs cannot be empty.
+# - Stubs cannot be used in connector syntax.
+# - Stubs cannot be used in control-flow syntax.
+# - Stubs must be resolved before the SLAM file is valid.
+#
+# Behavior:
+# - If lowering encounters a stub → HARD ERROR.
+# - If execution encounters a stub → HARD ERROR.
+# - If AI-assisted coding scans a file → stubs are FIRST priority.
+#
+# Examples:
+#     <gpu_stage_3> stub%(TODO: rasterizer_math, missing:core_logic)%
+#     <driver_init> stub%(pending_docs, expected:init_sequence)%
+#
+# This is the "special case" of Machine Funkiness:
+# - Specs = defined behavior
+# - Parentheticals = work-in-progress
+# - Stubs = incomplete, must error
+#
+# Stubs prevent silent failures and protect the substrate.
+#= END STUB PRIMITIVE DEFINITION =#
+------------------------------------------------------------
+SARA OPERATOR PRIMITIVES (COGNITIVE VERBS)
+------------------------------------------------------------
+# These operators define SARA-side reasoning behavior.
+# They do not belong to Puppy, Sequian, Nexus, or CartiGene.
+# They sit above the substrate and act on SLAM structures.
+#
+# Operators are verbs. They transform, evaluate, or route
+# information across Nexus, Sequian, CartiGene, and NexusSphere.
+
+infer():
+    # Generate new state from existing states.
+    # Uses NexusSphere rotation + CartiGene resonance.
+    # Produces a Sequian or Nexus output.
+
+recall():
+    # Retrieve stored deflections, memory events, or historical states.
+    # Uses NexusSphere.deflection_trajectories.
+
+deflect():
+    # Apply a directional shift to a state.
+    # Used for context updates, memory shaping, and reasoning pivots.
+
+rotate():
+    # Perform geometric rotation of reasoning state.
+    # Uses NexusSphere.rotation_logic (intake, compression, integration).
+
+stabilize():
+    # Apply CartiGene’s BuceyShift and oscillation dampening.
+    # Produces a stable Sequian or Nexus.
+
+resonate():
+    # Evaluate resonance quality between states.
+    # Uses CartiGene.shi and rotation/oscillation detection.
+
+compress():
+    # Reduce state complexity while preserving meaning.
+    # Uses NexusSphere.compression and CartiGene.grain.
+
+integrate():
+    # Merge new data with historical deflections.
+    # Uses NexusSphere.integration and CartiGene.stability metrics.
+
+filter():
+    # Remove noise, hallucinations, or unstable states.
+    # Uses CartiGene.noise metrics + NexusSphere.hallucination_filter.
+
+continuity_check():
+    # Validate reasoning continuity across time.
+    # Uses NexusSphere.continuity_tests (power_loss, recall_check).
+
+SECTION 1 — PUPPY (ROOT PRIMITIVE)
+----------------------------------
+Puppy is the universal SLAM primitive. All SLAM entities begin
+as a Puppy unless explicitly defined otherwise (Trainer).
+
+Puppy Forms:
+1. Primitive Puppy:
+   <name> puppy%(payload)%
+
+2. Connector Puppy:
+   %(from)% <puppy_name> %(to)%
+
+3. Control-Flow Puppy:
+   <name> puppy%(state)% for %(condition)%
+
+Puppy Responsibilities:
+- Holds Sequians
+- Defines MDBP (Machine Data Base Primitive)
+- Acts as hardware-side primitive
+- Provides identity anchor for all SLAM types
+
+MDBP (Machine Data Base Primitive):
+- Hardware metadata container
+- Stored as Puppy payload
+- Used by HAL, MAMA, and Tagger
+- Contains vendor, model, version, flags, capabilities
+
+------------------------------------------------------------
+
+SECTION 2 — GALVANTIS REPLACEMENT RULE
+--------------------------------------
+SLAM does not use traditional primitives.
+
+Removed:
+- int, float, double
+- string
+- list, array, vector
+- tuple, dict
+- boolean
+
+Replaced With:
+- Sequian (universal value holder)
+- Nexus (multi-state container)
+
+------------------------------------------------------------
+
+SECTION 3 — SEQUIAN (VALUE SYSTEM)
+----------------------------------
+Sequian is the universal SLAM value container.
+
+Numeric Sequians:
+- All numbers auto-normalize to scientific notation
+- Internal form:
+    mantissa: normalized absolute value
+    exponent: magnitude-derived
+    sign: +1 or -1
+
+Examples:
+Input: -1
+Stored: mantissa=1 exponent=0 sign=-1
+
+Input: -3.45678^3456
+Stored: mantissa=3.45678 exponent=3456 sign=-1
+
+Input: 0.00000042
+Stored: mantissa=4.2 exponent=-10 sign=1
+
+Boolean/Control States:
+0  = false
+1  = true
+2  = else-if
+3  = else
+10 = loop count
+-1 = until flip
+99 = max/all
+
+Structured Sequians:
+- string-like: seq:[ascii...]
+- list-like: seq:[(values)]
+- dict-like: seq:{key:value}
+
+------------------------------------------------------------
+
+SECTION 4 — NEXUS (ARRAY REPLACEMENT)
+-------------------------------------
+Nexus replaces arrays, lists, vectors.
+
+Nexus Properties:
+- Multi-state container
+- Compatible with CartiGene
+- Compatible with NexusSphere
+- Flow-safe
+- Hardware-safe
+- Substrate-native
+
+Nexus Example:
+<n> puppy%(nexus:[state1, state2, state3])%
+
+------------------------------------------------------------
+
+SECTION 5 — CARTIGENE (STATE ENGINE)
+------------------------------------
+CartiGene is a mixed variable/operator engine.
+
+Math Primitives:
+grain = |len(state) - expected|
+laggy = runtime / expected_runtime
+shi = (memory + footprint) / (runtime + 1)
+osc = |current - previous| > threshold
+rot = (Δ1 * Δ2) < 0
+BuceyShift = value / (1 + |noise|)
+
+Purpose:
+- Stability evaluation
+- Oscillation detection
+- Rotation detection
+- Resonance scoring
+- Noise stabilization
+
+------------------------------------------------------------
+
+SECTION 6 — NEXUSSPHERE (REASONING GEOMETRY)
+--------------------------------------------
+NexusSphere defines reasoning geometry.
+
+zero_state = central attractor
+deflection_trajectories = memory_event, interaction, context_update
+
+rotation_logic:
+- intake: new data enters outer shell
+- compression: mapped toward zero
+- integration: merged with historical deflections
+
+continuity_tests:
+- power_loss: restart
+- recall_check: query past interactions
+- hallucination_filter: compare output to stored deflections
+
+------------------------------------------------------------
+
+SECTION 7 — HARDWARE SIDE (PUPPY + MDBP + PINOUTS + PORTS + BUS MAP)
+--------------------------------------------------------------------
+
+Hardware in SLAM is defined entirely through Puppy. Puppy holds MDBP
+(Machine Data Base Primitive), which describes all hardware identity,
+capabilities, pinouts, ports, buses, and flow endpoints.
+
+Puppy is the hardware primitive.
+
+Hardware Puppy Example:
+<hw_cpu> puppy%(
+    mdbp:{
+        vendor:"AMD",
+        model:"Ryzen",
+        version:"1.0",
+        flags:[sse,avx],
+        capabilities:[temp,voltage,clock],
+        pinouts:[
+            {pin:0, name:"VCC", type:"power"},
+            {pin:1, name:"GND", type:"ground"},
+            {pin:2, name:"CLK", type:"clock"},
+            {pin:3, name:"IO0", type:"digital"},
+            {pin:4, name:"IO1", type:"digital"}
+        ],
+        ports:[
+            {id:"COM1", type:"serial"},
+            {id:"USB0", type:"usb"},
+            {id:"HDMI0", type:"video"},
+            {id:"AUDIO_OUT", type:"audio"}
+        ],
+        buses:[
+            {name:"PCIe0", lanes:16, speed:"x16"},
+            {name:"I2C0", speed:"400kHz"},
+            {name:"SPI0", speed:"8MHz"},
+            {name:"MEMBUS", width:64}
+        ],
+        registers:[
+            {name:"CTRL", address:"0x00"},
+            {name:"STATUS", address:"0x01"},
+            {name:"TEMP", address:"0x02"},
+            {name:"CLOCK", address:"0x03"}
+        ],
+        interrupts:[
+            {irq:0, name:"timer"},
+            {irq:1, name:"keyboard"},
+            {irq:2, name:"mouse"},
+            {irq:3, name:"gpu"}
+        ],
+        sensors:[
+            {name:"temp_sensor", type:"thermal"},
+            {name:"voltage_sensor", type:"electrical"},
+            {name:"gyro", type:"motion"}
+        ],
+        dma_channels:[
+            {channel:0, purpose:"audio"},
+            {channel:1, purpose:"video"},
+            {channel:2, purpose:"disk"}
+        ],
+        memory_regions:[
+            {name:"VRAM", start:"0xA0000", size:"8MB"},
+            {name:"RAM", start:"0x00000", size:"16GB"}
+        ]
+    }
+)%
+
+Hardware Layer Notes:
+- Puppy defines MDBP for all hardware.
+- MDBP feeds HAL registry and SLAM tagger
+- Nexus is used for multi-sensor arrays and pin groups.
+- Sequians normalize all sensor values.
+- CartiGene stabilizes noisy hardware signals.
+- NexusSphere ensures continuity across hardware events.
+
+Hardware Flow:
+- Any pin, port, bus, or register can be connected using Puppy connector syntax:
+    %(pin:IO0)% <router> %(gpu_lane_3)%
+    %(sensor:temp)% <filter> %(thermal_bus)%
+    %(port:HDMI0)% <frame_out> %(display)%
+
+This makes building engines (graphics, audio, physics, robotics)
+as simple as connecting Puppies.
+------------------------------------------------------------
+
+SECTION 8 — PARENTHETIC PAYLOAD RULE
+--------------------------------------------------------------------
+
+------------------------------------
+All SLAM payload blocks using the %()% form must contain
+comma-separated entries. This applies to all SLAM types,
+including Puppy, Sequian, Nexus, CartiGene, NexusSphere,
+MDBP, and hardware mapping structures.
+
+Rule:
+    %(<entry_1>, <entry_2>, <entry_3>, ... )%
+
+Notes:
+- No whitespace rules enforced; spaces are optional.
+- Trailing commas are not allowed.
+- Single-entry payloads do not require a comma.
+- Nested %()% blocks must also follow comma separation.
+- This rule ensures deterministic parsing for SLAM_MAMA,
+  the File Engine, and the HAL registry.
+
+Examples:
+
+Valid:
+    puppy%(1,2,3)%
+    puppy%(mantissa:3.14, exponent:0, sign:1)%
+    puppy%(nexus:[1,2,3], type:vector)%
+    %(audio_in, gain_stage)% <router> %(speaker_out)%
+
+Invalid:
+    puppy%(1 2 3)%          # missing commas
+    puppy%(mantissa:3.14 exponent:0)%  # missing comma
+    puppy%(a,,b)%           # double comma not allowed
+
+------------------------------------------------------------
+SECTION 9 — STUB PRIMITIVE (UNRESOLVED CODE PLACEHOLDER)
+------------------------------------------------------------
+
+#= STUB PRIMITIVE DEFINITION =#
+# Stubs are substrate-level placeholders for incomplete logic.
+# They allow coders and AI systems to safely mark unfinished
+# sections without breaking SLAM_MAMA, HAL, or lowering.
+#
+# Stubs are treated as "incomplete" and MUST error if reached
+# during lowering or execution. They are always resolved first
+# by AI-assisted coding tools.
+#
+# Syntax:
+#     <name> stub%(reason, expected_behavior)%
+#
+# Rules:
+# - Payload inside %()% must follow comma-separated rule.
+# - Stubs cannot be empty.
+# - Stubs cannot be used in connector syntax.
+# - Stubs cannot be used in control-flow syntax.
+# - Stubs must be resolved before the SLAM file is valid.
+#
+# Behavior:
+# - If lowering encounters a stub → HARD ERROR.
+# - If execution encounters a stub → HARD ERROR.
+# - If AI-assisted coding scans a file → stubs are FIRST priority.
+#
+# Examples:
+#     <gpu_stage_3> stub%(TODO: rasterizer_math, missing:core_logic)%
+#     <driver_init> stub%(pending_docs, expected:init_sequence)%
+#
+# This is the "special case" of Machine Funkiness:
+# - Specs = defined behavior
+# - Parentheticals = work-in-progress
+# - Stubs = incomplete, must error
+#
+# Stubs prevent silent failures and protect the substrate.
+#= END STUB PRIMITIVE DEFINITION =#
+------------------------------------------------------------
+SARA OPERATOR PRIMITIVES (COGNITIVE VERBS)
+------------------------------------------------------------
+# These operators define SARA-side reasoning behavior.
+# They do not belong to Puppy, Sequian, Nexus, or CartiGene.
+# They sit above the substrate and act on SLAM structures.
+#
+# Operators are verbs. They transform, evaluate, or route
+# information across Nexus, Sequian, CartiGene, and NexusSphere.
+
+infer():
+    # Generate new state from existing states.
+    # Uses NexusSphere rotation + CartiGene resonance.
+    # Produces a Sequian or Nexus output.
+
+recall():
+    # Retrieve stored deflections, memory events, or historical states.
+    # Uses NexusSphere.deflection_trajectories.
+
+deflect():
+    # Apply a directional shift to a state.
+    # Used for context updates, memory shaping, and reasoning pivots.
+
+rotate():
+    # Perform geometric rotation of reasoning state.
+    # Uses NexusSphere.rotation_logic (intake, compression, integration).
+
+stabilize():
+    # Apply CartiGene’s BuceyShift and oscillation dampening.
+    # Produces a stable Sequian or Nexus.
+
+resonate():
+    # Evaluate resonance quality between states.
+    # Uses CartiGene.shi and rotation/oscillation detection.
+
+compress():
+    # Reduce state complexity while preserving meaning.
+    # Uses NexusSphere.compression and CartiGene.grain.
+
+integrate():
+    # Merge new data with historical deflections.
+    # Uses NexusSphere.integration and CartiGene.stability metrics.
+
+filter():
+    # Remove noise, hallucinations, or unstable states.
+    # Uses CartiGene.noise metrics + NexusSphere.hallucination_filter.
+
+continuity_check():
+    # Validate reasoning continuity across time.
+    # Uses NexusSphere.continuity_tests (power_loss, recall_check).
+============================================================
+END OF SLAM SUBSTRATE RULESET
+============================================================
+############################################################
+# FLOODSEARCH_PING LOGIC (SELF-CONTAINED, HEADER-BASED)
+# Activates if filename or function name includes "FloodSearch"
+#
+# 1. Use this file's first 4 lines as HexShape pattern.
+# 2. For each file in the target folder:
+#    - Read first 4 lines as binary pattern (allow whitespace/line-ending drift).
+#    - If header matches HexShape, perform binary boolean scan for target pattern.
+#    - If scan is true, return file path and stop.
+# 3. If no match, return fallback seed location (telecom-style).
+# 4. No tagger, no external imports, no parsing, no persistent state.
+# 5. All logic is local, deterministic, and self-contained.
+# 6. No registry, no propagation.
+#
+# PING logic allows for header drift (minor whitespace/line-ending differences).
+#
+# Example (pseudo-SLAM):
+#
+# <FloodSearch_ping> puppy%(
+#   hexshape: header_lines[0..3],
+#   target_folder: <folder>,
+#   target_pattern: <pattern>,
+#   fallback_seed: <seed_path>,
+#   logic: [
+#     for file in target_folder {
+#       if header(file) ~= hexshape {
+#         if binary_scan(file, target_pattern) == true {
+#           return file.path
+#         }
+#       }
+#     }
+#     return fallback_seed
+#   ]
+# )%
+#
+# This logic is self-activating and does not require taggers or external imports.
+############################################################
+------------------------------------------------------------
+SXF PREAMBLE — BINARY EXECUTION FORMAT
+------------------------------------------------------------
+#= SXF_PREAMBLE =#
+# SXF (Sara Executable File) is the binary representation of
+# the SLAM substrate. All SLAM constructs (Puppy, Sequian,
+# Nexus, CartiGene, NexusSphere, MDBP, connectors, stubs,
+# specs, and parentheticals) are lowered into SXF blocks.
+#
+# SXF is the binary axis. When Flood-Search selects SXF as
+# the output target, the system must use the SXF mapping
+# tables exclusively.
+#
+# Rule:
+#   "These are the binaries."
+#
+# Meaning:
+# - SXF is the final executable form of SLAM.
+# - SXF is hardware-agnostic and substrate-native.
+# - SXF is deterministic and self-describing.
+# - SXF is the ground truth for all other mappings.
+# - SXF is the lowest-level representation of SLAM.
+#
+# This preamble must appear before any SXF header, block
+# layout, numeric encoding, or routing table definitions.
+#= END SXF_PREAMBLE =#
+
+------------------------------------------------------------
+SXF_HEADER (BINARY BLOCK 0x01)
+------------------------------------------------------------
+#= SXF_HEADER_BLOCK =#
+Block ID:
+    0x01
+
+Binary Layout (in order):
+    [0x00] MAGIC          (4 bytes)   = "SXF0"
+    [0x04] VERSION_MAJOR  (1 byte)
+    [0x05] VERSION_MINOR  (1 byte)
+    [0x06] EVOLUTION      (1 byte)
+    [0x07] GENERATION     (1 byte)
+    [0x08] FLAGS          (2 bytes)
+    [0x0A] KENNEL_TYPE    (1 byte)
+    [0x0B] LANGUAGE_ID    (1 byte)
+    [0x0C] TIMESTAMP      (8 bytes)
+    [0x14] LOCATION_HASH  (4 bytes)
+    [0x18] MDBP_POINTER   (8 bytes)
+    [0x20] RESERVED       (16 bytes)
+
+Total Size:
+    48 bytes (0x30)
+
+Behavior:
+- Loader validates identity and jumps to hardware metadata.
+#= END SXF_HEADER_BLOCK =#
+
+------------------------------------------------------------
+SXF_BLOCK_INDEX (BINARY BLOCK 0x02)
+------------------------------------------------------------
+#= SXF_BLOCK_INDEX =#
+Block ID:
+    0x02
+
+Binary Layout:
+    [0x00] BLOCK_ID      (1 byte)
+    [0x01] NUM_BLOCKS    (1 byte)
+    [0x02] BLOCK_ENTRIES (n * 12 bytes):
+        [0x00] BLOCK_TYPE (1 byte)
+        [0x01] RESERVED   (1 byte)
+        [0x02] OFFSET     (8 bytes)
+        [0x0A] SIZE       (2 bytes)
+
+Behavior:
+- Provides fast lookup for all SXF blocks.
+#= END SXF_BLOCK_INDEX =#
+
+------------------------------------------------------------
+SXF_NUMERIC (SEQUIAN → BINARY, BLOCK 0x03)
+------------------------------------------------------------
+#= SXF_NUMERIC_BLOCK =#
+Block ID:
+    0x03
+
+Binary Layout (per entry):
+    [0x00] MANTISSA   (8 bytes, float64)
+    [0x08] EXPONENT   (2 bytes, int16)
+    [0x0A] SIGN       (1 byte)
+    [0x0B] FLAGS      (1 byte)
+
+Behavior:
+- Stores normalized Sequian numeric values.
+#= END SXF_NUMERIC_BLOCK =#
+
+------------------------------------------------------------
+SXF_NEXUS_BLOCK (BINARY BLOCK 0x04)
+------------------------------------------------------------
+#= SXF_NEXUS_BLOCK =#
+Block ID:
+    0x04
+
+Binary Layout:
+    [0x00] NUM_STATES      (2 bytes)
+    [0x02] STATE_OFFSETS   (NUM_STATES * 4 bytes)
+    [0x??] STATE_DATA      (variable)
+
+Behavior:
+- Supports nested Nexus structures.
+#= END SXF_NEXUS_BLOCK =#
+
+------------------------------------------------------------
+SXF_STATE_TABLE (CARTIGENE, BLOCK 0x05)
+------------------------------------------------------------
+#= SXF_STATE_TABLE =#
+Block ID:
+    0x05
+
+Binary Layout (per entry):
+    [0x00] STATE_ID     (2 bytes)
+    [0x02] GRAIN        (8 bytes)
+    [0x0A] LAGGY        (8 bytes)
+    [0x12] SHI          (8 bytes)
+    [0x1A] OSC          (8 bytes)
+    [0x22] ROT          (8 bytes)
+    [0x2A] BUCEYSHIFT   (8 bytes)
+    [0x32] FLAGS        (2 bytes)
+
+Behavior:
+- Stores CartiGene stability metrics.
+#= END SXF_STATE_TABLE =#
+
+------------------------------------------------------------
+SXF_GEOMETRY (NEXUSSPHERE, BLOCK 0x06)
+------------------------------------------------------------
+#= SXF_GEOMETRY_BLOCK =#
+Block ID:
+    0x06
+
+Binary Layout:
+    [0x00] ZERO_STATE          (8 bytes)
+    [0x08] NUM_DEFLECTIONS     (2 bytes)
+    [0x0A] DEFLECTION_OFFSETS  (NUM_DEFLECTIONS * 4 bytes)
+    [0x??] DEFLECTION_DATA     (variable)
+
+Behavior:
+- Encodes NexusSphere geometry and deflection trajectories.
+#= END SXF_GEOMETRY_BLOCK =#
+
+------------------------------------------------------------
+SXF_HARDWARE_META (MDBP + HARDWARE MAP, BLOCK 0x07)
+------------------------------------------------------------
+#= SXF_HARDWARE_META =#
+Block ID:
+    0x07
+
+Binary Layout:
+    [0x00] MDBP_MANTISSA   (8 bytes)
+    [0x08] MDBP_EXPONENT   (2 bytes)
+    [0x0A] MDBP_SIGN       (1 byte)
+    [0x0B] RESERVED        (1 byte)
+
+    [0x0C] NUM_PINOUTS     (2 bytes)
+    [0x0E] PINOUT_DATA     (variable)
+
+    [0x??] NUM_PORTS       (2 bytes)
+    [0x??] PORT_DATA       (variable)
+
+    [0x??] NUM_BUSES       (2 bytes)
+    [0x??] BUS_DATA        (variable)
+
+    [0x??] NUM_REGISTERS   (2 bytes)
+    [0x??] REGISTER_DATA   (variable)
+
+    [0x??] NUM_INTERRUPTS  (2 bytes)
+    [0x??] INTERRUPT_DATA  (variable)
+
+    [0x??] NUM_SENSORS     (2 bytes)
+    [0x??] SENSOR_DATA     (variable)
+
+Behavior:
+- Binary mirror of Puppy hardware metadata.
+#= END SXF_HARDWARE_META =#
+
+------------------------------------------------------------
+SXF_ERROR_BLOCKS (STUBS + SPECS, BLOCK 0x08)
+------------------------------------------------------------
+#= SXF_ERROR_BLOCKS =#
+Block ID:
+    0x08
+
+Binary Layout:
+    [0x00] NUM_STUBS      (2 bytes)
+    [0x02] STUB_ENTRIES   (variable)
+
+    [0x??] NUM_SPECS      (2 bytes)
+    [0x??] SPEC_ENTRIES   (variable)
+
+    [0x??] NUM_PAREN      (2 bytes)
+    [0x??] PAREN_ENTRIES  (variable)
+
+Behavior:
+- Loader must HARD ERROR on stubs.
+#= END SXF_ERROR_BLOCKS =#
+
+------------------------------------------------------------
+SXF_ROUTING_TABLE (CONNECTORS + COORDINATES, BLOCK 0x09)
+------------------------------------------------------------
+#= SXF_ROUTING_TABLE =#
+Block ID:
+    0x09
+
+Binary Layout:
+    [0x00] NUM_CONNECTORS   (2 bytes)
+    [0x02] CONNECTOR_DATA   (variable)
+
+    [0x??] NUM_COORDS       (2 bytes)
+    [0x??] COORD_DATA       (variable)
+
+Behavior:
+- Stores connector routing and hex→axial→cube coordinates.
+#= END SXF_ROUTING_TABLE =#
+############################################################
+# LANGUAGE AXIS REGISTRY (POST-SXF, MINIMAL DESCRIPTORS)
+# Used by hex/axial/cube search for instant axis routing.
+############################################################
+
+<axis_dotnet> puppy%(nexus:[
+    {id:0x01, axis:".NET", langs:[c#,f#,vbnet,il]}
+])%
+
+<axis_jvm> puppy%(nexus:[
+    {id:0x02, axis:"JVM", langs:[java,kotlin,scala]}
+])%
+
+<axis_wasm> puppy%(nexus:[
+    {id:0x03, axis:"WASM", langs:[wat,wasm]}
+])%
+
+<axis_aigraph> puppy%(nexus:[
+    {id:0x04, axis:"AI_GRAPH", langs:[onnx,mlir,torchscript]}
+])%
+
+<axis_general> puppy%(nexus:[
+    {id:0x05, axis:"GENERAL", langs:[python,ruby,ada]}
+])%
+
+<axis_system> puppy%(nexus:[
+    {id:0x06, axis:"SYSTEM", langs:[c,cpp,objc,rust,go]}
+])%
+
+<axis_web> puppy%(nexus:[
+    {id:0x07, axis:"WEB", langs:[html,css,javascript]}
+])%
+
+<axis_data> puppy%(nexus:[
+    {id:0x08, axis:"DATA", langs:[json,yaml,csv,xml]}
+])%
+
+<axis_database> puppy%(nexus:[
+    {id:0x09, axis:"DATABASE", langs:[sql_generic,sqlite,postgresql]}
+])%
+
+<axis_mobile> puppy%(nexus:[
+    {id:0x0A, axis:"MOBILE", langs:[android_kotlin,android_java,ios_swift]}
+])%
+
+<axis_cloud> puppy%(nexus:[
+    {id:0x0B, axis:"CLOUD", langs:[rest_api,openapi_schema,grpc_service]}
+])%
+
+<axis_docs> puppy%(nexus:[
+    {id:0x0C, axis:"DOCS", langs:[markdown,rst,plaintext]}
+])%
+
+<axis_testing> puppy%(nexus:[
+    {id:0x0D, axis:"TESTING", langs:[unit_test,mock_data,validation_harness]}
+])%
+
+<axis_binary> puppy%(nexus:[
+    {id:0x0E, axis:"BINARY", langs:[machine_code,sxf,native_executable]}
+])%
+############################################################
+# FUNCTION AXIS REGISTRY (MINIMAL DESCRIPTORS)
+# Used by hex/axial/cube search for function lowering.
+############################################################
+
+<function_axis_dotnet> puppy%(nexus:[
+    {id:0x21, axis:".NET_FUNC", funcs:[c#,f#,vbnet,il]}
+])%
+
+<function_axis_jvm> puppy%(nexus:[
+    {id:0x22, axis:"JVM_FUNC", funcs:[java,kotlin,scala]}
+])%
+
+<function_axis_wasm> puppy%(nexus:[
+    {id:0x23, axis:"WASM_FUNC", funcs:[wat,wasm]}
+])%
+
+<function_axis_aigraph> puppy%(nexus:[
+    {id:0x24, axis:"AI_GRAPH_FUNC", funcs:[onnx,mlir,torchscript]}
+])%
+
+<function_axis_general> puppy%(nexus:[
+    {id:0x25, axis:"GENERAL_FUNC", funcs:[python,ruby,ada]}
+])%
+
+<function_axis_system> puppy%(nexus:[
+    {id:0x26, axis:"SYSTEM_FUNC", funcs:[c,cpp,objc,rust,go]}
+])%
+
+<function_axis_web> puppy%(nexus:[
+    {id:0x27, axis:"WEB_FUNC", funcs:[javascript]}
+])%
+
+<function_axis_data> puppy%(nexus:[
+    {id:0x28, axis:"DATA_FUNC", funcs:[json,yaml,csv,xml]}
+])%
+
+<function_axis_database> puppy%(nexus:[
+    {id:0x29, axis:"DATABASE_FUNC", funcs:[sql_generic,sqlite,postgresql]}
+])%
+
+<function_axis_mobile> puppy%(nexus:[
+    {id:0x2A, axis:"MOBILE_FUNC", funcs:[android_kotlin,android_java,ios_swift]}
+])%
+
+<function_axis_cloud> puppy%(nexus:[
+    {id:0x2B, axis:"CLOUD_FUNC", funcs:[rest_api,openapi_schema,grpc_service]}
+])%
+
+<function_axis_docs> puppy%(nexus:[
+    {id:0x2C, axis:"DOCS_FUNC", funcs:[markdown,rst,plaintext]}
+])%
+
+<function_axis_testing> puppy%(nexus:[
+    {id:0x2D, axis:"TESTING_FUNC", funcs:[unit_test,mock_data,validation_harness]}
+])%
+
+<function_axis_binary> puppy%(nexus:[
+    {id:0x2E, axis:"BINARY_FUNC", funcs:[machine_code,sxf,native_executable]}
+])%
+############################################################
+# AXIS NORMALIZER TEMPLATE
+# Maps SLAM semantics → target language syntax
+############################################################
+
+<axis_normalizer_<axis_name>> puppy%(nexus:[
+
+    # Function mapping
+    {map:"function", slam:"behavior", target:"<syntax>"},
+
+    # Variable mapping
+    {map:"variable", slam:"puppy", target:"<syntax>"},
+
+    # Value mapping
+    {map:"sequian", slam:"value", target:"<syntax>"},
+
+    # Container mapping
+    {map:"nexus", slam:"container", target:"<syntax>"},
+
+    # Connector mapping
+    {map:"connector", slam:"route", target:"<syntax>"},
+
+    # Control-flow mapping
+    {map:"control", slam:"flow", target:"<syntax>"}
+
+])%
+############################################################
+# FUNCTION NORMALIZER TEMPLATE
+############################################################
+
+<function_normalizer_<axis_name>> puppy%(nexus:[
+
+    {map:"function_def", slam:"dog", target:"<syntax>"},
+    {map:"function_call", slam:"connector", target:"<syntax>"},
+    {map:"params", slam:"sequian", target:"<syntax>"},
+    {map:"return", slam:"sequian", target:"<syntax>"}
+
+])%
+<axis_normalizer_dotnet> puppy%(nexus:[
+
+    {map:"function", slam:"behavior", target:"public dynamic <name>(dynamic args) { <body> }"},
+    {map:"variable", slam:"puppy", target:"dynamic <name> = <value>;"},
+    {map:"sequian", slam:"value", target:"<mantissa>e<exponent>"},
+    {map:"nexus", slam:"container", target:"new List<dynamic>{<items>}"},
+    {map:"connector", slam:"route", target:"<func>(<from>, <to>);"},
+    {map:"control", slam:"flow", target:"while(<cond>) { <body> }"}
+
+])%
+<axis_normalizer_python> puppy%(nexus:[
+
+    {map:"function", slam:"behavior", target:"def <name>(args):\n    <body>"},
+    {map:"variable", slam:"puppy", target:"<name> = <value>"},
+    {map:"sequian", slam:"value", target:"<mantissa>e<exponent>"},
+    {map:"nexus", slam:"container", target:"[<items>]"},
+    {map:"connector", slam:"route", target:"<func>(<from>, <to>)"},
+    {map:"control", slam:"flow", target:"while <cond>:\n    <body>"}
+
+])%
+<axis_normalizer_jvm> puppy%(nexus:[
+
+    {map:"function", slam:"behavior", target:"Object <name>(Object args) { <body> }"},
+    {map:"variable", slam:"puppy", target:"Object <name> = <value>;"},
+    {map:"sequian", slam:"value", target:"<mantissa>e<exponent>"},
+    {map:"nexus", slam:"container", target:"Arrays.asList(<items>)"},
+    {map:"connector", slam:"route", target:"<func>(<from>, <to>);"},
+    {map:"control", slam:"flow", target:"while(<cond>) { <body> }"}
+
+])%
+############################################################
+# LEGACY LANGUAGE GROUP
+############################################################
+
+<axis_legacy> puppy%(nexus:[
+
+    {id:0xA1, axis:"LEGACY", langs:[
+        cobol,
+        rpg,
+        fortran77, fortran90, fortran2003,
+        plsql,
+        oracle_sql,
+        mumps,
+        vms_dcl,
+        jcl,
+        clist,
+        rexx,
+        as400_cl,
+        pascal,
+        delphi,
+        prolog,
+        smalltalk,
+        lisp,
+        vhdl,
+        verilog,
+        foxpro,
+        dbase,
+        vb6,
+        qbasic
+    ]}
+
+])%
+############################################################
+# LEGACY NORMALIZER PACK
+############################################################
+
+<legacy_normalizers> puppy%(nexus:[
+
+    {lang:"cobol", normalizer:"axis_normalizer_cobol"},
+    {lang:"rpg", normalizer:"axis_normalizer_rpg"},
+    {lang:"fortran77", normalizer:"axis_normalizer_fortran"},
+    {lang:"fortran90", normalizer:"axis_normalizer_fortran"},
+    {lang:"fortran2003", normalizer:"axis_normalizer_fortran"},
+    {lang:"plsql", normalizer:"axis_normalizer_oracle"},
+    {lang:"oracle_sql", normalizer:"axis_normalizer_oracle"},
+    {lang:"mumps", normalizer:"axis_normalizer_mumps"},
+    {lang:"vms_dcl", normalizer:"axis_normalizer_vms"},
+    {lang:"jcl", normalizer:"axis_normalizer_jcl"},
+    {lang:"clist", normalizer:"axis_normalizer_clist"},
+    {lang:"rexx", normalizer:"axis_normalizer_rexx"},
+    {lang:"as400_cl", normalizer:"axis_normalizer_as400"},
+    {lang:"pascal", normalizer:"axis_normalizer_pascal"},
+    {lang:"delphi", normalizer:"axis_normalizer_delphi"},
+    {lang:"prolog", normalizer:"axis_normalizer_prolog"},
+    {lang:"smalltalk", normalizer:"axis_normalizer_smalltalk"},
+    {lang:"lisp", normalizer:"axis_normalizer_lisp"},
+    {lang:"vhdl", normalizer:"axis_normalizer_vhdl"},
+    {lang:"verilog", normalizer:"axis_normalizer_verilog"},
+    {lang:"foxpro", normalizer:"axis_normalizer_foxpro"},
+    {lang:"dbase", normalizer:"axis_normalizer_dbase"},
+    {lang:"vb6", normalizer:"axis_normalizer_vb6"},
+    {lang:"qbasic", normalizer:"axis_normalizer_qbasic"}
+
+])%
+############################################################
+# LEGACY DISCOVERY BLOCK
+############################################################
+
+<legacy_discovery> puppy%(nexus:[
+
+    {query:"mainframe", suggest:["cobol","jcl","rexx","clist"]},
+    {query:"as400", suggest:["rpg","as400_cl"]},
+    {query:"vms", suggest:["vms_dcl"]},
+    {query:"medical", suggest:["mumps"]},
+    {query:"scientific", suggest:["fortran77","fortran90","fortran2003"]},
+    {query:"aerospace", suggest:["ada","fortran","vhdl"]},
+    {query:"embedded", suggest:["pascal","c","ada"]},
+    {query:"old database", suggest:["foxpro","dbase"]},
+    {query:"legacy windows", suggest:["vb6","qbasic"]},
+    {query:"logic systems", suggest:["prolog","lisp"]},
+    {query:"hardware design", suggest:["vhdl","verilog"]}
+
+])%
+############################################################
+# LEGACY FALLBACK
+############################################################
+
+<legacy_fallback> puppy%(nexus:[
+
+    {rule:"if_no_axis", action:"search_legacy_group"},
+    {rule:"if_no_normalizer", action:"search_legacy_normalizers"},
+    {rule:"if_no_match", action:"suggest_closest_by_discovery"},
+    {rule:"if_unknown_system", action:"prompt_user_for_keywords"}
+
+])%
+<axis_normalizer_mumps> puppy%(nexus:[
+
+    {map:"function", slam:"behavior", target:"<name>(args)\n<body>\nQUIT"},
+    {map:"variable", slam:"puppy", target:"SET <name>=<value>"},
+    {map:"sequian", slam:"value", target:"<mantissa>E<exponent>"},
+    {map:"nexus", slam:"container", target:"<items>"},
+    {map:"connector", slam:"route", target:"DO <func>^<routine>(<from>,<to>)"},
+    {map:"control", slam:"flow", target:"FOR  SET <cond>  DO\n<body>"}
+
+])%
+<axis_normalizer_mumps> puppy%(nexus:[
+
+    {map:"function", slam:"behavior", target:"<name>(args)\n<body>\nQUIT"},
+    {map:"variable", slam:"puppy", target:"SET <name>=<value>"},
+    {map:"sequian", slam:"value", target:"<mantissa>E<exponent>"},
+    {map:"nexus", slam:"container", target:"<items>"},
+    {map:"connector", slam:"route", target:"DO <func>^<routine>(<from>,<to>)"},
+    {map:"control", slam:"flow", target:"FOR  SET <cond>  DO\n<body>"}
+
+])%
+<axis_normalizer_vms> puppy%(nexus:[
+
+    {map:"function", slam:"behavior", target:"$ <name> :== <body>"},
+    {map:"variable", slam:"puppy", target:"$ <name> = <value>"},
+    {map:"sequian", slam:"value", target:"<mantissa>E<exponent>"},
+    {map:"nexus", slam:"container", target:"(<items>)"},
+    {map:"connector", slam:"route", target:"$ CALL <func> <from> <to>"},
+    {map:"control", slam:"flow", target:"$ IF <cond> THEN <body>"}
+
+])%
+<axis_normalizer_jcl> puppy%(nexus:[
+
+    {map:"function", slam:"behavior", target:"//<name> EXEC PGM=<body>"},
+    {map:"variable", slam:"puppy", target:"// SET <name>=<value>"},
+    {map:"sequian", slam:"value", target:"<mantissa>E<exponent>"},
+    {map:"nexus", slam:"container", target:"// DD <items>"},
+    {map:"connector", slam:"route", target:"// EXEC <func>,FROM=<from>,TO=<to>"},
+    {map:"control", slam:"flow", target:"// IF <cond> THEN\n<body>\n// ENDIF"}
+
+])%
+<axis_normalizer_rexx> puppy%(nexus:[
+
+    {map:"function", slam:"behavior", target:"<name>:\n<body>\nRETURN"},
+    {map:"variable", slam:"puppy", target:"<name> = <value>"},
+    {map:"sequian", slam:"value", target:"<mantissa>E<exponent>"},
+    {map:"nexus", slam:"container", target:"<items>"},
+    {map:"connector", slam:"route", target:"CALL <func> <from> <to>"},
+    {map:"control", slam:"flow", target:"DO WHILE <cond>\n<body>\nEND"}
+
+])%
+<axis_normalizer_as400> puppy%(nexus:[
+
+    {map:"function", slam:"behavior", target:"CALL <name> PARM(<body>)"},
+    {map:"variable", slam:"puppy", target:"CHGVAR VAR(<name>) VALUE(<value>)"},
+    {map:"sequian", slam:"value", target:"<mantissa>E<exponent>"},
+    {map:"nexus", slam:"container", target:"(<items>)"},
+    {map:"connector", slam:"route", target:"CALL <func> PARM(<from> <to>)"},
+    {map:"control", slam:"flow", target:"IF <cond> THEN(<body>)"}
+
+])%
+<axis_normalizer_lisp> puppy%(nexus:[
+
+    {map:"function", slam:"behavior", target:"(defun <name> (args) <body>)"},
+    {map:"variable", slam:"puppy", target:"(setf <name> <value>)"},
+    {map:"sequian", slam:"value", target:"<mantissa>E<exponent>"},
+    {map:"nexus", slam:"container", target:"(list <items>)"},
+    {map:"connector", slam:"route", target:"(<func> <from> <to>)"},
+    {map:"control", slam:"flow", target:"(loop while <cond> do <body>)"}
+
+])%
+<reverse_normalizer_<lang>> puppy%(nexus:[
+
+    {map:"function", target:"<syntax>", slam:"behavior"},
+    {map:"variable", target:"<syntax>", slam:"puppy"},
+    {map:"value", target:"<syntax>", slam:"sequian"},
+    {map:"container", target:"<syntax>", slam:"nexus"},
+    {map:"call", target:"<syntax>", slam:"connector"},
+    {map:"flow", target:"<syntax>", slam:"control"}
+
+])%
+############################################################
+# NORMALIZER REGISTRY
+############################################################
+
+<normalizer_registry> puppy%(nexus:[
+
+    {axis:"dotnet", normalizer:"axis_normalizer_dotnet", reverse:"reverse_normalizer_dotnet"},
+    {axis:"jvm", normalizer:"axis_normalizer_jvm", reverse:"reverse_normalizer_jvm"},
+    {axis:"python", normalizer:"axis_normalizer_python", reverse:"reverse_normalizer_python"},
+    {axis:"wasm", normalizer:"axis_normalizer_wasm", reverse:"reverse_normalizer_wasm"},
+    {axis:"aigraph", normalizer:"axis_normalizer_aigraph", reverse:"reverse_normalizer_aigraph"},
+    {axis:"system", normalizer:"axis_normalizer_system", reverse:"reverse_normalizer_system"},
+    {axis:"web", normalizer:"axis_normalizer_web", reverse:"reverse_normalizer_web"},
+    {axis:"data", normalizer:"axis_normalizer_data", reverse:"reverse_normalizer_data"},
+    {axis:"sql", normalizer:"axis_normalizer_sql", reverse:"reverse_normalizer_sql"},
+    {axis:"fortran", normalizer:"axis_normalizer_fortran", reverse:"reverse_normalizer_fortran"},
+    {axis:"oracle", normalizer:"axis_normalizer_oracle", reverse:"reverse_normalizer_oracle"},
+    {axis:"cobol", normalizer:"axis_normalizer_cobol", reverse:"reverse_normalizer_cobol"},
+    {axis:"rpg", normalizer:"axis_normalizer_rpg", reverse:"reverse_normalizer_rpg"},
+    {axis:"mumps", normalizer:"axis_normalizer_mumps", reverse:"reverse_normalizer_mumps"},
+    {axis:"vms", normalizer:"axis_normalizer_vms", reverse:"reverse_normalizer_vms"},
+    {axis:"jcl", normalizer:"axis_normalizer_jcl", reverse:"reverse_normalizer_jcl"},
+    {axis:"rexx", normalizer:"axis_normalizer_rexx", reverse:"reverse_normalizer_rexx"},
+    {axis:"as400", normalizer:"axis_normalizer_as400", reverse:"reverse_normalizer_as400"},
+    {axis:"pascal", normalizer:"axis_normalizer_pascal", reverse:"reverse_normalizer_pascal"},
+    {axis:"prolog", normalizer:"axis_normalizer_prolog", reverse:"reverse_normalizer_prolog"},
+    {axis:"lisp", normalizer:"axis_normalizer_lisp", reverse:"reverse_normalizer_lisp"}
+
+])%
+system_puppy: tagger_boiler_plate
+generation_puppy: 0
+evolution_puppy: original
+version_puppy: 1
+type_puppy: substrate_connector
+visibility_puppy: sara_only
+role_puppy: universal_tagger
+
+required_fields_dog_array:
+  - hex_signature_puppy
+  - shape_signature_puppy
+  - unique_key_puppy
+  - mdbp_puppy
+  - qlc_puppy
+  - class_puppy
+  - subtype_puppy
+
+ic_breed:
+  in_dog_array:
+    - payload_breed
+...existing code...
+  cartigene_dog_array:
+    - GRAIN_puppy
+
+  establish_origin_dog_trick:
+    - origin_tagger_breed
+    - origin_mdbp_puppy
+    - origin_shape_signature_puppy
+
+  detect_domains_dog_trick:
+    - query_breed
+    - requested_domains_dog_array
+    - domain_shape_map_breed
+
+  generate_wavefront_dog_trick:
+    - origin_tagger_breed
+    - neighbor_taggers_dog_array
+    - wavefront_dog_array
+
+  evaluate_neighbors_dog_trick:
+    - neighbor_taggers_dog_array
+    - shape_delta_puppy
+    - signature_delta_puppy
+    - metadata_alignment_puppy
+    - scored_neighbors_dog_array
+
+  logarithmic_expand_dog_trick:
+    - scored_neighbors_dog_array
+    - expanded_wavefront_dog_array
+
+  logarithmic_reduce_dog_trick:
+    - expanded_wavefront_dog_array
+    - reduced_candidates_dog_array
+
+  select_best_matches_dog_trick:
+    - reduced_candidates_dog_array
+    - requested_domains_dog_array
+    - best_match_per_domain_breed
+
+  produce_search_result_dog_trick:
+    - best_match_per_domain_breed
+    - search_result_breed
+
+oc_breed:
+  out_dog_array:
+    - search_result_breed
+  pass_dog_array:
+    - UP_puppy
+
+search_rules_dog_array:
+  - "flood_search must operate in read-only mode"
+  - "flood_search must never modify taggers, metadata, or substrate"
+  - "flood_search must identify all domains referenced in query_breed"
+  - "flood_search must return correct tagger identifiers per domain"
+  - "file domains must return file taggers"
+  - "hardware domains must return hardware taggers"
+  - "each returned tag must include mdbp_puppy, qlc_puppy, class_puppy, subtype_puppy"
+  - "hex_signature_puppy and shape_signature_puppy may be included if allowed"
+  - "flood_search must never propose or apply connections"
+  - "flood_search must dissolve wavefront_dog_array after completion"
+  - "flood_search must remain substrate-internal and non-destructive"
+
+ide_mode_rules_dog_array:
+  - "when invoked from IDE, restrict search to IDE-provided file set"
+  - "return only taggers explicitly referenced by query_breed"
+  - "ignore unrelated taggers and substrate nodes"
+  - "ensure deterministic, minimal, context-specific tag resolution"
+
+fallback_rules_dog_array:
+  - "use truncated_tagger_line_puppy when no .slm file matches"
+  - "enable next_ten_file_jump_puppy for fallback navigation"
+  - "fallback must remain read-only and non-destructive"
+
+state_dog_array:
+  - state_breed:
+      name_puppy: IDLE
+      next_dog_array: [SEARCHING_puppy]
+  - state_breed:
+      name_puppy: SEARCHING
+      next_dog_array: [REDUCING_puppy, ERROR_puppy]
+  - state_breed:
+      name_puppy: REDUCING
+      next_dog_array: [MATCHING_puppy, ERROR_puppy]
+  - state_breed:
+      name_puppy: MATCHING
+      next_dog_array: [RETURNING_puppy, ERROR_puppy]
+  - state_breed:
+      name_puppy: RETURNING
+      next_dog_array: [IDLE_puppy]
+  - state_breed:
+      name_puppy: ERROR
+      next_dog_array: [IDLE_puppy]
+
+passers_breed:
+  up_dog_array:
+    - search_result_breed
+  down_dog_array:
+    - search_payload_breed
+  side_dog_array: []
+
+nbs_breed:
+  human_puppy: "Performs semantic flood search across substrate taggers and returns best match per domain."
+  sara_puppy: "Executes wavefront expansion, reduction, domain resolution, and tagger selection using Proto-Lingua shapes."
+  machine_puppy: "{'flood_search_slam': true}"
+
+meta_breed:
+  cat_puppy: SEARCH
+  prio_puppy: CRITICAL
+  safe_puppy: STRICT
+
+end_of_flood_search_slam_puppy

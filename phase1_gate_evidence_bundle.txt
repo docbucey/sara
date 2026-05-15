@@ -1,0 +1,28 @@
+PHASE 1 GATE EVIDENCE BUNDLE
+Version: phase1_finish_pass_v1
+Date: 2026-04-13
+
+Bundle Intent
+- Collect final Phase 1 closure evidence references and integrity metadata.
+
+Included Evidence Artifacts
+1. claywork_protocol_result.json
+2. nbs/Documentation/for passing code to copilot as a research asistant.txt
+
+Integrity Hashes (SHA256)
+- claywork_protocol_result.json
+  2763215F4EB47E9CA9D5F7ADB24F6C3C0F98BC98168316D7974086DC10A4AB83
+- nbs/Documentation/for passing code to copilot as a research asistant.txt
+  B798310862C3E5A1DC4CBCD034962C1108D50F6771EF4011D35893728F9026C9
+
+Gate Summary
+- P1-ENTRY-LOCK: PASS (phase lock checkpoint recorded)
+- P1-ROUTE-CONSTRAINT: PASS (CONTROL-routed expressive path and non-authority interface documented)
+- P1-SECURITY-OUTCOMES: PASS (allow/deny/constrain/schema_fail represented)
+- P1-OSH-VISIBILITY: PASS (OSH-1..OSH-5 mapping and rendering contract documented)
+- P1-ACCESSIBILITY-RECOVERY: PASS (Phase 1 ADA recovery matrix and templates documented)
+- P1-ARTIFACT-ALIGNMENT: PASS (required frozen map set present)
+
+Notes
+- This bundle is generated as a non-destructive documentation artifact.
+- Runtime implementation remains CONTROL/SECURITY authority-preserving.

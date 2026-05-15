@@ -1,0 +1,194 @@
+{
+  "sara_specification_gen1_5_to_gen2": {
+    "governance_layer": {
+      "purpose": "Supervise, route, and enforce policy for all actions via CONTROL (read-only).",
+      "required_functions": [
+        "control_shunt_entrypoint",
+        "route_command",
+        "validate_profile",
+        "authorize_map",
+        "reject_action",
+        "validate_shunt_header",
+        "update_core_profile_with_ai_config",
+        "SARA_AIBackend.register_backend",
+        "SARA_AIBackend.ask"
+      ],
+      "dependencies": [],
+      "cross_pillar_interactions": ["CORE", "MAMA", "SECURITY", "SDK"],
+      "csharp_integration_points": [
+        "OnShuntEntry",
+        "OnRouteCommand",
+        "OnProfileValidation",
+        "OnAuthorization",
+        "OnAIBackendRequest"
+      ],
+      "future_phase_expansion_slots": ["Advanced policy engines", "Dynamic governance plugins"]
+    },
+    "memory_layer": {
+      "purpose": "Provide persistent, queryable memory and event timelines (NBS functions, read-only).",
+      "required_functions": [
+        "ingest_artifacts_con",
+        "extract_concepts_con",
+        "query_concepts_con",
+        "parse_chat_con",
+        "emit_transcript_nbs_con",
+        "ingest_chat_con"
+      ],
+      "dependencies": [],
+      "cross_pillar_interactions": ["CONTROL", "CORE"],
+      "csharp_integration_points": ["OnMemoryIngest", "OnConceptQuery", "OnTranscriptEmit"],
+      "future_phase_expansion_slots": ["Semantic memory indexing", "Long-term memory modules"]
+    },
+    "learning_layer": {
+      "purpose": "Enable adaptation and experiential learning (LearnManager, read-only).",
+      "required_functions": [
+        "LearnManager.learn",
+        "LearnManager.summarize",
+        "LearnManager.experiential_learn"
+      ],
+      "dependencies": [],
+      "cross_pillar_interactions": ["CONTROL", "CORE", "MAMA"],
+      "csharp_integration_points": ["OnLearningCycle", "OnSummarize", "OnAdaptation"],
+      "future_phase_expansion_slots": ["Meta-learning", "Self-improving strategies"]
+    },
+    "ada_interface_layer": {
+      "purpose": "Enforce ADA-compliant interaction and protocol dispatch (MAMA, read-only).",
+      "required_functions": [
+        "mama_shunt_entrypoint",
+        "snapshot",
+        "diff",
+        "persist",
+        "validate_shunt_header",
+        "MamaDispatcher.dispatch"
+      ],
+      "dependencies": [],
+      "cross_pillar_interactions": ["CONTROL", "CORE", "SECURITY"],
+      "csharp_integration_points": ["OnAdaProtocol", "OnMamaDispatch"],
+      "future_phase_expansion_slots": ["Custom ADA modules", "Accessibility plugins"]
+    },
+    "tool_surface_layer": {
+      "purpose": "Expose plugin and integration surfaces for software/hardware (SDK, read-only).",
+      "required_functions": [
+        "dispatch_sdk_protocol",
+        "device_protocol",
+        "arms_protocol",
+        "server_protocol",
+        "ide_protocol",
+        "SaraSdkGen1.dispatch",
+        "SaraSdkGen1.dispatch_amipi"
+      ],
+      "dependencies": [],
+      "cross_pillar_interactions": ["CONTROL"],
+      "csharp_integration_points": [
+        "OnSdkDispatch",
+        "OnDeviceProtocol",
+        "OnArmsProtocol",
+        "OnServerProtocol",
+        "OnIdeProtocol"
+      ],
+      "future_phase_expansion_slots": ["New device adapters", "Third-party tool plugins"]
+    },
+    "generative_layer": {
+      "purpose": "Provide main generative reasoning and language capabilities (external SLM).",
+      "required_functions": [],
+      "dependencies": ["csharp_runtime_integration"],
+      "cross_pillar_interactions": ["governance_layer", "memory_layer", "learning_layer", "ada_interface_layer"],
+      "csharp_integration_points": ["OnSLMRequest", "OnSLMResponse"],
+      "future_phase_expansion_slots": ["SLM ensemble", "Hybrid LLM/SLM routing"]
+    },
+    "micro_slm_modules": {
+      "purpose": "Provide environment-specific, fallback, and deterministic generative helpers (external only, one per pillar).",
+      "required_functions": [],
+      "dependencies": ["csharp_runtime_integration"],
+      "cross_pillar_interactions": ["governance_layer", "tool_surface_layer"],
+      "csharp_integration_points": ["OnMicroSLMRequest", "OnMicroSLMResponse"],
+      "future_phase_expansion_slots": ["Custom micro-SLMs", "Domain-specific SLMs"]
+    },
+    "plugin_targets": {
+      "purpose": "Integrate with external programs and services (Word, Excel, OBS, etc.).",
+      "required_functions": [],
+      "dependencies": ["tool_surface_layer", "csharp_runtime_integration"],
+      "cross_pillar_interactions": ["tool_surface_layer"],
+      "csharp_integration_points": ["OnPluginInvoke", "OnPluginResult"],
+      "future_phase_expansion_slots": ["New app plugins", "Cloud service connectors"]
+    },
+    "hardware_mapping_layer": {
+      "purpose": "Map and route to hardware devices and adapters.",
+      "required_functions": [],
+      "dependencies": ["tool_surface_layer", "csharp_runtime_integration"],
+      "cross_pillar_interactions": ["tool_surface_layer"],
+      "csharp_integration_points": ["OnHardwareEvent", "OnDeviceAdapter"],
+      "future_phase_expansion_slots": ["IoT adapters", "Robotics integration"]
+    },
+    "cockpit_orchestration": {
+      "purpose": "Route between SLM, micro-SLMs, plugins, hardware, and SARA pillars (read-only).",
+      "required_functions": [],
+      "dependencies": [
+        "generative_layer",
+        "micro_slm_modules",
+        "plugin_targets",
+        "hardware_mapping_layer",
+        "governance_layer"
+      ],
+      "cross_pillar_interactions": [
+        "All pillars (read-only)",
+        "All external modules"
+      ],
+      "csharp_integration_points": [
+        "OnOrchestrateRequest",
+        "OnRouteDecision"
+      ],
+      "future_phase_expansion_slots": ["Dynamic routing policies", "User-customizable cockpit"]
+    },
+    "csharp_runtime_integration": {
+      "purpose": "Bridge between C# host and all SARA external layers.",
+      "required_functions": [],
+      "dependencies": [
+        "generative_layer",
+        "micro_slm_modules",
+        "plugin_targets",
+        "hardware_mapping_layer",
+        "cockpit_orchestration"
+      ],
+      "cross_pillar_interactions": [],
+      "csharp_integration_points": [
+        "OnExternalCall",
+        "OnIntegrationEvent"
+      ],
+      "future_phase_expansion_slots": ["Cross-language bridges", "Runtime hot-swap"]
+    },
+    "safety_and_policy": {
+      "purpose": "Enforce safety, policy, and compliance (CONTROL-driven, read-only).",
+      "required_functions": [
+        "validate_shunt_header",
+        "authorize_map",
+        "reject_action"
+      ],
+      "dependencies": ["governance_layer"],
+      "cross_pillar_interactions": ["All pillars (read-only)"],
+      "csharp_integration_points": ["OnPolicyCheck", "OnSafetyEvent"],
+      "future_phase_expansion_slots": ["Policy learning", "Automated compliance modules"]
+    },
+    "continuity_and_adaptation": {
+      "purpose": "Ensure continuity of memory and adaptive learning (NBS + Learning, read-only).",
+      "required_functions": [
+        "ingest_artifacts_con",
+        "extract_concepts_con",
+        "LearnManager.learn",
+        "LearnManager.experiential_learn"
+      ],
+      "dependencies": ["memory_layer", "learning_layer"],
+      "cross_pillar_interactions": ["governance_layer", "learning_layer"],
+      "csharp_integration_points": ["OnContinuityEvent", "OnAdaptationEvent"],
+      "future_phase_expansion_slots": ["Temporal reasoning", "Adaptive context windows"]
+    },
+    "auditability_and_determinism": {
+      "purpose": "Enable traceable, auditable, and deterministic operation (plugin + micro-SLM layer).",
+      "required_functions": [],
+      "dependencies": ["plugin_targets", "micro_slm_modules"],
+      "cross_pillar_interactions": ["governance_layer", "tool_surface_layer"],
+      "csharp_integration_points": ["OnAuditTrail", "OnDeterminismCheck"],
+      "future_phase_expansion_slots": ["Immutable logs", "Forensic replay"]
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "operators": [
+    { "name": "smithy.ping", "params": [] },
+    { "name": "smithy.run_command", "params": ["command"] }
+  ],
+  "ipc": {
+    "message_format": { "command": "string", "payload": "object" }
+  },
+  "addon_structure": {
+    "files": ["__init__.py", "operators.py", "bridge.py"]
+  }
+}

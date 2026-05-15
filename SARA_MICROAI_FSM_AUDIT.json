@@ -1,0 +1,60 @@
+{
+  "audit_date": "2026-04-02",
+  "fsm_audit": {
+    "core": {
+      "file": "claywork/saragen0finish/sara_core/sara_coregen1.py",
+      "fsm_class": "ShuntFSM",
+      "fsm_present": true,
+      "fsm_states": "User-defined (e.g., idle, processing, done)",
+      "fsm_transitions": "Dict of (state, command) -> (next_state, action_fn)",
+      "shunt_header_enforced": true,
+      "shunt_header_type": "JSON + binary header",
+      "sovereignty_check": "Delegated to CONTROL",
+      "logging": "MamaLedger (required)",
+      "compliance": "Full (FSM and shunt contract defined, but enforcement delegated to CONTROL)"
+    },
+    "control": {
+      "file": "claywork/saragen0finish/sara_control/sara_controlgen1.py",
+      "fsm_instance": "_CONTROL_FSM (ShuntFSM)",
+      "fsm_present": true,
+      "fsm_states": ["ready", "blocked"],
+      "fsm_transitions": "All control commands routed through FSM",
+      "shunt_header_enforced": true,
+      "shunt_header_type": "Binary + JSON",
+      "sovereignty_check": "king_sovereignty_check, paladin_gate, sheriff_audit",
+      "logging": "All actions logged, routed through CONTROL",
+      "compliance": "Full (FSM and shunt contract enforced for all control operations)"
+    },
+    "mama": {
+      "file": "claywork/saragen0finish/sara_mama/backup_restore.py (sample)",
+      "fsm_present": false,
+      "fsm_states": null,
+      "fsm_transitions": null,
+      "shunt_header_enforced": false,
+      "shunt_header_type": null,
+      "sovereignty_check": null,
+      "logging": null,
+      "compliance": "Non-compliant (no FSM/shunt logic in this file; other MAMA files may need review)"
+    },
+    "security": {
+      "file": "claywork/saragen0finish/sara_security/sara_securitygen1.py",
+      "fsm_instance": "_SECURITY_FSM (ShuntFSM)",
+      "fsm_present": true,
+      "fsm_states": ["ready", "blocked"],
+      "fsm_transitions": "Security commands routed through FSM",
+      "shunt_header_enforced": true,
+      "shunt_header_type": "Binary + JSON",
+      "sovereignty_check": "king_sovereignty_check, paladin_gate, sheriff_audit",
+      "logging": "All actions logged, audit and quarantine logic present",
+      "compliance": "Full (FSM and shunt contract enforced for all security operations)"
+    }
+  },
+  "compliance_gaps": [
+    {
+      "pillar": "mama",
+      "issue": "No FSM or shunt protocol logic found in backup_restore.py. Other MAMA files may also lack compliance.",
+      "repair_plan": "Review all MAMA files. Implement ShuntFSM-based routing and enforce shunt header protocol for all cross-pillar actions. Ensure all actions are routed through CONTROL and logged."
+    }
+  ],
+  "summary": "FSM and shunt protocol are fully implemented and enforced in CORE, CONTROL, and SECURITY pillars. MAMA pillar (sampled file) is non-compliant and must be reviewed and updated to enforce FSM and shunt protocol."
+}

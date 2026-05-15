@@ -1,0 +1,256 @@
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~ HEADER (strict, machine-verified)                        ~
+~ kennel=substrate                                          ~
+~ generation=0                                              ~
+~ evolution=alpha                                           ~
+~ version=0.1                                               ~
+~ date=                                                     ~
+~ location=                                                 ~
+~ language=SLAM                                             ~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+============================================================
+COLLAR — POWER-TRUTH / LOAD GOVERNOR PLATE (GEN-0)
+============================================================
+
+SECTION 0 — COLLAR IDENTITY
+------------------------------------------------------------
+<collar_mdbp> puppy%(
+    mdbp:{
+        vendor:"SARA",
+        model:"Collar_Gen0",
+        version:"0.1",
+        flags:[power_truth,load_governor,dogtag_aligned],
+        capabilities:[rail_sense,safety_sense,load_profile,cartigene_stabilized],
+        buses:[],
+        ports:[],
+        pinouts:[],
+        sensors:[
+            {name:"rail_sensor_root", type:"electrical"},
+            {name:"safety_interlock_root", type:"logical"},
+            {name:"domain_load_sensor", type:"electrical"},
+            {name:"domain_safety_sensor", type:"logical"}
+        ]
+    }
+)%
+
+
+SECTION 1 — GLOBAL POWER-TRUTH ROOT (CLOSEST TO SUPPLY)
+------------------------------------------------------------
+# This is the Patterson governor laid flat: closest, most honest rail.
+
+<collar_power_root> puppy%(
+    nexus:[
+        seq:{role:"power_truth_root"},
+        seq:{source:"psu_primary"},
+        seq:{rail:"12V_backbone"},
+        seq:{expected_behavior:"always_active,always_measurable,foundation_of_collar"}
+    ]
+)%
+
+
+SECTION 2 — GLOBAL SAFETY-TRUTH ROOT (RESET / INTERLOCK)
+------------------------------------------------------------
+# This is the safety escapement that pairs with power_root.
+
+<collar_safety_root> puppy%(
+    nexus:[
+        seq:{role:"safety_truth_root"},
+        seq:{source:"vrm_supervisor"},
+        seq:{signals:["PWR_OK","RESET_SUP","OCP","OVP","UVP","OTP"]},
+        seq:{expected_behavior:"prevents_runaway,protects_timing_chain,allows_restart"}
+    ]
+)%
+
+
+SECTION 3 — DOGTAG ALIGNMENT SURFACE (90° OFFSET)
+------------------------------------------------------------
+# This is where Dogtag’s timing shaft crosses Collar’s load rail.
+
+# We don’t own Dogtag here; we just expose an orthogonal surface.
+
+<collar_dogtag_alignment> puppy%(
+    nexus:[
+        seq:{role:"alignment_surface"},
+        seq:{axis_load:"collar_power_root"},
+        seq:{axis_time:"dogtag_primary_oscillator"},
+        seq:{cold_start_rule:"time_up && power_truth_ok && safety_truth_ok"},
+        seq:{note:"90_degree_offset_between_time_and_load"}
+    ]
+)%
+
+
+SECTION 4 — PER-DOMAIN POWER / SAFETY CHAINS (FLATTENED DRUM)
+------------------------------------------------------------
+# Pattern:
+#   power_truth → safety_truth → routing_adjacent → processing_adjacent
+#   (sensor, escapement, sensor, escapement … along the rail)
+
+# 4.1 CPU DOMAIN
+<collar_cpu_chain> puppy%(
+    nexus:[
+        seq:{domain:"cpu"},
+        seq:{power_truth:"vrm_vcore"},
+        seq:{power_sensors:["vcore_rail","vccsa","vccio"]},
+        seq:{safety_truth:"vrm_protection_block"},
+        seq:{safety_sensors:["OCP","OVP","UVP","OTP","PWR_OK"]},
+        seq:{routing_adjacent:"fabric_frontend_cpu"},
+        seq:{processing_adjacent:"cpu_core_cluster"}
+    ]
+)%
+
+# 4.2 GPU / GRAPHICS DOMAIN
+<collar_gpu_chain> puppy%(
+    nexus:[
+        seq:{domain:"gpu"},
+        seq:{power_truth:"pcie_12v_slot"},
+        seq:{power_sensors:["pcie_12v","aux_6pin","aux_8pin"]},
+        seq:{safety_truth:"pcie_ocp_block"},
+        seq:{safety_sensors:["PCIE_OCP","GPU_VRM_PROTECT","PERST#"]},
+        seq:{routing_adjacent:"pcie_fabric_gpu"},
+        seq:{processing_adjacent:"gpu_pipeline"}
+    ]
+)%
+
+# 4.3 NETWORK DOMAIN
+<collar_nic_chain> puppy%(
+    nexus:[
+        seq:{domain:"nic"},
+        seq:{power_truth:"phy_rail"},
+        seq:{power_sensors:["phy_1v2","mac_3v3"]},
+        seq:{safety_truth:"phy_brownout_block"},
+        seq:{safety_sensors:["BROWNOUT","LINK_RESET"]},
+        seq:{routing_adjacent:"pcie_fabric_nic"},
+        seq:{processing_adjacent:"nic_dma_engine"}
+    ]
+)%
+
+# 4.4 AUDIO DOMAIN
+<collar_audio_chain> puppy%(
+    nexus:[
+        seq:{domain:"audio"},
+        seq:{power_truth:"codec_analog_3v3"},
+        seq:{power_sensors:["codec_analog","codec_digital","amp_rail"]},
+        seq:{safety_truth:"amp_ocp_block"},
+        seq:{safety_sensors:["OCP","POP_SUPPRESS","CODEC_RESET"]},
+        seq:{routing_adjacent:"audio_dma_frontend"},
+        seq:{processing_adjacent:"audio_codec_core"}
+    ]
+)%
+
+# 4.5 STORAGE DOMAIN
+<collar_storage_chain> puppy%(
+    nexus:[
+        seq:{domain:"storage"},
+        seq:{power_truth:"nvme_controller_rail"},
+        seq:{power_sensors:["nvme_core","nand_3v3","sata_5v"]},
+        seq:{safety_truth:"nvme_thermal_power_block"},
+        seq:{safety_sensors:["THERM_THROTTLE","SATA_PWR_GOOD","PCIE_RESET"]},
+        seq:{routing_adjacent:"pcie_fabric_storage"},
+        seq:{processing_adjacent:"nvme_controller_core"}
+    ]
+)%
+
+# 4.6 USB / PERIPHERAL DOMAIN
+<collar_usb_chain> puppy%(
+    nexus:[
+        seq:{domain:"usb"},
+        seq:{power_truth:"usb_5v_vbus"},
+        seq:{power_sensors:["vbus_current","phy_rail"]},
+        seq:{safety_truth:"usb_port_switch_block"},
+        seq:{safety_sensors:["USB_OCP","PORT_DISABLE","ESD_EVENT"]},
+        seq:{routing_adjacent:"usb_host_controller"},
+        seq:{processing_adjacent:"usb_dma_engine"}
+    ]
+)%
+
+
+SECTION 5 — CARTIGENE LOAD STABILIZER (PER-DOMAIN)
+------------------------------------------------------------
+# This is the “don’t torque the drum directly” rule in math form.
+
+<collar_cartigene_policy> puppy%(
+    nexus:[
+        seq:{role:"load_stabilizer"},
+        seq:{engine:"CartiGene"},
+        seq:{metrics:["grain","laggy","shi","osc","rot","BuceyShift"]},
+        seq:{policy:"apply_buceyshift_before_load_commit"},
+        seq:{note:"stabilize_domain_load_before_it_hits_processing_units"}
+    ]
+)%
+
+# Example: generic CartiGene evaluation Puppy for any domain load state.
+<collar_eval_load_state> puppy%(
+    nexus:[
+        seq:{input:"nexus:domain_load_state"},
+        seq:{grain:"|len(state) - expected|"},
+        seq:{laggy:"runtime/expected_runtime"},
+        seq:{shi:"(memory+footprint)/(runtime+1)"},
+        seq:{osc:"|current-previous|>threshold"},
+        seq:{rot:"(Δ1*Δ2)<0"},
+        seq:{buceyshift:"value/(1+|noise|)"},
+        seq:{output:"stable_or_resonant_load_profile"}
+    ]
+)%
+
+
+SECTION 6 — COLD-START SEQUENCE (COLLAR + DOGTAG ALIGNMENT)
+------------------------------------------------------------
+# High-level, substrate-safe description of how Collar comes up
+# in phase with Dogtag from a cold state.
+
+<collar_cold_start> puppy%(
+    nexus:[
+        seq:{step:1, action:"read collar_power_root"},
+        seq:{require:"rail_present && rail_within_tolerance"},
+        seq:{step:2, action:"read collar_safety_root"},
+        seq:{require:"PWR_OK && no_OCP && no_OVP && no_UVP && no_OTP"},
+        seq:{step:3, action:"wait_for_dogtag_time_lock"},
+        seq:{require:"dogtag_primary_oscillator_locked && divider_chain_stable"},
+        seq:{step:4, action:"align_axes"},
+        seq:{rule:"collar_dogtag_alignment.cold_start_rule"},
+        seq:{step:5, action:"enable_domain_chains"},
+        seq:{domains:["cpu","gpu","nic","audio","storage","usb"]},
+        seq:{step:6, action:"route_load_through_cartigene"},
+        seq:{note:"no_direct_torque_on_processing_units"}
+    ]
+)%
+
+
+SECTION 7 — STUBS FOR FUTURE HARDWARE-SPECIFIC MAPPINGS
+------------------------------------------------------------
+# These are intentionally left as stubs; they must HARD ERROR
+# until you or a coding assistant fills them in with real pin/bus maps.
+
+<collar_hw_cpu_binding> stub%(
+    TODO: map_cpu_chain_to_real_mdbp,
+    expected_behavior: bind_collar_cpu_chain_to_hw_cpu_puppy
+)%
+
+<collar_hw_gpu_binding> stub%(
+    TODO: map_gpu_chain_to_real_mdbp,
+    expected_behavior: bind_collar_gpu_chain_to_hw_gpu_puppy
+)%
+
+<collar_hw_nic_binding> stub%(
+    TODO: map_nic_chain_to_real_mdbp,
+    expected_behavior: bind_collar_nic_chain_to_hw_nic_puppy
+)%
+
+<collar_hw_audio_binding> stub%(
+    TODO: map_audio_chain_to_real_mdbp,
+    expected_behavior: bind_collar_audio_chain_to_hw_audio_puppy
+)%
+
+<collar_hw_storage_binding> stub%(
+    TODO: map_storage_chain_to_real_mdbp,
+    expected_behavior: bind_collar_storage_chain_to_hw_storage_puppy
+)%
+
+<collar_hw_usb_binding> stub%(
+    TODO: map_usb_chain_to_real_mdbp,
+    expected_behavior: bind_collar_usb_chain_to_hw_usb_puppy
+)%
+
+============================================================
+END OF COLLAR PLATE (GEN-0)
+============================================================

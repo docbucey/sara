@@ -1,0 +1,72 @@
+
+
+protolingua template/boilerplate
+
+To make your "Protolingua" truly universal—working whether the user is in a traditional Python IDE, a custom SDK shell, or even another language—you need a Standardized Interface Template.
+
+This approach treats your Protolingua as a protocol rather than just a library. Below is a markdown list designed to serve as a universal template. It focuses on the "Input-Process-Output" contract so that the underlying language becomes irrelevant.
+
+🌌 Protolingua Universal Interface Template
+1. The Global Entry Point
+Zero-Import Declaration: The script must assume a "Virtual Environment" where the Protolingua primitives (P 
+0
+​
+ ,P 
+1
+​
+ ,...P 
+n
+​
+ ) are already resident in memory.
+
+The proto Namespace: If the host language requires an object-oriented approach, all commands are children of a single, universal proto object.
+
+2. Core Functional Blocks (The "Grammar")
+Regardless of the language used, the Protolingua script should follow this sequence:
+
+@init: Auto-detects the host environment (Standard Python, Protolingua SDK, or External API).
+
+@bridge: Maps native language types (like Python lists or C# arrays) into Protolingua Universal Objects.
+
+@execute: The logic layer where only Protolingua-specific verbs are used.
+
+3. Universal Logic Mapping
+To ensure it works "wherever," use this mapping table for your SDK development:
+
+Protolingua Concept	Python Equivalent	JS/Web Equivalent	Protolingua Native
+Data Intake	input() / sys.stdin	fetch() / prompt()	<< or absorb()
+Logic Gate	if/else	if/else	? or sift()
+Data Output	print()	console.log()	>> or echo()
+Storage	global / db	localStorage	store()
+🛠️ The "No-Import" Polyfill (Python Example)
+To allow a user to use "traditional Python" without writing import, you can provide a Bootstrap Wrapper. This is the "glue" that makes the universal template work.
+
+Python
+# --- THE BOOTSTRAP (Hidden from the user) ---
+import protolingua_sdk as proto
+
+# Pre-injecting the SDK into the global namespace
+globals().update({
+    'absorb': proto.absorb,
+    'echo': proto.echo,
+    'sift': proto.sift,
+    'Universe': proto.CoreContext()
+})
+
+# --- THE USER'S UNIVERSAL SCRIPT STARTS HERE ---
+# Notice: No imports, no boilerplate. 
+
+data = absorb() 
+if sift(data):
+    echo("Protolingua Protocol Active")
+📜 Markdown List for Your Documentation
+Copy and paste this into your project's README.md or SPEC.md to define how the Protolingua should be written:
+
+Protolingua Scripting Requirements
+Environment Agnosticism: Logic must not rely on language-specific standard libraries (e.g., no math.sqrt, use proto.sqrt).
+
+Implicit Context: Every script is executed within a Universe scope where all Protolingua verbs are top-level globals.
+
+Strict Typing: Data passed between functions must be wrapped in the ProtolinguaObject wrapper to ensure cross-language compatibility.
+
+Signal over Syntax: Use functional chains (e.g., absorb().sift().echo()) to minimize the need for variable declarations that differ between languages.

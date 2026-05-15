@@ -1,0 +1,13 @@
+{
+  "name": "smithy-extension-pack",
+  "displayName": "Smithy Extension Pack",
+  "description": "Extension pack for Smithy core and related tools.",
+  "version": "0.0.1",
+  "publisher": "private",
+  "private": true,
+  "engines": { "vscode": ">=1.70.0" },
+  "categories": ["Extension Packs"],
+  "extensionPack": ["smithy-core"],
+  "contributes": {},
+  "activationEvents": []
+}

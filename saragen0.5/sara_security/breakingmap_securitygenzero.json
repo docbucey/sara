@@ -1,0 +1,18 @@
+{
+  "pillar": "SECURITY",
+  "original_gen1_mappings": "See sara_securitygen1.functionmap.json for full function/class list.",
+  "legacy_features": [
+    "Security FSM",
+    "Audit/quarantine logic",
+    "Sovereignty/paladin/sheriff checks",
+    "No learning/adaptive logic"
+  ],
+  "mapped_improvements": [
+    "Modularize audit and quarantine flows",
+    "Cleaner separation of protocol and enforcement"
+  ],
+  "likely_intended_future": [
+    "Dynamic policy loading",
+    "Context-aware security enforcement"
+  ]
+}

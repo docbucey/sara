@@ -1,0 +1,115 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "amip_v0_1_schema.json",
+  "$comment": "Reasoning repair contract (2026-04-11): reasoning overlays, when present, remain advisory and presentation-only under CONTROL selection and SECURITY validation.",
+  "title": "AMIP v0.1 Payload Schema",
+  "description": "Deterministic JSON Schema for the SARA Gen1 AMIP v0.1 local payload contract, aligned to the Stage-4 specsheet.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "amip_version",
+    "mode",
+    "routing_intent",
+    "resource_budget",
+    "payload",
+    "machine_profile",
+    "correlation_id"
+  ],
+  "properties": {
+    "amip_version": {
+      "type": "string",
+      "const": "0.1",
+      "description": "AMIP protocol version identifier."
+    },
+    "mode": {
+      "type": "string",
+      "enum": [
+        "interactive",
+        "night_shift"
+      ],
+      "description": "Local execution mode resolved for the request."
+    },
+    "routing_intent": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[A-Za-z0-9._:-]+$",
+      "description": "Deterministic routing intent consumed by CONTROL and the Bucey Shunt FSM."
+    },
+    "resource_budget": {
+      "$ref": "#/$defs/resource_budget"
+    },
+    "payload": {
+      "type": "object",
+      "description": "Action-specific AMIP request payload. Reasoning overlays, if included, must remain nested advisory data and must not mutate routing headers or trust authority.",
+      "additionalProperties": true
+    },
+    "machine_profile": {
+      "$ref": "#/$defs/machine_profile_ref"
+    },
+    "correlation_id": {
+      "$ref": "#/$defs/uuid_string"
+    }
+  },
+  "$defs": {
+    "uuid_string": {
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$",
+      "description": "UUID string used for cross-request and workflow correlation."
+    },
+    "resource_budget": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "strain",
+        "tokens",
+        "runtime_ms"
+      ],
+      "properties": {
+        "strain": {
+          "type": "string",
+          "enum": [
+            "low",
+            "medium",
+            "high"
+          ],
+          "description": "Relative local strain level requested for the interaction."
+        },
+        "tokens": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000000,
+          "description": "Deterministic token or work-unit budget for the interaction."
+        },
+        "runtime_ms": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 86400000,
+          "description": "Maximum permitted runtime in milliseconds for the local request."
+        }
+      }
+    },
+    "machine_profile_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "profile_id"
+      ],
+      "properties": {
+        "profile_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "description": "Identifier of the CORE-owned machine profile bound to the AMIP request."
+        },
+        "profile_version": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 32,
+          "default": "v1",
+          "description": "Optional version of the referenced machine profile."
+        }
+      }
+    }
+  }
+}

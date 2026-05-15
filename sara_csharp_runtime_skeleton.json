@@ -1,0 +1,155 @@
+{
+  "external_integration_layer": {
+    "pillars": [
+      {
+        "pillar_name": "CONTROL",
+        "micro_slm_role": ["fallback", "environment-specific", "deterministic tasks"],
+        "plugin_targets": ["Word", "Excel", "PowerPoint", "Office file IO"],
+        "hardware_mappings": [],
+        "required_context": ["shunt_header", "profile", "authorization_map", "ai_backend_config"],
+        "callable_functions": [
+          "control_shunt_entrypoint",
+          "route_command",
+          "validate_profile",
+          "authorize_map",
+          "reject_action",
+          "validate_shunt_header",
+          "update_core_profile_with_ai_config",
+          "SARA_AIBackend.register_backend",
+          "SARA_AIBackend.ask"
+        ],
+        "cross_pillar_dependencies": ["CORE", "MAMA", "SECURITY", "SDK"],
+        "csharp_runtime_hooks": [
+          "OnShuntEntry",
+          "OnRouteCommand",
+          "OnProfileValidation",
+          "OnAuthorization",
+          "OnAIBackendRequest"
+        ],
+        "memory_hooks": [
+          "ingest_artifacts_con",
+          "extract_concepts_con",
+          "query_concepts_con",
+          "parse_chat_con",
+          "emit_transcript_nbs_con",
+          "ingest_chat_con"
+        ],
+        "learning_hooks": [
+          "LearnManager.learn",
+          "LearnManager.summarize",
+          "LearnManager.experiential_learn"
+        ]
+      },
+      {
+        "pillar_name": "CORE",
+        "micro_slm_role": ["fallback", "environment-specific", "deterministic tasks"],
+        "plugin_targets": ["Image", "Video", "Audio", "3D asset readers"],
+        "hardware_mappings": [],
+        "required_context": ["vnce_shunt_envelope", "identity", "config", "state"],
+        "callable_functions": [
+          "core_shunt_entrypoint",
+          "build_vnce_shunt_envelope",
+          "load_identity",
+          "load_config",
+          "validate_state",
+          "noop_action",
+          "validate_shunt_header"
+        ],
+        "cross_pillar_dependencies": ["CONTROL", "MAMA", "SECURITY"],
+        "csharp_runtime_hooks": [
+          "OnCoreShuntEntry",
+          "OnIdentityLoad",
+          "OnConfigLoad",
+          "OnStateValidation"
+        ]
+      },
+      {
+        "pillar_name": "MAMA",
+        "micro_slm_role": ["fallback", "ADA interface", "protocol dispatch"],
+        "plugin_targets": ["ClerkProtocol", "Office Suite intake", "Records", "Task routing"],
+        "hardware_mappings": [],
+        "required_context": ["shunt_header", "protocol_task_type", "payload"],
+        "callable_functions": [
+          "mama_shunt_entrypoint",
+          "snapshot",
+          "diff",
+          "persist",
+          "validate_shunt_header",
+          "MamaDispatcher.dispatch"
+        ],
+        "cross_pillar_dependencies": ["CONTROL", "CORE", "SECURITY"],
+        "csharp_runtime_hooks": [
+          "OnMamaShuntEntry",
+          "OnProtocolDispatch"
+        ],
+        "ada_constraints": [
+          "All orchestration and security checks must flow through CONTROL FSM/shunt header logic",
+          "Backend actions must be slaved to CONTROL"
+        ]
+      },
+      {
+        "pillar_name": "SECURITY",
+        "micro_slm_role": ["fallback", "audit", "quarantine", "scan", "policy enforcement"],
+        "plugin_targets": [],
+        "hardware_mappings": [],
+        "required_context": ["shunt_header", "trust_policy", "audit_log"],
+        "callable_functions": [
+          "security_shunt_entrypoint",
+          "audit_gate",
+          "quarantine",
+          "scan",
+          "validate_shunt_header"
+        ],
+        "cross_pillar_dependencies": ["CONTROL", "CORE", "MAMA"],
+        "csharp_runtime_hooks": [
+          "OnSecurityShuntEntry",
+          "OnAudit",
+          "OnQuarantine",
+          "OnScan"
+        ]
+      },
+      {
+        "pillar_name": "SDK",
+        "micro_slm_role": ["fallback", "plugin surface", "hardware/software integration"],
+        "plugin_targets": ["Word", "Excel", "OBS", "IDE", "Server", "Device"],
+        "hardware_mappings": ["device_protocol", "arms_protocol", "server_protocol", "ide_protocol"],
+        "required_context": ["backend_ami", "protocol", "action", "payload"],
+        "callable_functions": [
+          "dispatch_sdk_protocol",
+          "device_protocol",
+          "arms_protocol",
+          "server_protocol",
+          "ide_protocol",
+          "SaraSdkGen1.dispatch",
+          "SaraSdkGen1.dispatch_amipi"
+        ],
+        "cross_pillar_dependencies": ["CONTROL"],
+        "csharp_runtime_hooks": [
+          "OnSdkDispatch",
+          "OnDeviceProtocol",
+          "OnArmsProtocol",
+          "OnServerProtocol",
+          "OnIdeProtocol"
+        ],
+        "plugin_surface": [
+          "dispatch_sdk_protocol",
+          "device_protocol",
+          "arms_protocol",
+          "server_protocol",
+          "ide_protocol"
+        ]
+      }
+    ],
+    "cockpit": {
+      "name": "MonkeyInTheMiddleOrchestrator",
+      "cockpit_routing_rules": [
+        "If action is pillar-internal, route to SARA pillar (read-only, no modification).",
+        "If action requires fallback, deterministic, or environment-specific handling, route to micro-SLM for the relevant pillar.",
+        "If action targets a specific program (Word, Excel, OBS, etc.), route to the corresponding plugin module.",
+        "If action targets hardware or device class, route to the appropriate hardware adapter via SDK mappings.",
+        "If action requires ADA compliance or protocol dispatch, enforce MAMA ada_constraints before routing.",
+        "All routing decisions must preserve original pillar logic and not alter pillar code."
+      ]
+    }
+  }
+}

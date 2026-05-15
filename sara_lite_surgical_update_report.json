@@ -1,0 +1,428 @@
+{
+  "generated_on": "2026-04-10",
+  "mode": "analysis_only",
+  "output_file": "sara_lite_surgical_update_report.json",
+  "scope": "Step-by-step surgical update report for SARA Lite OS, Lite pillars, VNCE WFH readiness, and C# Office Suite impact based on work completed today since after 2am.",
+  "pillars_status": {
+    "overall_state": "planning_complete_runtime_partial",
+    "completed_today_since_2am": [
+      "Created desktop_vnce_node_iso_build_plan.json",
+      "Created desktop_vnce_node_iso_build_plan_with_ide.json",
+      "Created micro_sara_embedding_plan.json",
+      "Created sara_lite_os_unified_build_plan.json",
+      "Updated mythosreport.json with a live AMIP/AMIPI audit result",
+      "Created ai_profile_evolution_extensions.json",
+      "Created sara_self_evolve_protocol.json",
+      "Previously established protocol expansion inputs remain available: amip_amipi_surgical_expansion_plan.json, vnce_remote_node_requirements.json, and protocol_expansion_unified_patch.json"
+    ],
+    "core_lite": {
+      "status": "PARTIAL",
+      "readiness_for_wfh": "not yet online as a distinct OS module",
+      "what_is_already_present": [
+        "AMIP envelope and workflow_state concepts already exist in the current CORE runtime design.",
+        "Machine profile and deterministic shaping are already described in the Lite plans."
+      ],
+      "implementation_steps": [
+        {
+          "step": "Extract a small CORE-Lite wrapper that exposes envelope building, workflow_state, machine_profile resolution, and deterministic defaults for SARA Lite OS startup.",
+          "likely_modules": [
+            "claywork/saragen0finish/sara_core/sara_coregen1.py",
+            "/opt/sara-vnce/sara-lite/core-lite/",
+            "/var/lib/sara-lite/runtime/core-state.json"
+          ],
+          "change_type": "SURGICAL",
+          "depends_on_sara_lite_os": true
+        },
+        {
+          "step": "Bind CORE-Lite output to the planned AMIP/AMIPI schema store under the OS runtime layout.",
+          "likely_modules": [
+            "/opt/sara-vnce/sara-lite/schemas/",
+            "/var/lib/sara-lite/nbs/schemas/"
+          ],
+          "change_type": "SURGICAL",
+          "depends_on_sara_lite_os": true
+        }
+      ],
+      "notes": [
+        "CORE-Lite is one of the easier bounded extractions because the underlying concepts already exist.",
+        "It must remain non-routing and deterministic."
+      ]
+    },
+    "control_lite": {
+      "status": "NEAREST_TO_ONLINE",
+      "readiness_for_wfh": "partial but not yet packaged as an OS service",
+      "what_is_already_present": [
+        "CONTROL-side AMIP normalization exists conceptually in current plans and Gen1 control code.",
+        "VNCE lifecycle and AMIPI routing behavior already have identified runtime surfaces."
+      ],
+      "implementation_steps": [
+        {
+          "step": "Create a CONTROL-Lite service wrapper that exposes AMIP normalization, route_bucey_shunt behavior, and explicit route_class handling for VNCE and self.evolve.",
+          "likely_modules": [
+            "claywork/saragen0finish/sara_control/sara_controlgen1.py",
+            "/etc/systemd/system/sara-lite-control.service",
+            "/opt/sara-vnce/sara-lite/control-lite/"
+          ],
+          "change_type": "STRUCTURAL",
+          "depends_on_sara_lite_os": true
+        },
+        {
+          "step": "Wire byte-level shunt decode enforcement into the OS-facing control path rather than leaving it only at planning level.",
+          "likely_modules": [
+            "claywork/saragen0finish/sara_control/sara_controlgen1.py",
+            "/opt/sara-vnce/sara-lite/maps/shunt_map_descriptor.updated.json"
+          ],
+          "change_type": "SURGICAL",
+          "depends_on_sara_lite_os": true
+        },
+        {
+          "step": "Add and verify routing_intent='self.evolve' and keep dry_run-first behavior enforced.",
+          "likely_modules": [
+            "claywork/saragen0finish/sara_control/sara_controlgen1.py",
+            "sara_self_evolve_protocol.json",
+            "ai_profile_evolution_extensions.json"
+          ],
+          "change_type": "SURGICAL",
+          "depends_on_sara_lite_os": true
+        }
+      ],
+      "notes": [
+        "CONTROL-Lite is the core gating path for WFH readiness.",
+        "If this stays only at design level, VNCE-based WFH sessions remain blocked."
+      ]
+    },
+    "security_lite": {
+      "status": "PARTIAL",
+      "readiness_for_wfh": "not yet sufficiently online for trusted LAN/internet WFH",
+      "what_is_already_present": [
+        "SECURITY-first validation, STABLES concepts, and VNCE attestation are already represented in the current security plan and audit findings.",
+        "Trust-policy and audit-log paths are already defined for SARA Lite OS."
+      ],
+      "implementation_steps": [
+        {
+          "step": "Bind SECURITY-Lite to a real trust-policy file for local_only, lan, and internet posture decisions.",
+          "likely_modules": [
+            "claywork/saragen0finish/sara_security/sara_securitygen1.py",
+            "/etc/sara-lite/trust-policy.json",
+            "/var/lib/sara-lite/security/stables-state.json"
+          ],
+          "change_type": "STRUCTURAL",
+          "depends_on_sara_lite_os": true
+        },
+        {
+          "step": "Implement signature validation for NBS delta bundles and tie it into self_evolve and update-sync gates.",
+          "likely_modules": [
+            "claywork/saragen0finish/sara_security/sara_securitygen1.py",
+            "sara_self_evolve_protocol.json",
+            "/etc/sara-lite/update-policy.json"
+          ],
+          "change_type": "SURGICAL",
+          "depends_on_sara_lite_os": true
+        },
+        {
+          "step": "Harden LAN-first trust checks and quarantine behavior for VNCE resume and reconnect cases.",
+          "likely_modules": [
+            "claywork/saragen0finish/sara_security/sara_securitygen1.py",
+            "/var/lib/sara-lite/security/audit.log"
+          ],
+          "change_type": "STRUCTURAL",
+          "depends_on_sara_lite_os": true
+        }
+      ],
+      "notes": [
+        "SECURITY-Lite is the main blocker for moving from local-safe to WFH-trusted behavior.",
+        "Internet-strict behavior should remain disabled until LAN staging passes."
+      ]
+    },
+    "mama_lite": {
+      "status": "PARTIAL",
+      "readiness_for_wfh": "summary logic planned but cockpit-facing implementation still needed",
+      "what_is_already_present": [
+        "Low-strain, ADA-first, and voice-first defaults are already defined in the OS plans.",
+        "MAMA-Lite is already designated to summarize AMIP/AMIPI and self_evolve results."
+      ],
+      "implementation_steps": [
+        {
+          "step": "Create a minimal MAMA-Lite summary adapter that renders session, trust, and evolution status in human-readable text.",
+          "likely_modules": [
+            "claywork/saragen0finish/sara_mama/sara_mamagen1.py",
+            "/opt/sara-vnce/sara-lite/mama-lite/"
+          ],
+          "change_type": "SURGICAL",
+          "depends_on_sara_lite_os": true
+        },
+        {
+          "step": "Wire MAMA-Lite into the cockpit UI and the VNCE return summary surface.",
+          "likely_modules": [
+            "/usr/local/bin/sara-lite-cockpit",
+            "/usr/share/applications/sara-lite-cockpit.desktop",
+            "claywork/saragen0finish/sara_mama/envoy_desktop/"
+          ],
+          "change_type": "STRUCTURAL",
+          "depends_on_sara_lite_os": true
+        }
+      ],
+      "notes": [
+        "This is important for ADA and WFH usability but is not the first technical blocker.",
+        "MAMA-Lite must remain non-authoritative."
+      ]
+    },
+    "sdk_lite": {
+      "status": "STUBBED",
+      "readiness_for_wfh": "not sufficiently online yet",
+      "what_is_already_present": [
+        "SDK-Lite is already defined as adapter-only with AMIPI and VNCE packaging responsibilities.",
+        "The self_evolve AI profile and protocol spec are already documented for SDK-Lite request-building."
+      ],
+      "implementation_steps": [
+        {
+          "step": "Implement the request builder surfaces for VNCE and self_evolve without adding direct execution or networking bypasses.",
+          "likely_modules": [
+            "claywork/saragen0finish/sara_sdk/Sara_sdk.gen1.py",
+            "claywork/saragen0finish/sara_sdk/common/shunt_client.py",
+            "sara_self_evolve_protocol.json"
+          ],
+          "change_type": "SURGICAL",
+          "depends_on_sara_lite_os": true
+        },
+        {
+          "step": "Add remote endpoint metadata handling for server_host, server_port, transport_security, and reconnect policy under CONTROL governance.",
+          "likely_modules": [
+            "claywork/saragen0finish/sara_sdk/Sara_sdk.gen1.py",
+            "claywork/saragen0finish/sara_sdk/common/shunt_client.py"
+          ],
+          "change_type": "STRUCTURAL",
+          "depends_on_sara_lite_os": true
+        }
+      ],
+      "notes": [
+        "SDK-Lite is still the least online of the five Lite pillars.",
+        "It must remain a packaging surface and never a direct router."
+      ]
+    },
+    "nbs_lite": {
+      "status": "PLANNED_NOT_IMPLEMENTED",
+      "readiness_for_wfh": "not yet online",
+      "what_is_already_present": [
+        "Snapshot, map, schema, delta, and rebuild rules are already fully planned.",
+        "Self_evolve and update-sync governance has now been specified."
+      ],
+      "implementation_steps": [
+        {
+          "step": "Create the NBS-Lite service and filesystem roots for snapshots, maps, schemas, deltas, and rebuild state.",
+          "likely_modules": [
+            "/var/lib/sara-lite/nbs/snapshots/",
+            "/var/lib/sara-lite/nbs/maps/",
+            "/var/lib/sara-lite/nbs/schemas/",
+            "/var/lib/sara-lite/nbs/deltas/",
+            "/etc/systemd/system/sara-lite-nbs.service"
+          ],
+          "change_type": "STRUCTURAL",
+          "depends_on_sara_lite_os": true
+        },
+        {
+          "step": "Implement dry-run reconstruction and last-known-good rollback as the default update behavior.",
+          "likely_modules": [
+            "/usr/local/bin/sara-lite-rebuild",
+            "/usr/local/bin/sara-lite-update-sync",
+            "/etc/sara-lite/update-policy.json"
+          ],
+          "change_type": "STRUCTURAL",
+          "depends_on_sara_lite_os": true
+        }
+      ],
+      "notes": [
+        "NBS-Lite is critical for safe evolution and continuity but currently remains a design layer, not a boot-ready implementation.",
+        "Without it, self-repair and self_evolve remain conceptual only."
+      ]
+    },
+    "sara_lite_cockpit": {
+      "status": "PLANNED_NOT_IMPLEMENTED",
+      "readiness_for_wfh": "not yet available as the operator-facing UI",
+      "what_is_already_present": [
+        "The cockpit structure, allowed actions, blocked actions, and ADA profile are already specified.",
+        "Desktop entry and service names are already identified."
+      ],
+      "implementation_steps": [
+        {
+          "step": "Build a minimal single-window cockpit executable with health, trust, continuity, and tool-availability panels.",
+          "likely_modules": [
+            "/usr/local/bin/sara-lite-cockpit",
+            "/usr/share/applications/sara-lite-cockpit.desktop",
+            "/etc/sara-lite/cockpit-profile.json"
+          ],
+          "change_type": "STRUCTURAL",
+          "depends_on_sara_lite_os": true
+        },
+        {
+          "step": "Add the safe-mode banner, guided prompts, and quick-launch hooks for Geany/VSCodium after successful boot policy load.",
+          "likely_modules": [
+            "/home/operator/.config/xfce4/",
+            "/home/operator/.config/mate/",
+            "/opt/sara-vnce/devtools/"
+          ],
+          "change_type": "SURGICAL",
+          "depends_on_sara_lite_os": true
+        }
+      ],
+      "notes": [
+        "The cockpit is a usability multiplier for WFH but still needs actual implementation work.",
+        "It must remain request-based and never directly override routing or security."
+      ]
+    }
+  },
+  "os_build_status": {
+    "state": "design_strong_build_not_yet_assembled",
+    "what_is_done": [
+      "Base SARA Lite OS identity and desktop form have been fully specified.",
+      "IDE and devtools integration has been defined for VSCodium, Geany, Python/C#/shell tooling, and systemd integration.",
+      "Micro-SARA pillar placement, NBS-Lite continuity rules, and cockpit requirements have been mapped.",
+      "Self-evolve governance and AI Profile extensions have been defined as additive protocol specs.",
+      "Mythos-style boundary auditing has been recorded with a current PARTIAL_PASS status."
+    ],
+    "what_remains": [
+      "Actually assemble the Linux image and rootfs according to the spec.",
+      "Create the systemd service graph and file layout under /opt/sara-vnce and /var/lib/sara-lite.",
+      "Implement the Lite pillar wrappers and bootstrap scripts.",
+      "Run boot and WFH session validation on target x86_64 hardware.",
+      "Prove LAN-first trust, VNCE session start/resume, and local IDE behavior end-to-end."
+    ],
+    "change_assessment": {
+      "iso_layout_work": "STRUCTURAL",
+      "service_registration": "STRUCTURAL",
+      "desktop_profile_tuning": "SURGICAL",
+      "devtools_packaging": "SURGICAL"
+    },
+    "dependencies_on_sara_lite_os": [
+      "UEFI boot assets",
+      "XFCE or MATE with ADA defaults",
+      "systemd boot orchestration",
+      "local trust-policy files",
+      "persistent NBS-Lite storage layout"
+    ],
+    "notes": [
+      "The OS build is now well specified, but it remains primarily a blueprint until the image is actually assembled and boot-tested.",
+      "The biggest remaining gap is runtime wiring, not more planning."
+    ]
+  },
+  "csharp_office_suite_impact": {
+    "overall_assessment": "A separate C# codebase is probably not required, but the current visible Office Suite build is not yet proven to act as the VNCE server for SARA Lite OS as-is.",
+    "can_existing_csharp_office_suite_binary_act_as_vnce_server_as_is": {
+      "answer": "not_yet_reliably",
+      "reason": [
+        "The current workspace planning explicitly noted that the VNCE listener/acceptor boundary was not confirmed in the visible C# search results.",
+        "SARA Lite OS expects a server boundary with AMIP intake normalization, shunt header emission, session registry, and audit bridging."
+      ]
+    },
+    "minimal_csharp_changes_or_new_build_target_needed": [
+      {
+        "item": "Add a bounded VNCE listener or acceptor boundary for remote SARA Lite OS nodes.",
+        "likely_modules": [
+          "saragen0/SARA.Gen0.UI/",
+          "saragen0/SARA.Gen0.Client/",
+          "saragen0/SARA.Gen0.Models/"
+        ],
+        "change_type": "STRUCTURAL"
+      },
+      {
+        "item": "Add an AMIP intake normalizer and a Bucey shunt-header emitter so incoming VNCE requests are converted into CONTROL-governed envelopes.",
+        "likely_modules": [
+          "SARA.Gen0.Client",
+          "SARA.Gen0.Models",
+          "Office server config files"
+        ],
+        "change_type": "SURGICAL"
+      },
+      {
+        "item": "Add session registry, correlation tracking, and audit logging for session start, resume, disconnect, and close.",
+        "likely_modules": [
+          "SARA.Gen0.Client",
+          "SARA.Gen0.UI",
+          "local config or JSON profile files"
+        ],
+        "change_type": "SURGICAL"
+      }
+    ],
+    "build_and_deployment_recommendation": {
+      "separate_csharp_build_configuration": "optional_but_recommended_if_feature_flags_are_needed",
+      "separate_deployment_profile": "yes_recommended",
+      "shared_office_suite_build_with_config_only": "possible only if the shared binary gains the bounded VNCE server surfaces and they are enabled through config/profile rather than a fully separate branch"
+    },
+    "recommended_path": "Prefer one shared Office Suite codebase with a SARA Lite OS deployment profile and feature-gated VNCE server mode, rather than a fully separate product build, unless security packaging or customer deployment isolation forces a dedicated build target.",
+    "notes": [
+      "The missing piece is not necessarily a new product, but a clearly bounded server-side integration surface.",
+      "If the current Office Suite binary already contains hidden server hooks not visible in the searched workspace, then config-only enablement may be enough; otherwise a small bounded implementation pass is needed."
+    ]
+  },
+  "wfh_readiness": {
+    "overall_status": "PARTIAL_NOT_READY",
+    "vnce_based_wfh_sessions": {
+      "status": "not_yet_ready",
+      "reason": [
+        "CONTROL and SECURITY behavior is planned and partially mirrored from current Gen1 concepts, but the Lite runtime and confirmed C# VNCE server boundary are not yet online.",
+        "LAN-first trust and resume handling are not yet proven end-to-end in the SARA Lite OS form."
+      ]
+    },
+    "local_sara_lite_reasoning": {
+      "status": "partial",
+      "reason": [
+        "The micro-SARA pillar layout and AMIP/AMIPI/shunt rules are strongly specified.",
+        "The actual boot-time Lite modules and NBS-backed runtime are still waiting to be wired into the OS image."
+      ]
+    },
+    "ide_based_development_on_the_node": {
+      "status": "closest_to_ready_after_os_assembly",
+      "reason": [
+        "The IDE/devtool layer is the most concrete portion of the SARA Lite OS spec and can likely come online once the image is built.",
+        "It still depends on actual packaging into the ISO and successful desktop boot validation."
+      ]
+    },
+    "short_summary": "SARA Lite OS is architecturally well defined for WFH, local reasoning, and node-side development, but the current state is still pre-online: the blueprint is mature, the runtime wiring is not yet complete."
+  },
+  "blocking_items": [
+    "No confirmed C# VNCE server boundary in the visible Office Suite code for SARA Lite OS to connect to.",
+    "CONTROL-Lite, SECURITY-Lite, and SDK-Lite are not yet extracted or packaged as real OS services/modules.",
+    "NBS-Lite runtime, snapshot engine, and rollback/rebuild services are still planned rather than implemented.",
+    "The cockpit UI is specified but not yet built.",
+    "The Linux image has not yet been assembled and boot-tested on target WFH hardware.",
+    "LAN-first trust and STABLES resume behavior have not yet been validated end-to-end in the new OS form."
+  ],
+  "recommended_next_steps": [
+    {
+      "priority": 1,
+      "step": "Implement and package CONTROL-Lite plus SECURITY-Lite as the first real SARA Lite OS services.",
+      "why": "These two layers are the gating path for safe WFH VNCE sessions.",
+      "change_type": "STRUCTURAL"
+    },
+    {
+      "priority": 2,
+      "step": "Add the bounded C# VNCE server boundary and create a SARA Lite OS deployment profile for the Office Suite.",
+      "why": "Without a server boundary, the remote node cannot complete real WFH sessions.",
+      "change_type": "STRUCTURAL"
+    },
+    {
+      "priority": 3,
+      "step": "Bring SDK-Lite online as a request-builder and remote-endpoint packaging layer only.",
+      "why": "This unlocks AMIPI, VNCE packaging, and self_evolve request flow without violating routing rules.",
+      "change_type": "SURGICAL"
+    },
+    {
+      "priority": 4,
+      "step": "Implement NBS-Lite snapshot, dry-run rebuild, and rollback services using the already-defined filesystem layout.",
+      "why": "This is required for continuity, safe updates, and the self_evolve protocol.",
+      "change_type": "STRUCTURAL"
+    },
+    {
+      "priority": 5,
+      "step": "Build the cockpit UI and wire MAMA-Lite summaries into it.",
+      "why": "This is the main operator-facing usability layer for WFH and ADA-first use.",
+      "change_type": "STRUCTURAL"
+    },
+    {
+      "priority": 6,
+      "step": "Assemble the actual SARA Lite OS image and run LAN-first smoke tests: boot, attestation, VNCE connect, local reasoning, and local IDE launch.",
+      "why": "This converts the current plan set into a verified WFH-capable platform.",
+      "change_type": "STRUCTURAL"
+    }
+  ]
+}

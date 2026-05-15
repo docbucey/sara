@@ -1,0 +1,60 @@
+OSH PHASE 1 VISIBILITY MAP
+Version: phase1_finish_pass_v1
+Date: 2026-04-13
+Spec anchor: SPEC_SHEET_GEN0_CSHARP_EXTENDED.md:615
+
+Purpose
+- Map OSH-1..OSH-5 into always-visible operator UI states.
+- Keep state labels deterministic and plain-language.
+
+Source Alignment
+- ollama_shunt_map.json -> osh_stage_map
+- sara_controlgen1.py -> _phase1_pipeline_con labels and stage states
+- sara_mamagen1.py -> phase1 surface rendering for summaries
+
+Operator State Mapping
+1. OSH-1 Intake
+- Label: Intake
+- Description: Request received and header validated.
+- UI visibility: top pipeline bar + summary line
+- State colors/text: active/pending/complete (must include text label)
+
+2. OSH-2 Normalization
+- Label: Normalization
+- Description: Envelope normalization and shaping in progress.
+- UI visibility: top pipeline bar + diagnostics drawer
+
+3. OSH-3 Boundary
+- Label: Boundary
+- Description: Policy boundary checks active.
+- UI visibility: top pipeline bar + safeguard notice region
+
+4. OSH-4 Schema
+- Label: Schema
+- Description: Schema conformance verification active.
+- UI visibility: top pipeline bar + schema details panel
+
+5. OSH-5 Non-Authority
+- Label: Non-Authority
+- Description: Non-authority guarantees verified before acceptance.
+- UI visibility: top pipeline bar + trust status badge
+
+Always-Visible Surface Rules
+- V1: Show current_stage text in main header.
+- V2: Show full 5-stage pipeline with active stage highlighted.
+- V3: Show phase1_outcome under stage bar.
+- V4: Show security outcome text (allow/deny/constrain/schema_fail/boundary_blocked).
+- V5: If any stage fails, keep prior stage completion visible for traceability.
+
+Deterministic Rendering Contract (C#)
+- Inputs required:
+  - osh_pipeline.current_stage
+  - osh_pipeline.stages[]
+  - phase1_outcome
+- Outputs required:
+  - stage_bar_model
+  - outcome_banner_model
+  - action_buttons_model
+
+Phase 1 pass condition for visibility
+- PASS when OSH-1..OSH-5 can be observed in all terminal outcomes without hidden branches.

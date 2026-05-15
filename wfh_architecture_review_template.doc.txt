@@ -1,0 +1,38 @@
+WFH_ARCHITECTURE_REVIEW_TEMPLATE
+
+Document Owner:
+Week Of:
+Version:
+
+1. Current Architecture Snapshot
+- Pillar ownership summary:
+- Route/gate status summary:
+- Known stable interfaces:
+
+2. Authority Boundary Check
+- CONTROL authority status:
+- SECURITY authority status:
+- Any boundary violations observed:
+
+3. Findings (Ordered by severity)
+- Finding ID:
+- Description:
+- Evidence file/line:
+- Impact:
+- Proposed correction:
+
+4. Decisions Made This Week
+- Decision:
+- Rationale:
+- Affected files/artifacts:
+
+5. Open Questions
+- Question:
+- Owner:
+- Due date:
+
+6. Next Actions
+- Action:
+- Owner:
+- Due date:
+- Success criteria:

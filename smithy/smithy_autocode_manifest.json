@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "python": "smithy_python_spec.json",
+    "csharp": "smithy_csharp_spec.json"
+  },
+  "rules": {
+    "generate_functions": true,
+    "generate_classes": true,
+    "generate_ipc_handlers": true
+  }
+}

@@ -1,0 +1,53 @@
+INITIAL_CONDITIONING_SPECSHEET_SCAN_V2
+
+Scope
+- Extraction of conditioning-relevant constraints from SPEC_SHEET_GEN0_CSHARP_EXTENDED.md.
+- Reframed for post-phase conditioning after architecture/spec MD completion and baseline AI build readiness.
+
+Key Contract Findings
+1) C# remains surface-only and must not assume routing/security/schema authority.
+   - Spec anchors:
+     - SPEC_SHEET_GEN0_CSHARP_EXTENDED.md:74
+     - SPEC_SHEET_GEN0_CSHARP_EXTENDED.md:130
+
+2) Mandatory Phase 0 initialization order includes PersonalityEngine after governance/map boot and before entering Phase 1/2.
+   - Spec anchor:
+     - SPEC_SHEET_GEN0_CSHARP_EXTENDED.md:208
+
+3) Phase 2 entry is hard-gated by Phase 1 exits; failure of any gate blocks progression.
+   - Spec anchors:
+     - SPEC_SHEET_GEN0_CSHARP_EXTENDED.md:608
+     - SPEC_SHEET_GEN0_CSHARP_EXTENDED.md:626
+
+4) Frozen expressive route is mandatory inheritance.
+   - Route: CONTROL -> OSH -> Ollama JSON interface -> OSH -> CONTROL.
+   - Spec anchors:
+     - SPEC_SHEET_GEN0_CSHARP_EXTENDED.md:630
+     - SPEC_SHEET_GEN0_CSHARP_EXTENDED.md:692
+
+5) Phase 2 conditioning-critical rules:
+   - Persona is presentation-scoped, non-human, non-authoritative.
+   - Creativity allowed only when user/context requests and SECURITY approves.
+   - Creativity must remain bounded, schema-safe, non-authoritative, ADA-safe.
+   - Spec anchors:
+     - SPEC_SHEET_GEN0_CSHARP_EXTENDED.md:660
+     - SPEC_SHEET_GEN0_CSHARP_EXTENDED.md:763
+     - SPEC_SHEET_GEN0_CSHARP_EXTENDED.md:805
+     - SPEC_SHEET_GEN0_CSHARP_EXTENDED.md:830
+
+6) Phase 2 exit gates define full safety envelope for personality + creativity behavior.
+   - Includes non-autonomy enforcement and creativity route/gate/OSH integrity.
+   - Spec anchor:
+     - SPEC_SHEET_GEN0_CSHARP_EXTENDED.md:910
+
+Initial Conditioning Requirements Derived From Spec
+- IC-S1: Conditioning may begin only after architecture/spec set is complete and P1 gates remain locked.
+- IC-S2: Keep C# conditioning limited to presentation/view-model behavior; no routing/gate bypass.
+- IC-S3: Bind Process-1 conditioning signals to OSH stage visibility and SECURITY outcomes.
+- IC-S4: Default non-creative mode unless explicit request and SECURITY allow.
+- IC-S5: Enforce plain-language fallback in constrained/denied/schema-fail/boundary states.
+- IC-S6: Keep deliverable traceability in business-friendly review artifacts (doc narrative + sheet trackers).
+
+Spec-Level Go/No-Go
+- GO if: architecture/spec MD pack is complete, AI build is baseline-ready, and Process-1 wiring follows CONTROL/SECURITY authority boundaries.
+- NO-GO if: architecture/spec is incomplete, or any C# authority mutation, direct model route bypass, or creativity gate bypass is introduced.

@@ -1,0 +1,15 @@
+{
+  "pillar": "SDK",
+  "original_gen1_mappings": "No Gen1 SDK file found; presumed planned only.",
+  "legacy_features": [
+    "SDK integration planned, not implemented"
+  ],
+  "mapped_improvements": [
+    "Define SDK interface contracts",
+    "Document intended extension points"
+  ],
+  "likely_intended_future": [
+    "SDK for external integrations",
+    "Plugin system for new pillars"
+  ]
+}

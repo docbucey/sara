@@ -1,0 +1,85 @@
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~ SARA_LINGUA_OUTPUT_TARGET_REGISTRY                      ~
+~ Defines all languages, formats, and systems SARA_Lingua ~
+~ must normalize or lower into.                           ~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+@ CORE_LANGUAGES @
+ruby
+python
+c
+c++
+c#
+ada
+forth
+java
+sara
+
+@ SYSTEM_SHELL_TARGETS @
+bash
+powershell
+
+@ WEB_FRONTEND_TARGETS @
+html
+css
+javascript
+
+@ DATA_FORMAT_TARGETS @
+json
+yaml
+csv
+xml
+
+@ DATABASE_TARGETS @
+sql_generic
+sqlite
+postgresql
+
+@ MOBILE_TARGETS @
+android_kotlin
+android_java
+ios_swift
+
+@ CLOUD_API_TARGETS @
+rest_api
+openapi_schema
+grpc_service
+
+@ AI_ML_TARGETS @
+model_config
+prompt_template
+embedding_vector
+training_data
+inference_pipeline
+
+@ BINARY_EXECUTABLE_TARGETS @
+machine_code
+sxf
+native_executable
+
+@ DOCUMENTATION_TARGETS @
+markdown
+rst
+plaintext
+
+@ TESTING_TARGETS @
+unit_test
+mock_data
+validation_harness
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~ END_REGISTRY                                             ~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+these will be used to work on these files in order
+puppy
+dog
+breed
+kennel
+trainer
+
+end of process goal be able to make py saralingua normalizer file after wards so math and reasoning layers other layer can be properly changed to sara systems 
+
+longterm if someone uses sara as a language or system universal package import they could embed primative ai into what ever they code for into what they are working on or build ai direct extentions/plugins for systems they are working with. but thats not obvious ability its a discrete ability that can be marketed or discovered if they read the white sheets

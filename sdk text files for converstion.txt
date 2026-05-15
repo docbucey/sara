@@ -1,0 +1,152 @@
+
+
+C:.
+├───controlbase_llc
+│       identity_resolve_con.txt
+│       ingest_artifacts_con.txt
+│       ingest_chat_con.txt
+│       learn_overlay_con.txt
+│       load_persona_con.txt
+│       parse_chat_con.txt
+│       query_concepts_con.txt
+│       route_io_con.txt
+│       start_session_con.txt
+│       sync_narrative_profile_con.txt
+│
+├───proto_lingua_llc
+│       axioms.text
+│       breed.text
+│       cartigene.text
+│       dog.text
+│       envelope_trick.text
+│       hardware_tricks.text
+│       internet_tricks.text
+│       nexusdata.text
+│       os_tricks.text
+│       proto_lingua_summary.text
+│       puppy.text
+│       sequian.text
+│       vesselizer_trick.text
+│
+├───proto_math_llc
+│       layer12_accustic_physics.text
+│       layer_10_business_economics.text
+│       layer_11_optical_physics.text
+│       layer_1_power_roots.text
+│       layer_2_calculus_operations.text
+│       layer_3_linear_algebra.text
+│       layer_4_random_generators.text
+│       layer_5_geometry_transformations.text
+│       layer_6_physics_mechanics.text
+│       layer_7_chemistry.text
+│       layer_8_biology_ecology.text
+│       layer_9_astrophysics.text
+│       mathengine.text
+│       proto_math_summary.text
+│
+├───proto_pointers_llc
+│       pointer_control.text
+│       pointer_control_hooks.text
+│       pointer_core.text
+│       pointer_humanities.text
+│       pointer_index.text
+│       pointer_io.text
+│       pointer_lingua.text
+│       pointer_loader.text
+│       pointer_mama.text
+│       pointer_math.text
+│       pointer_philosophy.text
+│       pointer_resonance.text
+│       pointer_router.text
+│       pointer_sara_ai.text
+│       pointer_sara_clay_work.text
+│       pointer_science.text
+│       pointer_sdk.text
+│       pointer_security.text
+│       pointer_tactics.text
+│       pointer_theology.text
+│       pointer_utils.text
+│       proto_pointers_summary.text
+│
+├───proto_resonance_llc
+│   ├───Humanities
+│   │       ethical_hum.text
+│   │       historical_hum.text
+│   │       humanities_summary.text
+│   │       literary_hum.text
+│   │       semiotic_hum.text
+│   │
+│   ├───Philosophy
+│   │       analytic_phil.text
+│   │       dialectical_phil.text
+│   │       phenomenological_phil.text
+│   │       philosophy_summary.text
+│   │       pragmatic_phil.text
+│   │
+│   ├───Science
+│   │       creative_science.text
+│   │       game_science.text
+│   │       pattern_science.text
+│   │       science_summary.text
+│   │       scientific_method.text
+│   │       systems_science.text
+│   │
+│   ├───Tactics
+│   │       adaptive_tactics.text
+│   │       operational_tactics.text
+│   │       strategic_tactics.text
+│   │       tactical_tactics.text
+│   │       tactics_summary.text
+│   │
+│   └───Theology
+│           dogmatic_theo.text
+│           epoche_theo.text
+│           gnostic_theo.text
+│           heuristic_theo.text
+│           theology_summary.text
+│
+├───proto_utils_llc
+│       metrics.text
+│       pointer_expander.text
+│       proto_debugger.text
+│       proto_runtime_api.text
+│       proto_runtime_context.text
+│       proto_runtime_executor.text
+│       proto_runtime_loader.text
+│       proto_slam_wrapper.text
+│       universal_test_harness.text
+│
+├───sara_core_base
+│       Sara_corebase_classify_value_suffix.text
+│       Sara_corebase_create_characterbase_nbs_profile.text
+│       Sara_corebase_create_nbs_file.text
+│       Sara_corebase_create_nbs_project_profile.text
+│       Sara_corebase_create_nbs_reference.text
+│       Sara_corebase_in_out_nbs_file.text
+│       Sara_corebase_iso_now.text
+│       Sara_corebase_sanitize_name.text
+│       Sara_corebase_summary.txt
+│       Sara_corebase_to_proto_lingua.text
+│       Sara_corebase_update_nbs_project_profile.text
+│       Sara_corebase_validate_resonance.text
+│
+└───security_llc
+        environmental_weld.text
+        environmental_weld.txt
+        envoy.text
+        envoy.txt
+        king.text
+        king.txt
+        paladin.text
+        paladin.txt
+        scientists.text
+        scientists.txt
+        security_brain.text
+        security_brain.txt
+        security_diagnostics.text
+        security_diagnostics.txt
+        security_keep.text
+        security_keep.txt
+        security_llc_summary.txt
+        sheriff_and_deputy.text
+        sheriff_and_deputy.txt

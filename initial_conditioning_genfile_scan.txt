@@ -1,0 +1,64 @@
+INITIAL_CONDITIONING_GENFILE_SCAN_V1
+
+Scope
+- Gen-file inspection for concrete Initial Conditioning hooks across pillar runtime files and C# boundary files.
+
+Python Gen1 Hook Inventory
+
+A) CONTROL hooks (conditioning authority lane)
+- generation profile presets + resolver + policy application
+  - claywork/saragen0finish/sara_control/sara_controlgen1.py:4201
+  - claywork/saragen0finish/sara_control/sara_controlgen1.py:4226
+  - claywork/saragen0finish/sara_control/sara_controlgen1.py:4249
+- route guard and Bucey Shunt route entrypoint
+  - claywork/saragen0finish/sara_control/sara_controlgen1.py:4370
+  - claywork/saragen0finish/sara_control/sara_controlgen1.py:4505
+- deterministic phase-state output
+  - claywork/saragen0finish/sara_control/sara_controlgen1.py:4459
+  - claywork/saragen0finish/sara_control/sara_controlgen1.py:4480
+
+B) SECURITY hooks (conditioning gate lane)
+- STABLES command constants and lifecycle
+  - claywork/saragen0finish/sara_security/sara_securitygen1.py:163
+  - claywork/saragen0finish/sara_security/sara_securitygen1.py:367
+  - claywork/saragen0finish/sara_security/sara_securitygen1.py:408
+  - claywork/saragen0finish/sara_security/sara_securitygen1.py:456
+- trust posture + sovereignty context
+  - claywork/saragen0finish/sara_security/sara_securitygen1.py:572
+
+C) CORE hooks (conditioning context build lane)
+- deterministic work-state and AMIP payload builder
+  - claywork/saragen0finish/sara_core/sara_coregen1.py:1010
+  - claywork/saragen0finish/sara_core/sara_coregen1.py:1048
+- Bucey Shunt envelope builder
+  - claywork/saragen0finish/sara_core/sara_coregen1.py:1118
+
+D) MAMA hooks (conditioning visibility lane)
+- phase1 outcome derivation and OSH surface render
+  - claywork/saragen0finish/sara_mama/sara_mamagen1.py:1227
+  - claywork/saragen0finish/sara_mama/sara_mamagen1.py:1249
+- AMIP UX adaptation and result presentation
+  - claywork/saragen0finish/sara_mama/sara_mamagen1.py:1294
+  - claywork/saragen0finish/sara_mama/sara_mamagen1.py:1495
+
+C# Boundary Hook Inventory (Micro-AI Surface)
+
+Observed
+- C# posts only to CONTROL and MAMA dispatch endpoints via SARAClient.
+  - saragen0/SARA.Gen0.Client/SARAClient.cs:22
+  - saragen0/SARA.Gen0.Client/SARAClient.cs:31
+- MainWindow readiness probe uses CONTROL route call.
+  - saragen0/SARA.Gen0.UI/MainWindow.xaml.cs:33
+- Acceptance harness exercises CONTROL route actions and route_io probe.
+  - saragen0/SARA.Gen0.UI/AcceptanceTestHarness.cs:13
+  - saragen0/SARA.Gen0.UI/AcceptanceTestHarness.cs:21
+
+Not observed in current C# codebase
+- No concrete PersonalityEngine class implementation.
+- No explicit PersonalityPresentationLayer class implementation.
+- No explicit UserPersonaPreference model implementation.
+- No explicit OSH stage view-model in C# (current state appears backend-driven and generic).
+
+Genfile Conclusion
+- Python side already exposes Process-1 viable conditioning/gating/visibility hooks.
+- C# side currently provides boundary transport + readiness surfaces, but not full spec-named personality micro-AI classes yet.

@@ -1,0 +1,65 @@
+{
+  "_meta": {
+    "source_file": "actionmap.json",
+    "updated_on": "2026-04-10",
+    "reasoning_repair_updated_on": "2026-04-11",
+    "purpose": "Five-pillar action map aligned to the current Bucey Shunt, FSM, and audit-validated routing model.",
+    "todo_scan": {
+      "todo_count": 0,
+      "fixme_count": 0,
+      "incomplete_markers_found": []
+    },
+    "validation_basis": [
+      "SARA_COMPLIANCE_AUDIT.JSON",
+      "SARA_COMPLIANCE_DEEP_AUDIT.JACSON",
+      "SARA_MICROAI_FSM_AUDIT.json",
+      "cleanup_punchlist.md",
+      "controlref.txt",
+      "sara_gen1_stage9_pillar_readiness_report.json"
+    ],
+    "audit_notes": [
+      "CONTROL remains the sole routing authority.",
+      "CORE, CONTROL, and SECURITY are shunt/FSM compliant.",
+      "MAMA remains presentation-facing and must forward through CONTROL.",
+      "SDK remains the adapter and AMIPI lane surface."
+    ],
+    "reasoning_contract": {
+      "canonical_registry": "claywork/saragen0finish/sara_mama/reasoning_protocols.py",
+      "control_selects_model": true,
+      "security_validates_before_visibility": true,
+      "mama_invocation_mode": "consume_validated_reasoning_only",
+      "mama_may_not_route_or_gate": true,
+      "reasoning_output_policy": "advisory_and_presentation_only"
+    }
+  },
+  "CORE": {
+    "00": "resolve_machine_profile_core",
+    "01": "build_amip_payload_core",
+    "10": "build_bucey_shunt_envelope_core",
+    "11": "unwrap_bucey_shunt_core"
+  },
+  "CONTROL": {
+    "00": "route_bucey_shunt_con",
+    "01": "_normalize_amip_request_con",
+    "10": "office_file_action",
+    "11": "dispatch_amipi_con"
+  },
+  "SECURITY": {
+    "00": "validate_bucey_shunt_sec",
+    "01": "validate_amip_payload_sec",
+    "10": "king_sovereignty_check",
+    "11": "sheriff_audit"
+  },
+  "MAMA": {
+    "00": "adapt_amip_ux_mama",
+    "01": "summarize_bucey_shunt_mama",
+    "10": "present_amipi_result_mama",
+    "11": "persist"
+  },
+  "SDK": {
+    "00": "SDK_INTERNAL_AMI_LANES",
+    "01": "sdk_identity_catalog",
+    "10": "build_local_bucey_shunt",
+    "11": "send_bucey_shunt"
+  }
+}

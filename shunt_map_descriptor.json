@@ -1,0 +1,32 @@
+{
+  "map_sets": {
+    "0000": {
+      "name": "NO_OP",
+      "description": "Neutral IPO state",
+      "pillar": null,
+      "allowed_profiles": ["ALL"],
+      "out_routes": ["RETURN"]
+    },
+    "0001": {
+      "name": "CORE_LOAD",
+      "pillar": "CORE",
+      "functions": ["load_identity", "load_config"],
+      "allowed_profiles": ["GENERAL_OFFICE", "WFH_OPERATOR"],
+      "out_routes": ["RETURN", "ESCALATE"]
+    },
+    "0010": {
+      "name": "CONTROL_ROUTE",
+      "pillar": "CONTROL",
+      "functions": ["route_command", "validate_profile"],
+      "allowed_profiles": ["ALL"],
+      "out_routes": ["RETURN"]
+    },
+    "0100": {
+      "name": "MAMA_STORE",
+      "pillar": "MAMA",
+      "functions": ["snapshot", "diff", "persist"],
+      "allowed_profiles": ["RESEARCH_NBS"],
+      "out_routes": ["STORE", "RETURN"]
+    }
+  }
+}

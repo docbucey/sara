@@ -1,0 +1,12 @@
+{
+  "title": "Smithy Profile Schema",
+  "type": "object",
+  "properties": {
+    "name": { "type": "string" },
+    "mappings": {
+      "type": "object",
+      "additionalProperties": { "type": "string" }
+    }
+  },
+  "required": ["name", "mappings"]
+}

@@ -1,0 +1,118 @@
+# SARA UI Readiness & Four Pillars Review
+
+## Overview
+This document summarizes the readiness and architecture of the SARA system for UI development, with a focus on the four core pillars:
+- **sara_core (Gen1)**
+- **sara_control (Gen1)**
+- **sara_security (Gen1)**
+- **sara_mama (Gen1)**
+
+It also includes the current workflow, flow workouts, and a copy of the user-facing README for reference.
+
+---
+
+## 1. sara_core (Gen1)
+- **Purpose:** Foundation for all NBS file operations, metadata, and Proto-Lingua transformation.
+- **Key Features:**
+  - NBS file creation, reading, and metadata management
+  - Proto-Lingua helpers for type-safe data
+  - Sheet/profile APIs for user, SARA, and client records
+  - Minimal FSM for shunt/evolution routing
+  - Legacy compatibility helpers
+- **UI Readiness:**
+  - All core data operations are import-safe and ready for UI integration.
+  - No side effects at import; safe for backend or UI calls.
+
+## 2. sara_control (Gen1)
+- **Purpose:** Orchestration, session management, and control wall for all protocol actions.
+- **Key Features:**
+  - AI backend interface (pluggable LLMs)
+  - SecurityManager for access control and audit
+  - LearnManager for experiential learning
+  - Session/narrative management (start, append, checkpoint, end)
+  - Route I/O through security and FSM
+- **UI Readiness:**
+  - All orchestration and session flows are callable from a UI layer.
+  - Security and learning overlays are modular and ready for extension.
+
+## 3. sara_security (Gen1)
+- **Purpose:** Security gate, audit, file scanning, and quarantine for all protocol actions.
+- **Key Features:**
+  - Sovereignty check, paladin gate, and sheriff audit
+  - FSM-based command routing for all security operations
+  - File, image, DOCX, XLSX, PDF scanning and quarantine
+  - Batch audit and quarantine for office files
+- **UI Readiness:**
+  - All security checks and audits are callable via a single dispatch function.
+  - Quarantine and audit logs are accessible for UI display.
+
+## 4. sara_mama (Gen1)
+- **Purpose:** Central dispatcher and memory substrate for all protocol actions and model routing.
+- **Key Features:**
+  - Central FSM/dispatcher for protocol routing
+  - Protocol modules: Secretary, Accountant, Mailroom, Marketing, Switchboard
+  - Adaptive jargon lexicon and text quality checks
+  - Ledger for memory packets and attempts
+  - Calculator and research validation hooks
+- **UI Readiness:**
+  - All protocol actions are routed through a single dispatcher (MamaDispatcher)
+  - Ready for UI to call protocol actions, contacts, and validation routines
+
+---
+
+## Flow Workouts & UI Integration Plan
+- **All protocol actions** (word, excel, email, call, slideshow, contacts) are routed through `MamaDispatcher`.
+- **Security and control** are enforced via FSM and audit layers before protocol execution.
+- **Contacts** are persistent and accessible for UI listing and editing.
+- **Session and narrative management** are ready for UI-driven workflows (start, checkpoint, end, audit).
+- **Automation and backup** are scriptable and can be surfaced in UI.
+- **Error handling** is robust and returns structured results for UI feedback.
+
+---
+
+## User-Facing README (Current)
+
+# SARA Mama Personal Work Environment
+
+## Overview
+SARA Mama is a personal productivity and automation environment supporting:
+- Word processing (Secretary)
+- Spreadsheets (Accountant)
+- Email (Mailroom)
+- Slides/graphics (Marketing)
+- Calls/VoIP (Switchboard)
+- Persistent contacts for email and phone
+
+## Getting Started
+1. Run `mama_cli.py` for a simple command-line interface.
+2. Use commands like `word`, `excel`, `email`, `call`, `contacts`, `add_contact`, `remove_contact`.
+3. Contacts are saved automatically and persist across sessions.
+
+## Protocol Actions
+- **word**: Validate Word documents for required sections.
+- **excel**: Validate Excel files for required sheets/columns.
+- **email**: Validate email fields and addresses.
+- **call**: Validate phone/VoIP call data.
+- **contacts**: List contacts for mailroom or switchboard.
+- **add_contact/remove_contact**: Manage contacts.
+
+## Data & Storage
+- Contacts are stored as JSON files in the same directory as the protocols.
+- No cloud sync by default (local only).
+
+## Security
+- For personal use: no authentication by default.
+- Optional: enable password or encryption (see below).
+
+## Backup & Restore
+- Copy the `*_contacts.json` files to back up your contacts.
+- Restore by copying them back into the protocol directory.
+
+## Automation
+- You can script CLI commands or extend `mama_cli.py` for batch actions.
+
+## Support
+- For help, run `mama_cli.py` and type `help`.
+- All code is local and modifiable for your needs.
+
+---

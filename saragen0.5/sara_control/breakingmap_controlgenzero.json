@@ -1,0 +1,22 @@
+{
+  "pillar": "CONTROL",
+  "original_gen1_mappings": "See sara_controlgen1.functionmap.json for full function/class list.",
+  "legacy_features": [
+    "FSM routing",
+    "Shunt header enforcement",
+    "Profile/context validation",
+    "Context-driven orchestration (original design intent)",
+    "Situational awareness (original design intent)",
+    "Learning overlays (later experiments, now removed)"
+  ],
+  "mapped_improvements": [
+    "Modularize context-driven logic",
+    "Cleaner separation of deterministic FSM and orchestration",
+    "Clarify that AI backend was never intended; orchestration is top-level"
+  ],
+  "likely_intended_future": [
+    "Full context-driven orchestration",
+    "Situational awareness for protocol routing",
+    "External/top-level AI integration only (not as backend)"
+  ]
+}

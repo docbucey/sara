@@ -1,0 +1,30 @@
+  {
+    "copilot_migration_notes": {
+      "summary": "Migration and architecture notes for SARA NBS workspace transition.\nThis file was created as a reference and backup for Copilot to understand the project context. It is also used as a persistent record that can be updated at any time upon user request. The project folder was moved to enable proper GitHub integration, as GitHub could not be initialized in the original location.",
+      "date": "2026-04-17",
+      "actions": [
+        "Universal shunt entrypoint created and folded into claywork/saragen0finish/sara_control/sara_controlgen1.py.",
+        "Tested with claywork doc harness: PASS (Gate: PASS | Local: PASS | Distant: PASS).",
+        "Project moved from MODLES/NBS to SARA/NBS folder.",
+        "Initialized as a GitHub repository for version control and collaboration.",
+        ".gitignore and GitHub compliance recommended for Python, VS Code, and OS files."
+      ],
+      "key_files": [
+        "claywork/saragen0finish/sara_control/sara_controlgen1.py",
+        "README.md",
+        "shunt_map_descriptor.updated.json",
+        "actionmap.updated.json"
+      ],
+      "copilot_chat_summary": [
+        "Discussed and implemented a universal entrypoint for SARA AI, enabling a single API for all pillars.",
+        "Validated that the entrypoint can be safely folded into the control pillar.",
+        "Migrated the project to a new workspace and set up GitHub integration.",
+        "Explored using JSON files to transfer chat and migration context between workspaces."
+      ],
+      "next_steps": [
+        "In the new workspace, create a file based on the control entrypoint (sara_shunt_entrypoint) for Copilot in Office integration.",
+        "Use this as a middle point for Office or other external systems to interact with SARA AI via the universal entrypoint.",
+        "Continue documenting architectural decisions and migration notes in this file for future reference."
+      ]
+    }
+  }

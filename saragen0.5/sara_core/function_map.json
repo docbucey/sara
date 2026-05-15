@@ -1,0 +1,10 @@
+{
+  "pillar": "CORE",
+  "functions": [
+    "validate_shunt_header",
+    "ShuntFSM (protocol state/transition management)",
+    "data_file_io_handlers (image, video, audio, 3D, office)",
+    "proto_lingua_tagging_resonance_validation",
+    "compatibility_bridge (legacy imports/runtime safety)"
+  ]
+}

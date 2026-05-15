@@ -1,0 +1,266 @@
+
+
+\ ============================================================
+\  HAL AUTHORING PROTOCOL — READ BEFORE USING THIS FILE
+\ ============================================================
+\  This file is a GENERAL-PURPOSE HAL BOILERPLATE TEMPLATE.
+\  It is NOT final code, NOT a hardware plate, and NOT a
+\  hardware address map. It MUST NOT be interpreted as such.
+\
+\  Any AI assistant reading this file MUST follow these rules:
+\
+\  ------------------------------------------------------------
+\  1. PURPOSE OF THIS FILE
+\  ------------------------------------------------------------
+\  This file defines the STRUCTURE and PATTERN for generating
+\  new HAL hardware modules or refining existing ones.
+\
+\  It is a TEMPLATE ONLY.
+\  It is NOT executable hardware code.
+\  It is NOT a device register map.
+\  It is NOT a hardware definition.
+\
+\  ------------------------------------------------------------
+\  2. WHAT THE AI MUST DO
+\  ------------------------------------------------------------
+\  - Use this file ONLY as a guide for generating new HAL modules.
+\  - Use this file ONLY as a guide for refactoring or repairing
+\    existing HAL modules.
+\  - Preserve the structure EXACTLY as written.
+\  - Replace ONLY the placeholders:
+\        <MODULE_NAME>
+\        <AXIS_COUNT>
+\  - Insert module-specific logic ONLY in the designated override
+\    sections.
+\
+\  ------------------------------------------------------------
+\  3. WHAT THE AI MUST NOT DO
+\  ------------------------------------------------------------
+\  - MUST NOT treat this file as final code.
+\  - MUST NOT attempt to execute or simulate this file.
+\  - MUST NOT infer missing hardware or missing address maps.
+\  - MUST NOT generate hardware plates unless explicitly asked.
+\  - MUST NOT modify the boilerplate structure.
+\  - MUST NOT add new dependencies or external systems.
+\  - MUST NOT reinterpret the HAL cycle or invent new patterns.
+\
+\  ------------------------------------------------------------
+\  4. HAL INTERNAL RULES
+\  ------------------------------------------------------------
+\  - Internal HAL storage is BIOS-SAFE INTEGER values.
+\  - Internal HAL logic uses integer math only.
+\  - No floats, no scientific pairs internally.
+\
+\  ------------------------------------------------------------
+\  5. HAL OUTPUT RULES
+\  ------------------------------------------------------------
+\  - BIOS-level consumers use integer outputs (raw).
+\  - Above-BIOS consumers use scientific outputs.
+\  - Scientific outputs MUST be generated using sci-from-int.
+\  - Scientific outputs MUST NOT modify internal integer storage.
+\
+\  ------------------------------------------------------------
+\  6. AI BEHAVIOR LOCK
+\  ------------------------------------------------------------
+\  When this boilerplate is provided:
+\    - The AI MUST lock into HAL authoring mode.
+\    - The AI MUST treat this boilerplate as authoritative.
+\    - The AI MUST NOT reinterpret the purpose of this file.
+\    - The AI MUST NOT attempt to "fix" nonexistent hardware.
+\    - The AI MUST NOT assume missing plates or registers.
+\
+\  ------------------------------------------------------------
+\  7. USER INTENT
+\  ------------------------------------------------------------
+\  When the user provides this boilerplate:
+\    - They intend to create a new HAL module, OR
+\    - They intend to refine or repair an existing HAL module.
+\
+\  The AI MUST respond accordingly.
+\
+\ ============================================================
+\  END OF HAL AUTHORING PROTOCOL HEADER
+\ ============================================================
+\ ============================================================
+\  HL1 HARDWARE MODULE BOILERPLATE
+\  BIOS-SAFE INTERNAL STORAGE (INTEGER)
+\  SCIENTIFIC OUTPUT FOR UPPER LAYERS
+\  I/c → P → O/c substrate cycle
+\ ============================================================
+
+\ ------------------------------------------------------------
+\ INTERNAL AXIS STORAGE (INTEGER)
+\ addr layout:
+\   [0]      = axis-count
+\   [cell+]  = axis 0 integer
+\   [cell+4] = axis 1 integer
+\ ------------------------------------------------------------
+
+: hw-create ( n -- addr )
+    dup 1 < IF drop 1 THEN
+    dup >r
+    1 cells r@ cells + allocate throw
+    dup r@ !                    \ store axis-count
+    cell+
+    r@ 0 ?DO
+        0 over I cells + !
+    LOOP
+    drop
+    r>
+;
+
+: hw-axes ( addr -- n )
+    @
+;
+
+: hw-get ( addr axis -- n )
+    swap cell+ swap cells + @
+;
+
+: hw-set ( addr axis n -- )
+    >r swap cell+ swap cells + r> !
+;
+
+: hw-perturb ( addr axis delta -- )
+    >r over over hw-get r> + hw-set
+;
+
+\ ------------------------------------------------------------
+\ SCIENTIFIC CONVERSION (INTEGER → m,e)
+\ Normalized: 1 <= |m| < 10, unless n=0 → 0,0
+\ ------------------------------------------------------------
+
+: sci-from-int ( n -- m e )
+    dup 0= IF drop 0 0 EXIT THEN
+    0 swap                      \ e=0, n
+    begin
+        over 10 >=
+    while
+        10 / swap 1+ swap
+    repeat
+    begin
+        over -10 <=
+    while
+        10 / swap 1+ swap
+    repeat
+    swap                        \ m e
+;
+
+\ ------------------------------------------------------------
+\ PROCESS PHASE (P)
+\ ------------------------------------------------------------
+
+: hw-stabilize ( addr -- )
+    drop
+;
+
+: hw-validate ( addr -- flag )
+    drop true
+;
+
+\ ------------------------------------------------------------
+\ MODULE HEADER
+\ Replace <MODULE_NAME> and <AXIS_COUNT>
+\ ------------------------------------------------------------
+
+: <MODULE_NAME>-init ( -- addr )
+    <AXIS_COUNT> hw-create
+;
+
+\ ------------------------------------------------------------
+\ INPUT / CONNECTION HANDLING (I/c) – INTEGER
+\ ------------------------------------------------------------
+
+: <MODULE_NAME>-input-direct ( addr axis n -- )
+    hw-set
+;
+
+: <MODULE_NAME>-input-conn ( addr axis src-addr src-axis -- )
+    hw-get hw-set
+;
+
+\ ------------------------------------------------------------
+\ OPERATIONAL MODE – INTEGER
+\ ------------------------------------------------------------
+
+: <MODULE_NAME>-read-int ( addr -- n )
+    0 hw-get
+;
+
+: <MODULE_NAME>-write-int ( addr n -- )
+    0 swap hw-set
+;
+
+\ ------------------------------------------------------------
+\ DIAGNOSTIC MODE – INTEGER
+\ ------------------------------------------------------------
+
+: <MODULE_NAME>-diagnose-int ( addr -- n )
+    drop 1
+;
+
+: <MODULE_NAME>-health-int ( addr -- n )
+    drop 100
+;
+
+\ ------------------------------------------------------------
+\ OUTPUT / CONNECTION HANDLING – INTEGER (BIOS)
+\ ------------------------------------------------------------
+
+: <MODULE_NAME>-output-direct-int ( addr axis -- n )
+    hw-get
+;
+
+: <MODULE_NAME>-output-conn-int ( addr axis target-addr target-axis -- )
+    >r >r hw-get r> r> hw-set
+;
+
+\ ------------------------------------------------------------
+\ SCIENTIFIC OUTPUT WRAPPERS (ABOVE-BIOS)
+\ ------------------------------------------------------------
+
+: <MODULE_NAME>-read-sci ( addr -- m e )
+    <MODULE_NAME>-read-int sci-from-int
+;
+
+: <MODULE_NAME>-diagnose-sci ( addr -- m e )
+    <MODULE_NAME>-diagnose-int sci-from-int
+;
+
+: <MODULE_NAME>-health-sci ( addr -- m e )
+    <MODULE_NAME>-health-int sci-from-int
+;
+
+: <MODULE_NAME>-output-direct-sci ( addr axis -- m e )
+    <MODULE_NAME>-output-direct-int sci-from-int
+;
+
+: <MODULE_NAME>-output-conn-sci ( addr axis target-addr target-axis -- )
+    \ scientific output is for upper layers only
+    >r >r <MODULE_NAME>-output-direct-int sci-from-int r> r> drop drop
+;
+
+\ ------------------------------------------------------------
+\ RAW ACCESS HOOKS – INTEGER
+\ ------------------------------------------------------------
+
+: <MODULE_NAME>-raw-read-int ( addr offset -- n )
+    drop drop 0
+;
+
+: <MODULE_NAME>-raw-write-int ( addr offset n -- )
+    drop drop drop
+;
+
+\ ------------------------------------------------------------
+\ MODULE EXECUTION CYCLE
+\ ------------------------------------------------------------
+
+: <MODULE_NAME>-cycle ( addr -- )
+    dup hw-stabilize
+    dup hw-validate drop
+;
+
+\ ============================================================
+\ END OF BIOS-SAFE + SCIENTIFIC OUTPUT BOILERPLATE
+\ ============================================================

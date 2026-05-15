@@ -1,0 +1,326 @@
+{
+  "generated_on": "2026-04-10",
+  "mode": "consolidated_implementation_checklist",
+  "output_file": "sara_pillar_surgical_todo.json",
+  "inputs_used": [
+    "sara_full_and_lite_surgical_update_report.json",
+    "sara_lite_surgical_update_report.json",
+    "sara_simulation_harness_plan.json",
+    "stresstest1.json",
+    "stresstest2results.json",
+    "amip_amipi_surgical_expansion_plan.json"
+  ],
+  "directory_drift_scan": {
+    "canonical_surgical_reports_found": [
+      "sara_lite_surgical_update_report.json",
+      "sara_full_and_lite_surgical_update_report.json"
+    ],
+    "additional_related_surgical_plan_found": [
+      "amip_amipi_surgical_expansion_plan.json"
+    ],
+    "other_update_artifacts_spotted": [
+      "actionmap.updated.json",
+      "shunt_map_descriptor.updated.json",
+      "backendupdates.md",
+      "canonical_pillars_update_and_samples.txt",
+      "fsm repareandupdate.md"
+    ],
+    "finding": "No extra drifted surgical TODO JSON was found. The two surgical update reports remain the canonical checklist inputs, with the AMIP/AMIPI surgical expansion plan as the main adjacent drift artifact worth folding in."
+  },
+  "verified_baseline": {
+    "full_runtime_status": "PARTIAL_ONLINE",
+    "lite_runtime_status": "DESIGN_STRONG_NOT_BOOT_TESTED",
+    "claywork_protocol_gate": "PASS",
+    "local_status": "PASS",
+    "distant_status": "PASS",
+    "stress_replay_status": "PASS_WITH_LIMITATIONS",
+    "learning_drift_status": "PASS_WITH_ACCEPTABLE_EMERGENT_LOGS",
+    "important_limit": "The stress and learning runs were synthetic replays with fresh real protocol-gate evidence embedded; they were not live autonomous multi-week runtime executions."
+  },
+  "non_negotiable_invariants": [
+    "CONTROL-only routing remains authoritative for every external or internal request lane.",
+    "SECURITY-first gating and STABLES checks run before remote activation, update apply, or trust escalation.",
+    "SDK stays adapter-only and must not become a direct router or execution bypass.",
+    "NBS remains rollback-first, dry-run-first, and last-known-good preserving.",
+    "MAMA and cockpit layers remain operator-facing summaries, not policy owners."
+  ],
+  "implementation_order": [
+    "1. CONTROL-Lite packaging and route sealing",
+    "2. SECURITY-Lite trust-policy and quarantine wiring",
+    "3. NBS-Lite snapshots, deltas, rebuild, and rollback services",
+    "4. AMIP/AMIPI schema alignment and shunt-map enforcement",
+    "5. SDK-Lite request builders under CONTROL governance",
+    "6. MAMA-Lite and cockpit integration",
+    "7. Lite OS image assembly and boot graph validation",
+    "8. VNCE/WFH and bounded C# host bridge validation",
+    "9. Real executable simulation runner and regression automation"
+  ],
+  "subsystems": {
+    "control_and_route_authority": {
+      "priority": 1,
+      "status_now": "FULL_CONTROL_PATH_VERIFIED_PASS; CONTROL-Lite remains un-packaged and not yet boot-wired.",
+      "surgical_updates_remaining": [
+        "Package a minimal CONTROL-Lite wrapper around `dispatch()`, `route_bucey_shunt_con()`, `dispatch_amipi_con()`, `vnce_lifecycle`, and dry-run-first `self.evolve` handling.",
+        "Enforce byte-level shunt decode and route ownership using `shunt_map_descriptor.updated.json` rather than leaving it at planning level.",
+        "Ensure future Lite desktop, VNCE, and C# host inputs all enter through CONTROL rather than direct SDK or UI shortcuts."
+      ],
+      "files_to_touch": [
+        "claywork/saragen0finish/sara_control/sara_controlgen1.py",
+        "sara_self_evolve_protocol.json",
+        "ai_profile_evolution_extensions.json",
+        "shunt_map_descriptor.updated.json",
+        "actionmap.updated.json"
+      ],
+      "services_to_create_or_update": [
+        "sara-lite-control.service"
+      ],
+      "completion_criteria": [
+        "`dispatch()` remains the single authoritative route entrypoint for Lite and Full host traffic.",
+        "Unknown or malformed remote states default to hold, deny, or quarantine.",
+        "Local, LAN, and resume flows pass through the same CONTROL logic with no bypass paths."
+      ]
+    },
+    "security_and_trust_gates": {
+      "priority": 2,
+      "status_now": "PARTIAL_ONLINE_HARDENED_PATH in Full; SECURITY-Lite policy is defined but not yet installed as an OS service.",
+      "surgical_updates_remaining": [
+        "Bind SECURITY-Lite to a real trust-policy file covering local_only, lan, and internet_strict posture decisions.",
+        "Add signature validation for update-sync and `self.evolve` delta bundles before any apply path.",
+        "Harden VNCE resume/reconnect handling so mismatches fail closed and write audit logs."
+      ],
+      "files_to_touch": [
+        "claywork/saragen0finish/sara_security/sara_securitygen1.py",
+        "sara_self_evolve_protocol.json",
+        "mythosreport.json",
+        "/etc/sara-lite/trust-policy.json",
+        "/etc/sara-lite/update-policy.json",
+        "/var/lib/sara-lite/security/stables-state.json"
+      ],
+      "services_to_create_or_update": [
+        "sara-lite-security.service"
+      ],
+      "completion_criteria": [
+        "Trust policy loads at boot and clearly differentiates local, LAN-first, and stricter remote modes.",
+        "Unsigned or weakly attested updates are blocked before apply.",
+        "VNCE start, resume, reconnect, and downgrade drills consistently fail closed on mismatch."
+      ]
+    },
+    "core_and_schema_exports": {
+      "priority": 3,
+      "status_now": "CORE concepts exist and are reusable, but CORE-Lite has not been extracted as a clean runtime package.",
+      "surgical_updates_remaining": [
+        "Extract a bounded CORE-Lite wrapper for envelope building, workflow_state, machine_profile resolution, and deterministic defaults.",
+        "Freeze the schema contract used by Lite so CORE stays non-routing and deterministic.",
+        "Bind CORE-Lite output to the planned Lite schema store and state paths."
+      ],
+      "files_to_touch": [
+        "claywork/saragen0finish/sara_core/sara_coregen1.py",
+        "micro_sara_embedding_plan.json",
+        "sara_lite_os_unified_build_plan.json",
+        "/opt/sara-vnce/sara-lite/core-lite/",
+        "/var/lib/sara-lite/runtime/core-state.json"
+      ],
+      "services_to_create_or_update": [
+        "sara-lite-core.service"
+      ],
+      "completion_criteria": [
+        "CORE-Lite exports only builders, schema helpers, and continuity-safe state functions.",
+        "No routing authority is added to CORE-Lite.",
+        "AMIP envelope generation is stable during boot and local route tests."
+      ]
+    },
+    "amip_amipi_and_shunt_contracts": {
+      "priority": 4,
+      "status_now": "Schema and map drift still exists: runtime behavior is ahead of the formal AMIP/AMIPI and shunt contract files.",
+      "surgical_updates_remaining": [
+        "Create a first-class versioned AMIPI schema so CONTROL-to-SDK dispatch stops relying on informal stub metadata.",
+        "Align `amip_v0_1_schema.json` with the live CORE and CONTROL fields or narrow runtime emission so the schema is truthful again.",
+        "Add explicit enforcement for BYTE0-BYTE5 authority, lock, lane, and routing semantics from the updated shunt map files.",
+        "Move fallback `correlation_id` generation to a true UUID shape in every path."
+      ],
+      "files_to_touch": [
+        "amip_amipi_surgical_expansion_plan.json",
+        "actionmap.updated.json",
+        "shunt_map_descriptor.updated.json",
+        "claywork/saragen0finish/sara_core/sara_coregen1.py",
+        "claywork/saragen0finish/sara_control/sara_controlgen1.py",
+        "claywork/saragen0finish/sara_security/sara_securitygen1.py"
+      ],
+      "services_to_create_or_update": [
+        "schema validation hook inside sara-lite-control.service",
+        "schema validation hook inside sara-lite-security.service"
+      ],
+      "completion_criteria": [
+        "AMIP and AMIPI contracts are versioned, shared, and validated against live payloads.",
+        "Shunt authority and lock bits materially affect routing decisions.",
+        "No schema drift remains between planning artifacts and the live runtime emitters."
+      ]
+    },
+    "sdk_and_adapter_layer": {
+      "priority": 5,
+      "status_now": "SDK and SDK-Lite are still mostly stubbed and metadata-oriented.",
+      "surgical_updates_remaining": [
+        "Implement VNCE and `self.evolve` request builders without granting direct execution or route authority.",
+        "Add server_host, server_port, transport_security, and reconnect metadata handling under CONTROL governance.",
+        "Keep device, Android, iOS, ARM, TV, and kernel folders wrapper-only until real transport hooks exist."
+      ],
+      "files_to_touch": [
+        "claywork/saragen0finish/sara_sdk/Sara_sdk.gen1.py",
+        "claywork/saragen0finish/sara_sdk/common/shunt_client.py",
+        "claywork/saragen0finish/sara_sdk/tv/dashboard_api.py",
+        "sara_self_evolve_protocol.json"
+      ],
+      "services_to_create_or_update": [
+        "sara-lite-sdk.service"
+      ],
+      "completion_criteria": [
+        "SDK-generated requests always pass through CONTROL and SECURITY before use.",
+        "VNCE and remote host metadata can be built and handed off safely.",
+        "The adapter surface remains non-authoritative and auditable."
+      ]
+    },
+    "nbs_lite_and_safe_update_path": {
+      "priority": 6,
+      "status_now": "NBS-Lite is critical and fully planned, but it is not yet implemented as a live service graph.",
+      "surgical_updates_remaining": [
+        "Create the NBS-Lite filesystem roots for snapshots, maps, schemas, deltas, and rebuild state.",
+        "Implement dry-run reconstruction, staged delta apply, and last-known-good rollback as the default update path.",
+        "Wire update-sync and rebuild commands to SECURITY approval and CONTROL coordination."
+      ],
+      "files_to_touch": [
+        "sara_lite_os_unified_build_plan.json",
+        "micro_sara_embedding_plan.json",
+        "sara_self_evolve_protocol.json",
+        "/var/lib/sara-lite/nbs/snapshots/",
+        "/var/lib/sara-lite/nbs/maps/",
+        "/var/lib/sara-lite/nbs/schemas/",
+        "/var/lib/sara-lite/nbs/deltas/",
+        "/usr/local/bin/sara-lite-rebuild",
+        "/usr/local/bin/sara-lite-update-sync"
+      ],
+      "services_to_create_or_update": [
+        "sara-lite-nbs.service",
+        "sara-lite-update-sync.service",
+        "sara-lite-rebuild.service"
+      ],
+      "completion_criteria": [
+        "Every update or self-evolve proposal creates a pre-change snapshot and staged delta.",
+        "Rollback to last-known-good works without manual file surgery.",
+        "Rebuild drills are proven before enabling wider remote update trust."
+      ]
+    },
+    "mama_lite_and_cockpit_ui": {
+      "priority": 7,
+      "status_now": "MAMA concepts and Envoy UI surfaces exist, but MAMA-Lite and the cockpit are not yet wired as the operator-facing Lite shell.",
+      "surgical_updates_remaining": [
+        "Create a minimal MAMA-Lite summary adapter for session, trust, continuity, and update state.",
+        "Build the Lite cockpit as a single safe operator window with health, trust, continuity, and tool-availability panels.",
+        "Keep text low-strain, ADA-first, and voice-preferred by default."
+      ],
+      "files_to_touch": [
+        "claywork/saragen0finish/sara_mama/sara_mamagen1.py",
+        "claywork/saragen0finish/sara_mama/envoy_web/app.py",
+        "claywork/saragen0finish/sara_mama/envoy_desktop/sara_desktop_app.py",
+        "desktop_vnce_node_iso_build_plan_with_ide.json",
+        "/usr/local/bin/sara-lite-cockpit",
+        "/usr/share/applications/sara-lite-cockpit.desktop",
+        "/etc/sara-lite/cockpit-profile.json"
+      ],
+      "services_to_create_or_update": [
+        "sara-lite-cockpit",
+        "sara-lite-mama.service"
+      ],
+      "completion_criteria": [
+        "The operator can see current health, trust, NBS, and update status without using raw logs.",
+        "Hold, challenge, rollback, and rebuild states are explained clearly and calmly.",
+        "The UI never bypasses CONTROL or SECURITY policy."
+      ]
+    },
+    "os_build_boot_and_service_graph": {
+      "priority": 8,
+      "status_now": "The Lite OS design is strong, but the actual rootfs, image assembly, and boot orchestration have not been completed.",
+      "surgical_updates_remaining": [
+        "Assemble the Linux image and root filesystem according to the Lite OS plans.",
+        "Register the systemd boot graph for CORE-Lite, CONTROL-Lite, SECURITY-Lite, NBS-Lite, SDK-Lite, and cockpit layers.",
+        "Package ADA defaults, devtools, and local persistence locations into the booted image."
+      ],
+      "files_to_touch": [
+        "sara_lite_os_unified_build_plan.json",
+        "desktop_vnce_node_iso_build_plan.json",
+        "desktop_vnce_node_iso_build_plan_with_ide.json",
+        "/etc/systemd/system/",
+        "/opt/sara-vnce/",
+        "/var/lib/sara-lite/"
+      ],
+      "services_to_create_or_update": [
+        "systemd boot graph for sara-lite-core/control/security/sdk/nbs",
+        "desktop autostart for sara-lite-cockpit"
+      ],
+      "completion_criteria": [
+        "The image boots cleanly on target x86_64 hardware.",
+        "All required Lite services reach healthy status in the intended order.",
+        "The operator can reach the cockpit and local devtools without violating trust policy."
+      ]
+    },
+    "vnce_wfh_and_csharp_host_bridge": {
+      "priority": 9,
+      "status_now": "WFH readiness is partial; the VNCE server boundary exists conceptually, but the visible C# host listener remains unconfirmed.",
+      "surgical_updates_remaining": [
+        "Add or confirm a bounded VNCE listener/acceptor profile for the existing C# Office Suite host surface.",
+        "Bridge SARA Lite remote sessions through CONTROL and SECURITY with audit logging, not through raw UI or SDK shortcuts.",
+        "Prove LAN-first session start, trusted resume, reconnect challenge, and quarantine behavior end-to-end."
+      ],
+      "files_to_touch": [
+        "saragen0/SARA.Gen0.sln",
+        "saragen0/SARA.Gen0.Client/",
+        "saragen0/SARA.Gen0.UI/",
+        "claywork/saragen0finish/sara_control/sara_controlgen1.py",
+        "claywork/saragen0finish/sara_security/sara_securitygen1.py"
+      ],
+      "services_to_create_or_update": [
+        "bounded VNCE host profile for the existing C# Office Suite",
+        "LAN-first remote session bridge"
+      ],
+      "completion_criteria": [
+        "A separate C# codebase is not required, but the host profile is clearly bounded and testable.",
+        "Remote session establishment, resume, and disconnect handling produce auditable CONTROL and SECURITY outcomes.",
+        "WFH mode is enabled only after LAN staging passes."
+      ]
+    },
+    "simulation_runner_and_regression_validation": {
+      "priority": 10,
+      "status_now": "The current stress outputs are useful but mostly synthetic replays; only the protocol gate is freshly runtime-verified.",
+      "surgical_updates_remaining": [
+        "Turn the current simulation plans into a real non-destructive replay runner that can automatically produce result JSON files.",
+        "Add timing hooks and repeatable workload profiles for conversation load, business-plan cycles, adversarial drills, and drift logging.",
+        "Keep the runner dry-run-safe and evidence-oriented."
+      ],
+      "files_to_touch": [
+        "sara_simulation_harness_plan.json",
+        "sara_simulation_harness_plan_with_personality_checks.json",
+        "stresstest1.json",
+        "stresstest2_learning_and_drift.json",
+        "stresstest2results.json",
+        "scripts/run.ps1",
+        "scripts/claywork_protocol.ps1"
+      ],
+      "services_to_create_or_update": [
+        "optional simulation replay runner",
+        "optional scheduled regression gate"
+      ],
+      "completion_criteria": [
+        "Stress and learning result bundles can be regenerated from the plans without manual hand assembly.",
+        "The replay remains bounded, non-runtime-destructive, and easy to audit.",
+        "Protocol gate evidence is embedded automatically alongside simulation summaries."
+      ]
+    }
+  },
+  "definition_of_done": [
+    "Full CONTROL and SECURITY remain the proven backbone and still pass the protocol gate.",
+    "Lite services boot in a controlled order and persist their state under the planned filesystem layout.",
+    "WFH and VNCE flows are LAN-first, audited, resumable, and rollback-safe.",
+    "AMIP/AMIPI/shunt contracts are aligned with the live code and no longer drift from the schemas.",
+    "The operator-facing cockpit is usable, ADA-first, and policy-safe.",
+    "Synthetic simulation plans can be replayed automatically with fresh verification evidence."
+  ]
+}

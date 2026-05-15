@@ -1,0 +1,62 @@
+INITIAL_CONDITIONING_ARCHITECTURE_SCAN_V2
+
+Scope
+- Read-only architecture discovery pass for Initial Conditioning / Process-1 sequencing as a post phase.
+- Sources: Gen1 pillar code, extended C# specsheet, Stage-5/Stage-7 planning artifacts.
+- WFH execution assumption: primary workstream is architecture/spec review; optional side work can include research and dataset planning.
+
+Authoritative Architecture Findings
+1) CONTROL remains sole routing authority for expressive path and conditioning-sensitive mode selection.
+   - Evidence: CONTROL resolves generation profile and applies policy downgrade chain with SHI governor and strain awareness.
+   - File anchors:
+     - claywork/saragen0finish/sara_control/sara_controlgen1.py:4201
+     - claywork/saragen0finish/sara_control/sara_controlgen1.py:4249
+
+2) SECURITY remains sole gate authority and must be active before any conditioning-dependent expressive route is accepted.
+   - Evidence: STABLES init/validate lifecycle exists with deterministic ALLOW/CHALLENGE/QUARANTINE outcomes.
+   - File anchors:
+     - claywork/saragen0finish/sara_security/sara_securitygen1.py:163
+     - claywork/saragen0finish/sara_security/sara_securitygen1.py:367
+     - claywork/saragen0finish/sara_security/sara_securitygen1.py:456
+
+3) CORE is builder/source for deterministic AMIP + Bucey Shunt envelope context and machine-profile defaults.
+   - Evidence: CORE builds AMIP payload, Bucey Shunt envelope, and workflow state.
+   - File anchors:
+     - claywork/saragen0finish/sara_core/sara_coregen1.py:1048
+     - claywork/saragen0finish/sara_core/sara_coregen1.py:1118
+
+4) MAMA is presentation/memory surface for phase-state visibility and replay continuity, not route authority.
+   - Evidence: MAMA surfaces phase1_outcome/osh_pipeline and generation replay controls.
+   - File anchors:
+     - claywork/saragen0finish/sara_mama/sara_mamagen1.py:1227
+     - claywork/saragen0finish/sara_mama/sara_mamagen1.py:1249
+     - claywork/saragen0finish/sara_mama/sara_mamagen1.py:1294
+
+5) OSH stage semantics are already encoded and surfaced as deterministic pipeline state.
+   - Evidence: CONTROL _phase1_pipeline_con + route_bucey_shunt_con returns current stage and stage progression; MAMA mirrors the same state.
+   - File anchors:
+     - claywork/saragen0finish/sara_control/sara_controlgen1.py:4468
+     - claywork/saragen0finish/sara_control/sara_controlgen1.py:4505
+     - claywork/saragen0finish/sara_mama/sara_mamagen1.py:1249
+
+Initial Conditioning (Process-1) Architectural Sequence
+- Post-phase precondition: architecture/spec MD completion and baseline AI build readiness are required.
+- Process-1.0 Canonical lock: verify frozen map set and route constraints are unchanged.
+- Process-1.1 CORE context build: resolve profile, mode, resource budget, correlation/request IDs.
+- Process-1.2 SECURITY session conditioning: STABLES init/validate to establish active session hardness state.
+- Process-1.3 CONTROL pre-routing conditioning: normalize AMIP payload, apply SHI governor, apply generation policy.
+- Process-1.4 CONTROL route guard: enforce source/target pillar integrity + self.evolve dry-run protection.
+- Process-1.5 OSH pipeline execution path: enforce intake -> boundary -> schema -> non-authority gates.
+- Process-1.6 MAMA surface conditioning: expose deterministic pipeline state, outcome class, low-strain recovery language.
+
+Architecture Risks Identified
+- Risk-A1: If C# introduces direct model calls, route integrity is violated.
+  - Mitigation: preserve CONTROL-only endpoint contract.
+- Risk-A2: If tone/persona layer mutates security outcomes, non-authority is violated.
+  - Mitigation: tone applies only after gate outcomes are final.
+- Risk-A3: If STABLES resume token flow is skipped, session hardening can degrade.
+  - Mitigation: enforce stables_validate_session path for all relevant session contexts.
+
+Gate Readiness Judgement
+- Initial Conditioning path is architecturally discoverable and implementable as a post phase.
+- No additional new authority surface is required; sequence should be executed by existing CORE->SECURITY->CONTROL->MAMA responsibilities.

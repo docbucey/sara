@@ -1,0 +1,57 @@
+{
+  "name": "smithy-core",
+  "displayName": "Smithy Core",
+  "description": "Core extension for Smithy device and tool orchestration.",
+  "version": "0.0.1",
+  "publisher": "private",
+  "private": true,
+  "engines": { "vscode": ">=1.70.0" },
+  "categories": ["Other"],
+  "main": "./out/extension.js",
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.70.0",
+    "typescript": "^4.7.0",
+    "@types/node": "^16.0.0"
+  },
+  "activationEvents": [
+    "onCommand:smithy.start",
+    "onCommand:smithy.stop",
+    "onCommand:smithy.reload",
+    "onCommand:smithy.sendToBlender",
+    "onCommand:smithy.sendToSara",
+    "onCommand:smithy.bindDeviceInput",
+    "onCommand:smithy.runMacro",
+    "onCommand:smithy.loadProfile",
+    "onCommand:smithy.saveProfile",
+    "onCommand:smithy.openLog",
+    "onCommand:smithy.openSessionFolder",
+    "onCommand:smithy.testIPC"
+  ],
+  "contributes": {
+    "commands": [
+      { "command": "smithy.start", "title": "Smithy: Start" },
+      { "command": "smithy.stop", "title": "Smithy: Stop" },
+      { "command": "smithy.reload", "title": "Smithy: Reload" },
+      { "command": "smithy.sendToBlender", "title": "Smithy: Send to Blender" },
+      { "command": "smithy.sendToSara", "title": "Smithy: Send to SARA" },
+      { "command": "smithy.bindDeviceInput", "title": "Smithy: Bind Device Input" },
+      { "command": "smithy.runMacro", "title": "Smithy: Run Macro" },
+      { "command": "smithy.loadProfile", "title": "Smithy: Load Profile" },
+      { "command": "smithy.saveProfile", "title": "Smithy: Save Profile" },
+      { "command": "smithy.openLog", "title": "Smithy: Open Log" },
+      { "command": "smithy.openSessionFolder", "title": "Smithy: Open Session Folder" },
+      { "command": "smithy.testIPC", "title": "Smithy: Test IPC" },
+      { "command": "smithy.startDeviceListener", "title": "Smithy: Start Device Listener" },
+      { "command": "smithy.stopDeviceListener", "title": "Smithy: Stop Device Listener" },
+      { "command": "smithy.registerMacro", "title": "Smithy: Register Macro" },
+      { "command": "smithy.openProfileEditor", "title": "Smithy: Open Profile Editor" },
+      { "command": "smithy.insertCodeBlock", "title": "Smithy: Insert Code Block" },
+      { "command": "smithy.probeSystem", "title": "Smithy: Run System Probe" }
+    ]
+  }
+}

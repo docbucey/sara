@@ -1,0 +1,423 @@
+{
+  "metadata": {
+    "source_file": "shunt_map_descriptor.json",
+    "updated_on": "2026-04-10",
+    "reasoning_repair_updated_on": "2026-04-11",
+    "todo_scan": {
+      "todo_count": 0,
+      "fixme_count": 0,
+      "incomplete_markers_found": []
+    },
+    "current_model": "five_pillar",
+    "pillars": [
+      "CORE",
+      "CONTROL",
+      "SECURITY",
+      "MAMA",
+      "SDK"
+    ],
+    "audit_validation": {
+      "control_only_routing_required": true,
+      "canonical_defined_in_core": true,
+      "all_pillars_import_from_core": true,
+      "mama_header_generation_allowed": false,
+      "open_gaps_from_audit": [
+        "Direct UI to pillar bypass must remain blocked by CONTROL-only routing.",
+        "ADA Lock logic is still a documented refinement item for HUD-driven routing paths.",
+        "NBS snapshot/diff continuity is still a MAMA refinement item for RESEARCH_NBS."
+      ]
+    },
+    "reasoning_visibility_contract": {
+      "selection_owner": "CONTROL",
+      "visibility_gate_owner": "SECURITY",
+      "mama_consumes_validated_overlay_only": true,
+      "direct_mama_model_invocation_allowed": false,
+      "reasoning_may_not_mutate_headers": true
+    }
+  },
+  "header_spec": {
+    "name": "canonical_bucey_shunt_header",
+    "logical_control_bits": 24,
+    "physical_bytes": 6,
+    "reserved_padding_bytes": 210,
+    "byte_map": {
+      "BYTE0": {
+        "name": "shunt_mode_enable",
+        "description": "Enables Bucey Shunt mode.",
+        "values": {
+          "00": "disabled",
+          "01": "enabled"
+        }
+      },
+      "BYTE1": {
+        "name": "domain_origin_authority_routing",
+        "description": "Encodes domain, origin, authority, and routing in 2-bit groups.",
+        "bit_fields": {
+          "domain_bits": {
+            "bits": "7-6",
+            "values": {
+              "00": "LOCAL_CORE_CPU",
+              "01": "CONTROL_ORCHESTRATION",
+              "10": "SECURITY_COMPLIANCE",
+              "11": "INTERFACE_ADAPTER_SURFACE"
+            }
+          },
+          "origin_bits": {
+            "bits": "5-4",
+            "values": {
+              "00": "CORE_TRADITIONAL",
+              "01": "CONTROL_NATIVE",
+              "10": "SECURITY_NATIVE",
+              "11": "MAMA_OR_SDK_FORWARDER"
+            }
+          },
+          "authority_bits": {
+            "bits": "3-2",
+            "values": {
+              "00": "READ_ONLY",
+              "01": "VALIDATE_GATE",
+              "10": "PRESENT_STORE",
+              "11": "CONTROL_EXECUTE"
+            }
+          },
+          "routing_bits": {
+            "bits": "1-0",
+            "values": {
+              "00": "RETURN_OR_NOOP",
+              "01": "CONTROL_FIRST_STANDARD",
+              "10": "SECURITY_GATE_FIRST",
+              "11": "AMIPI_OR_ADAPTER_LANE"
+            }
+          }
+        }
+      },
+      "BYTE2": {
+        "name": "envoy_resonator_switch",
+        "description": "Selects the standard lane or Envoy/Resonator lane context.",
+        "values": {
+          "00": "standard_control_lane",
+          "01": "envoy_or_resonator_lane"
+        }
+      },
+      "BYTE3": {
+        "name": "filename_orchestrator_lane",
+        "description": "Encodes file/pattern hints and the final lane selector.",
+        "bit_fields": {
+          "filename_bits": {
+            "bits": "7-6"
+          },
+          "orchestrator_pattern_bits": {
+            "bits": "5-2"
+          },
+          "lane_bits": {
+            "bits": "1-0",
+            "values": {
+              "00": "core_control_lane",
+              "01": "mama_presentation_lane",
+              "10": "sdk_amipi_adapter_lane",
+              "11": "security_or_stables_lane"
+            }
+          }
+        }
+      },
+      "BYTE4": {
+        "name": "extension_signature_domain_confirm",
+        "description": "Confirms extension class and domain alignment.",
+        "bit_fields": {
+          "extension_signature_bits": {
+            "bits": "7-6"
+          },
+          "domain_confirm_bits": {
+            "bits": "5-4"
+          }
+        }
+      },
+      "BYTE5": {
+        "name": "authority_and_lock",
+        "description": "Encodes shunt authority level and lock state.",
+        "bit_fields": {
+          "shunt_authority_bits": {
+            "bits": "7-4",
+            "values": {
+              "0": "inbound_only",
+              "1": "read_allowed",
+              "2": "validate_or_route",
+              "3": "execute_write_control_owned"
+            }
+          },
+          "shunt_lock_bits": {
+            "bits": "3-0",
+            "values": {
+              "0": "read_only",
+              "1": "control_owned_lock",
+              "2": "security_gate_lock",
+              "3": "reserved_strict_lock"
+            }
+          }
+        }
+      }
+    }
+  },
+  "map_sets": {
+    "0000": {
+      "name": "NO_OP",
+      "description": "Neutral or return-only path.",
+      "pillar": null,
+      "allowed_profiles": [
+        "ALL"
+      ],
+      "out_routes": [
+        "RETURN"
+      ]
+    },
+    "0001": {
+      "name": "CORE_PROFILE_AND_ENVELOPE",
+      "description": "CORE resolves machine profile and builds canonical AMIP/Bucey payloads.",
+      "pillar": "CORE",
+      "functions": [
+        "resolve_machine_profile_core",
+        "build_amip_payload_core",
+        "build_bucey_shunt_envelope_core"
+      ],
+      "allowed_profiles": [
+        "GENERAL_OFFICE",
+        "WFH_OPERATOR",
+        "RESEARCH_NBS"
+      ],
+      "out_routes": [
+        "CONTROL",
+        "RETURN"
+      ]
+    },
+    "0010": {
+      "name": "CONTROL_ROUTE_AND_FSM",
+      "description": "CONTROL receives, validates, routes, and dispatches all shunt traffic.",
+      "pillar": "CONTROL",
+      "functions": [
+        "route_bucey_shunt_con",
+        "_normalize_amip_request_con",
+        "dispatch_amipi_con"
+      ],
+      "allowed_profiles": [
+        "ALL"
+      ],
+      "out_routes": [
+        "SECURITY",
+        "CORE",
+        "MAMA",
+        "SDK",
+        "RETURN"
+      ]
+    },
+    "0011": {
+      "name": "SECURITY_VALIDATE_AND_AUDIT",
+      "description": "SECURITY validates the shunt and AMIP payload before execution continues.",
+      "pillar": "SECURITY",
+      "functions": [
+        "validate_bucey_shunt_sec",
+        "validate_amip_payload_sec",
+        "king_sovereignty_check",
+        "sheriff_audit"
+      ],
+      "allowed_profiles": [
+        "GENERAL_OFFICE",
+        "WFH_OPERATOR",
+        "RESEARCH_NBS"
+      ],
+      "out_routes": [
+        "ALLOW",
+        "RESTRICT",
+        "DENY",
+        "ALERT",
+        "RETURN"
+      ]
+    },
+    "0100": {
+      "name": "MAMA_LOW_STRAIN_PRESENTATION",
+      "description": "MAMA shapes validated output for low-strain, ADA-aware presentation and continuity flows.",
+      "pillar": "MAMA",
+      "functions": [
+        "adapt_amip_ux_mama",
+        "summarize_bucey_shunt_mama",
+        "present_amipi_result_mama"
+      ],
+      "allowed_profiles": [
+        "GENERAL_OFFICE",
+        "WFH_OPERATOR",
+        "RESEARCH_NBS"
+      ],
+      "out_routes": [
+        "RETURN",
+        "STORE"
+      ]
+    },
+    "0101": {
+      "name": "SDK_AMIPI_ADAPTER_LANE",
+      "description": "SDK provides adapter and AMI lane mapping for internal local AI routing without taking routing authority away from CONTROL.",
+      "pillar": "SDK",
+      "functions": [
+        "SDK_INTERNAL_AMI_LANES",
+        "sdk_identity_catalog",
+        "build_local_bucey_shunt",
+        "send_bucey_shunt"
+      ],
+      "allowed_profiles": [
+        "GENERAL_OFFICE",
+        "WFH_OPERATOR"
+      ],
+      "out_routes": [
+        "CONTROL",
+        "RETURN"
+      ]
+    }
+  },
+  "fsm_routing_map": {
+    "INBOUND": {
+      "owner": "CONTROL",
+      "next": [
+        "VALIDATE"
+      ]
+    },
+    "VALIDATE": {
+      "owner": "SECURITY",
+      "next": [
+        "ROUTE",
+        "ERROR",
+        "HALT"
+      ]
+    },
+    "ROUTE": {
+      "owner": "CONTROL",
+      "next": [
+        "EXECUTE",
+        "RETURN"
+      ]
+    },
+    "EXECUTE": {
+      "owner": "CORE",
+      "secondary_paths": [
+        "MAMA",
+        "SDK"
+      ],
+      "next": [
+        "RETURN",
+        "ERROR"
+      ]
+    },
+    "RETURN": {
+      "owner": "MAMA",
+      "next": [
+        "COMPLETE"
+      ]
+    },
+    "ERROR": {
+      "owner": "SECURITY",
+      "next": [
+        "RETURN",
+        "HALT"
+      ]
+    },
+    "HALT": {
+      "owner": "CONTROL",
+      "next": []
+    }
+  },
+  "profile_gate_map": {
+    "WFH_OPERATOR": {
+      "entry_pillar": "CONTROL",
+      "required_constraints": [
+        "control_only_routing",
+        "ada_enforced",
+        "ambiguity_strict",
+        "pacing_rules_required"
+      ],
+      "allowed_pillars": [
+        "CORE",
+        "CONTROL",
+        "SECURITY",
+        "MAMA",
+        "SDK"
+      ]
+    },
+    "RESEARCH_NBS": {
+      "entry_pillar": "CONTROL",
+      "required_constraints": [
+        "nbs_continuity",
+        "snapshot_diff_pending",
+        "low_strain_output"
+      ],
+      "allowed_pillars": [
+        "CORE",
+        "CONTROL",
+        "SECURITY",
+        "MAMA"
+      ]
+    },
+    "GENERAL_OFFICE": {
+      "entry_pillar": "CONTROL",
+      "required_constraints": [
+        "client_output_sanitization",
+        "control_only_routing"
+      ],
+      "allowed_pillars": [
+        "CORE",
+        "CONTROL",
+        "SECURITY",
+        "MAMA",
+        "SDK"
+      ]
+    }
+  },
+  "lane_routing_map": {
+    "00": {
+      "lane_name": "standard_control_lane",
+      "primary_pillars": [
+        "CORE",
+        "CONTROL"
+      ]
+    },
+    "01": {
+      "lane_name": "mama_presentation_lane",
+      "primary_pillars": [
+        "MAMA"
+      ]
+    },
+    "10": {
+      "lane_name": "sdk_amipi_adapter_lane",
+      "primary_pillars": [
+        "SDK"
+      ]
+    },
+    "11": {
+      "lane_name": "security_stables_lane",
+      "primary_pillars": [
+        "SECURITY",
+        "SDK"
+      ]
+    }
+  },
+  "authority_map": {
+    "READ_ONLY": {
+      "allowed_pillars": [
+        "CORE",
+        "MAMA"
+      ]
+    },
+    "VALIDATE_GATE": {
+      "allowed_pillars": [
+        "SECURITY"
+      ]
+    },
+    "PRESENT_STORE": {
+      "allowed_pillars": [
+        "MAMA"
+      ]
+    },
+    "CONTROL_EXECUTE": {
+      "allowed_pillars": [
+        "CONTROL",
+        "CORE"
+      ]
+    }
+  }
+}

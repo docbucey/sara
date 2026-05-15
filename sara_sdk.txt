@@ -1,0 +1,39 @@
+
+
+sara_sdk/
+│
+├── __init__.py
+│     # Exposes the public API:
+│     # SequianCartiGene, Douglas, Galasvi, Puppy, Breed, DogArray, Funk
+│
+├── axioms.py
+│     # Contains the Sequian Numeric Axioms (the block we wrote earlier)
+│
+├── sequian.py
+│     # SequianCartiGene  → scientific-notation numeric carrier
+│     # Douglas           → pure operator layer
+│     # Galasvi           → pure container layer
+│     # 0 imports
+│
+├── protolingua_core.py
+│     # Puppy       → wraps SequianCartiGene
+│     # Breed       → wraps Galasvi
+│     # DogArray    → wraps NexusData or simple list logic
+│     # Funk        → string-based intent layer
+│     # 0 imports
+│
+├── nexusdata.py
+│     # Array substrate for Dog Arrays
+│     # 0 imports
+│
+├── runtime.py
+│     # Runtime injection model for MAMA and future beings
+│     # Provides ops/state objects
+│     # 0 imports
+│
+└── tricks/
+      ├── vesselizer.py
+      │     # Turns raw Python data into Proto-Lingua shapes
+      │
+      └── envelope.py
+            # NBS envelope builder

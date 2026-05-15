@@ -1,0 +1,13 @@
+{
+  "pillar": "MAMA",
+  "functions": [
+    "mama_shunt_entrypoint",
+    "ShuntFSM (interface protocol state/transition management)",
+    "ACT_mapped_functions (snapshot, diff, persist, noop_action)",
+    "validate_shunt_header",
+    "scout",
+    "yard",
+    "house",
+    "mapper"
+  ]
+}

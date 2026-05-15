@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "SArA Research Protocol Output Contract",
+  "type": "object",
+  "properties": {
+    "recommendation": { "type": ["string", "null"], "description": "Final recommendation or answer." },
+    "confidence": { "type": "integer", "minimum": 0, "maximum": 100, "description": "Weighted confidence score (0-100)." },
+    "evidence_by_tier": {
+      "type": "object",
+      "properties": {
+        "T1": { "type": "array", "items": {"type": "object"} },
+        "T2": { "type": "array", "items": {"type": "object"} },
+        "T3": { "type": "array", "items": {"type": "object"} },
+        "T4": { "type": "array", "items": {"type": "object"} }
+      },
+      "additionalProperties": false
+    },
+    "contested_points": { "type": "array", "items": {"type": "object"} },
+    "risk_flags": { "type": "array", "items": {"type": "string"} },
+    "next_verification_step": { "type": ["string", "null"], "description": "Suggested next step for verification." },
+    "status": { "type": "string", "enum": ["PASS", "unsafe_or_unverified"] }
+  },
+  "required": ["recommendation", "confidence", "evidence_by_tier", "contested_points", "risk_flags", "next_verification_step", "status"]
+}

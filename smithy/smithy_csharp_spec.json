@@ -1,0 +1,10 @@
+{
+  "classes": [
+    { "name": "DeviceInput", "fields": ["Device", "Control", "Value"] },
+    { "name": "MacroEngine", "fields": ["Bindings", "Execute"] },
+    { "name": "SmithyBridge", "fields": ["SendToBlender", "SendToSara"] }
+  ],
+  "ipc": {
+    "message_format": { "action": "string", "payload": "object" }
+  }
+}

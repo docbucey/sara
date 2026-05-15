@@ -1,0 +1,36 @@
+PHASE2_FINISH_OFF_PLAN_V1
+
+Objective
+- Close Phase 2 fully and satisfy all P2 exit gates with evidence.
+
+Current Blockers Identified
+1) C# personality/tone classes were missing.
+2) Typed phase1_outcome + osh_pipeline model binding was missing.
+3) Persona-state rendering and deterministic fallback templates were incomplete.
+4) Creativity gate behavior requires explicit UI-safe handling contract.
+
+Now Completed In This Pass
+- Added typed response support:
+  - saragen0/SARA.Gen0.Models/ControlResponse.cs
+  - Added Phase1Outcome and OshPipeline/OshStage models.
+- Added UI-only personality layer classes:
+  - saragen0/SARA.Gen0.UI/Phase2Personality.cs
+  - Added ToneProfile, UserPersonaPreference, PersonalityPresentationLayer.
+
+Remaining Finish Work (Execution Order)
+1) Wire PersonalityPresentationLayer into primary UI response surface (MainWindow/Chat path).
+2) Add explicit UI templates for:
+   - persona-constrained
+   - persona-denied
+   - persona-schema-fail
+   - persona-boundary-blocked
+3) Add creativity allow/deny UI behavior:
+   - default non-creative mode
+   - explicit user-request + approved path only
+4) Add gate evidence capture sheet updates for every P2 gate.
+5) Run final gate verification and publish Phase 2 closeout summary.
+
+Definition of Done
+- All P2 gates marked PASS with evidence references.
+- No direct model bypass introduced.
+- UI presentation changes remain non-authoritative.

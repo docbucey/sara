@@ -1,0 +1,195 @@
+{
+  "generated_on": "2026-04-10",
+  "mode": "analysis_only",
+  "protocol_name": "SARA_SELF_EVOLVE",
+  "protocol_type": "internal JSON-based CONTROL-governed evolution request",
+  "purpose": "Allow SARA Lite OS to request tightly governed schema, map, and policy evolution through CONTROL-Lite, SECURITY-Lite, and NBS-Lite without introducing raw execution, shell access, socket access, or URL access.",
+  "governance_model": {
+    "routing_authority": "CONTROL-Lite only",
+    "security_gate": "SECURITY-Lite first for evolution approval",
+    "state_engine": "NBS-Lite for delta application and continuity",
+    "presentation_layer": "MAMA-Lite for human-readable summaries only",
+    "sdk_role": "SDK-Lite request builder only; never execution authority"
+  },
+  "canonical_contract": {
+    "request": {
+      "protocol": "sara_self_evolve",
+      "version": "v1",
+      "origin": "sara-lite-os",
+      "target": "sara-lite-os",
+      "correlation_id": "<uuid>",
+      "machine_profile": {
+        "node_id": "<node-identity>",
+        "environment": "local_only | lan | internet",
+        "ami_id": "<ami-or-profile-id>"
+      },
+      "evolve_request": {
+        "intent": "apply_deltas",
+        "scope": [
+          "schemas",
+          "maps",
+          "policies"
+        ],
+        "deltas_ref": "nbs://deltas/2026-04-10T12-00Z",
+        "dry_run": true,
+        "require_signed": true
+      }
+    },
+    "result": {
+      "protocol": "sara_self_evolve_result",
+      "version": "v1",
+      "correlation_id": "<same-uuid>",
+      "status": "dry_run_ok | applied | blocked",
+      "summary": {
+        "schemas_updated": [],
+        "maps_updated": [],
+        "policies_updated": [],
+        "requires_reboot": false,
+        "operator_action_suggested": "review_changes_and_confirm_apply"
+      }
+    }
+  },
+  "sdk_lite_builder": {
+    "description": "SDK-Lite constructs the request record and forwards it into CONTROL-Lite. It never applies deltas or executes changes directly.",
+    "requirements": [
+      "Build the canonical JSON request for protocol='sara_self_evolve'.",
+      "Populate correlation_id, machine_profile, and evolve_request deterministically.",
+      "Allow scope only from the bounded set ['schemas', 'maps', 'policies'].",
+      "Default dry_run to true on all first-pass requests.",
+      "Reject or omit any field that implies shell execution, sockets, URL fetch, or arbitrary code execution."
+    ],
+    "allowed_outputs": [
+      "JSON request envelope",
+      "AMIP/AMIPI-compatible metadata for CONTROL-Lite",
+      "local audit metadata"
+    ],
+    "forbidden_behaviors": [
+      "subprocess execution",
+      "os.system usage",
+      "socket creation",
+      "URL fetching",
+      "direct file mutation outside NBS-governed delta staging"
+    ]
+  },
+  "control_lite_governance": {
+    "description": "CONTROL-Lite accepts routing_intent='self.evolve', verifies the caller identity, and routes the request to SECURITY-Lite plus NBS-Lite under a dry-run-first policy.",
+    "requirements": [
+      "Accept routing_intent='self.evolve' as a first-class governed route.",
+      "Verify that origin and target represent a trusted SARA node such as 'sara-lite-os'.",
+      "Require machine_profile.node_id and machine_profile.environment before continuing.",
+      "Route the request first to SECURITY-Lite for approval and then to NBS-Lite for dry-run evaluation.",
+      "Enforce dry_run=true on the first pass even if the caller attempts otherwise.",
+      "Return 'blocked' or 'dry_run_ok' status rather than implicit execution when any condition is uncertain."
+    ],
+    "route_class": "CONTROL_SELF_EVOLVE",
+    "deterministic_rules": [
+      "No free-form execution verbs are allowed.",
+      "No scope may extend beyond schemas, maps, and policies.",
+      "All responses must retain the original correlation_id.",
+      "Initial pass never applies live changes without a validated dry run."
+    ]
+  },
+  "security_lite_requirements": {
+    "description": "SECURITY-Lite validates trust, signatures, and environment policy before any NBS-Lite evolution can proceed.",
+    "requirements": [
+      "Verify signatures on all referenced deltas when require_signed=true.",
+      "Verify node identity from machine_profile.node_id.",
+      "Verify environment trust against local_only, lan, or internet policy.",
+      "Block the request if evolution is forbidden in the current environment or trust tier.",
+      "Block the request if any delta attempts to weaken CONTROL-only routing or SECURITY-first gating.",
+      "Audit all attempts with correlation_id, node identity, scope, and final decision."
+    ],
+    "block_conditions": [
+      "unsigned delta bundle",
+      "unknown node identity",
+      "environment policy forbid",
+      "scope outside schemas/maps/policies",
+      "attempted routing or security weakening",
+      "missing dry_run on first pass"
+    ],
+    "result_policy": {
+      "allowed_pre_apply_status": "dry_run_ok",
+      "denied_status": "blocked"
+    }
+  },
+  "nbs_lite_requirements": {
+    "description": "NBS-Lite stages, validates, dry-runs, snapshots, and if later approved applies only the allowed delta classes.",
+    "requirements": [
+      "Apply deltas only to schemas, maps, and policies.",
+      "Never apply code execution payloads, binaries, shell commands, or network actions.",
+      "Write a continuity snapshot before the dry run begins.",
+      "Write another continuity snapshot after a successful dry run or after a later approved apply pass.",
+      "Refuse any delta that weakens CONTROL-only routing or SECURITY-first gating.",
+      "Keep last-known-good state available for rollback at all times."
+    ],
+    "allowed_delta_classes": [
+      "schema updates",
+      "map updates",
+      "policy updates"
+    ],
+    "forbidden_delta_classes": [
+      "shell scripts",
+      "network fetch instructions",
+      "raw executable payloads",
+      "direct OS command sequences",
+      "policy changes that bypass control or security"
+    ],
+    "continuity_rules": [
+      "snapshot_before_evolution",
+      "snapshot_after_dry_run",
+      "snapshot_after_apply_if_approved",
+      "retain_last_known_good_for_rollback"
+    ]
+  },
+  "mama_lite_requirements": {
+    "description": "MAMA-Lite explains the request and result in plain language for the operator without ever gaining authority over routing or execution.",
+    "requirements": [
+      "Emit human-readable summaries of dry-run results, blocked attempts, and approved apply outcomes.",
+      "Present operator_action_suggested in low-strain language.",
+      "Use ADA-friendly, low-click, reduced-cognitive-load output formatting.",
+      "Never gain routing or execution authority.",
+      "Never mutate NBS state directly."
+    ],
+    "sample_summary_outputs": [
+      "Dry run completed successfully; review proposed schema and policy changes before confirmation.",
+      "Evolution request blocked because the environment trust policy does not allow self-evolution in this mode.",
+      "Approved changes were applied to schemas and maps; reboot not required."
+    ]
+  },
+  "integration_points": {
+    "amip_route_binding": {
+      "routing_intent": "self.evolve",
+      "protocol": "sara_self_evolve",
+      "target_route": "CONTROL_SELF_EVOLVE"
+    },
+    "suggested_files_and_paths": [
+      "/opt/sara-vnce/sara-lite/schemas/sara_self_evolve_v1.json",
+      "/var/lib/sara-lite/nbs/deltas/",
+      "/var/lib/sara-lite/nbs/snapshots/",
+      "/etc/sara-lite/update-policy.json",
+      "/var/lib/sara-lite/security/audit.log"
+    ],
+    "service_flow": [
+      "SDK-Lite builder prepares request",
+      "CONTROL-Lite normalizes and verifies self.evolve intent",
+      "SECURITY-Lite validates signatures, node identity, and environment policy",
+      "NBS-Lite performs dry run and continuity snapshotting",
+      "MAMA-Lite emits the operator summary",
+      "A later approved pass may move from dry_run_ok to applied if policy and operator controls allow it"
+    ]
+  },
+  "safety_constraints": [
+    "No raw execution, shell access, socket access, or URL access may be introduced by this protocol.",
+    "All behavior must remain deterministic, NBS-driven, and CONTROL/SECURITY-governed.",
+    "Dry run is mandatory on the first pass.",
+    "The protocol may evolve only schemas, maps, and policies.",
+    "Neither CONTROL-only routing nor SECURITY-first gating may be weakened by any accepted delta.",
+    "If any check fails, the request result must be 'blocked' and the platform remains in a safe posture."
+  ],
+  "rollout_guidance": {
+    "phase_1": "Define the canonical schema and route binding for routing_intent='self.evolve'.",
+    "phase_2": "Add SECURITY-Lite signature and environment checks plus NBS-Lite dry-run validation.",
+    "phase_3": "Add operator-facing MAMA-Lite summaries and cockpit visibility for review and confirmation.",
+    "phase_4": "Allow controlled 'applied' mode only after dry-run and trust-policy approval are both satisfied."
+  }
+}

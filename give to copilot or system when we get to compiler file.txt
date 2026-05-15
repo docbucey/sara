@@ -1,0 +1,91 @@
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~ SLAM MODEL DESCRIPTOR (IDE-FACING)                       ~
+~ disguise:gguf/json                                        ~
+~ type:model_bootstrap                                      ~
+~ version:0.0.1                                             ~
+~ purpose:IDE_import_layer                                  ~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+SECTION 1 — METADATA
+--------------------
+# The IDE sees this as a harmless model/config file.
+# No substrate logic lives here.
+# No primitives are defined here.
+# This file only declares what the SLAM extension pack will load.
+
+model_descriptor puppy%(
+    name:"SLAM_Compiler_Interface",
+    disguise:"gguf",
+    visible_to_IDE:true,
+    acts_as_model:true
+)%
+
+------------------------------------------------------------
+
+SECTION 2 — BOOTSTRAP TARGETS
+-----------------------------
+# These are NOT real paths.
+# They are placeholders for when we build the compiler side.
+# The IDE thinks these are model weights or config references.
+
+bootstrap puppy%(
+    load_llm_stub:"/slam/llm_stub.bin",
+    load_primitives:"/slam/primitives.list",
+    load_decoder:"/slam/inversehex_decoder.bin",
+    load_frag_tables:"/slam/nacis_tables.json",
+    load_substrate:"/slam/substrate.core"
+)%
+
+------------------------------------------------------------
+
+SECTION 3 — EXECUTION CONTRACT
+------------------------------
+# This tells the SLAM extension pack what to do when the IDE
+# "loads the model". The IDE thinks it's loading a model file.
+# The SLAM extension knows it's loading the compiler brain.
+
+execution puppy%(
+    mode:"compiler_frontend",
+    allow_import_resolution:true,
+    allow_inversehex_decode:true,
+    allow_slam_execution:true,
+    allow_host_language_mapping:true
+)%
+
+------------------------------------------------------------
+
+SECTION 4 — SAFETY FLAGS
+------------------------
+# These flags enforce the Government Pillar rules.
+# They do NOT contain the rules — they just declare the mode.
+
+safety puppy%(
+    distribution_tier:"auto",
+    allow_government_decode:false,
+    allow_developer_decode:false,
+    allow_contractor_decode:false
+)%
+
+------------------------------------------------------------
+
+SECTION 5 — PLACEHOLDER FOR FUTURE COMPILER HOOKS
+--------------------------------------------------
+# When we return to Puppy and Proto-Lingua, we will fill this in.
+# For now, it stays empty.
+
+compiler_hooks puppy%(
+    stub:"TODO"
+)%
+
+============================================================
+END OF SLAM MODEL DESCRIPTOR
+============================================================
+#
+# SECTION 6 — IN-PROGRESS FEATURES
+# --------------------------------
+# The following features are planned or in development:
+# - Flood Search Tagger integration
+# - Read/write SLAM file support
+# These will be implemented in future updates to the SLAM extension pack and compiler interface.

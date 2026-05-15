@@ -1,0 +1,14 @@
+{
+  "pillar": "SECURITY",
+  "functions": [
+    "Paladin (defense/threat detection)",
+    "Sheriff (auditor/integrity scans)",
+    "Deputy (janitor/gatekeeper)",
+    "Archeologist (catalog/inventory)",
+    "Conservator (repair/stabilize)",
+    "Restoration (capability scan/upgrade)",
+    "Envoy (secure transport/proxy)",
+    "King (authority/lockdown)",
+    "SecurityKeep (role orchestration)"
+  ]
+}

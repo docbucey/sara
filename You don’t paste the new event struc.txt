@@ -1,0 +1,148 @@
+You don’t paste the new event structure **at the bottom of a blank file**.  
+You patch it **inside the `HandleInput` method**, because that’s where the agent receives human input, generates agent output, and triggers machine‑level transitions.
+
+The clean way to do this is:
+
+- **Add the full event structure right where the event is created.**
+- **Replace the old minimal event dictionaries.**
+- **Do NOT put it at the bottom of the file.**
+- **Do NOT create a new file for it.**
+
+Everything belongs *inside* `HandleInput` and inside the places where the agent responds.
+
+---
+
+## 🧩 Where to put the full event structure  
+You open your scaffold file, scroll to:
+
+```
+public void HandleInput(string input)
+{
+    switch (CurrentState)
+    {
+        case State.Session:
+```
+
+Right **inside each branch**, you replace the old event creation with the new full event structure.
+
+---
+
+## 🧩 What the patched code looks like inside `HandleInput`
+Here is the exact block you insert **in place of the old event code**.
+
+### 1. Log the human input  
+Put this at the top of `HandleInput`:
+
+```csharp
+var humanEvt = new Dictionary<string, object>
+{
+    ["speaker_profile"] = "human",
+    ["listener_profile"] = "agent",
+    ["input_text"] = input,
+    ["output_text"] = null,
+    ["event_type"] = "input",
+    ["state_before"] = CurrentState.ToString(),
+    ["state_after"] = null,
+    ["timestamp"] = SaraCore.IsoNow(),
+    ["tags"] = new List<string> { "interaction", "human_input" }
+};
+SaraControl.AppendEvent(Project, NarrativePath, humanEvt);
+```
+
+This records **exactly what you typed**, correctly attributed to the human profile.
+
+---
+
+### 2. Log the agent’s response  
+Where you currently have:
+
+```
+Console.WriteLine("Agent is working.");
+```
+
+Replace it with:
+
+```csharp
+var agentOutput = "Agent is working.";
+
+var agentEvt = new Dictionary<string, object>
+{
+    ["speaker_profile"] = "agent",
+    ["listener_profile"] = "human",
+    ["input_text"] = input,
+    ["output_text"] = agentOutput,
+    ["event_type"] = "output",
+    ["state_before"] = "Session",
+    ["state_after"] = "Working",
+    ["timestamp"] = SaraCore.IsoNow(),
+    ["tags"] = new List<string> { "interaction", "agent_output" }
+};
+SaraControl.AppendEvent(Project, NarrativePath, agentEvt);
+
+Console.WriteLine(agentOutput);
+```
+
+Now the agent’s output is logged correctly.
+
+---
+
+### 3. Log machine/system actions  
+Right after you change the state:
+
+```csharp
+var sysEvt = new Dictionary<string, object>
+{
+    ["speaker_profile"] = "machine",
+    ["listener_profile"] = "agent",
+    ["input_text"] = null,
+    ["output_text"] = "State transition executed.",
+    ["event_type"] = "system_action",
+    ["state_before"] = "Session",
+    ["state_after"] = "Working",
+    ["timestamp"] = SaraCore.IsoNow(),
+    ["tags"] = new List<string> { "system", "transition" }
+};
+SaraControl.AppendEvent(Project, NarrativePath, sysEvt);
+```
+
+This records the **internal substrate action**.
+
+---
+
+## 🧩 Why this must go inside `HandleInput`  
+Because:
+
+- this is where **human input enters the system**  
+- this is where **agent output is generated**  
+- this is where **machine transitions occur**  
+
+If you put the event structure at the bottom of the file, it will never run.
+
+It must be inside the logic that handles:
+
+- human → agent  
+- agent → human  
+- machine → agent  
+
+That’s the whole point of the three‑profile shunt.
+
+---
+
+## 🧩 What this fixes  
+After this patch:
+
+- human input is logged correctly  
+- agent output is logged correctly  
+- machine actions are logged correctly  
+- the narrative timeline becomes usable  
+- the profiles stop overwriting each other  
+- the NBS system becomes meaningful again  
+- claywork and resonance will work later  
+- SLAM integration becomes possible  
+- the F# rewrite becomes clean  
+
+This is the foundation SARA, NCR‑Tech, and SLAM all depend on.
+
+---
+
+If you want, I can show you the **fully patched `HandleInput` method** so you can paste it in one shot.

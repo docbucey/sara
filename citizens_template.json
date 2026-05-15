@@ -1,0 +1,88 @@
+{
+  "citizens": [
+    {
+      "name": "template_citizen",
+      "role": "skeleton/template for a SARA-powered C# program module or user agent",
+      "permissions": {
+        "read": true,
+        "write": false,
+        "append": false,
+        "governed_by": ["CONTROL", "SECURITY"]
+      },
+      "stub_policy": {
+        "ai_append_only": true,
+        "manual_append_allowed": true,
+        "ai_stub_fill_requires_explicit_permission": true
+      },
+      "entrypoint": "sara_shunt_entrypoint",
+      "supported_actions": ["read_file", "query_status", "parse_for_analytics"],
+      "security": {
+        "requires_shunt_header": true,
+        "control_governed": true
+      },
+      "environment_specific": {
+        "word": {
+          "can_read": ["docx", "rtf", "odt"],
+          "can_parse": true,
+          "can_write": false,
+          "can_append": false,
+          "notes": "Word can only read and parse document-style files for analytics or display. No writing or appending allowed via the bridge."
+        },
+        "excel": {
+          "can_read": ["xlsx", "csv", "ods"],
+          "can_parse": true,
+          "can_write": false,
+          "can_append": false,
+          "notes": "Excel can only read and parse spreadsheet files for analytics or display. No writing or appending allowed via the bridge."
+        },
+        "vscode": {
+          "can_read": ["any_code_language"],
+          "can_parse": true,
+          "can_write": false,
+          "can_append": false,
+          "notes": "VS Code can read and parse any code file for analytics or code review, but cannot write or append via the bridge."
+        },
+        "blender": {
+          "can_read": ["blend", "fbx", "obj", "stl"],
+          "can_parse": true,
+          "can_write": false,
+          "can_append": false,
+          "notes": "Blender can only read and parse 3D model files for analytics, preview, or display. No writing or appending allowed via the bridge."
+        }
+      },
+      "description": "Use this template to create new C# modules or user agents. All file operations are routed through SARA's CONTROL and SECURITY pillars, ensuring safe, auditable, and intentional evolution. Stubs are only filled by AI when explicitly allowed; otherwise, manual work is required. Each environment (Word, Excel, VS Code) has minimal, strictly separated permissions: only reading/parsing for analytics is allowed, no writing or appending to document or spreadsheet files via the bridge.",
+      "governance": {
+        "enforced_by": ["CONTROL", "SECURITY", "NBS"],
+        "profile_system": ["user", "admin", "system"],
+        "audit_policy": {
+          "log_all_actions": true,
+          "log_fields": ["actor", "action", "target_file", "timestamp", "purpose"],
+          "violation_handling": "escalate_to_admin_and_log"
+        },
+        "escalation_policy": {
+          "allow_override": true,
+          "requires_explicit_approval": true,
+          "approval_levels": ["user", "admin"]
+        },
+        "data_policy": {
+          "minimization": true,
+          "redaction": "as_required_by_profile",
+          "return_types": ["metadata", "summary", "redacted_content"]
+        },
+        "onboarding_removal": {
+          "controlled_by": "CONTROL",
+          "requires_audit": true
+        },
+        "ai_to_ai_communication": {
+          "routed_through": "CONTROL",
+          "audited_by": "NBS",
+          "profile_governed": true
+        },
+        "version": "1.0.0",
+        "changelog": [
+          {"date": "2026-04-18", "change": "Initial governance, audit, and profile system section added."}
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,290 @@
+
+
+C:.
+├───controlbase_llc
+│       append_event_con.slam
+│       append_event_con.txt
+│       array_normalize_con.slam
+│       array_normalize_con.txt
+│       base control
+│       checkpoint_con.slam
+│       checkpoint_con.txt
+│       control_llc_summary.txt
+│       emit_transcript_nbs_con.slam
+│       emit_transcript_nbs_con.txt
+│       end_session_con.slam
+│       end_session_con.txt
+│       ensure_narrative_profile_con.slam
+│       ensure_narrative_profile_con.txt
+│       extract_concepts_con.slam
+│       extract_concepts_con.txt
+│       heartbeat_con.slam
+│       heartbeat_con.txt
+│       identity_resolve_con.slam
+│       identity_resolve_con.txt
+│       ingest_artifacts_con.slam
+│       ingest_artifacts_con.txt
+│       ingest_chat_con.slam
+│       ingest_chat_con.txt
+│       learn_overlay_con.slam
+│       learn_overlay_con.txt
+│       load_persona_con.slam
+│       load_persona_con.txt
+│       parse_chat_con.slam
+│       parse_chat_con.txt
+│       query_concepts_con.slam
+│       query_concepts_con.txt
+│       route_io_con.slam
+│       route_io_con.txt
+│       sara_registry_controlbase_llc.slam
+│       start_session_con.slam
+│       start_session_con.txt
+│       sync_narrative_profile_con.slam
+│       sync_narrative_profile_con.txt
+│       _iso_now_con.slam
+│       _iso_now_con.txt
+│
+├───proto_lingua_llc
+│       axioms.slam
+│       axioms.txt
+│       breed.slam
+│       breed.txt
+│       cartigene.slam
+│       cartigene.txt
+│       dog.slam
+│       dog.txt
+│       envelope_trick.slam
+│       envelope_trick.txt
+│       hardware_tricks.slam
+│       hardware_tricks.txt
+│       internet_tricks.slam
+│       internet_tricks.txt
+│       nexusdata.slam
+│       nexusdata.txt
+│       os_tricks.slam
+│       os_tricks.txt
+│       proto_lingua_summary.txt
+│       puppy.slam
+│       puppy.txt
+│       sara_registry_proto_lingua_llc.slam
+│       sequian.slam
+│       sequian.txt
+│       vesselizer_trick.slam
+│       vesselizer_trick.txt
+│
+├───proto_math_llc
+│       layer12_accustic_physics.slam
+│       layer12_accustic_physics.txt
+│       layer_10_business_economics.slam
+│       layer_10_business_economics.txt
+│       layer_11_optical_physics.slam
+│       layer_11_optical_physics.txt
+│       layer_1_power_roots.slam
+│       layer_1_power_roots.txt
+│       layer_2_calculus_operations.slam
+│       layer_2_calculus_operations.txt
+│       layer_3_linear_algebra.slam
+│       layer_3_linear_algebra.txt
+│       layer_4_random_generators.slam
+│       layer_4_random_generators.txt
+│       layer_5_geometry_transformations.slam
+│       layer_5_geometry_transformations.txt
+│       layer_6_physics_mechanics.slam
+│       layer_6_physics_mechanics.txt
+│       layer_7_chemistry.slam
+│       layer_7_chemistry.txt
+│       layer_8_biology_ecology.slam
+│       layer_8_biology_ecology.txt
+│       layer_9_astrophysics.slam
+│       layer_9_astrophysics.txt
+│       mathengine.slam
+│       mathengine.txt
+│       proto_math_summary.txt
+│       sara_registry_proto_math_llc.slam
+│
+├───proto_pointers_llc
+│       pointer_control.slam
+│       pointer_control.txt
+│       pointer_control_hooks.slam
+│       pointer_control_hooks.txt
+│       pointer_core.slam
+│       pointer_core.txt
+│       pointer_humanities.slam
+│       pointer_humanities.txt
+│       pointer_index.slam
+│       pointer_index.txt
+│       pointer_io.slam
+│       pointer_io.txt
+│       pointer_lingua.slam
+│       pointer_lingua.txt
+│       pointer_loader.slam
+│       pointer_loader.txt
+│       pointer_mama.slam
+│       pointer_mama.txt
+│       pointer_math.slam
+│       pointer_math.txt
+│       pointer_philosophy.slam
+│       pointer_philosophy.txt
+│       pointer_resonance.slam
+│       pointer_resonance.txt
+│       pointer_router.slam
+│       pointer_router.txt
+│       pointer_sara_ai.slam
+│       pointer_sara_ai.txt
+│       pointer_sara_clay_work.slam
+│       pointer_sara_clay_work.txt
+│       pointer_science.slam
+│       pointer_science.txt
+│       pointer_sdk.slam
+│       pointer_sdk.txt
+│       pointer_security.slam
+│       pointer_security.txt
+│       pointer_tactics.slam
+│       pointer_tactics.txt
+│       pointer_theology.slam
+│       pointer_theology.txt
+│       pointer_utils.slam
+│       pointer_utils.txt
+│       proto_pointers_summary.txt
+│       sara_registry_proto_pointers_llc.slam
+│
+├───proto_resonance_llc
+│   ├───Humanities
+│   │       ethical_hum.slam
+│   │       ethical_hum.txt
+│   │       historical_hum.slam
+│   │       historical_hum.txt
+│   │       humanities_summary.txt
+│   │       literary_hum.slam
+│   │       literary_hum.txt
+│   │       sara_registry_Humanities.slam
+│   │       semiotic_hum.slam
+│   │       semiotic_hum.txt
+│   │
+│   ├───Philosophy
+│   │       analytic_phil.slam
+│   │       analytic_phil.txt
+│   │       dialectical_phil.slam
+│   │       dialectical_phil.txt
+│   │       phenomenological_phil.slam
+│   │       phenomenological_phil.txt
+│   │       philosophy_summary.txt
+│   │       pragmatic_phil.slam
+│   │       pragmatic_phil.txt
+│   │       sara_registry_Philosophy.slam
+│   │
+│   ├───Science
+│   │       creative_science.slam
+│   │       creative_science.txt
+│   │       game_science.slam
+│   │       game_science.txt
+│   │       pattern_science.slam
+│   │       pattern_science.txt
+│   │       sara_registry_Science.slam
+│   │       science_summary.txt
+│   │       scientific_method.slam
+│   │       scientific_method.txt
+│   │       systems_science.slam
+│   │       systems_science.txt
+│   │
+│   ├───Tactics
+│   │       adaptive_tactics.slam
+│   │       adaptive_tactics.txt
+│   │       operational_tactics.slam
+│   │       operational_tactics.txt
+│   │       sara_registry_Tactics.slam
+│   │       strategic_tactics.slam
+│   │       strategic_tactics.txt
+│   │       tactical_tactics.slam
+│   │       tactical_tactics.txt
+│   │       tactics_summary.txt
+│   │
+│   └───Theology
+│           dogmatic_theo.slam
+│           dogmatic_theo.txt
+│           epoche_theo.slam
+│           epoche_theo.txt
+│           gnostic_theo.slam
+│           gnostic_theo.txt
+│           heuristic_theo.slam
+│           heuristic_theo.txt
+│           sara_registry_Theology.slam
+│           theology_summary.txt
+│
+├───proto_utils_llc
+│       metrics.slam
+│       metrics.txt
+│       pointer_expander.slam
+│       pointer_expander.txt
+│       proto_debugger.slam
+│       proto_debugger.txt
+│       proto_runtime_api.slam
+│       proto_runtime_api.txt
+│       proto_runtime_context.slam
+│       proto_runtime_context.txt
+│       proto_runtime_executor.slam
+│       proto_runtime_executor.txt
+│       proto_runtime_loader.slam
+│       proto_runtime_loader.txt
+│       proto_slam_wrapper.slam
+│       proto_slam_wrapper.txt
+│       sara_registry_proto_utils_llc.slam
+│       universal_test_harness.slam
+│       universal_test_harness.txt
+│
+├───sara_core_base
+│       Sara_corebase_classify_value_suffix.slam
+│       Sara_corebase_classify_value_suffix.txt
+│       Sara_corebase_create_characterbase_nbs_profile.slam
+│       Sara_corebase_create_characterbase_nbs_profile.txt
+│       Sara_corebase_create_nbs_file.slam
+│       Sara_corebase_create_nbs_file.txt
+│       Sara_corebase_create_nbs_project_profile.slam
+│       Sara_corebase_create_nbs_project_profile.txt
+│       Sara_corebase_create_nbs_reference.slam
+│       Sara_corebase_create_nbs_reference.txt
+│       Sara_corebase_in_out_nbs_file.slam
+│       Sara_corebase_in_out_nbs_file.txt
+│       Sara_corebase_iso_now.slam
+│       Sara_corebase_iso_now.txt
+│       Sara_corebase_sanitize_name.slam
+│       Sara_corebase_sanitize_name.txt
+│       Sara_corebase_summary.txt
+│       Sara_corebase_to_proto_lingua.slam
+│       Sara_corebase_to_proto_lingua.txt
+│       Sara_corebase_update_nbs_project_profile.slam
+│       Sara_corebase_update_nbs_project_profile.txt
+│       Sara_corebase_validate_resonance.slam
+│       Sara_corebase_validate_resonance.txt
+│       sara_registry_sara_core_base.slam
+│
+└───security_llc
+        environmental_weld.slam
+        environmental_weld.text
+        environmental_weld.txt
+        envoy.slam
+        envoy.text
+        envoy.txt
+        king.slam
+        king.text
+        king.txt
+        paladin.slam
+        paladin.text
+        paladin.txt
+        sara_registry_security_llc.slam
+        scientists.slam
+        scientists.text
+        scientists.txt
+        security_brain.slam
+        security_brain.text
+        security_brain.txt
+        security_diagnostics.slam
+        security_diagnostics.text
+        security_diagnostics.txt
+        security_keep.slam
+        security_keep.text
+        security_keep.txt
+        security_llc_summary.txt
+        sheriff_and_deputy.slam
+        sheriff_and_deputy.text
+        sheriff_and_deputy.txt

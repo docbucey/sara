@@ -1,0 +1,35 @@
+{
+  "metadata": {
+    "artifact": "slf",
+    "version": "phase0-frozen-v1",
+    "created_on": "2026-04-13",
+    "purpose": "Long-range planning and language integration map for governed expressive flow.",
+    "authority": {
+      "planning_coordination_owner": "CONTROL",
+      "visibility_owner": "MAMA",
+      "gate_owner": "SECURITY"
+    },
+    "references": [
+      "ollama_action_map.json",
+      "ollama_shunt_map.json",
+      "actionmap.updated.json"
+    ]
+  },
+  "integration_paths": [
+    {
+      "id": "SLF-1",
+      "name": "plan_to_expression",
+      "description": "Translate validated intent into bounded expressive mode without changing route outcome."
+    },
+    {
+      "id": "SLF-2",
+      "name": "expression_to_plain_summary",
+      "description": "Produce plain-language summary channel for accessibility and operator clarity."
+    }
+  ],
+  "safety": {
+    "tone_never_overrides_gate": true,
+    "osh_visibility_mandatory": true,
+    "bounded_drift_only": true
+  }
+}

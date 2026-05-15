@@ -1,0 +1,17 @@
+{
+  "pillar": "CORE",
+  "original_gen1_mappings": "See sara_coregen1.functionmap.json for full function/class list.",
+  "legacy_features": [
+    "NBS file IO",
+    "FSM/protocol enforcement",
+    "No learning/adaptive logic"
+  ],
+  "mapped_improvements": [
+    "Cleaner separation of IO and protocol logic",
+    "Potential for modular IO adapters"
+  ],
+  "likely_intended_future": [
+    "Pluggable storage backends",
+    "Protocol-agnostic core logic"
+  ]
+}

@@ -1,0 +1,22 @@
+WFH_WEEKLY_EXEC_SUMMARY_TEMPLATE
+
+Week Of:
+Prepared By:
+
+1. What Was Completed
+- 
+
+2. What Is In Progress
+- 
+
+3. Key Risks
+- 
+
+4. Decisions Needed
+- 
+
+5. Next Week Plan
+- 
+
+6. Overall Status
+- GREEN | AMBER | RED

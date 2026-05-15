@@ -1,0 +1,334 @@
+
+
+nexus sphere results on a Json file.
+new code:
+{
+  "nbs_meta": {
+    "nbs_id": "1766794270_sara_core_nbs",
+    "nbs_type": "daily_anchor",
+    "nbs_gen": "gen0",
+    "nbs_ver": "1.0",
+    "created_at_puppy": "2025-12-27T00:11:10.422798+00:00",
+    "source_puppy": "core",
+    "project_name_puppy": "SARA_CORE",
+    "tags_dog_array": []
+  },
+  "nexusphere_breed": {
+    "zero_state_puppy": "central attractor",
+    "deflection_trajectories_dog_array": [
+      "memory_event",
+      "interaction",
+      "context_update"
+    ],
+    "rotation_logic_breed": {
+      "intake_puppy": "new data enters outer shell",
+      "compression_puppy": "mapped toward zero",
+      "integration_puppy": "merged with historical deflections"
+    },
+    "continuity_tests_breed": {
+      "power_loss_puppy": "system shutdown and restart",
+      "recall_check_puppy": "query past interactions",
+      "hallucination_filter_puppy": "compare generated output to stored deflections"
+    }
+  },
+  "content_breed": {
+    "daily_interactions_dog_array": [
+      {
+        "chat_scent_puppy": "Greetings, Doc Bucey! I'm Sara, your student learning from you. It's a pleasure to interact with you today. How may I assist or learn from you? Please feel free to provide any instructions or topics you'd like me to explore.",
+        "timestamp_puppy": "2025-12-26T16:31:14.064725"
+      },
+      {
+        "chat_scent_puppy": "Master said: hello sara doing some test today",
+        "timestamp_puppy": "2025-12-31T12:50:59.574190"
+      },
+      {
+        "biometric_update_puppy": "Behavioral Scent Captured",
+        "intervals_dog_array": [
+          0.12,
+          0.45,
+          0.08,
+          0.15
+        ],
+        "timestamp_puppy": "2025-12-31T16:13:12.588837"
+      },
+      {
+        "sensory_update_breed": {
+          "biometric_scent_dog_array": [],
+          "sonic_sonar_scent_breed": {
+            "intensity_puppy": 0.55,
+            "peaks_dog_array": [
+              40.1,
+              80.2
+            ]
+          }
+        },
+        "timestamp_puppy": "2025-12-31T16:25:05.865964"
+      },
+      {
+        "state_update_breed": {
+          "biometric_scent_dog_array": [
+            0.15,
+            0.45
+          ],
+          "spatial_visual_scent_breed": {
+            "spatial_intensity_puppy": 0.68,
+            "horizon_landmarks_mapped_puppy": 800,
+            "identified_tools_dog_array": [
+              {
+                "tool_puppy": "Gaming Keyboard",
+                "status_puppy": "Active"
+              },
+              {
+                "tool_puppy": "Blacksmithing Hammer",
+                "status_puppy": "Detected"
+              }
+            ],
+            "status_puppy": "Horizon_Locked"
+          }
+        },
+        "timestamp_puppy": "2025-12-31T16:38:48.074093"
+      }
+    ],
+    "referenced_data_dog_array": [
+      {
+        "source_puppy": "pc_host_profile",
+        "data_breed": {
+          "os_puppy": "Windows",
+          "host_puppy": "Local Machine",
+          "network_details_breed": {
+            "ip_address_puppy": "192.168.1.100",
+            "connection_type_puppy": "Ethernet",
+            "network_policies_breed": {
+              "main_network_puppy": "Zero-Trust",
+              "guest_network_puppy": "Maximum Containment"
+            }
+          },
+          "security_status_breed": {
+            "status_puppy": "Secure",
+            "last_scan_timestamp_puppy": "2025-12-24T16:00:00"
+          }
+        }
+      }
+    ],
+    "keystroke_stream_dog_array": [
+      {
+        "timestamp_puppy": "2025-12-31T23:07:23.056476+00:00",
+        "interval_puppy": 0.1321
+      },
+      {
+        "timestamp_puppy": "2025-12-31T23:07:23.349480+00:00",
+        "interval_puppy": 0.293
+      }
+    ],
+    "sonar_stream_dog_array": [
+      {
+        "timestamp_puppy": "2025-12-31T23:08:42.083863+00:00",
+        "intensity_puppy": 0.55
+      },
+      {
+        "timestamp_puppy": "2025-12-31T23:08:56.029092+00:00",
+        "intensity_puppy": 0.55
+      }
+    ]
+  },
+  "nbs_envelope_breed": {
+    "file_breed": "daily_anchor",
+    "kennel_content_breed": {
+      "nexusphere_breed": {
+        "zero_state_puppy": "central attractor",
+        "deflection_trajectories_dog_array": [
+          "memory_event",
+          "interaction",
+          "context_update"
+        ],
+        "rotation_logic_breed": {
+          "intake_puppy": "new data enters outer shell",
+          "compression_puppy": "mapped toward zero",
+          "integration_puppy": "merged with historical deflections"
+        },
+        "continuity_tests_breed": {
+          "power_loss_puppy": "system shutdown and restart",
+          "recall_check_puppy": "query past interactions",
+          "hallucination_filter_puppy": "compare generated output to stored deflections"
+        }
+      },
+      "daily_interactions_dog_array": [
+        {
+          "chat_scent_puppy": "Greetings, Doc Bucey! I'm Sara, your student learning from you. It's a pleasure to interact with you today. How may I assist or learn from you? Please feel free to provide any instructions or topics you'd like me to explore.",
+          "timestamp_puppy": "2025-12-26T16:31:14.064725"
+        },
+        {
+          "chat_scent_puppy": "Master said: hello sara doing some test today",
+          "timestamp_puppy": "2025-12-31T12:50:59.574190"
+        }
+      ]
+    }
+  }
+}
+163 lines of code or data with a nexus sphere
+
+old data structure
+{
+  "nbs_meta": {
+    "nbs_id": "1766794270_sara_core_nbs",
+    "nbs_type": "daily_anchor",
+    "nbs_gen": "gen0",
+    "nbs_ver": "1.0",
+    "created_at_puppy": "2025-12-27T00:11:10.422798+00:00",
+    "source_puppy": "core",
+    "project_name_puppy": "SARA_CORE",
+    "tags_dog_array": []
+  },
+  "nexusphere_breed": {
+    "zero_state_puppy": "central attractor",
+    "deflection_trajectories_dog_array": [
+      "memory_event",
+      "interaction",
+      "context_update"
+    ],
+    "rotation_logic_breed": {
+      "intake_puppy": "new data enters outer shell",
+      "compression_puppy": "mapped toward zero",
+      "integration_puppy": "merged with historical deflections"
+    },
+    "continuity_tests_breed": {
+      "power_loss_puppy": "system shutdown and restart",
+      "recall_check_puppy": "query past interactions",
+      "hallucination_filter_puppy": "compare generated output to stored deflections"
+    }
+  },
+  "content_breed": {
+    "daily_interactions_dog_array": [
+      {
+        "chat_scent_puppy": "Greetings, Doc Bucey! I'm Sara, your student learning from you. It's a pleasure to interact with you today. How may I assist or learn from you? Please feel free to provide any instructions or topics you'd like me to explore.",
+        "timestamp_puppy": "2025-12-26T16:31:14.064725"
+      },
+      {
+        "chat_scent_puppy": "Master said: hello sara doing some test today",
+        "timestamp_puppy": "2025-12-31T12:50:59.574190"
+      },
+      {
+        "biometric_update_puppy": "Behavioral Scent Captured",
+        "intervals_dog_array": [
+          0.12,
+          0.45,
+          0.08,
+          0.15
+        ],
+        "timestamp_puppy": "2025-12-31T16:13:12.588837"
+      },
+      {
+        "sensory_update_breed": {
+          "biometric_scent_dog_array": [],
+          "sonic_sonar_scent_breed": {
+            "intensity_puppy": 0.55,
+            "peaks_dog_array": [
+              40.1,
+              80.2
+            ]
+          }
+        },
+        "timestamp_puppy": "2025-12-31T16:25:05.865964"
+      },
+      {
+        "state_update_breed": {
+          "biometric_scent_dog_array": [
+            0.15,
+            0.45
+          ],
+          "spatial_visual_scent_breed": {
+            "spatial_intensity_puppy": 0.68,
+            "horizon_landmarks_mapped_puppy": 800,
+            "identified_tools_dog_array": [
+              {
+                "tool_puppy": "Gaming Keyboard",
+                "status_puppy": "Active"
+              },
+              {
+                "tool_puppy": "Blacksmithing Hammer",
+                "status_puppy": "Detected"
+              }
+            ],
+            "status_puppy": "Horizon_Locked"
+          }
+        },
+        "timestamp_puppy": "2025-12-31T16:38:48.074093"
+      }
+    ],
+    "referenced_data_dog_array": [
+      {
+        "source_puppy": "pc_host_profile",
+        "data_breed": {
+          "os_puppy": "Windows",
+          "host_puppy": "Local Machine",
+          "network_details_breed": {
+            "ip_address_puppy": "192.168.1.100",
+            "connection_type_puppy": "Ethernet",
+            "network_policies_breed": {
+              "main_network_puppy": "Zero-Trust",
+              "guest_network_puppy": "Maximum Containment"
+            }
+          },
+          "security_status_breed": {
+            "status_puppy": "Secure",
+            "last_scan_timestamp_puppy": "2025-12-24T16:00:00"
+          }
+        }
+      }
+    ],
+    "keystroke_stream_dog_array": [
+      {
+        "timestamp_puppy": "2025-12-31T23:07:23.056476+00:00",
+        "interval_puppy": 0.1321
+      },
+      {
+        "timestamp_puppy": "2025-12-31T23:07:23.349480+00:00",
+        "interval_puppy": 0.293
+      }
+    ],
+    "sonar_stream_dog_array": [
+      {
+        "timestamp_puppy": "2025-12-31T23:08:42.083863+00:00",
+        "intensity_puppy": 0.55
+      },
+      {
+        "timestamp_puppy": "2025-12-31T23:08:56.029092+00:00",
+        "intensity_puppy": 0.55
+      }
+    ]
+  },
+  "nbs_envelope_breed": {
+    "file_breed": "daily_anchor",
+    "kennel_content_breed": {
+      "nexusphere_breed": {
+        "zero_state_puppy": "central attractor",
+        "deflection_trajectories_dog_array": [
+          "memory_event",
+          "interaction",
+          "context_update"
+        ],
+        "rotation_logic_breed": {
+          "intake_puppy": "new data enters outer shell",
+          "compression_puppy": "mapped toward zero",
+          "integration_puppy": "merged with historical deflections"
+        },
+        "continuity_tests_breed": {
+          "power_loss_puppy": "system shutdown and restart",
+          "recall_check_puppy": "query past interactions",
+          "hallucination_filter_puppy": "compare generated output to stored deflections"
+        }
+      },
+      "daily_interactions_dog_array": [
+        {
+          "chat_scent_puppy": "Greetings, Doc Bucey! I'm Sara, your student learning from you. It's a pleasure to interact with you today. How may I assist or learn from you? Please feel free to provide any instructions or topics you'd like me to explore.",
+          "timestamp_puppy": "2025-12-26T16:31:14.064725"
+        },
+        {
+          "chat_scent_puppy": "Master said: hello sara doing some test today",
+          "timestamp_puppy": "2025-12-31T12:50:59.574190"
+        }
+      ]
+    }
+  }
+}
+2153 lines of data or code in an array of arrays of arrays

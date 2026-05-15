@@ -1,0 +1,31 @@
+# SARA — System dependencies
+# Install: pip install -r requirements.txt
+
+# Office Suite (Word, Excel, PowerPoint)
+python-docx>=0.8.11
+openpyxl>=3.1.0
+python-pptx>=0.6.21
+
+# PDF generation (fpdf2 preferred, reportlab as fallback)
+fpdf2>=2.7.0
+
+# Image processing
+Pillow>=10.0.0
+
+# Local LLM (runs GGUF models directly, no Ollama needed)
+llama-cpp-python>=0.2.0
+
+# Google Services (Calendar, Meet, Drive)
+google-api-python-client>=2.0.0
+google-auth-oauthlib>=1.0.0
+google-auth-httplib2>=0.1.0
+
+# Date parsing for calendar events
+python-dateutil>=2.8.0
+
+# Stellar time — UT1 / DUT1 (IERS earth orientation), Sol geometry (requires numpy)
+numpy>=1.24.0
+astropy>=6.0.0
+
+# Optional: reportlab for advanced PDF layouts
+# reportlab>=4.0.0

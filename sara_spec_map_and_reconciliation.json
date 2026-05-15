@@ -1,0 +1,673 @@
+{
+  "generated_on": "2026-04-11",
+  "mode": "read_only_reconciliation",
+  "output_file": "sara_spec_map_and_reconciliation.json",
+  "workspace_root": "c:\\Users\\mdbuc\\Documents\\coding projects\\MODLES\\NBS",
+  "discovery_notes": {
+    "requested_patterns": [
+      "sara_gen0_specs.*",
+      "sara_gen0.1_specs.*",
+      "Lite build and surgical reports",
+      "WFH and VNCE specs",
+      "AMIP/AMIPI, shunt-map, actionmap, NBS, self.evolve, UI/cockpit specs"
+    ],
+    "workspace_equivalents_found": [
+      "sara_gen0.1-spec.md",
+      "SPEC_SHEET.md",
+      "SPEC_SHEET_GEN0_CSHARP.md",
+      "sara_gen1_stage4_specsheet.md",
+      "OFFICE_SUITE_SARA_SPEC.md"
+    ],
+    "not_found_as_exact_named_files": [
+      "sara_gen0_specs.* (exact filename)",
+      "sara_gen0.1_specs.* (plural exact filename)",
+      "amipi_v0_1_schema.json"
+    ],
+    "read_only_rule": "No code, schemas, or specs were modified during this reconciliation pass."
+  },
+  "spec_groups": {
+    "Gen0": [
+      "SPEC_SHEET.md",
+      "SPEC_SHEET_GEN0_CSHARP.md",
+      "claywork/saragen0finish/sara_core/sara_core_spec_sheet.mak",
+      "claywork/saragen0finish/sara_control/sara_control_spec_sheet.mak",
+      "claywork/saragen0finish/sara_security/sara_security_spec_sheet.mak",
+      "claywork/saragen0finish/sara_mama/sara_mama_spec_sheet.mak"
+    ],
+    "Gen0.1": [
+      "sara_gen0.1-spec.md",
+      "OFFICE_SUITE_SARA_SPEC.md"
+    ],
+    "Lite": [
+      "sara_lite_os_unified_build_plan.json",
+      "micro_sara_embedding_plan.json",
+      "sara_lite_surgical_update_report.json",
+      "sara_full_and_lite_surgical_update_report.json",
+      "desktop_vnce_node_iso_build_plan.json",
+      "desktop_vnce_node_iso_build_plan_with_ide.json"
+    ],
+    "WFH": [
+      "abbucey_wfh_gig_filter_and_spec_protocol.md",
+      "sara_lite_surgical_update_report.json",
+      "desktop_vnce_node_iso_build_plan.json"
+    ],
+    "VNCE_host": [
+      "sara_gen1_stage4_specsheet.md",
+      "vnce_remote_node_requirements.json",
+      "desktop_vnce_node_iso_build_plan.json",
+      "desktop_vnce_node_iso_build_plan_with_ide.json",
+      "sara_lite_os_unified_build_plan.json"
+    ],
+    "pillar_definitions": [
+      "sara_gen0.1-spec.md",
+      "claywork/saragen0finish/sara_core/sara_core_spec_sheet.mak",
+      "claywork/saragen0finish/sara_control/sara_control_spec_sheet.mak",
+      "claywork/saragen0finish/sara_security/sara_security_spec_sheet.mak",
+      "claywork/saragen0finish/sara_mama/sara_mama_spec_sheet.mak",
+      "canonical_pillars_update_and_samples.txt"
+    ],
+    "schema_amip_amipi": [
+      "amip_v0_1_schema.json",
+      "amip_amipi_surgical_expansion_plan.json",
+      "sara_gen1_stage4_specsheet.md",
+      "vnce_remote_node_requirements.json"
+    ],
+    "shunt_authority_bits": [
+      "shunt_map_descriptor.updated.json",
+      "actionmap.updated.json",
+      "fsm repareandupdate.md",
+      "sara_gen1_stage4_specsheet.md"
+    ],
+    "nbs_continuity": [
+      "micro_sara_embedding_plan.json",
+      "sara_lite_os_unified_build_plan.json",
+      "claywork/saragen0finish/sara_mama/sara_morning_install_training_spec.mak",
+      "claywork/saragen0finish/sara_mama/sara_interface_refactor_spec.mak"
+    ],
+    "evolution_self_evolve": [
+      "sara_self_evolve_protocol.json",
+      "ai_profile_evolution_extensions.json",
+      "micro_sara_embedding_plan.json",
+      "sara_lite_os_unified_build_plan.json"
+    ],
+    "ui_cockpit": [
+      "SPEC_SHEET_GEN0_CSHARP.md",
+      "OFFICE_SUITE_SARA_SPEC.md",
+      "claywork/saragen0finish/sara_mama/sara_interface_refactor_spec.mak",
+      "claywork/saragen0finish/sara_mama/sara_morning_install_training_spec.mak",
+      "desktop_vnce_node_iso_build_plan_with_ide.json"
+    ]
+  },
+  "spec_details": [
+    {
+      "file": "sara_gen0.1-spec.md",
+      "version_family": ["Gen0.1"],
+      "authority_level": "primary",
+      "scope": "Foundation architecture, five-pillar model, deterministic local-first philosophy, CONTROL-first entry model.",
+      "pillar_impact": ["CORE", "CONTROL", "SECURITY", "MAMA", "SDK"],
+      "dependencies": ["SPEC_SHEET_GEN0_CSHARP.md", "sara_gen1_stage4_specsheet.md"],
+      "invariants": ["local-first", "deterministic behavior", "profile-mediated access", "CONTROL is primary entrypoint", "human-centered MAMA"],
+      "overlaps": ["OFFICE_SUITE_SARA_SPEC.md", "sara_full_and_lite_surgical_update_report.json"],
+      "contradictions": [],
+      "missing_or_incomplete": ["ABBucey hooks are reserved only", "future C# boundary hooks are reserved only", "no executable implementation requirements beyond architecture"]
+    },
+    {
+      "file": "SPEC_SHEET_GEN0_CSHARP.md",
+      "version_family": ["Gen0", "C# UI"],
+      "authority_level": "supporting",
+      "scope": "C# project, HUD geometry, ADA behavior, persistence, and front-end planning.",
+      "pillar_impact": ["CONTROL", "MAMA", "UI"],
+      "dependencies": ["SPEC_SHEET.md", "OFFICE_SUITE_SARA_SPEC.md"],
+      "invariants": ["ADA-aware UI", "deterministic HUD", "profile-sensitive adaptation"],
+      "overlaps": ["OFFICE_SUITE_SARA_SPEC.md", "sara_interface_refactor_spec.mak"],
+      "contradictions": [
+        "Acts as a mixed document: project spec plus later HUD/macros phases; not a single-version source of truth."
+      ],
+      "missing_or_incomplete": ["No explicit unified version tag for appended later phases", "UI contract is broader than current runtime proof"]
+    },
+    {
+      "file": "SPEC_SHEET.md",
+      "version_family": ["Gen0", "Harness/Test"],
+      "authority_level": "primary_for_harness_only",
+      "scope": "Language-agnostic localhost test-harness and protocol-suite specification.",
+      "pillar_impact": ["CONTROL", "CORE", "SECURITY", "Harness"],
+      "dependencies": ["philo.mak", "machine.mak", "master.mak"],
+      "invariants": ["localhost only", "token auth", "atomic writes", "worker isolation", "bounded output"],
+      "overlaps": ["scripts/claywork_protocol.ps1", "doctest harness artifacts"],
+      "contradictions": [],
+      "missing_or_incomplete": ["Spec is complete for harness behavior but is not a pillar-runtime source of truth"]
+    },
+    {
+      "file": "sara_gen1_stage4_specsheet.md",
+      "version_family": ["Gen1", "Boundary", "AMIP/AMIPI"],
+      "authority_level": "primary",
+      "scope": "C# <-> Python interface boundary, AMI/Bucey Shunt/AMIP/AMIPI/AMPI layering.",
+      "pillar_impact": ["CORE", "CONTROL", "SECURITY", "MAMA", "SDK"],
+      "dependencies": ["amip_v0_1_schema.json", "shunt_map_descriptor.updated.json", "actionmap.updated.json"],
+      "invariants": ["Bucey Shunt is the only local transport", "no UI or AI may bypass the shunt", "C# treats AMI IDs as read-only"],
+      "overlaps": ["amip_amipi_surgical_expansion_plan.json", "vnce_remote_node_requirements.json"],
+      "contradictions": [],
+      "missing_or_incomplete": ["AMPI remains future-facing only", "formal AMIPI schema file is still absent"]
+    },
+    {
+      "file": "OFFICE_SUITE_SARA_SPEC.md",
+      "version_family": ["Gen0.1", "Office/UI"],
+      "authority_level": "primary_for_office_ui",
+      "scope": "Office Suite front-end shell, HUD integration, accessibility, LabRat IDE, unified UI views.",
+      "pillar_impact": ["CONTROL", "MAMA", "SECURITY", "UI"],
+      "dependencies": ["SPEC_SHEET_GEN0_CSHARP.md", "sara_gen1_stage4_specsheet.md"],
+      "invariants": ["all UI requests are Control-routed", "all Office traffic is shunt-wrapped", "no raw shunt metadata leaks to UI"],
+      "overlaps": ["sara_interface_refactor_spec.mak", "desktop_vnce_node_iso_build_plan_with_ide.json"],
+      "contradictions": [
+        "Assumes front-end readiness work ahead of currently verified Lite runtime maturity."
+      ],
+      "missing_or_incomplete": ["No final implementation state proof", "UI shell phases remain planning-oriented"]
+    },
+    {
+      "file": "claywork/saragen0finish/sara_core/sara_core_spec_sheet.mak",
+      "version_family": ["Gen0"],
+      "authority_level": "historical_foundation",
+      "scope": "CORE planning, plan packets, deterministic architecture and status artifacts.",
+      "pillar_impact": ["CORE"],
+      "dependencies": ["result.meta.json", "distant_end.json", "master_result.json"],
+      "invariants": ["Core defines structure, not direct tool execution", "bounded plan packets", "preserve prior accepted logic"],
+      "overlaps": ["sara_gen0.1-spec.md"],
+      "contradictions": [],
+      "missing_or_incomplete": ["Four-pillar era document; SDK not first-class here"]
+    },
+    {
+      "file": "claywork/saragen0finish/sara_control/sara_control_spec_sheet.mak",
+      "version_family": ["Gen0"],
+      "authority_level": "historical_foundation",
+      "scope": "CONTROL routing, gating, dispatch, result collection, and JSON status outputs.",
+      "pillar_impact": ["CONTROL"],
+      "dependencies": ["sara_core output packets", "security allow/deny state"],
+      "invariants": ["Control does not redefine Core planning", "explicit dispatch behavior", "reversible bounded routing"],
+      "overlaps": ["sara_gen0.1-spec.md", "fsm repareandupdate.md"],
+      "contradictions": [],
+      "missing_or_incomplete": ["Does not describe five-pillar SDK-aware state explicitly"]
+    },
+    {
+      "file": "claywork/saragen0finish/sara_security/sara_security_spec_sheet.mak",
+      "version_family": ["Gen0", "Security"],
+      "authority_level": "supporting_with_exception",
+      "scope": "Security gating, audit, hardening, and the King/Phoenix sovereign lane note.",
+      "pillar_impact": ["SECURITY", "CONTROL"],
+      "dependencies": ["control routing state", "audit artifacts"],
+      "invariants": ["Security evaluates before sensitive actions", "never silently allow denied paths", "stable deny reasons"],
+      "overlaps": ["mythosreport.json", "fsm repareandupdate.md"],
+      "contradictions": [
+        "Introduces a narrow sovereign security exception where Control is not the active executor during Phoenix operations, which sits in tension with later global CONTROL-only routing language."
+      ],
+      "missing_or_incomplete": ["Exception path is specified conceptually but not fully reconciled with Lite routing specs"]
+    },
+    {
+      "file": "claywork/saragen0finish/sara_mama/sara_mama_spec_sheet.mak",
+      "version_family": ["Gen0", "Gen1 transition"],
+      "authority_level": "supporting",
+      "scope": "Memory/lesson capture, retry hints, PlainJain-first baseline, later launcher direction notes.",
+      "pillar_impact": ["MAMA"],
+      "dependencies": ["sara_interface_refactor_spec.mak", "sara_morning_install_training_spec.mak"],
+      "invariants": ["preserve provenance", "separate accepted vs failed patterns", "compact reusable history"],
+      "overlaps": ["sara_interface_refactor_spec.mak", "SPEC_SHEET_GEN0_CSHARP.md"],
+      "contradictions": [],
+      "missing_or_incomplete": ["Mixed-era notes from Gen0 to Gen2 require interpretation by date"]
+    },
+    {
+      "file": "claywork/saragen0finish/sara_mama/sara_interface_refactor_spec.mak",
+      "version_family": ["Gen0", "UI/Refactor"],
+      "authority_level": "primary_for_basic_vs_study_mode",
+      "scope": "Basic Interface vs Study Mode split, NBS training packet rules, security and routing requirements for the browser UI.",
+      "pillar_impact": ["MAMA", "CONTROL", "SECURITY", "NBS"],
+      "dependencies": ["sara_morning_install_training_spec.mak"],
+      "invariants": ["Basic Interface is default", "Study Mode is explicit", "security checks still pass through sara_security", "NBS packet schema remains stable"],
+      "overlaps": ["OFFICE_SUITE_SARA_SPEC.md", "SPEC_SHEET_GEN0_CSHARP.md"],
+      "contradictions": [],
+      "missing_or_incomplete": ["No single final UI implementation document ties all browser and C# surfaces together"]
+    },
+    {
+      "file": "claywork/saragen0finish/sara_mama/sara_morning_install_training_spec.mak",
+      "version_family": ["Gen0", "Training/NBS"],
+      "authority_level": "supporting",
+      "scope": "Morning startup preflight, practical training, NBS write verification, and Basic Interface acceptance gate.",
+      "pillar_impact": ["MAMA", "NBS", "Health UI"],
+      "dependencies": ["sara_interface_refactor_spec.mak"],
+      "invariants": ["Basic Interface usable before study controls", "NBS writes must confirm at startup", "one smoke blind-study only"],
+      "overlaps": ["sara_interface_refactor_spec.mak"],
+      "contradictions": [],
+      "missing_or_incomplete": ["Limited to morning workflow; not a general runtime spec"]
+    },
+    {
+      "file": "sara_lite_surgical_update_report.json",
+      "version_family": ["Lite", "Audit/Update"],
+      "authority_level": "audit_only",
+      "scope": "Step-by-step Lite status, WFH readiness, pillar extraction status, and implementation gaps.",
+      "pillar_impact": ["CORE-Lite", "CONTROL-Lite", "SECURITY-Lite", "MAMA-Lite", "SDK-Lite", "NBS-Lite"],
+      "dependencies": ["micro_sara_embedding_plan.json", "sara_lite_os_unified_build_plan.json"],
+      "invariants": ["CONTROL-Lite is routing authority", "SDK-Lite remains wrapper-only", "Internet-strict should remain disabled until LAN staging passes"],
+      "overlaps": ["sara_full_and_lite_surgical_update_report.json"],
+      "contradictions": [],
+      "missing_or_incomplete": ["Runtime is still partial and mostly not boot-tested"]
+    },
+    {
+      "file": "sara_full_and_lite_surgical_update_report.json",
+      "version_family": ["Lite", "Full runtime", "Audit/Update"],
+      "authority_level": "audit_only",
+      "scope": "Cross-system audit comparing full runtime and Lite plans pillar by pillar.",
+      "pillar_impact": ["CORE", "CONTROL", "SECURITY", "MAMA", "SDK", "Lite pillars"],
+      "dependencies": ["runtime files under claywork/saragen0finish", "Lite planning assets"],
+      "invariants": ["CONTROL-only routing", "SECURITY-first gating", "SDK adapter-only"],
+      "overlaps": ["sara_lite_surgical_update_report.json", "mythosreport.json"],
+      "contradictions": [],
+      "missing_or_incomplete": ["C# VNCE host boundary remains unconfirmed", "Lite remains packaging/service wiring rather than booted proof"]
+    },
+    {
+      "file": "sara_lite_os_unified_build_plan.json",
+      "version_family": ["Lite", "OS", "VNCE"],
+      "authority_level": "primary",
+      "scope": "Bootable SARA Lite OS identity, service graph, desktop environment, IDE layer, micro-pillar layout, NBS continuity, cockpit profile.",
+      "pillar_impact": ["CORE-Lite", "CONTROL-Lite", "SECURITY-Lite", "MAMA-Lite", "SDK-Lite", "NBS-Lite", "Cockpit"],
+      "dependencies": ["micro_sara_embedding_plan.json", "desktop_vnce_node_iso_build_plan.json", "desktop_vnce_node_iso_build_plan_with_ide.json", "amip_amipi_surgical_expansion_plan.json", "vnce_remote_node_requirements.json"],
+      "invariants": ["CONTROL-only routing", "SECURITY-first gating", "SDK is adapter-only", "desktop-first ADA-safe operation"],
+      "overlaps": ["micro_sara_embedding_plan.json", "desktop_vnce_node_iso_build_plan_with_ide.json"],
+      "contradictions": [],
+      "missing_or_incomplete": ["Actual image assembly and boot validation are still pending"]
+    },
+    {
+      "file": "micro_sara_embedding_plan.json",
+      "version_family": ["Lite", "Micro-pillar", "NBS"],
+      "authority_level": "primary",
+      "scope": "Defines CORE-Lite, CONTROL-Lite, SECURITY-Lite, MAMA-Lite, SDK-Lite, NBS-Lite roles, storage needs, and guardrails.",
+      "pillar_impact": ["All Lite pillars", "NBS-Lite"],
+      "dependencies": ["sara_lite_os_unified_build_plan.json"],
+      "invariants": ["CORE-Lite is non-routing", "CONTROL-Lite is sole routing authority", "SECURITY-Lite runs before remote activation", "MAMA-Lite is non-authoritative", "SDK-Lite is wrapper-only"],
+      "overlaps": ["sara_lite_os_unified_build_plan.json", "sara_lite_surgical_update_report.json"],
+      "contradictions": [],
+      "missing_or_incomplete": ["Spec is complete at the plan level but not fully implemented in runtime code"]
+    },
+    {
+      "file": "desktop_vnce_node_iso_build_plan.json",
+      "version_family": ["Lite", "WFH", "VNCE"],
+      "authority_level": "primary_for_remote_node_design",
+      "scope": "Linux desktop VNCE remote-node ISO plan, server peer expectations, remote session field requirements, and safe desktop defaults.",
+      "pillar_impact": ["CONTROL", "SECURITY", "SDK", "MAMA", "VNCE node"],
+      "dependencies": ["vnce_remote_node_requirements.json", "amip_amipi_surgical_expansion_plan.json"],
+      "invariants": ["CONTROL only", "SECURITY first on remote ingress", "SDK adapter only", "default failure mode is hold/local_only"],
+      "overlaps": ["desktop_vnce_node_iso_build_plan_with_ide.json", "sara_lite_os_unified_build_plan.json"],
+      "contradictions": [],
+      "missing_or_incomplete": ["Server-side C# VNCE listener remains required but not proven in visible code"]
+    },
+    {
+      "file": "desktop_vnce_node_iso_build_plan_with_ide.json",
+      "version_family": ["Lite", "VNCE", "UI/cockpit", "IDE"],
+      "authority_level": "supporting",
+      "scope": "Adds VSCodium/Geany/devtool and desktop integration to the VNCE node ISO plan.",
+      "pillar_impact": ["SDK-Lite", "MAMA-Lite", "UI/cockpit"],
+      "dependencies": ["desktop_vnce_node_iso_build_plan.json", "sara_lite_os_unified_build_plan.json"],
+      "invariants": ["IDE may not bypass security or routing", "telemetry and remote tunnels disabled by default", "ADA-aware desktop defaults"],
+      "overlaps": ["OFFICE_SUITE_SARA_SPEC.md", "SPEC_SHEET_GEN0_CSHARP.md"],
+      "contradictions": [],
+      "missing_or_incomplete": ["Offline packaging and final image size tradeoffs remain open"]
+    },
+    {
+      "file": "vnce_remote_node_requirements.json",
+      "version_family": ["VNCE", "WFH", "AMIP/AMIPI"],
+      "authority_level": "primary_for_vnce_fields",
+      "scope": "Required AMIP fields, AMIPI fields, shunt bits, and remote trust expansions for VNCE sessions.",
+      "pillar_impact": ["CONTROL", "SECURITY", "SDK", "MAMA"],
+      "dependencies": ["amip_v0_1_schema.json", "shunt_map_descriptor.updated.json", "actionmap.updated.json"],
+      "invariants": ["remote sessions remain shunt-wrapped", "CONTROL-only routing", "security/stables hardening for resume"],
+      "overlaps": ["sara_gen1_stage4_specsheet.md", "desktop_vnce_node_iso_build_plan.json"],
+      "contradictions": [],
+      "missing_or_incomplete": ["Calls out missing formal AMIPI schema and remote trust model beyond local_only"]
+    },
+    {
+      "file": "amip_v0_1_schema.json",
+      "version_family": ["Schema", "AMIP"],
+      "authority_level": "primary_for_formal_amip_validation",
+      "scope": "Formal JSON schema for AMIP v0.1 payload validation.",
+      "pillar_impact": ["CORE", "CONTROL", "SECURITY", "SDK"],
+      "dependencies": [],
+      "invariants": ["additionalProperties=false at root", "correlation_id must be UUID", "mode and budget are bounded"],
+      "overlaps": ["amip_amipi_surgical_expansion_plan.json", "sara_gen1_stage4_specsheet.md"],
+      "contradictions": [
+        "Live runtime emits extra fields such as source_pillar, deterministic, workflow_state, and may use non-UUID fallback correlation_id in some paths."
+      ],
+      "missing_or_incomplete": ["Does not cover AMIPI", "narrower than current runtime payload reality"]
+    },
+    {
+      "file": "amip_amipi_surgical_expansion_plan.json",
+      "version_family": ["Schema", "AMIP/AMIPI", "Drift report"],
+      "authority_level": "audit_only_supporting",
+      "scope": "Compares live runtime fields to AMIP schema, action map, and shunt map; recommends expansion areas.",
+      "pillar_impact": ["CORE", "CONTROL", "SECURITY", "SDK"],
+      "dependencies": ["amip_v0_1_schema.json", "actionmap.updated.json", "shunt_map_descriptor.updated.json"],
+      "invariants": ["CONTROL remains routing authority", "SDK remains consumer/adapter, not primary owner"],
+      "overlaps": ["sara_gen1_stage4_specsheet.md", "vnce_remote_node_requirements.json"],
+      "contradictions": [
+        "Documents current schema drift explicitly rather than resolving it."
+      ],
+      "missing_or_incomplete": ["No formal AMIPI schema file is produced here", "runtime enforcement of updated shunt bits is still incomplete"]
+    },
+    {
+      "file": "shunt_map_descriptor.updated.json",
+      "version_family": ["Shunt", "Authority bits", "Routing map"],
+      "authority_level": "primary",
+      "scope": "Canonical Bucey Shunt byte map, lane routing map, profile gate map, authority map, and audit validation notes.",
+      "pillar_impact": ["CONTROL", "SECURITY", "MAMA", "SDK"],
+      "dependencies": ["actionmap.updated.json"],
+      "invariants": ["control_only_routing_required=true", "mama_header_generation_allowed=false", "byte-level authority and lock semantics matter"],
+      "overlaps": ["fsm repareandupdate.md", "vnce_remote_node_requirements.json"],
+      "contradictions": [
+        "Updated map is richer than the currently proven runtime enforcement."
+      ],
+      "missing_or_incomplete": ["Not all BYTE0-BYTE5 semantics are actively enforced in the live code path"]
+    },
+    {
+      "file": "actionmap.updated.json",
+      "version_family": ["Action routing", "Pillars"],
+      "authority_level": "primary",
+      "scope": "Maps pillar function slots to the current five-pillar Bucey Shunt and FSM model.",
+      "pillar_impact": ["CORE", "CONTROL", "SECURITY", "MAMA", "SDK"],
+      "dependencies": ["shunt_map_descriptor.updated.json"],
+      "invariants": ["CONTROL remains sole routing authority", "MAMA forwards through CONTROL", "SDK remains adapter lane"],
+      "overlaps": ["shunt_map_descriptor.updated.json", "sara_gen1_stage4_specsheet.md"],
+      "contradictions": [],
+      "missing_or_incomplete": ["Some SDK actions remain stub-only in the live repo"]
+    },
+    {
+      "file": "fsm repareandupdate.md",
+      "version_family": ["FDSSM", "Shunt/FSM"],
+      "authority_level": "primary_for_fdssm_rules",
+      "scope": "Gen1-only FDSSM repair/update contract, shunt entrypoints, sovereignty checks, numeric tagging, and logging rules.",
+      "pillar_impact": ["CORE", "CONTROL", "SECURITY", "MAMA"],
+      "dependencies": ["active Gen1 files list", "shunt header contract from CORE"],
+      "invariants": ["only *gen1 files are in FDSSM scope", "all cross-pillar ops enter through shunt entrypoints", "CONTROL/SECURITY must run sovereignty checks"],
+      "overlaps": ["sara_gen1_stage4_specsheet.md", "shunt_map_descriptor.updated.json"],
+      "contradictions": [
+        "Still written from the four-micro-AI-pillar perspective and does not elevate SDK into the FDSSM enforcement set."
+      ],
+      "missing_or_incomplete": ["Repair guidance is detailed, but full numeric mapping tables are not centralized in one JSON file"]
+    },
+    {
+      "file": "canonical_pillars_update_and_samples.txt",
+      "version_family": ["Historical reference", "UI prep"],
+      "authority_level": "historical_sample_only",
+      "scope": "Sample code and pillar summaries intended for UI planning and integration.",
+      "pillar_impact": ["CORE", "CONTROL", "SECURITY", "MAMA"],
+      "dependencies": ["sample runtime functions"],
+      "invariants": ["all actions routed through control", "use markdowns/spec sheets to bridge design to implementation"],
+      "overlaps": ["OFFICE_SUITE_SARA_SPEC.md", "SPEC_SHEET_GEN0_CSHARP.md"],
+      "contradictions": [
+        "States that Security is not implemented in Python, which is outdated for the current workspace.",
+        "Concludes canonical pillars are complete and fully integrated, which overstates current Lite and remote readiness."
+      ],
+      "missing_or_incomplete": ["Best treated as a historical reference rather than a live canonical source"]
+    },
+    {
+      "file": "mythosreport.json",
+      "version_family": ["Security audit", "AMIP/AMIPI"],
+      "authority_level": "audit_only",
+      "scope": "Risk and boundary audit describing why AMIP/AMIPI prevents Mythos-style behavior and what remains unsealed.",
+      "pillar_impact": ["CONTROL", "SECURITY", "SDK", "CORE"],
+      "dependencies": ["active runtime files"],
+      "invariants": ["preserve CONTROL-only routing", "preserve SECURITY-first gating", "no raw OS/network access through governed paths"],
+      "overlaps": ["sara_security_spec_sheet.mak", "amip_amipi_surgical_expansion_plan.json"],
+      "contradictions": [],
+      "missing_or_incomplete": ["Reports a PARTIAL_PASS only; full repo-wide hard boundary is not yet proven"]
+    },
+    {
+      "file": "ai_profile_evolution_extensions.json",
+      "version_family": ["Lite", "Evolution/self.evolve"],
+      "authority_level": "primary",
+      "scope": "Extends the AI profile structure with a governed self.evolve capability and required safety constraints.",
+      "pillar_impact": ["CONTROL-Lite", "SDK-Lite", "MAMA-Lite", "SECURITY-Lite", "NBS-Lite"],
+      "dependencies": ["sara_self_evolve_protocol.json", "micro_sara_embedding_plan.json"],
+      "invariants": ["self.evolve is CONTROL-governed", "SDK-Lite is request-builder only", "dry_run=true on first pass", "no raw execution/sockets/URLs"],
+      "overlaps": ["sara_self_evolve_protocol.json"],
+      "contradictions": [],
+      "missing_or_incomplete": ["Depends on NBS-Lite and trust-policy implementation to become live"]
+    },
+    {
+      "file": "sara_self_evolve_protocol.json",
+      "version_family": ["Lite", "Evolution/self.evolve"],
+      "authority_level": "primary",
+      "scope": "Canonical CONTROL-governed self.evolve protocol, dry-run-first, signed-delta, NBS-Lite and SECURITY-Lite constrained.",
+      "pillar_impact": ["CONTROL-Lite", "SECURITY-Lite", "NBS-Lite", "MAMA-Lite", "SDK-Lite"],
+      "dependencies": ["ai_profile_evolution_extensions.json", "micro_sara_embedding_plan.json"],
+      "invariants": ["no raw execution", "dry_run mandatory on first pass", "allowed scope limited to schemas/maps/policies", "must not weaken CONTROL or SECURITY invariants"],
+      "overlaps": ["ai_profile_evolution_extensions.json"],
+      "contradictions": [],
+      "missing_or_incomplete": ["Requires actual Lite services and signed delta workflow to move from planning to live behavior"]
+    },
+    {
+      "file": "abbucey_wfh_gig_filter_and_spec_protocol.md",
+      "version_family": ["WFH", "CONTROL planning"],
+      "authority_level": "primary_for_wfh_job_filtering",
+      "scope": "Deterministic WFH gig intake, feasibility classification, spec-sheet generation, and deliverable engine correction map.",
+      "pillar_impact": ["CONTROL", "SECURITY", "CORE"],
+      "dependencies": ["VNCE lifecycle", "STABLES metadata"],
+      "invariants": ["deterministic only", "do not modify unrelated CONTROL logic", "do not activate ABBucey automatically"],
+      "overlaps": ["sara_gen0.1-spec.md", "sara_lite_surgical_update_report.json"],
+      "contradictions": [],
+      "missing_or_incomplete": ["Planning-only; anchors are named but not required to be active in the live repo"]
+    }
+  ],
+  "major_contradictions": [
+    {
+      "id": "pillar_count_evolution",
+      "severity": "moderate",
+      "summary": "Early Gen0 and historical sample docs emphasize four canonical pillars, while Gen0.1, Gen1 boundary, and Lite plans use a five-pillar model that adds SDK.",
+      "affected_specs": [
+        "sara_core_spec_sheet.mak",
+        "sara_control_spec_sheet.mak",
+        "sara_security_spec_sheet.mak",
+        "sara_mama_spec_sheet.mak",
+        "canonical_pillars_update_and_samples.txt",
+        "sara_gen0.1-spec.md",
+        "sara_gen1_stage4_specsheet.md"
+      ],
+      "recommended_resolution": "Use the five-pillar model as the canonical source for Gen0.1, Gen1 boundary work, and Lite. Treat the four-pillar documents as historical foundation context."
+    },
+    {
+      "id": "amip_schema_vs_runtime_drift",
+      "severity": "high",
+      "summary": "The formal AMIP schema is narrower than the live runtime payload reality and requires UUID correlation_id, while the runtime audit found extra fields and at least one non-UUID fallback path.",
+      "affected_specs": [
+        "amip_v0_1_schema.json",
+        "amip_amipi_surgical_expansion_plan.json",
+        "sara_gen1_stage4_specsheet.md"
+      ],
+      "recommended_resolution": "Treat `amip_v0_1_schema.json` as the formal validator and `amip_amipi_surgical_expansion_plan.json` as the drift report. Do not auto-apply schema changes without explicit versioned reconciliation."
+    },
+    {
+      "id": "control_only_vs_phoenix_exception",
+      "severity": "moderate",
+      "summary": "Most later specs require CONTROL-only routing, but the Security spec records a narrow King/Phoenix sovereign lane where Security acts directly during active Phoenix operations.",
+      "affected_specs": [
+        "claywork/saragen0finish/sara_security/sara_security_spec_sheet.mak",
+        "sara_gen0.1-spec.md",
+        "sara_lite_os_unified_build_plan.json",
+        "shunt_map_descriptor.updated.json"
+      ],
+      "recommended_resolution": "Treat the Phoenix lane as a narrow security exception, not the default architecture. For Gen0.1 and Lite, CONTROL-only routing with SECURITY-first gating remains the canonical general rule."
+    },
+    {
+      "id": "historical_security_status",
+      "severity": "low",
+      "summary": "`canonical_pillars_update_and_samples.txt` says Security is not implemented in Python, which no longer matches the current workspace state and Lite planning assumptions.",
+      "affected_specs": [
+        "canonical_pillars_update_and_samples.txt",
+        "mythosreport.json",
+        "sara_full_and_lite_surgical_update_report.json"
+      ],
+      "recommended_resolution": "Use the sample file only as historical UI-planning context, not as a live implementation status source."
+    },
+    {
+      "id": "ui_readiness_vs_runtime_maturity",
+      "severity": "moderate",
+      "summary": "The Office/UI specs describe a mature shell and HUD path, but the Lite and VNCE reports still describe the runtime as partial and not fully boot-tested.",
+      "affected_specs": [
+        "OFFICE_SUITE_SARA_SPEC.md",
+        "SPEC_SHEET_GEN0_CSHARP.md",
+        "sara_lite_surgical_update_report.json",
+        "sara_full_and_lite_surgical_update_report.json"
+      ],
+      "recommended_resolution": "Treat the UI documents as forward design intent and the Lite surgical reports as the current readiness reality."
+    }
+  ],
+  "major_overlaps": [
+    {
+      "subsystem": "five-pillar architecture",
+      "specs": [
+        "sara_gen0.1-spec.md",
+        "sara_gen1_stage4_specsheet.md",
+        "sara_lite_os_unified_build_plan.json",
+        "micro_sara_embedding_plan.json"
+      ]
+    },
+    {
+      "subsystem": "AMIP/AMIPI and shunt routing",
+      "specs": [
+        "sara_gen1_stage4_specsheet.md",
+        "amip_v0_1_schema.json",
+        "amip_amipi_surgical_expansion_plan.json",
+        "shunt_map_descriptor.updated.json",
+        "actionmap.updated.json",
+        "vnce_remote_node_requirements.json"
+      ]
+    },
+    {
+      "subsystem": "Lite OS and VNCE remote-node build",
+      "specs": [
+        "sara_lite_os_unified_build_plan.json",
+        "micro_sara_embedding_plan.json",
+        "desktop_vnce_node_iso_build_plan.json",
+        "desktop_vnce_node_iso_build_plan_with_ide.json",
+        "vnce_remote_node_requirements.json"
+      ]
+    },
+    {
+      "subsystem": "UI, cockpit, and accessible front-end",
+      "specs": [
+        "SPEC_SHEET_GEN0_CSHARP.md",
+        "OFFICE_SUITE_SARA_SPEC.md",
+        "sara_interface_refactor_spec.mak",
+        "sara_morning_install_training_spec.mak",
+        "desktop_vnce_node_iso_build_plan_with_ide.json"
+      ]
+    },
+    {
+      "subsystem": "evolution/self.evolve governance",
+      "specs": [
+        "sara_self_evolve_protocol.json",
+        "ai_profile_evolution_extensions.json",
+        "micro_sara_embedding_plan.json",
+        "sara_lite_os_unified_build_plan.json"
+      ]
+    }
+  ],
+  "missing_pieces_summary": [
+    "A formal `amipi_v0_1_schema.json` is not present in the workspace.",
+    "The Lite OS image and service graph are specified but not fully boot-validated.",
+    "VNCE host/listener behavior for the C# Office Suite remains specified but not fully proven in visible runtime code.",
+    "The repo still shows partial hardening only; `mythosreport.json` records repo-wide raw OS/network surfaces outside the ideal governed path.",
+    "Several historical docs are living append-only specs without clean single-version boundaries.",
+    "Some shunt BYTE0-BYTE5 semantics are described more richly than they are currently enforced in live runtime paths."
+  ],
+  "source_of_truth_by_subsystem": {
+    "foundation_architecture_gen0_1": [
+      "sara_gen0.1-spec.md"
+    ],
+    "gen1_interface_boundary": [
+      "sara_gen1_stage4_specsheet.md"
+    ],
+    "formal_amip_schema": [
+      "amip_v0_1_schema.json"
+    ],
+    "amip_amipi_drift_reference": [
+      "amip_amipi_surgical_expansion_plan.json"
+    ],
+    "shunt_and_authority_bits": [
+      "shunt_map_descriptor.updated.json"
+    ],
+    "action_routing_map": [
+      "actionmap.updated.json"
+    ],
+    "lite_os_and_service_graph": [
+      "sara_lite_os_unified_build_plan.json"
+    ],
+    "lite_pillar_roles_and_storage": [
+      "micro_sara_embedding_plan.json"
+    ],
+    "vnce_remote_node_and_host_requirements": [
+      "vnce_remote_node_requirements.json",
+      "desktop_vnce_node_iso_build_plan.json"
+    ],
+    "office_suite_ui_and_csharp_front_end": [
+      "OFFICE_SUITE_SARA_SPEC.md",
+      "SPEC_SHEET_GEN0_CSHARP.md"
+    ],
+    "browser_basic_vs_study_mode": [
+      "claywork/saragen0finish/sara_mama/sara_interface_refactor_spec.mak"
+    ],
+    "morning_training_and_nbs_gate": [
+      "claywork/saragen0finish/sara_mama/sara_morning_install_training_spec.mak"
+    ],
+    "self_evolve_governance": [
+      "sara_self_evolve_protocol.json",
+      "ai_profile_evolution_extensions.json"
+    ],
+    "current_readiness_and_gap_assessment": [
+      "sara_lite_surgical_update_report.json",
+      "sara_full_and_lite_surgical_update_report.json",
+      "mythosreport.json"
+    ]
+  },
+  "recommended_canonical_spec_set": {
+    "Gen0.1": [
+      "sara_gen0.1-spec.md",
+      "sara_gen1_stage4_specsheet.md",
+      "amip_v0_1_schema.json",
+      "shunt_map_descriptor.updated.json",
+      "actionmap.updated.json",
+      "OFFICE_SUITE_SARA_SPEC.md",
+      "SPEC_SHEET_GEN0_CSHARP.md"
+    ],
+    "Lite": [
+      "sara_lite_os_unified_build_plan.json",
+      "micro_sara_embedding_plan.json",
+      "vnce_remote_node_requirements.json",
+      "desktop_vnce_node_iso_build_plan.json",
+      "desktop_vnce_node_iso_build_plan_with_ide.json",
+      "sara_self_evolve_protocol.json",
+      "ai_profile_evolution_extensions.json",
+      "shunt_map_descriptor.updated.json",
+      "actionmap.updated.json"
+    ],
+    "audit_support_only_not_primary": [
+      "sara_lite_surgical_update_report.json",
+      "sara_full_and_lite_surgical_update_report.json",
+      "mythosreport.json",
+      "amip_amipi_surgical_expansion_plan.json",
+      "canonical_pillars_update_and_samples.txt"
+    ]
+  },
+  "bottom_line": {
+    "gen0_1_consensus": "The workspace now centers on a five-pillar, deterministic, local-first, CONTROL-routed architecture. `sara_gen0.1-spec.md` is the cleanest foundation statement for that model.",
+    "lite_consensus": "The Lite platform is strongly specified across OS, micro-pillar, VNCE, and self.evolve planning docs, but current readiness remains partial and mostly not boot-verified.",
+    "highest_risk_reconciliation_area": "Formal AMIP schema and live runtime payload drift, plus the still-missing first-class AMIPI schema.",
+    "recommended_reading_order": [
+      "sara_gen0.1-spec.md",
+      "sara_gen1_stage4_specsheet.md",
+      "amip_v0_1_schema.json",
+      "shunt_map_descriptor.updated.json",
+      "actionmap.updated.json",
+      "micro_sara_embedding_plan.json",
+      "sara_lite_os_unified_build_plan.json",
+      "vnce_remote_node_requirements.json",
+      "sara_self_evolve_protocol.json",
+      "OFFICE_SUITE_SARA_SPEC.md"
+    ]
+  }
+}

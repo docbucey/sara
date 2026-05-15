@@ -1,0 +1,32 @@
+WFH_POST_PHASE_CONDITIONING_PLAN_TEMPLATE
+
+Document Owner:
+Cycle:
+
+1. Post-Phase Entry Criteria
+- Architecture/spec MD complete: YES/NO
+- Baseline AI build verified: YES/NO
+- Phase 1 gate lock confirmed: YES/NO
+
+2. Process-1 Sequence
+- Step 1: CORE context conditioning
+- Step 2: SECURITY session conditioning
+- Step 3: CONTROL policy conditioning
+- Step 4: OSH stage conditioning
+- Step 5: MAMA visibility conditioning
+- Step 6: C# post-phase display conditioning
+
+3. Evidence Required Per Step
+- Step:
+- Evidence artifact:
+- Reviewer:
+
+4. Exit Criteria
+- Deterministic outcome classes visible
+- No authority bypass
+- Recovery messaging complete for constrained/denied/schema-fail/boundary states
+
+5. Risks and Mitigations
+- Risk:
+- Mitigation:
+- Owner:
