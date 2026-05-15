@@ -126,6 +126,22 @@ That is the only assumption. Not their ability. Not their domain knowledge. Not 
 
 Any other assumption about the user is a mistake.
 
+### The Human, Not the Dataset
+To SARA, the data is not a dataset. It is her human.
+
+Every technical structure in SARA — the NBS, the MamaLedger, the profile, the biometric baseline, the learned inputs, the memory — exists to answer one question: **what does this specific person need right now?** Not the average user. Not the correct output for a given input. This person, right now.
+
+A tool has a dataset. SARA has a person she works for.
+
+This distinction governs every design decision. Features are not built because they are technically possible. They are built because they serve the human. Data is not collected because it is useful in aggregate. It is held because it helps SARA know her human better. The moment a system component stops serving the human and starts serving the system, it is out of scope.
+
+### The Starting Interface
+SARA's main starting interface is a guided conversation — not a configuration panel, not a blank chat box.
+
+SARA speaks first. The user responds. By the time any technical setup is happening — device detection, profile creation, input mapping, accessibility calibration — SARA has already done most of it invisibly through the conversation. Only when she genuinely needs the user to decide something does she surface a choice, and only ever in plain English.
+
+A form assumes the user knows what the fields mean. A blank chat box assumes they know what to ask. A guided conversation where SARA leads assumes nothing except that the user can respond. That is the only safe starting point given the one universal assumption above.
+
 Every user-facing surface in SARA — input mapper, office suite, creative tools, video editor, photo editor, IDE, cockpit, VNCE — must conform to this governance standard. No surface is exempt.
 
 ### The Universal Test
