@@ -1,0 +1,153 @@
+<Window x:Class="DisabilityMapper.OfficeSuiteWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="SARA — Office Suite"
+        Width="900" Height="700"
+        MinWidth="600" MinHeight="500"
+        WindowStartupLocation="CenterScreen"
+        Background="#000000">
+
+    <Window.Resources>
+        <SolidColorBrush x:Key="Bg0"     Color="#000000"/>
+        <SolidColorBrush x:Key="Bg1"     Color="#1A1A1A"/>
+        <SolidColorBrush x:Key="Bg2"     Color="#333333"/>
+        <SolidColorBrush x:Key="AccentA" Color="#FFFF00"/>
+        <SolidColorBrush x:Key="AccentB" Color="#00FF00"/>
+        <SolidColorBrush x:Key="FgPrim"  Color="#FFFFFF"/>
+        <SolidColorBrush x:Key="FgSub"   Color="#CCCCCC"/>
+        <SolidColorBrush x:Key="Warning" Color="#FF0000"/>
+        <SolidColorBrush x:Key="Cyan"    Color="#00FFFF"/>
+
+        <Style TargetType="TextBlock">
+            <Setter Property="Foreground" Value="{StaticResource FgPrim}"/>
+            <Setter Property="FontFamily" Value="Courier New"/>
+            <Setter Property="FontSize"   Value="13"/>
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="Background"      Value="{StaticResource Bg1}"/>
+            <Setter Property="Foreground"      Value="{StaticResource FgPrim}"/>
+            <Setter Property="BorderBrush"     Value="{StaticResource AccentA}"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="Padding"         Value="8,6"/>
+            <Setter Property="FontFamily"      Value="Courier New"/>
+            <Setter Property="FontSize"        Value="14"/>
+            <Setter Property="CaretBrush"      Value="{StaticResource FgPrim}"/>
+        </Style>
+        <Style x:Key="BtnStyle" TargetType="Button">
+            <Setter Property="Background"      Value="{StaticResource Bg2}"/>
+            <Setter Property="Foreground"      Value="{StaticResource AccentA}"/>
+            <Setter Property="BorderBrush"     Value="{StaticResource AccentA}"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="Padding"         Value="16,8"/>
+            <Setter Property="FontFamily"      Value="Courier New"/>
+            <Setter Property="FontWeight"      Value="Bold"/>
+            <Setter Property="FontSize"        Value="13"/>
+            <Setter Property="Cursor"          Value="Hand"/>
+            <Setter Property="Margin"          Value="4,0"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="{StaticResource AccentA}"/>
+                    <Setter Property="Foreground" Value="{StaticResource Bg0}"/>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Opacity" Value="0.4"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- ROW 0: HEADER -->
+        <Border Grid.Row="0" Background="{StaticResource Bg2}" Padding="10" Margin="0,0,0,8"
+                BorderThickness="2" BorderBrush="{StaticResource AccentA}">
+            <DockPanel>
+                <TextBlock DockPanel.Dock="Left" Text="SARA OFFICE SUITE"
+                           FontSize="16" FontWeight="Bold" Foreground="{StaticResource AccentA}"
+                           VerticalAlignment="Center"/>
+                <!-- Fatigue indicator -->
+                <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" VerticalAlignment="Center">
+                    <TextBlock Text="FATIGUE:" FontSize="11" Foreground="{StaticResource FgSub}"
+                               VerticalAlignment="Center" Margin="0,0,6,0"/>
+                    <Border x:Name="FatigueBar" Width="60" Height="18"
+                            CornerRadius="2" BorderThickness="1" BorderBrush="{StaticResource FgSub}">
+                        <Border.Background>
+                            <SolidColorBrush Color="#00FF00"/>
+                        </Border.Background>
+                    </Border>
+                </StackPanel>
+            </DockPanel>
+        </Border>
+
+        <!-- ROW 1: INPUT AREA -->
+        <TextBox Grid.Row="1" x:Name="InputBox"
+                 AcceptsReturn="True" AcceptsTab="True"
+                 TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"
+                 FontSize="15"/>
+
+        <!-- ROW 2: ACTION BUTTONS -->
+        <Border Grid.Row="2" Padding="4,8">
+            <WrapPanel HorizontalAlignment="Center">
+                <Button Style="{StaticResource BtnStyle}" Content="[ASK SARA]"
+                        Click="AskSara_Click" x:Name="AskBtn"/>
+                <Button Style="{StaticResource BtnStyle}" Content="[SAVE .DOCX]"
+                        Click="SaveDocx_Click"/>
+                <Button Style="{StaticResource BtnStyle}" Content="[SAVE .XLSX]"
+                        Click="SaveXlsx_Click"/>
+                <Button Style="{StaticResource BtnStyle}" Content="[SAVE .PDF]"
+                        Click="SavePdf_Click"/>
+                <Button Style="{StaticResource BtnStyle}" Content="[DRAFT DOC]"
+                        Click="DraftDocx_Click" ToolTip="AI writes a document from your prompt"/>
+                <Button Style="{StaticResource BtnStyle}" Content="[BROWSE]"
+                        Click="WebBrowse_Click" ToolTip="Fetch a URL and show text"/>
+                <Button Style="{StaticResource BtnStyle}" Content="[SEARCH]"
+                        Click="WebSearch_Click" ToolTip="Search the web"/>
+                <Button Style="{StaticResource BtnStyle}" Content="[EMAIL]"
+                        Click="SendEmail_Click" ToolTip="Send email via Gmail"/>
+                <Button Style="{StaticResource BtnStyle}" Content="[CALENDAR]"
+                        Click="CalendarList_Click" ToolTip="Show upcoming calendar events"/>
+                <Button Style="{StaticResource BtnStyle}" Content="[CLEAR]"
+                        Click="Clear_Click"/>
+            </WrapPanel>
+        </Border>
+
+        <!-- ROW 3: RESPONSE AREA -->
+        <TextBox Grid.Row="3" x:Name="ResponseBox"
+                 IsReadOnly="True" AcceptsReturn="True"
+                 TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"
+                 Background="#0D0D0D" BorderBrush="{StaticResource Cyan}"
+                 FontSize="14" Foreground="{StaticResource AccentB}"/>
+
+        <!-- ROW 4: SAVE STATUS -->
+        <Border Grid.Row="4" Padding="4,6">
+            <TextBlock x:Name="SaveStatus" Text="" FontSize="12"
+                       Foreground="{StaticResource Cyan}"/>
+        </Border>
+
+        <!-- ROW 5: STATUS BAR -->
+        <Border Grid.Row="5" Background="{StaticResource Bg2}"
+                Padding="8,4" BorderThickness="2" BorderBrush="{StaticResource AccentB}">
+            <DockPanel>
+                <Ellipse x:Name="SaraDot" Width="10" Height="10"
+                         DockPanel.Dock="Left" Margin="0,0,8,0"
+                         VerticalAlignment="Center"/>
+                <TextBlock x:Name="StatusText" Text="Checking SARA..."
+                           Foreground="{StaticResource AccentB}"
+                           FontSize="12" FontWeight="Bold"
+                           VerticalAlignment="Center"/>
+            </DockPanel>
+        </Border>
+    </Grid>
+
+    <Window.InputBindings>
+        <KeyBinding Key="Return" Modifiers="Ctrl" Command="{x:Null}"/>
+    </Window.InputBindings>
+</Window>

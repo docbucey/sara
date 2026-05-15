@@ -1,0 +1,62 @@
+﻿using System;
+using System.Windows;
+using System.Windows.Interop;
+using DisabilityMapper.Services;
+using DisabilityMapper.ViewModels;
+
+namespace DisabilityMapper;
+
+public partial class MainWindow : Window
+{
+    public MainWindow()
+    {
+        InitializeComponent();
+        var vm = new MainViewModel();
+        DataContext = vm;
+
+        // Show/hide steno window whenever a StenoToggle mapping fires
+        vm.StenoToggleRequested += () =>
+            StenoKeyboardWindow.Toggle(vm.StenoVm);
+
+        Loaded += OnWindowLoaded;
+    }
+
+    private void OnWindowLoaded(object sender, RoutedEventArgs e)
+    {
+        var vm   = (MainViewModel)DataContext;
+        var hwnd = new WindowInteropHelper(this).Handle;
+
+        // Register Raw Input (keyboard + mouse) and hook into WPF message pump
+        vm.OnWindowLoaded(hwnd);
+        HwndSource.FromHwnd(hwnd)?.AddHook(WndProc);
+
+        // Auto-discover all attached devices and start input monitoring immediately
+        vm.RefreshDevicesCommand.Execute(null);
+        if (!vm.IsPolling)
+            vm.TogglePollingCommand.Execute(null);
+    }
+
+    private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+    {
+        var vm = (MainViewModel)DataContext;
+
+        if (msg == RawInputService.WM_INPUT)
+            vm.OnRawInput(lParam);
+        else if (msg is TouchService.WM_POINTERDOWN
+                     or TouchService.WM_POINTERUP
+                     or TouchService.WM_POINTERUPDATE)
+            vm.OnPointerInput(msg, wParam);
+
+        return IntPtr.Zero;
+    }
+
+    private void OpenOffice_Click(object sender, RoutedEventArgs e)
+    {
+        OfficeSuiteWindow.Toggle();
+    }
+
+    private void OpenSaraFallbackUi_Click(object sender, RoutedEventArgs e)
+    {
+        SaraFallbackShellWindow.Toggle();
+    }
+}

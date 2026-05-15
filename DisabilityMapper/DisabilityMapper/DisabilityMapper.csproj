@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+    <!-- Ship as SARA.exe; code namespaces stay DisabilityMapper -->
+    <AssemblyName>SARA</AssemblyName>
+    <RootNamespace>DisabilityMapper</RootNamespace>
+    <Title>SARA</Title>
+    <Description>Accessibility input mapper built for Parkinson's Disease and Tardive Dyskinesia. Remaps any keyboard, gamepad, joystick, mouse, or touch device with tremor filtering, debounce, and steno chord support.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.3.2" />
+    <PackageReference Include="InputSimulatorStandard" Version="1.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="SharpDX.DirectInput" Version="4.2.0" />
+  </ItemGroup>
+
+</Project>

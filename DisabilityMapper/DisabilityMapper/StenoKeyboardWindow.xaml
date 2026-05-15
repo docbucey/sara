@@ -1,0 +1,515 @@
+<Window x:Class="DisabilityMapper.StenoKeyboardWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="clr-namespace:DisabilityMapper.ViewModels"
+        Title="Steno Keyboard"
+        Width="668" Height="364"
+        MinWidth="668" MinHeight="364"
+        MaxWidth="668" MaxHeight="364"
+        ResizeMode="CanMinimize"
+        WindowStyle="ToolWindow"
+        ShowInTaskbar="False"
+        Background="#1E1E2E"
+        Topmost="{Binding IsAlwaysOnTop}">
+
+    <Window.Resources>
+        <!-- ── Steno key base style ───────────────────────────────────── -->
+        <Style x:Key="StenoBase" TargetType="ToggleButton">
+            <Setter Property="Width"            Value="52"/>
+            <Setter Property="Height"           Value="44"/>
+            <Setter Property="Margin"           Value="2"/>
+            <Setter Property="FontFamily"       Value="Segoe UI Semibold"/>
+            <Setter Property="FontSize"         Value="12"/>
+            <Setter Property="BorderThickness"  Value="1"/>
+            <Setter Property="Cursor"           Value="Hand"/>
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ToggleButton">
+                        <Border x:Name="Bd"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="7">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="Bd" Property="Background" Value="#FFFFFF28"/>
+                                <Setter TargetName="Bd" Property="BorderThickness" Value="2.5"/>
+                                <Setter Property="FontWeight" Value="Bold"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Bd" Property="Opacity" Value="0.8"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="Bd" Property="Opacity" Value="0.6"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Left hand (blue) -->
+        <Style x:Key="StenoLeft" BasedOn="{StaticResource StenoBase}" TargetType="ToggleButton">
+            <Setter Property="Background"  Value="#1E3055"/>
+            <Setter Property="Foreground"  Value="#89B4FA"/>
+            <Setter Property="BorderBrush" Value="#4A78C4"/>
+        </Style>
+
+        <!-- Right hand (green) -->
+        <Style x:Key="StenoRight" BasedOn="{StaticResource StenoBase}" TargetType="ToggleButton">
+            <Setter Property="Background"  Value="#1A3028"/>
+            <Setter Property="Foreground"  Value="#A6E3A1"/>
+            <Setter Property="BorderBrush" Value="#3A8060"/>
+        </Style>
+
+        <!-- Vowels (amber) – slightly wider -->
+        <Style x:Key="StenoVowel" BasedOn="{StaticResource StenoBase}" TargetType="ToggleButton">
+            <Setter Property="Background"  Value="#352B14"/>
+            <Setter Property="Foreground"  Value="#F9E2AF"/>
+            <Setter Property="BorderBrush" Value="#A07030"/>
+            <Setter Property="Width"       Value="58"/>
+            <Setter Property="FontSize"    Value="14"/>
+        </Style>
+
+        <!-- Asterisk (coral – delete/undo stroke) – taller to span 2 rows -->
+        <Style x:Key="StenoStar" BasedOn="{StaticResource StenoBase}" TargetType="ToggleButton">
+            <Setter Property="Background"  Value="#3A1820"/>
+            <Setter Property="Foreground"  Value="#F38BA8"/>
+            <Setter Property="BorderBrush" Value="#802040"/>
+            <Setter Property="Width"       Value="52"/>
+            <Setter Property="Height"      Value="92"/>
+            <Setter Property="FontSize"    Value="20"/>
+        </Style>
+
+        <!-- Number bar (purple) -->
+        <Style x:Key="StenoNum" BasedOn="{StaticResource StenoBase}" TargetType="ToggleButton">
+            <Setter Property="Background"  Value="#28204A"/>
+            <Setter Property="Foreground"  Value="#CBA6F7"/>
+            <Setter Property="BorderBrush" Value="#6040A0"/>
+            <Setter Property="Height"      Value="92"/>
+        </Style>
+
+        <!-- Action button (toolbar) -->
+        <Style x:Key="ActBtn" TargetType="Button">
+            <Setter Property="Background"      Value="#27273A"/>
+            <Setter Property="Foreground"      Value="#CDD6F4"/>
+            <Setter Property="BorderBrush"     Value="#45475A"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding"         Value="12,4"/>
+            <Setter Property="FontFamily"      Value="Segoe UI"/>
+            <Setter Property="FontSize"        Value="13"/>
+            <Setter Property="Cursor"          Value="Hand"/>
+            <Setter Property="Margin"          Value="4,0,0,0"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#45475A"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- Send button – highlighted -->
+        <Style x:Key="SendBtn" BasedOn="{StaticResource ActBtn}" TargetType="Button">
+            <Setter Property="Background"  Value="#1A3028"/>
+            <Setter Property="Foreground"  Value="#A6E3A1"/>
+            <Setter Property="BorderBrush" Value="#A6E3A1"/>
+            <Setter Property="FontWeight"  Value="SemiBold"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#A6E3A1"/>
+                    <Setter Property="Foreground" Value="#1E1E2E"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- ── Dark TabControl / TabItem ─────────────────────────────────── -->
+        <Style TargetType="TabControl">
+            <Setter Property="Background"      Value="#1E1E2E"/>
+            <Setter Property="BorderBrush"     Value="#45475A"/>
+            <Setter Property="BorderThickness" Value="0,1,1,1"/>
+            <Setter Property="Padding"         Value="0"/>
+        </Style>
+        <Style TargetType="TabItem">
+            <Setter Property="Background"  Value="#27273A"/>
+            <Setter Property="Foreground"  Value="#7F849C"/>
+            <Setter Property="FontFamily"  Value="Segoe UI"/>
+            <Setter Property="FontSize"    Value="12"/>
+            <Setter Property="BorderBrush" Value="#45475A"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TabItem">
+                        <Border x:Name="Bd"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="1,1,1,0"
+                                Margin="0,2,2,0" Padding="12,5">
+                            <ContentPresenter ContentSource="Header"
+                                              HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"
+                                              TextElement.Foreground="{TemplateBinding Foreground}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="Bd" Property="Background" Value="#1E1E2E"/>
+                                <Setter Property="Foreground" Value="#89B4FA"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Bd" Property="Background" Value="#313145"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- ── Direct-type key button styles ────────────────────────────── -->
+        <Style x:Key="DTypeKey" TargetType="Button">
+            <Setter Property="Width"           Value="42"/>
+            <Setter Property="Height"          Value="38"/>
+            <Setter Property="Margin"          Value="2"/>
+            <Setter Property="Background"      Value="#27273A"/>
+            <Setter Property="Foreground"      Value="#CDD6F4"/>
+            <Setter Property="BorderBrush"     Value="#45475A"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="FontFamily"      Value="Segoe UI"/>
+            <Setter Property="FontSize"        Value="13"/>
+            <Setter Property="Cursor"          Value="Hand"/>
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#45475A"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="#89B4FA"/>
+                    <Setter Property="Foreground" Value="#1E1E2E"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <!-- Wide variant (Backspace / Tab / Enter) -->
+        <Style x:Key="DTypeKeyWide" BasedOn="{StaticResource DTypeKey}" TargetType="Button">
+            <Setter Property="Width"     Value="84"/>
+            <Setter Property="FontSize"  Value="12"/>
+        </Style>
+        <!-- Extra-wide Space bar -->
+        <Style x:Key="DTypeSpace" BasedOn="{StaticResource DTypeKey}" TargetType="Button">
+            <Setter Property="Width"    Value="240"/>
+            <Setter Property="Content"  Value="Space"/>
+        </Style>
+        <!-- Symbol key – amber tint -->
+        <Style x:Key="DTypeSym" BasedOn="{StaticResource DTypeKey}" TargetType="Button">
+            <Setter Property="Foreground"  Value="#F9E2AF"/>
+            <Setter Property="BorderBrush" Value="#A07030"/>
+        </Style>
+    </Window.Resources>
+
+    <TabControl>
+
+        <!-- ═══════════════════════════════════════════════════════════════
+             TAB 1 — STENO CHORDS
+        ════════════════════════════════════════════════════════════════ -->
+        <TabItem Header=" ◆  Steno Chords ">
+          <Grid Margin="6,6,6,4">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>   <!-- dict import bar -->
+                <RowDefinition Height="Auto"/>   <!-- chord preview bar -->
+                <RowDefinition Height="Auto"/>   <!-- steno key grid -->
+                <RowDefinition Height="Auto"/>   <!-- output bar -->
+            </Grid.RowDefinitions>
+
+        <!-- ═══ DICTIONARY IMPORT ════════════════════════════════════════ -->
+        <Border Grid.Row="0" Background="#1A1A2A" CornerRadius="4"
+                Padding="8,4" Margin="0,0,0,4">
+            <DockPanel>
+                <Button DockPanel.Dock="Right"
+                        Command="{Binding ImportDictionaryCommand}"
+                        Background="#27273A" Foreground="#CBA6F7"
+                        BorderBrush="#6040A0" BorderThickness="1"
+                        Padding="10,3" Cursor="Hand" Margin="6,0,0,0"
+                        FontFamily="Segoe UI" FontSize="12"
+                        Content="📂  Import Plover Dict…"/>
+                <TextBlock Text="{Binding DictionaryStatus}"
+                           FontSize="10" Foreground="#7F849C"
+                           VerticalAlignment="Center"
+                           TextTrimming="CharacterEllipsis"/>
+            </DockPanel>
+        </Border>
+
+        <!-- ═══ CHORD PREVIEW ═══════════════════════════════════════════ -->
+        <Border Grid.Row="1" Background="#27273A" CornerRadius="4"
+                Padding="10,4" Margin="0,0,0,6">
+            <DockPanel>
+                <TextBlock DockPanel.Dock="Right"
+                           Text="✱ alone = undo last word"
+                           FontSize="10" Foreground="#585B70"
+                           VerticalAlignment="Center" Margin="8,0,0,0"/>
+                <TextBlock Text="Chord: " Foreground="#585B70"
+                           FontFamily="Segoe UI" FontSize="12"
+                           VerticalAlignment="Center"/>
+                <TextBlock Text="{Binding ChordPreview}"
+                           Foreground="#F9E2AF"
+                           FontFamily="Consolas" FontSize="15"
+                           FontWeight="Bold" VerticalAlignment="Center"/>
+            </DockPanel>
+        </Border>
+
+        <!-- ═══ STENO KEY GRID ══════════════════════════════════════════ -->
+        <!--
+            Standard stenotype layout (English / Plover-compatible):
+
+            Col:  0    1    2    3    4    5   6    7    8    9   10
+            Row0: [#] [S-] [T-] [P-] [H-] [*] [-F] [-P] [-L] [-T] [-D]
+            Row1:      [S-] [K-] [W-] [R-] [*] [-R] [-B] [-G] [-S] [-Z]
+            Row2:               [A]  [O]        [-E] [-U]
+
+            # and * both span rows 0–1 (physical height of two rows).
+        -->
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="56"/>  <!-- col 0: # -->
+                <ColumnDefinition Width="56"/>  <!-- col 1: S -->
+                <ColumnDefinition Width="56"/>  <!-- col 2: T / K -->
+                <ColumnDefinition Width="56"/>  <!-- col 3: P / W / A -->
+                <ColumnDefinition Width="56"/>  <!-- col 4: H / R / O -->
+                <ColumnDefinition Width="56"/>  <!-- col 5: * -->
+                <ColumnDefinition Width="56"/>  <!-- col 6: -F / -R / -E -->
+                <ColumnDefinition Width="56"/>  <!-- col 7: -P / -B / -U -->
+                <ColumnDefinition Width="56"/>  <!-- col 8: -L / -G -->
+                <ColumnDefinition Width="56"/>  <!-- col 9: -T / -S -->
+                <ColumnDefinition Width="56"/>  <!-- col10: -D / -Z -->
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="48"/>   <!-- top key row -->
+                <RowDefinition Height="48"/>   <!-- bottom key row -->
+                <RowDefinition Height="52"/>   <!-- vowel row -->
+            </Grid.RowDefinitions>
+
+            <!-- ── Number bar (col 0, spans rows 0–1) ── -->
+            <ToggleButton Grid.Row="0" Grid.Column="0" Grid.RowSpan="2"
+                          Tag="#" Style="{StaticResource StenoNum}" Content="#"
+                          Checked="StenoKey_Checked" Unchecked="StenoKey_Unchecked"
+                          x:Name="Key_NUM"/>
+
+            <!-- ── Left hand top row ── -->
+            <ToggleButton Grid.Row="0" Grid.Column="1"
+                          Tag="S" Style="{StaticResource StenoLeft}" Content="S-"
+                          Checked="StenoKey_Checked" Unchecked="StenoKey_Unchecked"
+                          x:Name="SKey_Top"/>
+            <ToggleButton Grid.Row="0" Grid.Column="2"
+                          Tag="T" Style="{StaticResource StenoLeft}" Content="T-"
+                          Checked="StenoKey_Checked" Unchecked="StenoKey_Unchecked"/>
+            <ToggleButton Grid.Row="0" Grid.Column="3"
+                          Tag="P" Style="{StaticResource StenoLeft}" Content="P-"
+                          Checked="StenoKey_Checked" Unchecked="StenoKey_Unchecked"/>
+            <ToggleButton Grid.Row="0" Grid.Column="4"
+                          Tag="H" Style="{StaticResource StenoLeft}" Content="H-"
+                          Checked="StenoKey_Checked" Unchecked="StenoKey_Unchecked"/>
+
+            <!-- ── Asterisk (col 5, spans rows 0–1) ── -->
+            <ToggleButton Grid.Row="0" Grid.Column="5" Grid.RowSpan="2"
+                          Tag="*" Style="{StaticResource StenoStar}" Content="✱"
+                          Checked="StenoKey_Checked" Unchecked="StenoKey_Unchecked"
+                          x:Name="Key_STAR"/>
+
+            <!-- ── Right hand top row ── -->
+            <ToggleButton Grid.Row="0" Grid.Column="6"
+                          Tag="-F" Style="{StaticResource StenoRight}" Content="-F"
+                          Checked="StenoKey_Checked" Unchecked="StenoKey_Unchecked"/>
+            <ToggleButton Grid.Row="0" Grid.Column="7"
+                          Tag="-P" Style="{StaticResource StenoRight}" Content="-P"
+                          Checked="StenoKey_Checked" Unchecked="StenoKey_Unchecked"/>
+            <ToggleButton Grid.Row="0" Grid.Column="8"
+                          Tag="-L" Style="{StaticResource StenoRight}" Content="-L"
+                          Checked="StenoKey_Checked" Unchecked="StenoKey_Unchecked"/>
+            <ToggleButton Grid.Row="0" Grid.Column="9"
+                          Tag="-T" Style="{StaticResource StenoRight}" Content="-T"
+                          Checked="StenoKey_Checked" Unchecked="StenoKey_Unchecked"/>
+            <ToggleButton Grid.Row="0" Grid.Column="10"
+                          Tag="-D" Style="{StaticResource StenoRight}" Content="-D"
+                          Checked="StenoKey_Checked" Unchecked="StenoKey_Unchecked"/>
+
+            <!-- ── Left hand bottom row ── -->
+            <!-- S appears on both rows; both buttons share Tag="S" and sync state -->
+            <ToggleButton Grid.Row="1" Grid.Column="1"
+                          Tag="S" Style="{StaticResource StenoLeft}" Content="S-"
+                          Checked="StenoKey_Checked" Unchecked="StenoKey_Unchecked"
+                          x:Name="SKey_Bot"/>
+            <ToggleButton Grid.Row="1" Grid.Column="2"
+                          Tag="K" Style="{StaticResource StenoLeft}" Content="K-"
+                          Checked="StenoKey_Checked" Unchecked="StenoKey_Unchecked"/>
+            <ToggleButton Grid.Row="1" Grid.Column="3"
+                          Tag="W" Style="{StaticResource StenoLeft}" Content="W-"
+                          Checked="StenoKey_Checked" Unchecked="StenoKey_Unchecked"/>
+            <ToggleButton Grid.Row="1" Grid.Column="4"
+                          Tag="R" Style="{StaticResource StenoLeft}" Content="R-"
+                          Checked="StenoKey_Checked" Unchecked="StenoKey_Unchecked"/>
+
+            <!-- ── Right hand bottom row ── -->
+            <ToggleButton Grid.Row="1" Grid.Column="6"
+                          Tag="-R" Style="{StaticResource StenoRight}" Content="-R"
+                          Checked="StenoKey_Checked" Unchecked="StenoKey_Unchecked"/>
+            <ToggleButton Grid.Row="1" Grid.Column="7"
+                          Tag="-B" Style="{StaticResource StenoRight}" Content="-B"
+                          Checked="StenoKey_Checked" Unchecked="StenoKey_Unchecked"/>
+            <ToggleButton Grid.Row="1" Grid.Column="8"
+                          Tag="-G" Style="{StaticResource StenoRight}" Content="-G"
+                          Checked="StenoKey_Checked" Unchecked="StenoKey_Unchecked"/>
+            <ToggleButton Grid.Row="1" Grid.Column="9"
+                          Tag="-S" Style="{StaticResource StenoRight}" Content="-S"
+                          Checked="StenoKey_Checked" Unchecked="StenoKey_Unchecked"/>
+            <ToggleButton Grid.Row="1" Grid.Column="10"
+                          Tag="-Z" Style="{StaticResource StenoRight}" Content="-Z"
+                          Checked="StenoKey_Checked" Unchecked="StenoKey_Unchecked"/>
+
+            <!-- ── Vowel row ── -->
+            <ToggleButton Grid.Row="2" Grid.Column="3"
+                          Tag="A" Style="{StaticResource StenoVowel}" Content="A"
+                          Checked="StenoKey_Checked" Unchecked="StenoKey_Unchecked"/>
+            <ToggleButton Grid.Row="2" Grid.Column="4"
+                          Tag="O" Style="{StaticResource StenoVowel}" Content="O"
+                          Checked="StenoKey_Checked" Unchecked="StenoKey_Unchecked"/>
+            <ToggleButton Grid.Row="2" Grid.Column="6"
+                          Tag="E" Style="{StaticResource StenoVowel}" Content="E"
+                          Checked="StenoKey_Checked" Unchecked="StenoKey_Unchecked"/>
+            <ToggleButton Grid.Row="2" Grid.Column="7"
+                          Tag="U" Style="{StaticResource StenoVowel}" Content="U"
+                          Checked="StenoKey_Checked" Unchecked="StenoKey_Unchecked"/>
+        </Grid>
+
+        <!-- ═══ OUTPUT BAR ══════════════════════════════════════════════ -->
+        <Border Grid.Row="3" Background="#27273A" CornerRadius="4"
+                Padding="8,5" Margin="0,6,0,0">
+            <DockPanel>
+                <!-- Action buttons (right-docked) -->
+                <Button DockPanel.Dock="Right"
+                        Style="{StaticResource ActBtn}"
+                        Command="{Binding ClearOutputCommand}"
+                        Content="✕ Clear" ToolTip="Clear output buffer"/>
+                <Button DockPanel.Dock="Right"
+                        Style="{StaticResource ActBtn}"
+                        Command="{Binding BackspaceCommand}"
+                        Content="⌫" ToolTip="Delete last word"/>
+                <Button DockPanel.Dock="Right"
+                        Style="{StaticResource SendBtn}"
+                        Command="{Binding FireChordCommand}"
+                        Content="⏎  Send" ToolTip="Fire current chord (or press Enter)"/>
+
+                <!-- Auto-fire toggle -->
+                <CheckBox DockPanel.Dock="Right"
+                          IsChecked="{Binding IsAlwaysOnTop}"
+                          Content="On top"
+                          Foreground="#7F849C" FontSize="11"
+                          VerticalAlignment="Center" Margin="4,0,8,0"/>
+
+                <!-- Output preview (scrolling left) -->
+                <ScrollViewer HorizontalScrollBarVisibility="Hidden"
+                              VerticalScrollBarVisibility="Disabled">
+                    <TextBlock Text="{Binding OutputBuffer}"
+                               Foreground="#CDD6F4"
+                               FontFamily="Segoe UI" FontSize="13"
+                               VerticalAlignment="Center"
+                               TextTrimming="CharacterEllipsis"/>
+                </ScrollViewer>
+            </DockPanel>
+        </Border>
+          </Grid>
+        </TabItem>
+
+        <!-- ═══════════════════════════════════════════════════════════════
+             TAB 2 — DIRECT TYPE  (click individual chars — URLs, passwords, etc.)
+        ════════════════════════════════════════════════════════════════ -->
+        <TabItem Header=" ⌨  Direct Type ">
+            <StackPanel Margin="6,8,6,6">
+
+                <!-- Hint -->
+                <TextBlock Text="Click any key to type it immediately into the focused app."
+                           FontSize="10" Foreground="#585B70" Margin="2,0,0,4"/>
+
+                <!-- ── Row 0: Numbers ──────────────────────────────────── -->
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
+                    <Button Style="{StaticResource DTypeKey}" Content="1" Command="{Binding TypeCharCommand}" CommandParameter="1"/>
+                    <Button Style="{StaticResource DTypeKey}" Content="2" Command="{Binding TypeCharCommand}" CommandParameter="2"/>
+                    <Button Style="{StaticResource DTypeKey}" Content="3" Command="{Binding TypeCharCommand}" CommandParameter="3"/>
+                    <Button Style="{StaticResource DTypeKey}" Content="4" Command="{Binding TypeCharCommand}" CommandParameter="4"/>
+                    <Button Style="{StaticResource DTypeKey}" Content="5" Command="{Binding TypeCharCommand}" CommandParameter="5"/>
+                    <Button Style="{StaticResource DTypeKey}" Content="6" Command="{Binding TypeCharCommand}" CommandParameter="6"/>
+                    <Button Style="{StaticResource DTypeKey}" Content="7" Command="{Binding TypeCharCommand}" CommandParameter="7"/>
+                    <Button Style="{StaticResource DTypeKey}" Content="8" Command="{Binding TypeCharCommand}" CommandParameter="8"/>
+                    <Button Style="{StaticResource DTypeKey}" Content="9" Command="{Binding TypeCharCommand}" CommandParameter="9"/>
+                    <Button Style="{StaticResource DTypeKey}" Content="0" Command="{Binding TypeCharCommand}" CommandParameter="0"/>
+                    <Button Style="{StaticResource DTypeKeyWide}" Content="⌫ Bksp" Command="{Binding DirectBackspaceCommand}"
+                            Foreground="#F38BA8" BorderBrush="#802040"/>
+                </StackPanel>
+
+                <!-- ── Row 1: Q W E R T Y U I O P ─────────────────────── -->
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
+                    <Button Style="{StaticResource DTypeKey}" Content="Q" Command="{Binding TypeCharCommand}" CommandParameter="q"/>
+                    <Button Style="{StaticResource DTypeKey}" Content="W" Command="{Binding TypeCharCommand}" CommandParameter="w"/>
+                    <Button Style="{StaticResource DTypeKey}" Content="E" Command="{Binding TypeCharCommand}" CommandParameter="e"/>
+                    <Button Style="{StaticResource DTypeKey}" Content="R" Command="{Binding TypeCharCommand}" CommandParameter="r"/>
+                    <Button Style="{StaticResource DTypeKey}" Content="T" Command="{Binding TypeCharCommand}" CommandParameter="t"/>
+                    <Button Style="{StaticResource DTypeKey}" Content="Y" Command="{Binding TypeCharCommand}" CommandParameter="y"/>
+                    <Button Style="{StaticResource DTypeKey}" Content="U" Command="{Binding TypeCharCommand}" CommandParameter="u"/>
+                    <Button Style="{StaticResource DTypeKey}" Content="I" Command="{Binding TypeCharCommand}" CommandParameter="i"/>
+                    <Button Style="{StaticResource DTypeKey}" Content="O" Command="{Binding TypeCharCommand}" CommandParameter="o"/>
+                    <Button Style="{StaticResource DTypeKey}" Content="P" Command="{Binding TypeCharCommand}" CommandParameter="p"/>
+                </StackPanel>
+
+                <!-- ── Row 2: A S D F G H J K L ─────────────────────────── -->
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
+                    <Button Style="{StaticResource DTypeKey}" Content="A" Command="{Binding TypeCharCommand}" CommandParameter="a"/>
+                    <Button Style="{StaticResource DTypeKey}" Content="S" Command="{Binding TypeCharCommand}" CommandParameter="s"/>
+                    <Button Style="{StaticResource DTypeKey}" Content="D" Command="{Binding TypeCharCommand}" CommandParameter="d"/>
+                    <Button Style="{StaticResource DTypeKey}" Content="F" Command="{Binding TypeCharCommand}" CommandParameter="f"/>
+                    <Button Style="{StaticResource DTypeKey}" Content="G" Command="{Binding TypeCharCommand}" CommandParameter="g"/>
+                    <Button Style="{StaticResource DTypeKey}" Content="H" Command="{Binding TypeCharCommand}" CommandParameter="h"/>
+                    <Button Style="{StaticResource DTypeKey}" Content="J" Command="{Binding TypeCharCommand}" CommandParameter="j"/>
+                    <Button Style="{StaticResource DTypeKey}" Content="K" Command="{Binding TypeCharCommand}" CommandParameter="k"/>
+                    <Button Style="{StaticResource DTypeKey}" Content="L" Command="{Binding TypeCharCommand}" CommandParameter="l"/>
+                </StackPanel>
+
+                <!-- ── Row 3: Z X C V B N M ──────────────────────────────── -->
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
+                    <Button Style="{StaticResource DTypeKey}" Content="Z" Command="{Binding TypeCharCommand}" CommandParameter="z"/>
+                    <Button Style="{StaticResource DTypeKey}" Content="X" Command="{Binding TypeCharCommand}" CommandParameter="x"/>
+                    <Button Style="{StaticResource DTypeKey}" Content="C" Command="{Binding TypeCharCommand}" CommandParameter="c"/>
+                    <Button Style="{StaticResource DTypeKey}" Content="V" Command="{Binding TypeCharCommand}" CommandParameter="v"/>
+                    <Button Style="{StaticResource DTypeKey}" Content="B" Command="{Binding TypeCharCommand}" CommandParameter="b"/>
+                    <Button Style="{StaticResource DTypeKey}" Content="N" Command="{Binding TypeCharCommand}" CommandParameter="n"/>
+                    <Button Style="{StaticResource DTypeKey}" Content="M" Command="{Binding TypeCharCommand}" CommandParameter="m"/>
+                </StackPanel>
+
+                <!-- ── Row 4: URL / password symbols ─────────────────────── -->
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
+                    <Button Style="{StaticResource DTypeSym}" Content="."  Command="{Binding TypeCharCommand}" CommandParameter="."/>
+                    <Button Style="{StaticResource DTypeSym}" Content=","  Command="{Binding TypeCharCommand}" CommandParameter=","/>
+                    <Button Style="{StaticResource DTypeSym}" Content="/"  Command="{Binding TypeCharCommand}" CommandParameter="/"/>
+                    <Button Style="{StaticResource DTypeSym}" Content="@"  Command="{Binding TypeCharCommand}" CommandParameter="@"/>
+                    <Button Style="{StaticResource DTypeSym}" Content="-"  Command="{Binding TypeCharCommand}" CommandParameter="-"/>
+                    <Button Style="{StaticResource DTypeSym}" Content="_"  Command="{Binding TypeCharCommand}" CommandParameter="_"/>
+                    <Button Style="{StaticResource DTypeSym}" Content="#"  Command="{Binding TypeCharCommand}" CommandParameter="#"/>
+                    <Button Style="{StaticResource DTypeSym}" Content="?"  Command="{Binding TypeCharCommand}" CommandParameter="?"/>
+                    <Button Style="{StaticResource DTypeSym}" Content="="  Command="{Binding TypeCharCommand}" CommandParameter="="/>
+                    <Button Style="{StaticResource DTypeSym}" Content="&amp;" Command="{Binding TypeCharCommand}" CommandParameter="&amp;"/>
+                    <Button Style="{StaticResource DTypeSym}" Content=":"  Command="{Binding TypeCharCommand}" CommandParameter=":"/>
+                    <Button Style="{StaticResource DTypeSym}" Content="%"  Command="{Binding TypeCharCommand}" CommandParameter="%"/>
+                    <Button Style="{StaticResource DTypeSym}" Content="+"  Command="{Binding TypeCharCommand}" CommandParameter="+"/>
+                    <Button Style="{StaticResource DTypeSym}" Content="~"  Command="{Binding TypeCharCommand}" CommandParameter="~"/>
+                </StackPanel>
+
+                <!-- ── Row 5: Space / Tab / Enter ────────────────────────── -->
+                <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
+                    <Button Style="{StaticResource DTypeSpace}" Command="{Binding TypeSpaceCommand}"/>
+                    <Button Style="{StaticResource DTypeKeyWide}" Content="↹  Tab"   Command="{Binding TypeTabCommand}"
+                            Foreground="#CBA6F7" BorderBrush="#6040A0"/>
+                    <Button Style="{StaticResource DTypeKeyWide}" Content="↵  Enter" Command="{Binding TypeEnterCommand}"
+                            Foreground="#A6E3A1" BorderBrush="#3A8060"/>
+                </StackPanel>
+
+            </StackPanel>
+        </TabItem>
+
+    </TabControl>
+</Window>
