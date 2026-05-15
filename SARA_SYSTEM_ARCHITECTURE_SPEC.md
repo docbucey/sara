@@ -117,6 +117,40 @@ SARA is a modular, protocol-driven AI system designed for safe, auditable, and e
 
 ---
 
+## 2.2 Universal UI Governance Standard
+
+Every user-facing surface in SARA — input mapper, office suite, creative tools, video editor, photo editor, IDE, cockpit, VNCE — must conform to this governance standard. No surface is exempt.
+
+### The Universal Test
+If a 10–12 year old with no interest in technology and zero reading of any manual can identify what every control does and complete their first task in under 60 seconds, the surface passes. If they hesitate or need to read anything to proceed, it fails.
+
+### Non-Negotiable Rules (All Surfaces)
+- **Plain English everywhere on primary surfaces.** Technical terms belong in menus, tooltips, and advanced panels — never on buttons, labels, or first-view prompts.
+- **Action-first language.** Buttons and prompts use everyday verbs: "Find", "Teach", "Save", "Try It". Never "Refresh", "Configure", "Apply", "Remove", "Submit".
+- **Status in plain English.** No boolean flags, no color dots without text, no codes. "✓ Ready", "Not connected", "SARA is ready" — not "Status: True" or a lone indicator.
+- **Progressive disclosure.** Complex settings are accessible but not visible on first view. Show what matters for the current step only.
+- **One question at a time.** Multi-column form grids are replaced by guided sequential prompts: "What should happen when you press this?" not a 5-column editor grid.
+- **No placeholder content.** Body diagrams, legends, and dev-facing debug panels are not shown to end users. If it doesn't immediately help the user, it is removed.
+
+### Simplicity Scale by Surface
+
+| Surface | User | Simplicity Floor | Notes |
+|---------|------|-----------------|-------|
+| Disability Mapper | Anyone — zero literacy assumed | Maximum | Entry point for all users; no exceptions to the preteen standard |
+| Office Suite | General public — writers, students, workers | Near-maximum | First use: obvious new/open/print. Formatting reveals on selection. |
+| Photo / Creative Suite | Anyone who wants to edit an image | High | Drag in, crop, save — obvious. Advanced tools in a second layer. |
+| Video Editor | Anyone who wants to cut a clip | High | First action (drag clip, trim, export) must be zero-friction. Timeline depth is secondary. |
+| IDE / Code Editor | Developers — technical by definition | Standard | Onboarding still zero-friction (new project → running template). Depth is expected. |
+| Cockpit / Control | Operators | Standard | Status always plain English. Common actions ≤ 2 clicks. Deep controls can be complex. |
+| VNCE / Remote | Operators / Admins | Standard | Same as Cockpit. |
+
+### Reference Implementation
+The Disability Mapper C# UI (`DisabilityMapper/DisabilityMapper/MainWindow.xaml`) is the canonical reference for maximum-simplicity surface design. See `SPEC_SHEET_GEN0_CSHARP_EXTENDED.md` Section 1.1 for the documented design target and its rules.
+
+All future SARA UI work — regardless of pillar, language, or framework — is measured against this standard at the appropriate row in the table above.
+
+---
+
 ## 3. File Structure & Integration
 - **Sara_core.py:** Foundation, memory, file IO, protocol enforcement
 - **sara_control.py:** Orchestration, SARA class, AI backend, protocol routing
