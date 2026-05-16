@@ -1,0 +1,182 @@
+/*
+COPILOT_INSTRUCTION:
+Using Puppy.slam as the authoritative substrate definition,
+attempt to fully populate all placeholder blocks in this file
+(searchandnavigation.slam) with valid SLAM syntax.
+
+Rules:
+1. Use ONLY the primitives, rules, and structures defined in
+   Puppy.slam. If a required primitive or rule does not yet
+   exist in Puppy.slam, STOP and return the message:
+
+       "SLAM substrate not ready: missing <primitive_name>"
+
+   Do NOT attempt to invent or approximate missing substrate
+   behavior.
+
+2. Preserve the skeleton structure exactly as written.
+   - Do NOT reorder sections.
+   - Do NOT rename sections.
+   - Do NOT remove placeholder markers (#= ... =#).
+   - Only replace the placeholder interiors with valid SLAM.
+
+3. Implement the following blocks ONLY if Puppy.slam provides
+   the necessary substrate definitions:
+   - MDBP_BLOCK
+   - HARDWARE_GRID
+   - HEX_COORDINATE_SYSTEM
+   - NAVIGATION_PRIMITIVES
+   - YES_NO_SEARCH
+   - FLOOD_SEARCH_INTEGRATION
+   - TAGGER_INTEGRATION
+   - SXF_INTEGRATION
+
+4. All generated SLAM must follow:
+   - %()% comma-separated payload rule
+   - Sequian normalization rules
+   - Puppy primitive rules
+   - Nexus/NexusSphere/CartiGene rules where applicable
+
+5. For YES/NO search:
+   - Implement a SLAM form that returns ONLY yes/no.
+   - Do NOT return file contents.
+   - Do NOT leak partial matches.
+   - Use MDBP + hex coordinates + 3-point hardware grid.
+
+6. If SLAM substrate is ready:
+   - Fill each placeholder with valid SLAM syntax.
+   - Do NOT add logic outside placeholders.
+   - Do NOT modify the skeleton header or metadata.
+
+7. If SLAM substrate is NOT ready:
+   - Return ONLY the message:
+       "SLAM substrate not ready"
+   - Do NOT modify this file.
+
+END_COPILOT_INSTRUCTION
+*/
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~ HEADER (strict, machine-verified)                        ~
+~ kennel=substrate                                          ~
+~ generation=0                                              ~
+~ evolution=alpha                                           ~
+~ version=0.1                                               ~
+~ date=                                                     ~
+~ location=                                                 ~
+~ language=SLAM                                             ~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+============================================================
+SEARCH AND NAVIGATION SUBSTRATE — SKELETON
+============================================================
+
+SECTION 1 — PURPOSE
+-------------------
+# This file defines:
+# - MDBP (Most Direct Binary Path) interface
+# - HexShape → Axial → Cube coordinate mapping
+# - File-internal navigation geometry
+# - Substrate-level search primitives
+# - Tagger and Flood-Search integration points
+#
+# This is a skeleton. No logic is implemented here.
+
+------------------------------------------------------------
+
+SECTION 2 — MDBP (PLACEHOLDER)
+------------------------------
+#= MDBP_BLOCK =#
+# Placeholder for MDBP calculation and immutability rules.
+# This block will be filled by Copilot using Puppy.slam rules.
+#
+# SLAM Form (to be generated):
+#     <name> mdp%(mantissa:<m>, exponent:<e>, sign:<s>)%
+#
+# Notes:
+# - MDBP is assigned once.
+# - MDBP is immutable.
+# - MDBP is used by Tagger, Flood-Search, SXF.
+#= END MDBP_BLOCK =#
+
+------------------------------------------------------------
+
+SECTION 3 — HEXSHAPE COORDINATE SYSTEM (PLACEHOLDER)
+----------------------------------------------------
+#= HEX_COORDINATE_SYSTEM =#
+# Defines the coordinate system used for file navigation.
+#
+# HexShape → Axial:
+#     q = <hex.q>
+#     r = <hex.r>
+#
+# Axial → Cube:
+#     x = q
+#     z = r
+#     y = -x - z
+#
+# SLAM Form (to be generated):
+#     <name> coord%(x:<x>, y:<y>, z:<z>)%
+#
+# Notes:
+# - x = longitude
+# - z = latitude
+# - y = altitude
+#= END HEX_COORDINATE_SYSTEM =#
+
+------------------------------------------------------------
+
+SECTION 4 — NAVIGATION PRIMITIVES (PLACEHOLDER)
+-----------------------------------------------
+#= NAVIGATION_PRIMITIVES =#
+# Placeholder for navigation verbs and routing helpers.
+#
+# Planned primitives:
+#     locate():
+#     jump():
+#     region():
+#     nearest():
+#     distance():
+#
+# These will be filled by Copilot using Puppy.slam rules.
+#= END NAVIGATION_PRIMITIVES =#
+
+------------------------------------------------------------
+
+SECTION 5 — FLOOD-SEARCH INTEGRATION (PLACEHOLDER)
+--------------------------------------------------
+#= FLOOD_SEARCH_INTEGRATION =#
+# Placeholder for Flood-Search hooks.
+#
+# Planned:
+# - Use MDBP as initial anchor
+# - Use (x,y,z) coordinates for region jumps
+# - Use HexShape for fast scanning
+#= END FLOOD_SEARCH_INTEGRATION =#
+
+------------------------------------------------------------
+
+SECTION 6 — TAGGER INTEGRATION (PLACEHOLDER)
+--------------------------------------------
+#= TAGGER_INTEGRATION =#
+# Placeholder for Tagger lineage mapping.
+#
+# Planned:
+# - Tagger stores MDBP
+# - Tagger stores (x,y,z)
+# - Tagger mirrors coordinate lineage
+#= END TAGGER_INTEGRATION =#
+
+------------------------------------------------------------
+
+SECTION 7 — SXF INTEGRATION (PLACEHOLDER)
+-----------------------------------------
+#= SXF_INTEGRATION =#
+# Placeholder for SXF routing table mapping.
+#
+# Planned:
+# - SXF stores MDBP in binary
+# - SXF stores (x,y,z) for block navigation
+#= END SXF_INTEGRATION =#
+
+============================================================
+END OF SEARCH AND NAVIGATION SKELETON
+============================================================

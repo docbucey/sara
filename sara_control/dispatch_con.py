@@ -235,6 +235,54 @@ def _cmd_refinement_loop(kwargs):
 def _cmd_job_ready_pipeline(kwargs):
     return job_ready_pipeline_entry(job_payload=kwargs.get("payload") or kwargs, previous_state=kwargs.get("previous_state"))
 
+def _cmd_input_map_update(kwargs):
+    """SARA writes a device mapping change. Called from voice or chat.
+    kwargs: device (str), action (dict), category (str: axes|buttons|keyboard_remap)
+    Example: device='button_8', action={'type':'key_combo','keys':['LControlKey','C']}, category='buttons'
+    """
+    import json
+    sara_root = os.environ.get("SARA_ROOT", os.path.join(os.path.expanduser("~"), "Documents", "coding projects", "SARA"))
+    map_path = os.path.join(sara_root, "input_map.json")
+    device   = kwargs.get("device", "")
+    action   = kwargs.get("action", {})
+    category = kwargs.get("category", "buttons")
+    if not device:
+        return {"success": False, "error": "device key required (e.g. 'button_0', 'axis_x')"}
+    try:
+        mapping = {}
+        if os.path.exists(map_path):
+            with open(map_path, "r", encoding="utf-8") as f:
+                mapping = json.load(f)
+        mapping.setdefault(category, {})[device] = action
+        with open(map_path, "w", encoding="utf-8") as f:
+            json.dump(mapping, f, indent=2)
+        return {"success": True, "updated": f"{category}.{device}", "action": action}
+    except Exception as e:
+        return {"success": False, "error": str(e)}
+
+def _cmd_input_device_profile(kwargs):
+    """Store machine device profile (sent from DisabilityMapper on startup) to NBS."""
+    import json
+    sara_root = os.environ.get("SARA_ROOT", os.path.join(os.path.expanduser("~"), "Documents", "coding projects", "SARA"))
+    profile_path = os.path.join(sara_root, "machine_profile.json")
+    profile = kwargs.get("profile") or kwargs.get("payload") or {}
+    try:
+        with open(profile_path, "w", encoding="utf-8") as f:
+            json.dump(profile, f, indent=2)
+        return append_event_con(
+            con_project=kwargs.get("project", SYSTEM_CORE_PROJECT_NAME),
+            con_narrative_path=kwargs.get("narrative_path", "narrative/machine_profile_nbs.json"),
+            con_event={
+                "type": "machine_profile_scan",
+                "machine_id": profile.get("machine_id", ""),
+                "device_count": profile.get("device_count", 0),
+                "devices": profile.get("devices", []),
+                "scan_time": profile.get("scan_time", ""),
+            }
+        )
+    except Exception as e:
+        return {"success": False, "error": str(e)}
+
 def _cmd_client_projects_create(kwargs):
     return _core.create_client_projects_sheet(client_name=kwargs["client_name"], sheet_data=kwargs.get("sheet_data"), operating_mode=kwargs.get("operating_mode", "wfh"), editable_fields=kwargs.get("editable_fields"))
 
@@ -1102,6 +1150,8 @@ if ShuntFSM is not None:
             ("ready", "stellar_time_dut1"): ("ready", _cmd_stellar_time_dut1),
             ("ready", "stellar_observer_set"): ("ready", _cmd_stellar_observer_set),
             ("ready", "stellar_observer_get"): ("ready", _cmd_stellar_observer_get),
+            ("ready", "input_map_update"):     ("ready", _cmd_input_map_update),
+            ("ready", "input_device_profile"): ("ready", _cmd_input_device_profile),
             ("blocked", "reset"):            ("ready",   None),
         },
         initial_state="ready",

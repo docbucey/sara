@@ -1,0 +1,6 @@
+risk_id,risk_statement,probability,impact,score,mitigation,owner,status,residual_risk,evidence
+R-001,C# bypasses CONTROL route,Medium,High,12,Enforce CONTROL-only client calls,owner,Open,Low,
+R-002,Tone layer mutates security outcomes,Low,High,8,Bind tone only after final gate outcome,owner,Open,Low,
+R-003,Conditioning started before spec completion,Medium,Medium,9,Use post-phase entry checklist,owner,Open,Low,
+R-004,Dataset side work distracts main architecture goals,Medium,Medium,9,Use main-vs-side workstream tracker,owner,Open,Medium,
+R-005,Incomplete weekly reporting causes drift,Medium,Medium,9,Publish weekly executive summary every Friday,owner,Open,Low,

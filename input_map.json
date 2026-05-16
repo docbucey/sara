@@ -1,0 +1,45 @@
+{
+  "version": "1.0",
+  "comment": "SARA pre-maps. Any joystick/HOTAS/G13/gamepad works like a gaming mouse out of the box. SARA can update any mapping via voice or chat: 'map trigger to Ctrl+C'",
+  "defaults": {
+    "axis_scale": 15,
+    "axis_deadzone": 0.15,
+    "scroll_scale": 3,
+    "button_debounce_ms": 50
+  },
+  "axes": {
+    "axis_x":  { "type": "mouse_rel_x", "scale": 15, "deadzone": 0.15 },
+    "axis_y":  { "type": "mouse_rel_y", "scale": 15, "deadzone": 0.15, "invert": true },
+    "axis_z":  { "type": "scroll_y",    "scale": 3,  "deadzone": 0.20 },
+    "axis_rx": { "type": "scroll_x",    "scale": 3,  "deadzone": 0.20 },
+    "axis_ry": { "type": "scroll_y",    "scale": 3,  "deadzone": 0.20 },
+    "axis_rz": { "type": "mouse_rel_x", "scale": 15, "deadzone": 0.15 }
+  },
+  "buttons": {
+    "button_0":  { "type": "mouse_left" },
+    "button_1":  { "type": "mouse_right" },
+    "button_2":  { "type": "key", "vk": "Return" },
+    "button_3":  { "type": "key", "vk": "Escape" },
+    "button_4":  { "type": "key", "vk": "Tab" },
+    "button_5":  { "type": "key", "vk": "Space" },
+    "button_6":  { "type": "key", "vk": "Back" },
+    "button_7":  { "type": "key", "vk": "Delete" },
+    "button_8":  { "type": "key_combo", "keys": ["LControlKey", "C"] },
+    "button_9":  { "type": "key_combo", "keys": ["LControlKey", "V"] },
+    "button_10": { "type": "key_combo", "keys": ["LControlKey", "Z"] },
+    "button_11": { "type": "key_combo", "keys": ["LControlKey", "S"] },
+    "button_12": { "type": "key", "vk": "Up" },
+    "button_13": { "type": "key", "vk": "Down" },
+    "button_14": { "type": "key", "vk": "Left" },
+    "button_15": { "type": "key", "vk": "Right" },
+    "button_16": { "type": "key_combo", "keys": ["LWin", "D"] },
+    "button_17": { "type": "key_combo", "keys": ["LMenu", "F4"] },
+    "button_18": { "type": "key_combo", "keys": ["LControlKey", "LWin", "Left"] },
+    "button_19": { "type": "key_combo", "keys": ["LControlKey", "LWin", "Right"] },
+    "pov_up":    { "type": "key", "vk": "Up" },
+    "pov_down":  { "type": "key", "vk": "Down" },
+    "pov_left":  { "type": "key", "vk": "Left" },
+    "pov_right": { "type": "key", "vk": "Right" }
+  },
+  "keyboard_remap": {}
+}

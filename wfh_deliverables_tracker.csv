@@ -1,0 +1,9 @@
+deliverable_id,deliverable_name,owner,workstream,status,priority,due_date,evidence_file,next_action
+D-001,Architecture Review Narrative,owner,main,Not Started,High,,nbs/Documentation/wfh_architecture_review_template.doc.txt,Start weekly architecture review
+D-002,Spec Reconciliation Narrative,owner,main,Not Started,High,,nbs/Documentation/wfh_spec_reconciliation_template.doc.txt,Map required vs implemented
+D-003,Post-Phase Conditioning Plan,owner,main,Not Started,High,,nbs/Documentation/wfh_post_phase_conditioning_plan.doc.txt,Confirm entry criteria
+D-004,Weekly Executive Summary,owner,main,Not Started,Medium,,nbs/Documentation/wfh_weekly_exec_summary_template.doc.txt,Publish weekly summary
+D-005,Gap Register,owner,main,Not Started,High,,nbs/Documentation/wfh_arch_spec_gap_register.csv,Log first 10 gaps
+D-006,Risk Register,owner,main,Not Started,High,,nbs/Documentation/wfh_risk_register.csv,Log top 5 risks
+D-007,Research Dataset Log,owner,side,Not Started,Medium,,nbs/Documentation/wfh_research_dataset_log.csv,Track optional dataset ideas
+D-008,Business Financial Planning Sheet,owner,main,Not Started,High,,nbs/Documentation/wfh_business_financial_planning_sheet.csv,Load existing business assumptions

@@ -1,0 +1,6 @@
+item_id,date,topic,research_type,data_source,objective,data_sensitivity,quality_notes,readiness,next_step
+RS-001,,Architecture patterns,Research,Manual review,Compare route/gate patterns,Low,,Idea,Collect references
+RS-002,,Spec compliance labels,Dataset draft,Spec extracts,Create requirement-classification dataset,Low,,Idea,Define schema columns
+RS-003,,Recovery messaging examples,Dataset draft,Internal docs,Build constrained/denied fallback set,Low,,Idea,Draft 25 samples
+RS-004,,Persona-safe phrasing,Dataset draft,Internal docs,Build non-authority tone pairs,Low,,Idea,Draft paired prompts
+RS-005,,Business KPI vocabulary,Dataset draft,Business plans,Align language with business reporting,Low,,Idea,Extract glossary

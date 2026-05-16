@@ -1,0 +1,1 @@
+{"version":3,"file":"inputNormalizer.js","sourceRoot":"","sources":["../../src/devices/inputNormalizer.ts"],"names":[],"mappings":";;;AAMA,SAAgB,cAAc,CAAC,GAAQ;;IACnC,OAAO;QACH,MAAM,EAAE,GAAG,CAAC,MAAM,IAAI,SAAS;QAC/B,OAAO,EAAE,GAAG,CAAC,OAAO,IAAI,SAAS;QACjC,KAAK,EAAE,MAAA,GAAG,CAAC,KAAK,mCAAI,CAAC;KACxB,CAAC;AACN,CAAC;AAND,wCAMC"}

@@ -1,0 +1,1 @@
+{"version":3,"file":"sendToBlender.js","sourceRoot":"","sources":["../../src/commands/sendToBlender.ts"],"names":[],"mappings":";;;AAAA,iCAAiC;AACjC,SAAgB,qBAAqB,CAAC,OAAgC;IACpE,OAAO,CAAC,aAAa,CAAC,IAAI,CACxB,MAAM,CAAC,QAAQ,CAAC,eAAe,CAAC,sBAAsB,EAAE,GAAG,EAAE;QAC3D,MAAM,CAAC,MAAM,CAAC,sBAAsB,CAAC,kBAAkB,CAAC,CAAC;IAC3D,CAAC,CAAC,CACH,CAAC;AACJ,CAAC;AAND,sDAMC"}

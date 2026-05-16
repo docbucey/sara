@@ -1,0 +1,12 @@
+section,metric,description,current_value,target_value,assumption,source,last_updated,owner
+Business Plan,Primary Offering,Core value proposition,,,,,
+Business Plan,Customer Segment,Primary users and buyers,,,,,
+Business Plan,Pricing Model,Subscription/license/services mix,,,,,
+Financials,Monthly Revenue,Projected monthly revenue,,,,,
+Financials,Monthly Operating Cost,Fixed plus variable costs,,,,,
+Financials,Burn Rate,Net monthly cash usage,,,,,
+Financials,Runway Months,Cash runway estimate,,,,,
+Financials,Break-even Month,Expected break-even timeline,,,,,
+KPIs,Spec Review Throughput,Specs reconciled per week,,,,,
+KPIs,Architecture Closure Rate,Gaps closed per week,,,,,
+KPIs,Risk Reduction Rate,High-risk items reduced per month,,,,,

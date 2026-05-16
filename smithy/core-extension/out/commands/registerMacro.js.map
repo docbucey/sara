@@ -1,0 +1,1 @@
+{"version":3,"file":"registerMacro.js","sourceRoot":"","sources":["../../src/commands/registerMacro.ts"],"names":[],"mappings":";;;AAAA,iCAAiC;AACjC,2DAAwD;AAExD,SAAgB,mBAAmB,CAAC,EAAU,EAAE,MAAc,EAAE,UAAe,EAAE;IAC7E,6BAAa,CAAC,QAAQ,CAAC,EAAE,EAAE;QACvB,EAAE;QACF,MAAM;QACN,OAAO;KACV,CAAC,CAAC;IAEH,MAAM,CAAC,MAAM,CAAC,sBAAsB,CAAC,kBAAkB,EAAE,eAAe,CAAC,CAAC;AAC9E,CAAC;AARD,kDAQC"}

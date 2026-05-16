@@ -1,0 +1,13 @@
+gate_id,gate_name,status,evidence_file,evidence_note,owner,next_action
+P2-ENTRY-LOCK,Phase1 gates verified,Pending,nbs/Documentation/initial_conditioning_specsheet_scan.txt,Confirm all Phase1 exits are still valid,owner,Verify latest gate artifacts
+P2-ROUTE-INHERITANCE,Frozen CONTROL-routed path enforced,Pending,saragen0/SARA.Gen0.Client/SARAClient.cs,Client route path is CONTROL-first,owner,Add final proof note
+P2-SECURITY-STATE-COVERAGE,allow/deny/constrain/schema-fail represented,In Progress,saragen0/SARA.Gen0.UI/Phase2Personality.cs,Persona state mapping added for outcomes,owner,Wire UI templates to all response views
+P2-NON-AUTH-PRESERVATION,UI cannot mutate authority decisions,In Progress,saragen0/SARA.Gen0.UI/Phase2Personality.cs,Safety-state fallback keeps route/gate truth,owner,Add explicit non-authority banner in UI
+P2-PERSONA-EVOLUTION-SAFETY,Persona inputs remain presentation-scoped,Pending,nbs/Documentation/phase2_finish_off_plan.txt,Spec-constrained target defined,owner,Implement preference persistence rules
+P2-ACCESSIBILITY-READABILITY,Plain-language fallback and readability constraints,In Progress,saragen0/SARA.Gen0.UI/Phase2Personality.cs,Safety fallbacks produce guidance-first text,owner,Tune templates and run review
+P2-SYNTHETIC-CUSSING-SAFETY,Synthetic phrasing bounded and safe,Pending,nbs/Documentation/phase2_finish_off_plan.txt,No explicit bounded phrase list yet,owner,Add bounded phrase list and disable-in-safety rule
+P2-ARTIFACT-ALIGNMENT,Frozen artifact set only,Pending,nbs/Documentation/initial_conditioning_discovery.txt,Post-phase lock documented,owner,Attach artifact verification evidence
+P2-CREATIVITY-BOUNDED-TESTABILITY,Creativity default-off unless permitted,Pending,nbs/Documentation/phase2_finish_off_plan.txt,Rule documented but not wired in UI,owner,Implement mode toggle with gate dependency
+P2-NON-AUTONOMY-ENFORCEMENT,No autonomy-like behavior possible,Pending,nbs/Documentation/phase2_finish_off_plan.txt,Constraint documented,owner,Add explicit UI policy statement
+P2-CREATIVITY-ROUTE-GATE-OSH-INTEGRITY,Creativity remains routed/gated/OSH-safe,Pending,nbs/Documentation/initial_conditioning_architecture_scan.txt,Architecture path confirmed,owner,Link runtime evidence
+P2-CREATIVE-ADA-SAFETY-VERIFICATION,ADA safety verified in creative and non-creative modes,Pending,nbs/Documentation/phase2_finish_off_plan.txt,Verification pending,owner,Create validation checklist

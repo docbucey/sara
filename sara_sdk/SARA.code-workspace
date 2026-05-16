@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": ".."
+		},
+		{
+			"path": "../../../../OneDrive/Documents/sara/addons/smithy"
+		}
+	],
+	"settings": {
+		"git.ignoreLimitWarning": true
+	}
+}

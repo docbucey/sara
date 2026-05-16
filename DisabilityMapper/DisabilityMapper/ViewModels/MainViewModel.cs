@@ -11,13 +11,16 @@ namespace DisabilityMapper.ViewModels
 {
     public partial class MainViewModel : ObservableObject
     {
-        private readonly ProfileStore _store;
-        private readonly HidService   _hid;
+        private readonly ProfileStore           _store;
+        private readonly HidService              _hid;
+        private readonly VirtualDeviceService    _vds = new();
 
         [ObservableProperty] private DeviceProfileViewModel? _selectedDevice;
         [ObservableProperty] private bool _isPolling;
         [ObservableProperty] private string _statusText = "Starting up…";
         [ObservableProperty] private bool _saraConnected;
+        [ObservableProperty] private bool _isConsoleBridgeActive;
+        [ObservableProperty] private string _consoleBridgeStatus = "Console Bridge: off";
 
         public ObservableCollection<DeviceProfileViewModel> Devices { get; } = new();
 
@@ -168,6 +171,34 @@ namespace DisabilityMapper.ViewModels
             foreach (var d in Devices)
                 d.Save();
             StatusText = "All profiles saved.";
+        }
+
+        [RelayCommand]
+        private void ToggleConsoleBridge()
+        {
+            if (IsConsoleBridgeActive)
+            {
+                _vds.Disconnect();
+                _hid.SetVirtualDevice(null);
+                IsConsoleBridgeActive = false;
+                ConsoleBridgeStatus   = "Console Bridge: off";
+                StatusText            = "Console Bridge stopped.";
+            }
+            else
+            {
+                if (_vds.TryConnect(out var msg))
+                {
+                    _hid.SetVirtualDevice(_vds);
+                    IsConsoleBridgeActive = true;
+                    ConsoleBridgeStatus   = msg;
+                    StatusText            = "Console Bridge active — device appears as Xbox 360 controller";
+                }
+                else
+                {
+                    ConsoleBridgeStatus = msg;
+                    StatusText          = $"⚠ {msg}";
+                }
+            }
         }
         // ── Raw Input bridge (called from MainWindow WndProc hook) ─────────────
 

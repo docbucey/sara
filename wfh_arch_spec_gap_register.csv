@@ -1,0 +1,6 @@
+gap_id,category,spec_reference,current_state,severity,owner,target_date,decision,status,evidence
+G-001,Routing,Phase2 route inheritance,Pending review,High,owner,,,Open,
+G-002,Security,Security outcome coverage,Pending review,High,owner,,,Open,
+G-003,UI-State,OSH stage visibility,Pending review,Medium,owner,,,Open,
+G-004,Persona,Spec-named C# persona classes,Pending review,Medium,owner,,,Open,
+G-005,Recovery,Fallback messaging templates,Pending review,High,owner,,,Open,

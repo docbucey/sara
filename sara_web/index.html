@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SARA</title>
+<style>
+:root {
+  --bg: #1a1a2e;
+  --surface: #16213e;
+  --text: #e8e8e8;
+  --accent: #0f3460;
+  --green: #2ecc71;
+  --yellow: #f1c40f;
+  --red: #e74c3c;
+  --border: #2a2a4a;
+  --input-bg: #0d1b2a;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+#fatigue-bar {
+  height: 8px;
+  background: var(--green);
+  transition: background 0.5s ease;
+  flex-shrink: 0;
+}
+#fatigue-bar.yellow { background: var(--yellow); }
+#fatigue-bar.red { background: var(--red); }
+
+header {
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+header h1 { font-size: 20px; font-weight: 600; letter-spacing: 2px; }
+#status {
+  font-size: 13px;
+  padding: 4px 12px;
+  border-radius: 12px;
+  background: var(--accent);
+}
+#status.connected { background: #1a5c34; }
+#status.error { background: #5c1a1a; }
+
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 16px 24px;
+  gap: 12px;
+  overflow: hidden;
+}
+
+#output {
+  flex: 1;
+  background: var(--input-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px;
+  overflow-y: auto;
+  font-size: 18px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+#output .user-msg { color: #5dade2; }
+#output .sara-msg { color: #e8e8e8; }
+#output .error-msg { color: var(--red); }
+#output .system-msg { color: #888; font-size: 14px; }
+
+.input-row {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+#prompt {
+  flex: 1;
+  background: var(--input-bg);
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  font-size: 20px;
+  padding: 14px 16px;
+  outline: none;
+  resize: none;
+  font-family: inherit;
+}
+#prompt:focus { border-color: #3498db; }
+
+.btn {
+  background: var(--accent);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  white-space: nowrap;
+  font-family: inherit;
+}
+.btn:hover { background: #1a4a80; }
+.btn:focus { outline: 2px solid #3498db; outline-offset: 2px; }
+.btn.primary { background: #1a6b3c; }
+.btn.primary:hover { background: #22864c; }
+
+.toolbar {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  flex-shrink: 0;
+}
+
+.steno-panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px;
+  flex-shrink: 0;
+  display: none;
+}
+.steno-panel.visible { display: block; }
+.steno-keys {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  justify-content: center;
+}
+.steno-key {
+  width: 48px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--accent);
+  border: 2px solid var(--border);
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  user-select: none;
+}
+.steno-key:hover { background: #1a4a80; }
+.steno-key.latched { background: #2ecc71; color: #000; border-color: #27ae60; }
+.steno-chord-display {
+  text-align: center;
+  font-size: 20px;
+  font-weight: 600;
+  padding: 8px;
+  color: #5dade2;
+  min-height: 36px;
+}
+.steno-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 8px;
+}
+
+.morning-panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px;
+  flex-shrink: 0;
+  max-height: 42vh;
+  overflow-y: auto;
+}
+.morning-panel h2 { font-size: 16px; margin-bottom: 10px; color: #7fb3d5; }
+.morning-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+@media (max-width: 900px) { .morning-grid { grid-template-columns: 1fr; } }
+.morning-panel label { display: block; font-size: 13px; margin-bottom: 4px; color: #bbb; }
+.morning-panel textarea, .morning-panel input[type="text"] {
+  width: 100%;
+  background: var(--input-bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 14px;
+  padding: 8px;
+  font-family: inherit;
+}
+.morning-panel textarea { min-height: 64px; resize: vertical; }
+.morning-actions { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.morning-actions .btn { padding: 10px 14px; font-size: 14px; }
+.morning-hint { font-size: 12px; color: #888; margin-top: 6px; line-height: 1.4; }
+
+.ada-voice-panel {
+  background: #1b2838;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px;
+  flex-shrink: 0;
+}
+.ada-voice-panel h2 { font-size: 16px; margin-bottom: 8px; color: #c4e3a0; }
+.ada-voice-panel .morning-hint { margin-bottom: 8px; }
+</style>
+</head>
+<body>
+
+<div id="fatigue-bar"></div>
+
+<header>
+  <h1>SARA</h1>
+  <span id="status">Connecting...</span>
+</header>
+
+<div class="main">
+  <div id="output" role="log" aria-live="polite" aria-relevant="additions"><span class="system-msg">Starting up...</span></div>
+
+  <div class="steno-panel" id="steno-panel">
+    <div class="steno-chord-display" id="chord-display"></div>
+    <div class="steno-keys" id="steno-keys"></div>
+    <div class="steno-actions">
+      <button class="btn" onclick="stenoFire()" tabindex="0">Fire Chord</button>
+      <button class="btn" onclick="stenoClear()" tabindex="0">Clear</button>
+      <button class="btn" onclick="stenoUndo()" tabindex="0">Undo</button>
+    </div>
+  </div>
+
+  <div class="input-row">
+    <textarea id="prompt" rows="2" placeholder="Type here or use steno keys..." tabindex="1"></textarea>
+    <button class="btn primary" onclick="sendPrompt()" tabindex="2">Send</button>
+  </div>
+
+  <div class="toolbar">
+    <button class="btn" onclick="saveDoc()" tabindex="3">Save .docx</button>
+    <button class="btn" onclick="saveXlsx()" tabindex="4">Save .xlsx</button>
+    <button class="btn" onclick="toggleSteno()" tabindex="5" id="steno-toggle">Steno: OFF</button>
+    <button class="btn" onclick="clearOutput()" tabindex="6">Clear Screen</button>
+  </div>
+
+  <section class="morning-panel" aria-labelledby="morning-heading">
+    <h2 id="morning-heading">Morning routine (news + Fiverr batch)</h2>
+    <p class="morning-hint">RSS URLs must be enabled after save. Split many gigs with a line containing only <code>---</code>. SARA clusters by word overlap, then runs AI in batches so you steer once per batch instead of per listing.</p>
+    <div class="morning-grid">
+      <div>
+        <label for="mr-feeds">RSS feed URLs (one per line, saved as enabled)</label>
+        <textarea id="mr-feeds" rows="3" placeholder="https://example.com/feed.xml"></textarea>
+      </div>
+      <div>
+        <label for="mr-queries">News search phrases (one per line; DuckDuckGo HTML)</label>
+        <textarea id="mr-queries" rows="3" placeholder="remote python contract&#10;accessibility consulting"></textarea>
+      </div>
+      <div>
+        <label for="mr-keywords">Fiverr-style include keywords (comma-separated, optional filter on paste)</label>
+        <input type="text" id="mr-keywords" placeholder="python, pytorch, accessibility" />
+      </div>
+      <div>
+        <label for="mr-exclude">Exclude if text contains (comma-separated)</label>
+        <input type="text" id="mr-exclude" placeholder="adult, crypto pump" />
+      </div>
+      <div style="grid-column: 1 / -1;">
+        <label for="mr-gigs">Paste gig / job listings (split with --- between gigs)</label>
+        <textarea id="mr-gigs" rows="4" placeholder="Title line first, then description...&#10;---&#10;Next gig..."></textarea>
+      </div>
+      <div style="grid-column: 1 / -1;">
+        <label for="mr-guidance">Your guidance for SARA (applied to every AI batch; refine as you go)</label>
+        <textarea id="mr-guidance" rows="2" placeholder="I want fixed-price data labeling under $200, no phone calls, EU or US buyers only."></textarea>
+      </div>
+    </div>
+    <div class="morning-actions">
+      <button type="button" class="btn" onclick="mrSaveConfig()">Save morning config</button>
+      <button type="button" class="btn" onclick="mrLoadConfig()">Reload config</button>
+      <button type="button" class="btn" onclick="mrFetchFeeds()">Fetch RSS</button>
+      <button type="button" class="btn" onclick="mrNewsSearch()">Run news searches</button>
+      <button type="button" class="btn" onclick="mrAddGigs()">Add gigs from paste</button>
+      <button type="button" class="btn" onclick="mrListGigs()">List gig count</button>
+      <button type="button" class="btn" onclick="mrCluster()">Cluster similar</button>
+      <button type="button" class="btn" onclick="mrFilter()">Apply keyword filter</button>
+      <button type="button" class="btn" onclick="mrAiBatch()">AI batch (guided)</button>
+      <button type="button" class="btn" onclick="mrClearGigs()">Clear all gigs</button>
+    </div>
+  </section>
+
+  <section class="ada-voice-panel" aria-labelledby="ada-voice-heading">
+    <h2 id="ada-voice-heading">ADA voice &amp; blind-access fallback</h2>
+    <p class="morning-hint">Profile is stored in MAMA settings and returned on every <code>route_amip</code> as <code>ada_voice_io</code>. Use this web panel if desktop UIs are not ready: browser TTS reads SARA&rsquo;s last reply. Mic still requires your native app + SECURITY consent when you add it.</p>
+    <label for="ada-tts-rate">TTS target (words per minute, hint for native engines)</label>
+    <input type="number" id="ada-tts-rate" min="80" max="220" value="175" style="max-width:120px;margin:6px 0 10px;display:block;background:var(--input-bg);border:1px solid var(--border);color:var(--text);padding:8px;border-radius:6px;" />
+    <div class="morning-actions">
+      <button type="button" class="btn" onclick="adaVoiceLoad()">Load profile</button>
+      <button type="button" class="btn" onclick="adaVoicePreset('blind_full_access')">Preset: blind full access</button>
+      <button type="button" class="btn" onclick="adaVoicePreset('default')">Preset: default</button>
+      <button type="button" class="btn" onclick="adaVoicePreset('motor_first')">Preset: motor-first</button>
+      <button type="button" class="btn" onclick="adaVoicePreset('factory_reset')">Factory reset</button>
+      <button type="button" class="btn" onclick="adaVoiceSaveRate()">Save WPM to profile</button>
+      <button type="button" class="btn primary" onclick="adaSpeakLast()">Read last SARA reply (browser TTS)</button>
+      <button type="button" class="btn" onclick="adaSpeakStop()">Stop speech</button>
+    </div>
+  </section>
+</div>
+
+<script>
+const API = 'http://127.0.0.1:5050';
+let stenoOn = false;
+let stenoLatched = new Set();
+let lastSaraResponse = '';
+
+const KEY_ORDER = [
+  '#','S','T','K','P','W','H','R',
+  'A','O','*','E','U',
+  '-F','-R','-P','-B','-L','-G','-T','-S','-D','-Z'
+];
+
+const STENO_DICT = {
+  '-T':'the','-F':'of','SKP':'and','TO':'to','AEU':'a','TPH':'in',
+  'T':'it','-B':'be','TH':'this','TP':'for','R':'are','U':'you',
+  'K':'can','HR':'will','SR':'have','TPR':'from','HE':'he','WE':'we',
+  'TKO':'do','SO':'so','TPHO':'no','S':'is','KPW':'but','EU':'I',
+  'SHE':'she','W-':'with','A':'at','O':'or','PHEU':'my','PHED':'me',
+  'HO':'how','WHEPB':'when','WOBG':'work','TEUBG':'think',
+  'TKPW':'good','TEUPL':'time','PHOPB':'one','PHRO':'people',
+  '-S':'s','-D':'d'
+};
+
+const outputEl = document.getElementById('output');
+const promptEl = document.getElementById('prompt');
+const statusEl = document.getElementById('status');
+const fatigueEl = document.getElementById('fatigue-bar');
+
+function appendOutput(text, cls) {
+  const span = document.createElement('span');
+  span.className = cls;
+  span.textContent = text + '\n';
+  outputEl.appendChild(span);
+  outputEl.scrollTop = outputEl.scrollHeight;
+}
+
+function clearOutput() {
+  outputEl.innerHTML = '';
+  appendOutput('Screen cleared.', 'system-msg');
+}
+
+async function checkHealth() {
+  try {
+    const r = await fetch(API + '/health');
+    const d = await r.json();
+    statusEl.textContent = d.control_loaded ? 'Connected' : 'No CONTROL';
+    statusEl.className = d.control_loaded ? 'connected' : 'error';
+  } catch(e) {
+    statusEl.textContent = 'Offline';
+    statusEl.className = 'error';
+    appendOutput('Cannot reach SARA at ' + API + '. Start server_con.py --http first.', 'error-msg');
+  }
+}
+
+async function sendShunt(command, payload) {
+  const envelope = {
+    command: command,
+    intent: command,
+    source_pillar: 'WEB_UI',
+    target_pillar: 'CONTROL',
+    requires_response: true,
+    payload: payload || {}
+  };
+  try {
+    const r = await fetch(API + '/shunt', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(envelope)
+    });
+    return await r.json();
+  } catch(e) {
+    return {success: false, error: 'Connection failed: ' + e.message};
+  }
+}
+
+function extractResponse(data) {
+  if (!data) return '[empty response]';
+  if (typeof data === 'string') return data;
+  if (data.text) return data.text;
+  if (data.response) return data.response;
+  if (data.local_result) return extractResponse(data.local_result);
+  if (data.result) return extractResponse(data.result);
+  if (data.output) return data.output;
+  if (data.note) return data.note;
+  return JSON.stringify(data, null, 2);
+}
+
+async function sendPrompt() {
+  const text = promptEl.value.trim();
+  if (!text) return;
+  promptEl.value = '';
+  appendOutput('You: ' + text, 'user-msg');
+
+  const result = await sendShunt('route_amip', {
+    routing_intent: 'amipi.invoke',
+    prompt: text,
+    text: text,
+    mode: 'interactive'
+  });
+
+  if (result.success) {
+    const response = extractResponse(result);
+    lastSaraResponse = response;
+    appendOutput('SARA: ' + response, 'sara-msg');
+  } else {
+    const err = result.error || (result.result && result.result.error) || 'Unknown error';
+    appendOutput('Error: ' + err, 'error-msg');
+  }
+}
+
+async function saveDoc() {
+  const text = lastSaraResponse || 'No content to save.';
+  appendOutput('Saving document...', 'system-msg');
+  const ts = new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19);
+  const result = await sendShunt('write_docx', {
+    output_path: 'C:\\Users\\mdbuc\\Documents\\sara_output_' + ts + '.docx',
+    title: 'SARA Output',
+    paragraphs: text.split('\n')
+  });
+  if (result.success) {
+    appendOutput('Document saved to Documents folder.', 'system-msg');
+  } else {
+    appendOutput('Save failed: ' + (result.error || extractResponse(result)), 'error-msg');
+  }
+}
+
+async function saveXlsx() {
+  const text = lastSaraResponse || 'No content to save.';
+  appendOutput('Saving spreadsheet...', 'system-msg');
+  const ts = new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19);
+  const rows = text.split('\n').map(line => [line]);
+  const result = await sendShunt('write_xlsx', {
+    output_path: 'C:\\Users\\mdbuc\\Documents\\sara_output_' + ts + '.xlsx',
+    sheets: {'Sheet1': rows}
+  });
+  if (result.success) {
+    appendOutput('Spreadsheet saved to Documents folder.', 'system-msg');
+  } else {
+    appendOutput('Save failed: ' + (result.error || extractResponse(result)), 'error-msg');
+  }
+}
+
+// Steno keyboard
+function buildStenoKeyboard() {
+  const container = document.getElementById('steno-keys');
+  container.innerHTML = '';
+  KEY_ORDER.forEach(k => {
+    const el = document.createElement('div');
+    el.className = 'steno-key';
+    el.textContent = k;
+    el.dataset.key = k;
+    el.onclick = () => stenoToggleKey(k);
+    container.appendChild(el);
+  });
+}
+
+function stenoToggleKey(key) {
+  if (stenoLatched.has(key)) {
+    stenoLatched.delete(key);
+  } else {
+    stenoLatched.add(key);
+  }
+  updateStenoDisplay();
+}
+
+function updateStenoDisplay() {
+  const chord = KEY_ORDER.filter(k => stenoLatched.has(k)).join('');
+  document.getElementById('chord-display').textContent = chord || '(no keys latched)';
+  document.querySelectorAll('.steno-key').forEach(el => {
+    el.classList.toggle('latched', stenoLatched.has(el.dataset.key));
+  });
+}
+
+function stenoFire() {
+  if (stenoLatched.size === 0) return;
+  if (stenoLatched.size === 1 && stenoLatched.has('*')) {
+    stenoUndo();
+    stenoLatched.clear();
+    updateStenoDisplay();
+    return;
+  }
+  const chord = KEY_ORDER.filter(k => stenoLatched.has(k)).join('');
+  stenoLatched.clear();
+  updateStenoDisplay();
+  const word = STENO_DICT[chord] || '[' + chord + ']';
+  promptEl.value += word + ' ';
+  promptEl.focus();
+}
+
+function stenoClear() {
+  stenoLatched.clear();
+  updateStenoDisplay();
+}
+
+function stenoUndo() {
+  const val = promptEl.value;
+  const trimmed = val.trimEnd();
+  const lastSpace = trimmed.lastIndexOf(' ');
+  promptEl.value = lastSpace >= 0 ? trimmed.slice(0, lastSpace + 1) : '';
+}
+
+function toggleSteno() {
+  stenoOn = !stenoOn;
+  document.getElementById('steno-panel').classList.toggle('visible', stenoOn);
+  document.getElementById('steno-toggle').textContent = 'Steno: ' + (stenoOn ? 'ON' : 'OFF');
+}
+
+// Keyboard shortcuts
+promptEl.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    sendPrompt();
+  }
+});
+
+document.addEventListener('keydown', e => {
+  if (e.ctrlKey && e.key === 's') {
+    e.preventDefault();
+    saveDoc();
+  }
+  if (e.ctrlKey && e.key === 'e') {
+    e.preventDefault();
+    saveXlsx();
+  }
+  if (e.ctrlKey && e.key === 'k') {
+    e.preventDefault();
+    toggleSteno();
+  }
+});
+
+function mrHostname(url) {
+  try { return new URL(url).hostname; } catch (_) { return 'feed'; }
+}
+
+async function mrLoadConfig() {
+  const data = await sendShunt('morning_routine_get_config', {});
+  const pack = data.result || {};
+  if (!pack.success) {
+    appendOutput('Morning config load failed: ' + JSON.stringify(pack), 'error-msg');
+    return;
+  }
+  const c = pack.config || {};
+  const lines = (c.feeds || []).filter(f => f.enabled !== false).map(f => f.url).filter(Boolean);
+  document.getElementById('mr-feeds').value = lines.join('\n');
+  document.getElementById('mr-queries').value = (c.news_search_queries || []).join('\n');
+  document.getElementById('mr-keywords').value = (c.fiverr_keywords || []).join(', ');
+  document.getElementById('mr-exclude').value = (c.fiverr_exclude || []).join(', ');
+  appendOutput('Morning routine config loaded.', 'system-msg');
+}
+
+async function mrSaveConfig() {
+  const urls = document.getElementById('mr-feeds').value.split('\n').map(s => s.trim()).filter(Boolean);
+  const feeds = urls.map((url, i) => ({
+    id: 'feed-' + (i + 1),
+    title: mrHostname(url),
+    url,
+    enabled: true
+  }));
+  const queries = document.getElementById('mr-queries').value.split('\n').map(s => s.trim()).filter(Boolean);
+  const keywords = document.getElementById('mr-keywords').value.split(',').map(s => s.trim()).filter(Boolean);
+  const exclude = document.getElementById('mr-exclude').value.split(',').map(s => s.trim()).filter(Boolean);
+  const pack = await sendShunt('morning_routine_set_config', {
+    config: { feeds, news_search_queries: queries, fiverr_keywords: keywords, fiverr_exclude: exclude }
+  });
+  const inner = pack.result || {};
+  if (inner.success) {
+    appendOutput('Morning routine config saved (' + feeds.length + ' feeds, ' + queries.length + ' searches).', 'system-msg');
+  } else {
+    appendOutput('Save failed: ' + JSON.stringify(inner), 'error-msg');
+  }
+}
+
+async function mrFetchFeeds() {
+  appendOutput('Fetching enabled RSS feeds...', 'system-msg');
+  const pack = await sendShunt('morning_routine_fetch_feeds', {});
+  const inner = pack.result || {};
+  if (!inner.success) {
+    appendOutput('RSS fetch failed: ' + JSON.stringify(inner), 'error-msg');
+    return;
+  }
+  (inner.results || []).forEach(r => {
+    if (!r.success) {
+      appendOutput('Feed error ' + r.url + ': ' + (r.error || '?'), 'error-msg');
+      return;
+    }
+    const items = r.items || [];
+    appendOutput('— ' + (r.feed_title || r.url) + ' (' + items.length + ' items)', 'system-msg');
+    items.slice(0, 8).forEach(it => {
+      appendOutput('  • ' + (it.title || '') + (it.link ? '\n    ' + it.link : ''), 'sara-msg');
+    });
+  });
+}
+
+async function mrNewsSearch() {
+  appendOutput('Running configured news searches...', 'system-msg');
+  const pack = await sendShunt('morning_routine_news_search', { num_results: 5 });
+  const inner = pack.result || {};
+  if (!inner.success) {
+    appendOutput('News search failed: ' + JSON.stringify(inner), 'error-msg');
+    return;
+  }
+  (inner.results || []).forEach(block => {
+    appendOutput(extractResponse(block), 'sara-msg');
+  });
+}
+
+async function mrAddGigs() {
+  const text = document.getElementById('mr-gigs').value.trim();
+  if (!text) {
+    appendOutput('Paste gig text first.', 'error-msg');
+    return;
+  }
+  const pack = await sendShunt('morning_routine_gigs_add', { text });
+  const inner = pack.result || {};
+  if (inner.success) {
+    appendOutput('Gigs added: ' + inner.added + ' (total stored: ' + inner.total_gigs + ').', 'system-msg');
+  } else {
+    appendOutput('Add gigs failed: ' + JSON.stringify(inner), 'error-msg');
+  }
+}
+
+async function mrListGigs() {
+  const pack = await sendShunt('morning_routine_gigs_list', {});
+  const inner = pack.result || {};
+  if (!inner.success) {
+    appendOutput('List failed: ' + JSON.stringify(inner), 'error-msg');
+    return;
+  }
+  appendOutput('Stored gigs: ' + inner.count, 'system-msg');
+  (inner.gigs || []).slice(0, 25).forEach(g => {
+    appendOutput('  [' + (g.cluster_id || '-') + '] ' + (g.title || g.gig_id), 'sara-msg');
+  });
+  if (inner.count > 25) appendOutput('  … ' + (inner.count - 25) + ' more', 'system-msg');
+}
+
+async function mrClearGigs() {
+  const pack = await sendShunt('morning_routine_gigs_clear', {});
+  const inner = pack.result || {};
+  appendOutput(inner.success ? 'All gigs cleared.' : JSON.stringify(inner), inner.success ? 'system-msg' : 'error-msg');
+}
+
+async function mrCluster() {
+  const pack = await sendShunt('morning_routine_cluster', { threshold: 0.12 });
+  const inner = pack.result || {};
+  if (!inner.success) {
+    appendOutput('Cluster failed: ' + JSON.stringify(inner), 'error-msg');
+    return;
+  }
+  appendOutput('Clusters: ' + (inner.clusters || []).length, 'system-msg');
+  (inner.clusters || []).forEach(c => {
+    appendOutput('  ' + c.cluster_id + ' — size ' + c.size + ' — e.g. ' + (c.sample_titles || []).join(' | '), 'sara-msg');
+  });
+}
+
+async function mrFilter() {
+  const pack = await sendShunt('morning_routine_filter_gigs', {});
+  const inner = pack.result || {};
+  if (inner.success) {
+    appendOutput('Keyword filter applied. Matched: ' + inner.matched + ' / ' + inner.total, 'system-msg');
+  } else {
+    appendOutput(JSON.stringify(inner), 'error-msg');
+  }
+}
+
+async function mrAiBatch() {
+  const guidance = document.getElementById('mr-guidance').value.trim();
+  if (!guidance) {
+    appendOutput('Add guidance text so SARA knows how to rank and group gigs.', 'error-msg');
+    return;
+  }
+  appendOutput('Running batched AI analysis (may take a while)...', 'system-msg');
+  const pack = await sendShunt('morning_routine_ai_batch', { user_guidance: guidance, batch_size: 12 });
+  const inner = pack.result || {};
+  if (!inner.success) {
+    appendOutput('AI batch failed: ' + (inner.error || JSON.stringify(inner)), 'error-msg');
+    return;
+  }
+  appendOutput('AI batches completed: ' + inner.batches + ' (backend: ' + (inner.backend || '?') + ')', 'system-msg');
+  (inner.results || []).forEach((b, i) => {
+    appendOutput('--- Batch ' + (i + 1) + ' — gigs ' + JSON.stringify(b.gig_ids) + ' ---', 'system-msg');
+    appendOutput(b.analysis || '', 'sara-msg');
+  });
+}
+
+let adaVoiceCached = null;
+
+async function adaVoiceLoad() {
+  const pack = await sendShunt('ada_voice_profile_get', {});
+  const inner = pack.result || {};
+  if (!inner.success) {
+    appendOutput('ADA voice profile load failed: ' + JSON.stringify(inner), 'error-msg');
+    return;
+  }
+  adaVoiceCached = inner.ada_voice_profile || {};
+  const wpm = adaVoiceCached.tts_rate_wpm || 175;
+  document.getElementById('ada-tts-rate').value = wpm;
+  appendOutput('ADA voice profile loaded (label=' + (adaVoiceCached.profile_label || 'default') + ').', 'system-msg');
+}
+
+async function adaVoicePreset(name) {
+  const pack = await sendShunt('ada_voice_profile_set', { preset: name });
+  const inner = pack.result || {};
+  if (!inner.success) {
+    appendOutput('ADA preset failed: ' + JSON.stringify(inner), 'error-msg');
+    return;
+  }
+  adaVoiceCached = inner.ada_voice_profile || {};
+  document.getElementById('ada-tts-rate').value = adaVoiceCached.tts_rate_wpm || 175;
+  appendOutput('ADA voice preset applied: ' + name, 'system-msg');
+}
+
+async function adaVoiceSaveRate() {
+  const wpm = parseInt(document.getElementById('ada-tts-rate').value, 10) || 175;
+  const pack = await sendShunt('ada_voice_profile_set', { partial: { tts_rate_wpm: wpm } });
+  const inner = pack.result || {};
+  if (inner.success) {
+    appendOutput('Saved tts_rate_wpm=' + wpm, 'system-msg');
+    adaVoiceCached = inner.ada_voice_profile || adaVoiceCached;
+  } else {
+    appendOutput('ADA save failed: ' + JSON.stringify(inner), 'error-msg');
+  }
+}
+
+function adaSpeakLast() {
+  if (!('speechSynthesis' in window)) {
+    appendOutput('Browser speech synthesis not available.', 'error-msg');
+    return;
+  }
+  const text = (lastSaraResponse || '').trim();
+  if (!text) {
+    appendOutput('No SARA reply to read yet.', 'error-msg');
+    return;
+  }
+  speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  const wpm = parseInt(document.getElementById('ada-tts-rate').value, 10) || 175;
+  u.rate = Math.min(1.35, Math.max(0.65, wpm / 170));
+  u.pitch = 1;
+  speechSynthesis.speak(u);
+}
+
+function adaSpeakStop() {
+  if ('speechSynthesis' in window) speechSynthesis.cancel();
+}
+
+// Init
+buildStenoKeyboard();
+updateStenoDisplay();
+checkHealth();
+setInterval(checkHealth, 10000);
+appendOutput('SARA Web UI ready. Ctrl+K = toggle steno, Ctrl+S = save doc, Ctrl+E = save xlsx', 'system-msg');
+appendOutput('Morning routine panel: save RSS + searches, fetch news, paste Fiverr blocks, cluster, then AI batch with your guidance.', 'system-msg');
+mrLoadConfig();
+adaVoiceLoad();
+promptEl.focus();
+</script>
+</body>
+</html>

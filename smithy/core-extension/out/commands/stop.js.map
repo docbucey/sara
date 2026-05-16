@@ -1,0 +1,1 @@
+{"version":3,"file":"stop.js","sourceRoot":"","sources":["../../src/commands/stop.ts"],"names":[],"mappings":";;;AAAA,iCAAiC;AACjC,SAAgB,YAAY,CAAC,OAAgC;IAC3D,OAAO,CAAC,aAAa,CAAC,IAAI,CACxB,MAAM,CAAC,QAAQ,CAAC,eAAe,CAAC,aAAa,EAAE,GAAG,EAAE;QAClD,MAAM,CAAC,MAAM,CAAC,sBAAsB,CAAC,iBAAiB,CAAC,CAAC;IAC1D,CAAC,CAAC,CACH,CAAC;AACJ,CAAC;AAND,oCAMC"}

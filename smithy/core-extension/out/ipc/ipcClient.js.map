@@ -1,0 +1,1 @@
+{"version":3,"file":"ipcClient.js","sourceRoot":"","sources":["../../src/ipc/ipcClient.ts"],"names":[],"mappings":";;;AAEA,MAAa,SAAS;IAClB,MAAM,CAAC,IAAI,CAAC,GAAqB;QAC7B,OAAO,CAAC,GAAG,CAAC,gBAAgB,EAAE,IAAI,CAAC,SAAS,CAAC,GAAG,EAAE,IAAI,EAAE,CAAC,CAAC,CAAC,CAAC;QAE5D,wCAAwC;QACxC,cAAc;QACd,gBAAgB;QAChB,cAAc;QACd,4BAA4B;IAChC,CAAC;CACJ;AAVD,8BAUC"}

@@ -217,6 +217,39 @@
                             Content="💾  Save"
                             Margin="0,0,8,0"
                             ToolTip="Save all your settings"/>
+
+                    <!-- Console Bridge toggle -->
+                    <Button Margin="0,0,8,0"
+                            Command="{Binding ToggleConsoleBridgeCommand}"
+                            ToolTip="{Binding ConsoleBridgeStatus}">
+                        <Button.Style>
+                            <Style TargetType="Button" BasedOn="{StaticResource BtnStyle}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsConsoleBridgeActive}" Value="True">
+                                        <Setter Property="Background"   Value="#153828"/>
+                                        <Setter Property="BorderBrush"  Value="#2E9E6B"/>
+                                        <Setter Property="Foreground"   Value="#2E9E6B"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                        <StackPanel Orientation="Horizontal">
+                            <Ellipse Width="7" Height="7" Margin="0,0,6,0" VerticalAlignment="Center">
+                                <Ellipse.Style>
+                                    <Style TargetType="Ellipse">
+                                        <Setter Property="Fill" Value="#3A3A3A"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsConsoleBridgeActive}" Value="True">
+                                                <Setter Property="Fill" Value="#2E9E6B"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Ellipse.Style>
+                            </Ellipse>
+                            <TextBlock Text="Console Bridge" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+
                     <Button Style="{StaticResource BtnStyle}"
                             Content="Office Suite" Margin="0,0,0,0"
                             Click="OpenOffice_Click"

@@ -1,0 +1,1 @@
+{"version":3,"file":"bindDeviceInput.js","sourceRoot":"","sources":["../../src/commands/bindDeviceInput.ts"],"names":[],"mappings":";;;AAAA,iCAAiC;AACjC,SAAgB,uBAAuB,CAAC,OAAgC;IACtE,OAAO,CAAC,aAAa,CAAC,IAAI,CACxB,MAAM,CAAC,QAAQ,CAAC,eAAe,CAAC,wBAAwB,EAAE,GAAG,EAAE;QAC7D,MAAM,CAAC,MAAM,CAAC,sBAAsB,CAAC,qBAAqB,CAAC,CAAC;IAC9D,CAAC,CAAC,CACH,CAAC;AACJ,CAAC;AAND,0DAMC"}

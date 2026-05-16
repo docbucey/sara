@@ -1,0 +1,1 @@
+{"version":3,"file":"mouse.js","sourceRoot":"","sources":["../../src/devices/mouse.ts"],"names":[],"mappings":";;;AAAA,4BAA4B;AAC5B,qDAAkD;AAElD,SAAgB,kBAAkB,CAAC,OAAe,EAAE,QAAa,CAAC;IAChE,+BAAc,CAAC,cAAc,CAAC;QAC5B,MAAM,EAAE,OAAO;QACf,OAAO;QACP,KAAK;KACN,CAAC,CAAC;AACL,CAAC;AAND,gDAMC;AACD,4BAA4B;AAC5B,SAAgB,gBAAgB,CAAC,KAAU;IACzC,0CAA0C;AAC5C,CAAC;AAFD,4CAEC"}

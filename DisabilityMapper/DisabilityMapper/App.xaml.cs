@@ -11,7 +11,9 @@ namespace DisabilityMapper;
 
 public partial class App : Application
 {
-    private Process? _saraBackend;
+    private Process?       _saraBackend;
+    private InputMapService?  _inputMap;
+    private JoystickService?  _joystick;
 
     protected override void OnStartup(StartupEventArgs e)
     {
@@ -29,6 +31,16 @@ public partial class App : Application
                     "SARA CONTROL did not start in time.\nCheck that Python is installed and the SARA folder is accessible.",
                     "SARA — Startup Error", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
+
+            // Start TSR input layer — input remapping is always on
+            string saraRoot = SaraPaths.ResolveSaraRoot();
+            _inputMap = new InputMapService(saraRoot);
+            _joystick = new JoystickService(_inputMap);
+            _joystick.Start();
+
+            // Report machine device profile to SARA / NBS (fire and forget)
+            _ = MachineProfileService.ScanAndReportAsync(saraRoot);
+
             new MainWindow().Show();
         });
     }
@@ -81,6 +93,9 @@ public partial class App : Application
 
     private void StopSaraBackend()
     {
+        _joystick?.Dispose();
+        _inputMap?.Dispose();
+
         if (_saraBackend is { HasExited: false })
         {
             try { _saraBackend.Kill(entireProcessTree: true); } catch { }

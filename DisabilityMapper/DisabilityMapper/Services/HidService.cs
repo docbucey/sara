@@ -26,6 +26,7 @@ namespace DisabilityMapper.Services
         private readonly TouchService             _touch     = new();
         private readonly WakeDeviceService        _wake      = new();
         private readonly List<DeviceWatcher>      _watchers  = new();
+        private          VirtualDeviceService?        _vds;
         // Per-path profile+filter for raw-input (keyboard + mouse) devices
         private readonly Dictionary<string, RawHidDeviceProfile> _rawKbProfiles    = new();
         private readonly Dictionary<string, RawHidDeviceProfile> _mouseProfiles     = new();
@@ -52,6 +53,17 @@ namespace DisabilityMapper.Services
     /// <summary>Fires the full structured HidEvent for every raw input.</summary>
     public event Action<HidEvent>? RawHidEvent;
 
+        /// <summary>
+        /// Connects or disconnects the Console Bridge (ViGEmBus virtual controller).
+        /// Pass null to disable forwarding.
+        /// </summary>
+        public void SetVirtualDevice(VirtualDeviceService? vds)
+        {
+            _vds = vds;
+            lock (_watchers)
+                foreach (var w in _watchers)
+                    w.VirtualDevice = vds;
+        }
         /// <summary>
         /// Pass-through to MacroEngine.StenoToggleCallback.
         /// Set this from MainViewModel after construction so that StenoToggle
@@ -304,6 +316,7 @@ namespace DisabilityMapper.Services
                     _disconnectedProfiles[capturedGuid] = capturedProfile;
                 DeviceDisconnected?.Invoke(capturedGuid);
             };
+            watcher.VirtualDevice = _vds;
             lock (_watchers) _watchers.Add(watcher);
             watcher.Start();
         }
@@ -449,6 +462,7 @@ namespace DisabilityMapper.Services
         private          Joystick?         _joystick;
         private          Thread?           _thread;
         private readonly TremorFilterService _filter;
+        private          VirtualDeviceService?  _vds;
 
         // Hat switch state: hatIndex → set of currently active direction names
         private readonly Dictionary<int, HashSet<string>> _prevHatDirs = new();
@@ -463,6 +477,9 @@ namespace DisabilityMapper.Services
         internal Action? Disconnected;
 
         internal string ProfileGuid => _profile.DeviceGuid;
+
+        /// <summary>Set or clear the virtual-controller output for this watcher.</summary>
+        internal VirtualDeviceService? VirtualDevice { set => _vds = value; }
 
         internal DeviceWatcher(DirectInput di, DeviceProfile profile,
                                MacroEngine macro, CancellationToken ct)
@@ -601,6 +618,7 @@ namespace DisabilityMapper.Services
 
         private void OnFilteredButton(string source, bool isPressed)
         {
+            _vds?.Forward(source, isPressed ? 1.0 : 0.0);
             var mapping = _profile.Mappings
                 .Find(m => m.SourceInput.Equals(source, StringComparison.OrdinalIgnoreCase));
             if (mapping is null) return;
@@ -609,6 +627,7 @@ namespace DisabilityMapper.Services
 
         private void OnFilteredAxis(string source, double value)
         {
+            _vds?.Forward(source, value);
             var posMapping = _profile.Mappings
                 .Find(m => m.SourceInput.Equals(source + "+", StringComparison.OrdinalIgnoreCase));
             var negMapping = _profile.Mappings

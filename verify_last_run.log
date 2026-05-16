@@ -1,0 +1,10 @@
+SARA verify Thu 05/14/2026 18:10:24.22 
+ 
+--- smoke_office_files --- 
+OK — wrote:
+  C:\Users\mdbuc\AppData\Local\Temp\sara_smoke_office\sara_smoke.docx
+  C:\Users\mdbuc\AppData\Local\Temp\sara_smoke_office\sara_smoke.xlsx
+ 
+--- verify_dispatch --- 
+OK: dispatch_con imported (CONTROL can load).
+ 
