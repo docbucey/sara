@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using DisabilityMapper.Services;
 using Newtonsoft.Json.Linq;
 
 namespace DisabilityMapper;
@@ -87,7 +88,7 @@ public partial class AssetDeckWindow : Window
         string msg;
         try
         {
-            var r = await Http.GetAsync("http://127.0.0.1:5050/health");
+            var r = await Http.GetAsync($"{BuceyShunt.BaseUrl}/health");
             var j = JObject.Parse(await r.Content.ReadAsStringAsync());
             var loaded = j.Value<bool?>("control_loaded") == true;
             if (loaded)

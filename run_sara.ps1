@@ -27,6 +27,13 @@ if (-not (Test-Path $server)) {
 Write-Host "[SARA] Root: $Root"
 Write-Host "[SARA] Python: $python"
 Write-Host "[SARA] http://${BindHost}:$Port/  (health: /health , API: POST /shunt)"
+
+# RPi mode hint
+if ($env:SARA_HOST) {
+    Write-Host "[SARA] SARA_HOST is set to '$env:SARA_HOST' — VALANCE will target RPi, not this server."
+} else {
+    Write-Host "[SARA] RPi mode: set `$env:SARA_HOST = '192.168.42.1:5050' to run CONTROL on the RPi."
+}
 Write-Host "[SARA] Ctrl+C to stop."
 Write-Host ""
 

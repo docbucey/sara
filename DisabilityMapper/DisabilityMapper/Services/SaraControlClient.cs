@@ -13,7 +13,41 @@ namespace DisabilityMapper.Services
     public static class BuceyShunt
     {
         private static readonly HttpClient Http = new() { Timeout = TimeSpan.FromSeconds(120) };
-        private const string Endpoint = "http://127.0.0.1:5050/shunt";
+
+        /// <summary>
+        /// Base URL for the SARA control server.
+        /// Override with environment variable SARA_HOST (host:port or full URL base).
+        /// Examples:
+        ///   SARA_HOST=192.168.42.1:5050   (RPi on ad-hoc/AP network)
+        ///   SARA_HOST=127.0.0.1:5050      (local — default)
+        /// </summary>
+        public static string BaseUrl { get; private set; } = ResolveBaseUrl();
+
+        private static string ResolveBaseUrl()
+        {
+            var env = System.Environment.GetEnvironmentVariable("SARA_HOST");
+            if (!string.IsNullOrWhiteSpace(env))
+            {
+                // Accept bare host:port or a full http:// URL
+                var raw = env.Trim();
+                return raw.StartsWith("http", StringComparison.OrdinalIgnoreCase)
+                    ? raw.TrimEnd('/')
+                    : $"http://{raw}";
+            }
+            return "http://127.0.0.1:5050";
+        }
+
+        private static string Endpoint => $"{BaseUrl}/shunt";
+        private static string HealthUrl => $"{BaseUrl}/health";
+
+        /// <summary>Override the target host at runtime (e.g. from a settings dialog).</summary>
+        public static void SetHost(string hostAndPort)
+        {
+            var raw = hostAndPort.Trim();
+            BaseUrl = raw.StartsWith("http", StringComparison.OrdinalIgnoreCase)
+                ? raw.TrimEnd('/')
+                : $"http://{raw}";
+        }
 
         /// <summary>
         /// Build a Bucey Shunt envelope. This is the universal SARA packet.
@@ -65,7 +99,7 @@ namespace DisabilityMapper.Services
         {
             try
             {
-                var r = await Http.GetAsync("http://127.0.0.1:5050/health");
+                var r = await Http.GetAsync(HealthUrl);
                 var j = JObject.Parse(await r.Content.ReadAsStringAsync());
                 return j.Value<bool>("control_loaded");
             }
