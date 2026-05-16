@@ -1,5 +1,6 @@
 using System;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -14,6 +15,8 @@ namespace DisabilityMapper.ViewModels
         private readonly ProfileStore           _store;
         private readonly HidService              _hid;
         private readonly VirtualDeviceService    _vds = new();
+        private readonly SessionRecorderService  _recorder = new();
+        private readonly GlobalHookService       _hook = new();
 
         [ObservableProperty] private DeviceProfileViewModel? _selectedDevice;
         [ObservableProperty] private bool _isPolling;
@@ -21,6 +24,29 @@ namespace DisabilityMapper.ViewModels
         [ObservableProperty] private bool _saraConnected;
         [ObservableProperty] private bool _isConsoleBridgeActive;
         [ObservableProperty] private string _consoleBridgeStatus = "Console Bridge: off";
+
+        // Signal monitor — raw vs filtered live display
+        [ObservableProperty] private string _signalInputName = "—";
+        [ObservableProperty] private double _rawSignalValue;
+        [ObservableProperty] private double _filteredSignalValue;
+
+        // Session recorder
+        [ObservableProperty] private bool   _isSessionRecording;
+        [ObservableProperty] private string _sessionFilePath = string.Empty;
+
+        // WFH global tremor filter
+        [ObservableProperty] private bool   _isWfhFilterActive;
+        [ObservableProperty] private string _wfhFilterStatus = "WFH Filter: off";
+
+        // PT/OT prescription + session history
+        [ObservableProperty] private string _prescribedSport = string.Empty;
+        public ObservableCollection<string> SessionFiles { get; } = new();
+
+        // Raised when PT/OT changes the prescribed sport so MainWindow can push it to Patient Console
+        public event Action<string>? PrescribedSportChanged;
+
+        partial void OnPrescribedSportChanged(string value) =>
+            PrescribedSportChanged?.Invoke(value);
 
         public ObservableCollection<DeviceProfileViewModel> Devices { get; } = new();
 
@@ -114,6 +140,21 @@ namespace DisabilityMapper.ViewModels
                     }
                 });
 
+            _hid.RawHidEvent += e =>
+                System.Windows.Application.Current.Dispatcher.Invoke(() =>
+                {
+                    SignalInputName = e.InputName;
+                    RawSignalValue  = Math.Abs(e.Value);
+                });
+
+            _hid.FilteredHidEvent += e =>
+                System.Windows.Application.Current.Dispatcher.Invoke(() =>
+                    FilteredSignalValue = Math.Abs(e.Value));
+
+            // Session telemetry — background thread safe, no dispatcher needed
+            _hid.RawHidEvent      += e => _recorder.OnRawEvent(e);
+            _hid.FilteredHidEvent += e => _recorder.OnFilteredEvent(e);
+
             LoadSavedProfiles();
         }
 
@@ -154,14 +195,20 @@ namespace DisabilityMapper.ViewModels
             if (IsPolling)
             {
                 _hid.StopPolling();
-                IsPolling  = false;
-                StatusText = "Mapping stopped.";
+                _recorder.StopSession();
+                IsPolling          = false;
+                IsSessionRecording = false;
+                SessionFilePath    = string.Empty;
+                StatusText         = "Mapping stopped.";
             }
             else
             {
                 _hid.StartPolling();
-                IsPolling  = true;
-                StatusText = "Mapping active.";
+                _recorder.StartSession();
+                IsPolling          = true;
+                IsSessionRecording = true;
+                SessionFilePath    = _recorder.CurrentSessionPath ?? string.Empty;
+                StatusText         = "Mapping active.";
             }
         }
 
@@ -200,10 +247,79 @@ namespace DisabilityMapper.ViewModels
                 }
             }
         }
+
+        [RelayCommand]
+        private void ToggleWfhFilter()
+        {
+            if (IsWfhFilterActive)
+            {
+                _hook.Stop();
+                IsWfhFilterActive = false;
+                WfhFilterStatus   = "WFH Filter: off";
+                StatusText        = "WFH tremor filter stopped.";
+            }
+            else
+            {
+                _hook.Start();
+                IsWfhFilterActive = true;
+                WfhFilterStatus   = $"KB debounce {_hook.DebounceMs} ms  ·  Mouse dead-zone {_hook.MouseDeadZone} px";
+                StatusText        = $"WFH tremor filter active — KB {_hook.DebounceMs} ms · Mouse ±{_hook.MouseDeadZone} px";
+            }
+        }
+
+        // ── PT/OT session management ───────────────────────────────────────
+
+        /// <summary>Activate Console Bridge + session recording for a patient game session.</summary>
+        public void StartPatientSession(string sport, string team, string opp)
+        {
+            // Ensure Console Bridge is on
+            if (!IsConsoleBridgeActive)
+                ToggleConsoleBridgeCommand.Execute(null);
+
+            // Ensure mapping is running
+            if (!IsPolling)
+                TogglePollingCommand.Execute(null);
+
+            StatusText = $"Session: {sport.Trim()} — {team} vs {opp}";
+        }
+
+        /// <summary>Stop the patient session (Console Bridge + recording).</summary>
+        public void StopPatientSession()
+        {
+            if (IsConsoleBridgeActive)
+                ToggleConsoleBridgeCommand.Execute(null);
+
+            if (IsPolling)
+                TogglePollingCommand.Execute(null);
+
+            StatusText = "Session ended.";
+            RefreshSessionFilesCommand.Execute(null);
+        }
+
+        [RelayCommand]
+        private void RefreshSessionFiles()
+        {
+            SessionFiles.Clear();
+            var dir = SessionRecorderService.SessionDir;
+            if (!Directory.Exists(dir)) return;
+
+            foreach (var f in Directory.GetFiles(dir, "*.jsonl")
+                                       .OrderByDescending(x => x))
+            {
+                SessionFiles.Add(Path.GetFileName(f));
+            }
+        }
         // ── Raw Input bridge (called from MainWindow WndProc hook) ─────────────
 
         public void OnWindowLoaded(IntPtr hwnd) => _hid.RegisterRawInput(hwnd);
         public void OnRawInput(IntPtr lParam)   => _hid.ProcessRawInput(lParam);
+
+        /// <summary>Called by MainWindow.Closed — unhooks global hooks cleanly.</summary>
+        public void Shutdown()
+        {
+            _hook.Dispose();
+            _recorder.Dispose();
+        }
         /// <summary>
         /// Forward WM_POINTER*, WM_POINTERDOWN, WM_POINTERUP from the WndProc hook
         /// so touch/pen contacts reach the mapping pipeline.

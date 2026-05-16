@@ -53,6 +53,9 @@ namespace DisabilityMapper.Services
     /// <summary>Fires the full structured HidEvent for every raw input.</summary>
     public event Action<HidEvent>? RawHidEvent;
 
+    /// <summary>Fires the full structured HidEvent after the tremor filter has processed it.</summary>
+    public event Action<HidEvent>? FilteredHidEvent;
+
         /// <summary>
         /// Connects or disconnects the Console Bridge (ViGEmBus virtual controller).
         /// Pass null to disable forwarding.
@@ -316,7 +319,8 @@ namespace DisabilityMapper.Services
                     _disconnectedProfiles[capturedGuid] = capturedProfile;
                 DeviceDisconnected?.Invoke(capturedGuid);
             };
-            watcher.VirtualDevice = _vds;
+            watcher.VirtualDevice    = _vds;
+            watcher.FilteredCallback = e => FilteredHidEvent?.Invoke(e);
             lock (_watchers) _watchers.Add(watcher);
             watcher.Start();
         }
@@ -476,6 +480,9 @@ namespace DisabilityMapper.Services
         /// <summary>Invoked on the poll thread when the device disconnects.</summary>
         internal Action? Disconnected;
 
+        /// <summary>Invoked after each filtered event so HidService can surface a FilteredHidEvent.</summary>
+        internal Action<HidEvent>? FilteredCallback;
+
         internal string ProfileGuid => _profile.DeviceGuid;
 
         /// <summary>Set or clear the virtual-controller output for this watcher.</summary>
@@ -618,6 +625,7 @@ namespace DisabilityMapper.Services
 
         private void OnFilteredButton(string source, bool isPressed)
         {
+            FilteredCallback?.Invoke(new HidEvent(_profile.DeviceGuid, source, isPressed ? 1.0 : 0.0, DateTime.UtcNow));
             _vds?.Forward(source, isPressed ? 1.0 : 0.0);
             var mapping = _profile.Mappings
                 .Find(m => m.SourceInput.Equals(source, StringComparison.OrdinalIgnoreCase));
@@ -627,6 +635,7 @@ namespace DisabilityMapper.Services
 
         private void OnFilteredAxis(string source, double value)
         {
+            FilteredCallback?.Invoke(new HidEvent(_profile.DeviceGuid, source, value, DateTime.UtcNow));
             _vds?.Forward(source, value);
             var posMapping = _profile.Mappings
                 .Find(m => m.SourceInput.Equals(source + "+", StringComparison.OrdinalIgnoreCase));

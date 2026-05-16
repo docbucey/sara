@@ -18,6 +18,12 @@ public partial class MainWindow : Window
         vm.StenoToggleRequested += () =>
             StenoKeyboardWindow.Toggle(vm.StenoVm);
 
+        // Push prescribed sport changes to the Patient Console if it's open
+        vm.PrescribedSportChanged += sport =>
+            _patientConsole?.UpdatePrescribedSport(sport);
+
+        Closed += (_, _) => vm.Shutdown();
+
         Loaded += OnWindowLoaded;
     }
 
@@ -53,6 +59,32 @@ public partial class MainWindow : Window
     private void OpenOffice_Click(object sender, RoutedEventArgs e)
     {
         OfficeSuiteWindow.Toggle();
+    }
+
+    private PatientConsoleWindow? _patientConsole;
+
+    private void OpenPatientConsole_Click(object sender, RoutedEventArgs e)
+    {
+        var vm = (MainViewModel)DataContext;
+
+        if (_patientConsole is { IsVisible: true })
+        {
+            _patientConsole.Activate();
+            return;
+        }
+
+        _patientConsole = new PatientConsoleWindow(vm, vm.PrescribedSport);
+        _patientConsole.Closed += (_, _) => _patientConsole = null;
+        _patientConsole.Show();
+    }
+
+    /// <summary>
+    /// Called when the PT/OT changes PrescribedSport in VALANCE while the
+    /// Patient Console is already open.
+    /// </summary>
+    internal void UpdatePatientConsoleSport(string sport)
+    {
+        _patientConsole?.UpdatePrescribedSport(sport);
     }
 
     private void OpenSaraFallbackUi_Click(object sender, RoutedEventArgs e)

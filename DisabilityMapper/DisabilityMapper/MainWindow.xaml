@@ -176,6 +176,26 @@
             <Setter Property="Background" Value="#07111E"/>
         </Style>
 
+        <!-- Signal meter bar — used in Signal Monitor panel -->
+        <Style x:Key="SignalBar" TargetType="ProgressBar">
+            <Setter Property="Height"          Value="16"/>
+            <Setter Property="Minimum"         Value="0"/>
+            <Setter Property="Maximum"         Value="1"/>
+            <Setter Property="Background"      Value="#07111E"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ProgressBar">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="3">
+                            <Border x:Name="PART_Indicator" HorizontalAlignment="Left"
+                                    CornerRadius="3" MinWidth="0"
+                                    Background="{TemplateBinding Foreground}"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
     </Window.Resources>
 
     <Grid Margin="0">
@@ -251,9 +271,62 @@
                     </Button>
 
                     <Button Style="{StaticResource BtnStyle}"
-                            Content="Office Suite" Margin="0,0,0,0"
+                            Content="Office Suite" Margin="0,0,8,0"
                             Click="OpenOffice_Click"
                             ToolTip="Open the SARA Office Suite"/>
+
+                    <!-- Patient Console button -->
+                    <Button Margin="0,0,8,0"
+                            Click="OpenPatientConsole_Click"
+                            ToolTip="Open the patient-facing sport selector window">
+                        <Button.Style>
+                            <Style TargetType="Button" BasedOn="{StaticResource BtnStyle}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsConsoleBridgeActive}" Value="True">
+                                        <Setter Property="Background"  Value="#1A1040"/>
+                                        <Setter Property="BorderBrush" Value="#7B3FA0"/>
+                                        <Setter Property="Foreground"  Value="#C08AE0"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="🎮" Margin="0,0,6,0" VerticalAlignment="Center"/>
+                            <TextBlock Text="Patient Console" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+
+                    <!-- WFH Tremor Filter toggle -->
+                    <Button Margin="0,0,0,0"
+                            Command="{Binding ToggleWfhFilterCommand}"
+                            ToolTip="{Binding WfhFilterStatus}">
+                        <Button.Style>
+                            <Style TargetType="Button" BasedOn="{StaticResource BtnStyle}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsWfhFilterActive}" Value="True">
+                                        <Setter Property="Background"  Value="#0F2918"/>
+                                        <Setter Property="BorderBrush" Value="#2E9E6B"/>
+                                        <Setter Property="Foreground"  Value="#2E9E6B"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                        <StackPanel Orientation="Horizontal">
+                            <Ellipse Width="7" Height="7" Margin="0,0,6,0" VerticalAlignment="Center">
+                                <Ellipse.Style>
+                                    <Style TargetType="Ellipse">
+                                        <Setter Property="Fill" Value="#3A3A3A"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsWfhFilterActive}" Value="True">
+                                                <Setter Property="Fill" Value="#2E9E6B"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Ellipse.Style>
+                            </Ellipse>
+                            <TextBlock Text="WFH Filter" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
                 </StackPanel>
 
                 <!-- Center: subtitle -->
@@ -718,6 +791,157 @@
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
                     <StackPanel Margin="14,14,14,14">
 
+                        <!-- ── SIGNAL MONITOR — raw vs filtered — VA demo panel ───── -->
+                        <Border Background="{StaticResource Bg1}" CornerRadius="6"
+                                Padding="12" Margin="0,0,0,12" BorderThickness="1"
+                                BorderBrush="{StaticResource AccentA}">
+                            <StackPanel>
+                                <DockPanel Margin="0,0,0,10">
+                                    <TextBlock DockPanel.Dock="Left"
+                                               Text="SIGNAL MONITOR" FontSize="11" FontWeight="Bold"
+                                               Foreground="{StaticResource FgSub}"
+                                               VerticalAlignment="Center"/>
+                                    <TextBlock DockPanel.Dock="Right"
+                                               Text="{Binding SignalInputName}"
+                                               FontSize="12" FontWeight="Bold"
+                                               Foreground="{StaticResource AccentB}"
+                                               HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                                </DockPanel>
+                                <!-- RAW row -->
+                                <DockPanel Margin="0,0,0,8">
+                                    <TextBlock DockPanel.Dock="Left"
+                                               Text="RAW" Width="58"
+                                               FontSize="12" FontWeight="Bold"
+                                               Foreground="{StaticResource Amber}"
+                                               VerticalAlignment="Center"/>
+                                    <TextBlock DockPanel.Dock="Right" Width="36"
+                                               Text="{Binding RawSignalValue, StringFormat='{}{0:F2}'}"
+                                               FontSize="12" FontFamily="Consolas"
+                                               Foreground="{StaticResource Amber}"
+                                               VerticalAlignment="Center" TextAlignment="Right"/>
+                                    <ProgressBar Style="{StaticResource SignalBar}"
+                                                 Value="{Binding RawSignalValue}"
+                                                 Foreground="{StaticResource Amber}"
+                                                 Margin="6,0"/>
+                                </DockPanel>
+                                <!-- FILTERED row -->
+                                <DockPanel>
+                                    <TextBlock DockPanel.Dock="Left"
+                                               Text="FILTERED" Width="58"
+                                               FontSize="12" FontWeight="Bold"
+                                               Foreground="{StaticResource AccentB}"
+                                               VerticalAlignment="Center"/>
+                                    <TextBlock DockPanel.Dock="Right" Width="36"
+                                               Text="{Binding FilteredSignalValue, StringFormat='{}{0:F2}'}"
+                                               FontSize="12" FontFamily="Consolas"
+                                               Foreground="{StaticResource AccentB}"
+                                               VerticalAlignment="Center" TextAlignment="Right"/>
+                                    <ProgressBar Style="{StaticResource SignalBar}"
+                                                 Value="{Binding FilteredSignalValue}"
+                                                 Foreground="{StaticResource AccentB}"
+                                                 Margin="6,0"/>
+                                </DockPanel>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- ── SESSION RECORDER STATUS ──────────────────────── -->
+                        <Border Background="{StaticResource Bg1}" CornerRadius="6"
+                                Padding="12" Margin="0,0,0,12" BorderThickness="1"
+                                BorderBrush="{StaticResource Bg2}">
+                            <StackPanel>
+                                <DockPanel>
+                                    <TextBlock DockPanel.Dock="Left"
+                                               Text="SESSION" FontSize="11" FontWeight="Bold"
+                                               Foreground="{StaticResource FgSub}"
+                                               VerticalAlignment="Center"/>
+                                    <StackPanel DockPanel.Dock="Right" Orientation="Horizontal"
+                                                VerticalAlignment="Center">
+                                        <Ellipse Width="7" Height="7" VerticalAlignment="Center" Margin="0,0,6,0">
+                                            <Ellipse.Style>
+                                                <Style TargetType="Ellipse">
+                                                    <Setter Property="Fill" Value="#3A3A3A"/>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding IsSessionRecording}" Value="True">
+                                                            <Setter Property="Fill" Value="{StaticResource AccentB}"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Ellipse.Style>
+                                        </Ellipse>
+                                        <TextBlock FontSize="12" VerticalAlignment="Center">
+                                            <TextBlock.Style>
+                                                <Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+                                                    <Setter Property="Text"       Value="Idle"/>
+                                                    <Setter Property="Foreground" Value="{StaticResource FgSub}"/>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding IsSessionRecording}" Value="True">
+                                                            <Setter Property="Text"       Value="Recording"/>
+                                                            <Setter Property="Foreground" Value="{StaticResource AccentB}"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </TextBlock.Style>
+                                        </TextBlock>
+                                    </StackPanel>
+                                </DockPanel>
+                                <TextBlock Text="{Binding SessionFilePath}"
+                                           FontSize="10" FontFamily="Consolas"
+                                           Foreground="{StaticResource FgSub}"
+                                           TextTrimming="CharacterEllipsis"
+                                           Margin="0,6,0,0"/>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- ── WFH FILTER STATUS ─────────────────────────── -->
+                        <Border Background="{StaticResource Bg1}" CornerRadius="6"
+                                Padding="10,8" Margin="0,0,0,12" BorderThickness="1">
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Setter Property="BorderBrush" Value="{StaticResource Bg2}"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsWfhFilterActive}" Value="True">
+                                            <Setter Property="BorderBrush" Value="#2E9E6B"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <DockPanel>
+                                <TextBlock DockPanel.Dock="Left"
+                                           Text="WFH FILTER" FontSize="10" FontWeight="Bold"
+                                           Foreground="{StaticResource FgSub}"
+                                           VerticalAlignment="Center"/>
+                                <StackPanel DockPanel.Dock="Right" Orientation="Horizontal"
+                                            HorizontalAlignment="Right" VerticalAlignment="Center">
+                                    <Ellipse Width="7" Height="7" VerticalAlignment="Center" Margin="0,0,6,0">
+                                        <Ellipse.Style>
+                                            <Style TargetType="Ellipse">
+                                                <Setter Property="Fill" Value="#3A3A3A"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding IsWfhFilterActive}" Value="True">
+                                                        <Setter Property="Fill" Value="{StaticResource AccentB}"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Ellipse.Style>
+                                    </Ellipse>
+                                    <TextBlock FontSize="11" VerticalAlignment="Center">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+                                                <Setter Property="Text"       Value="Off"/>
+                                                <Setter Property="Foreground" Value="{StaticResource FgSub}"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding IsWfhFilterActive}" Value="True">
+                                                        <Setter Property="Text"       Value="Active"/>
+                                                        <Setter Property="Foreground" Value="{StaticResource AccentB}"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </StackPanel>
+                            </DockPanel>
+                        </Border>
+
                         <!-- Section: LIVE INPUT (the big glowing readout) -->
                         <TextBlock Text="LIVE INPUT" FontSize="11" FontWeight="Bold"
                                    Foreground="{StaticResource FgSub}"
@@ -846,6 +1070,72 @@
                                            Foreground="{StaticResource FgSub}">
                                     4. Hit 💾 Save when done.
                                 </TextBlock>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- ═══ PT/OT PRESCRIPTION PANEL ═══════════════════════════ -->
+                        <Border Background="{StaticResource Bg1}" CornerRadius="6"
+                                Padding="12" BorderThickness="1" BorderBrush="{StaticResource AccentC}"
+                                Margin="0,0,0,8">
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                                    <Ellipse Width="7" Height="7" Fill="{StaticResource AccentC}"
+                                             VerticalAlignment="Center" Margin="0,0,6,0"/>
+                                    <TextBlock Text="PT/OT PRESCRIPTION" FontSize="10" FontWeight="Bold"
+                                               Foreground="{StaticResource AccentC}"/>
+                                </StackPanel>
+
+                                <!-- Sport prescription -->
+                                <TextBlock Text="SPORT" FontSize="10" FontWeight="Bold"
+                                           Foreground="{StaticResource FgSub}" Margin="0,0,0,4"/>
+                                <ComboBox SelectedValue="{Binding PrescribedSport}"
+                                          SelectedValuePath="Content"
+                                          Background="#1A3450" Foreground="{StaticResource FgPrim}"
+                                          BorderBrush="{StaticResource Bg2}"
+                                          FontSize="13" Margin="0,0,0,10">
+                                    <ComboBoxItem>Football</ComboBoxItem>
+                                    <ComboBoxItem>Basketball</ComboBoxItem>
+                                    <ComboBoxItem>Baseball / Softball</ComboBoxItem>
+                                    <ComboBoxItem>Soccer</ComboBoxItem>
+                                    <ComboBoxItem>Tennis</ComboBoxItem>
+                                    <ComboBoxItem>Golf</ComboBoxItem>
+                                    <ComboBoxItem>Track &amp; Field</ComboBoxItem>
+                                    <ComboBoxItem>Swimming</ComboBoxItem>
+                                    <ComboBoxItem>Volleyball</ComboBoxItem>
+                                </ComboBox>
+
+                                <!-- Session files list -->
+                                <DockPanel Margin="0,0,0,6">
+                                    <TextBlock DockPanel.Dock="Left" Text="SESSION LOG"
+                                               FontSize="10" FontWeight="Bold"
+                                               Foreground="{StaticResource FgSub}"
+                                               VerticalAlignment="Center"/>
+                                    <Button DockPanel.Dock="Right"
+                                            Command="{Binding RefreshSessionFilesCommand}"
+                                            Content="↻" FontSize="12"
+                                            Background="Transparent" BorderThickness="0"
+                                            Foreground="{StaticResource FgSub}"
+                                            ToolTip="Refresh session file list"
+                                            Cursor="Hand" Padding="4,0" HorizontalAlignment="Right"/>
+                                </DockPanel>
+                                <Border Background="{StaticResource Bg0}" CornerRadius="4"
+                                        Height="90" BorderThickness="1" BorderBrush="{StaticResource Bg2}">
+                                    <ListBox ItemsSource="{Binding SessionFiles}"
+                                             Background="Transparent" BorderThickness="0"
+                                             FontSize="11"
+                                             FontFamily="Consolas"
+                                             Foreground="{StaticResource FgSub}"
+                                             ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                                        <ListBox.ItemContainerStyle>
+                                            <Style TargetType="ListBoxItem">
+                                                <Setter Property="Padding" Value="4,2"/>
+                                                <Setter Property="Foreground" Value="{StaticResource FgSub}"/>
+                                                <Setter Property="Background" Value="Transparent"/>
+                                                <Setter Property="BorderThickness" Value="0"/>
+                                            </Style>
+                                        </ListBox.ItemContainerStyle>
+                                    </ListBox>
+                                </Border>
                             </StackPanel>
                         </Border>
 
