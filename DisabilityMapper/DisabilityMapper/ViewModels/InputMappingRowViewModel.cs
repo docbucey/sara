@@ -57,10 +57,13 @@ namespace DisabilityMapper.ViewModels
             }
         }
 
-        partial void OnActionTypeChanged(string value) => OnPropertyChanged(nameof(CurrentMapping));
-        partial void OnActionValueChanged(string value) => OnPropertyChanged(nameof(CurrentMapping));
-        partial void OnMacroTextChanged(string value) => OnPropertyChanged(nameof(CurrentMapping));
+        partial void OnActionTypeChanged(string value) { OnPropertyChanged(nameof(CurrentMapping)); OnPropertyChanged(nameof(IsMapped)); }
+        partial void OnActionValueChanged(string value) { OnPropertyChanged(nameof(CurrentMapping)); OnPropertyChanged(nameof(IsMapped)); }
+        partial void OnMacroTextChanged(string value) { OnPropertyChanged(nameof(CurrentMapping)); OnPropertyChanged(nameof(IsMapped)); }
         partial void OnHoldModeChanged(bool value) => OnPropertyChanged(nameof(CurrentMapping));
+
+        /// <summary>Used by VALANCE tile template to color-code mapped vs unmapped buttons.</summary>
+        public bool IsMapped => HasMapping();
 
         public void Apply(ButtonMapping mapping)
         {
