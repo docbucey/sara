@@ -32,6 +32,15 @@ except ImportError:
         def paladin_gate(text):
             return True, "PALADIN:ALLOW:stub"
 
+try:
+    from .sheriff import sheriff_audit
+except ImportError:
+    try:
+        from sheriff import sheriff_audit
+    except ImportError:
+        def sheriff_audit(event_type, actor, decision, reason, details=None, **extra):  # type: ignore[misc]
+            return {}
+
 _AMI_ID_RE = re.compile(r"^[0-9A-Fa-f]{4}\s[0-9A-Fa-f]{8}\s[0-9A-Fa-f]{4}$")
 _AMIP_REQUIRED_FIELDS = {
     "amip_version",
@@ -95,6 +104,15 @@ def validate_amip_payload_sec(amip_request: Dict[str, Any]) -> Dict[str, Any]:
 
     errors.extend(_validate_self_evolve_signature_sec(amip_request))
     errors.extend(_validate_contextual_routing_signals_sec(amip_request))
+
+    if routing_intent.lower() == "self.evolve" and errors:
+        _se_errors = [e for e in errors if "self_evolve" in e or "delta_signature" in e or "dry_run" in e]
+        if _se_errors:
+            sheriff_audit(
+                "security.self_evolve.rejected", "validation", "DENY",
+                f"SELF_EVOLVE:check-failed:{','.join(_se_errors[:5])}",
+                details={"correlation_id": str(amip_request.get("correlation_id", "")), "errors": _se_errors},
+            )
 
     return {
         "valid": len(errors) == 0,

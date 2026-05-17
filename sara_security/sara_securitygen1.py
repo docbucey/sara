@@ -601,6 +601,14 @@ def stables_validate_session_sec(
             metadata["recommended_action"] = "present_pending_resume_token"
             return metadata
         if presented_token != pending_token:
+            sheriff_audit(
+                "stables.vnce.resume", "stables", "QUARANTINE",
+                "STABLES:pending-resume-token-mismatch",
+                details={"session_key": session_key, "device_identity": record.get("device_identity"), "envoy_instance_id": record.get("envoy_instance_id")},
+            )
+            record["state"] = "ABANDONED"
+            record["pending_resume_token"] = None
+            record["resume_window_expires_at"] = None
             metadata = _stables_metadata_from_record_sec(record, outcome=SECURITY_OUTCOME_QUARANTINE, reason="STABLES:pending-resume-token-mismatch")
             metadata["recommended_action"] = "quarantine_and_review"
             return metadata
@@ -629,6 +637,14 @@ def stables_validate_session_sec(
     if presented_token:
         current_token = str(record.get("current_token") or "")
         if current_token and presented_token != current_token:
+            sheriff_audit(
+                "stables.vnce.rotation", "stables", "QUARANTINE",
+                "STABLES:rotation-token-mismatch",
+                details={"session_key": session_key, "device_identity": record.get("device_identity"), "envoy_instance_id": record.get("envoy_instance_id")},
+            )
+            record["state"] = "ABANDONED"
+            record["current_token"] = ""
+            record["pending_resume_token"] = None
             metadata = _stables_metadata_from_record_sec(record, outcome=SECURITY_OUTCOME_QUARANTINE, reason="STABLES:rotation-token-mismatch")
             metadata["recommended_action"] = "quarantine_and_review"
             return metadata
@@ -1192,6 +1208,15 @@ def validate_amip_payload_sec(amip_request: Dict[str, Any]) -> Dict[str, Any]:
 
     errors.extend(_validate_self_evolve_signature_sec(amip_request))
     errors.extend(_validate_contextual_routing_signals_sec(amip_request))
+
+    if routing_intent.lower() == "self.evolve" and errors:
+        _se_errors = [e for e in errors if "self_evolve" in e or "delta_signature" in e or "dry_run" in e]
+        if _se_errors:
+            sheriff_audit(
+                "security.self_evolve.rejected", "validation", "DENY",
+                f"SELF_EVOLVE:check-failed:{','.join(_se_errors[:5])}",
+                details={"correlation_id": str(amip_request.get("correlation_id", "")), "errors": _se_errors},
+            )
 
     return {
         "valid": len(errors) == 0,

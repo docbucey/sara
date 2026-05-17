@@ -1,0 +1,42 @@
+{
+    "_comment": "SARA Lite local trust policy — do not remove this file. Controls environment posture decisions in sara_security.",
+    "_generated": "2026-05-17",
+    "_schema": "sara-trust-policy-1.0",
+    "policy_id": "sara-lite-local-default",
+
+    "allowed_environments": [
+        "local",
+        "local_only",
+        "trusted_local",
+        "interactive",
+        "night_shift",
+        "lan"
+    ],
+    "trusted_hosts": [
+        "localhost",
+        "127.0.0.1",
+        "::1",
+        "local_only"
+    ],
+
+    "allow_lan": true,
+    "allow_internet_strict": false,
+
+    "posture_local_only": "ALLOW",
+    "posture_lan": "CHALLENGE",
+    "posture_internet_strict": "QUARANTINE",
+
+    "vnce": {
+        "require_stables_token": true,
+        "fail_closed_on_mismatch": true,
+        "resume_window_seconds": 1800,
+        "rotation_window_seconds": 300
+    },
+
+    "update_sync": {
+        "require_dry_run": true,
+        "require_delta_signature": true,
+        "require_signed_by": true,
+        "allow_unsigned_self_evolve": false
+    }
+}

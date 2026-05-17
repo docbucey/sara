@@ -49,6 +49,15 @@ except ImportError:
         def _iso_now_sec() -> str:
             return datetime.now(timezone.utc).isoformat()
 
+try:
+    from .sheriff import sheriff_audit
+except ImportError:
+    try:
+        from sheriff import sheriff_audit
+    except ImportError:
+        def sheriff_audit(event_type, actor, decision, reason, details=None, **extra):  # type: ignore[misc]
+            return {}
+
 
 def _stables_now_ts_sec() -> int:
     return int(datetime.now(timezone.utc).timestamp())
@@ -343,6 +352,14 @@ def stables_validate_session_sec(
             metadata["recommended_action"] = "present_pending_resume_token"
             return metadata
         if presented_token != pending_token:
+            sheriff_audit(
+                "stables.vnce.resume", "stables", "QUARANTINE",
+                "STABLES:pending-resume-token-mismatch",
+                details={"session_key": session_key, "device_identity": record.get("device_identity"), "envoy_instance_id": record.get("envoy_instance_id")},
+            )
+            record["state"] = "ABANDONED"
+            record["pending_resume_token"] = None
+            record["resume_window_expires_at"] = None
             metadata = _stables_metadata_from_record_sec(record, outcome=SECURITY_OUTCOME_QUARANTINE, reason="STABLES:pending-resume-token-mismatch")
             metadata["recommended_action"] = "quarantine_and_review"
             return metadata
@@ -371,6 +388,14 @@ def stables_validate_session_sec(
     if presented_token:
         current_token = str(record.get("current_token") or "")
         if current_token and presented_token != current_token:
+            sheriff_audit(
+                "stables.vnce.rotation", "stables", "QUARANTINE",
+                "STABLES:rotation-token-mismatch",
+                details={"session_key": session_key, "device_identity": record.get("device_identity"), "envoy_instance_id": record.get("envoy_instance_id")},
+            )
+            record["state"] = "ABANDONED"
+            record["current_token"] = ""
+            record["pending_resume_token"] = None
             metadata = _stables_metadata_from_record_sec(record, outcome=SECURITY_OUTCOME_QUARANTINE, reason="STABLES:rotation-token-mismatch")
             metadata["recommended_action"] = "quarantine_and_review"
             return metadata

@@ -11,20 +11,21 @@ namespace DisabilityMapper.ViewModels
 
         private static readonly string[] s_sports =
         {
-            "🏈  Football",            "🏀  Basketball",
-            "⚾  Baseball / Softball",  "⚽  Soccer",
-            "🎾  Tennis",               "⛳  Golf",
-            "🏃  Track & Field",        "🏊  Swimming",
-            "🏐  Volleyball"
+            "Wheelchair Basketball",  "Seated Volleyball",
+            "Track & Field",          "Swimming",
+            "Handcycling",            "Wheelchair Tennis",
+            "Wheelchair Rugby",       "Power Soccer",
+            "Archery",                "Bocce Ball",
+            "Rowing",                 "Shooting Sports",
         };
 
         private static readonly string[] s_teams =
         {
-            "Alabama",          "Arkansas",        "Auburn",          "Austin Peay",
-            "Florida",          "Georgia",         "Kentucky",        "LSU",
-            "Mississippi State","Missouri",        "Murray State",    "Oklahoma",
-            "Ole Miss",         "South Carolina",  "Tennessee",       "Texas",
-            "Texas A&M",        "Vanderbilt"
+            "Louisville VA",        "Lexington VA",        "Nashville VA",        "Memphis VA",
+            "Gulf Coast VA",        "Jackson VA",          "Hines VA (Chicago)",  "Marion VA",
+            "Miami VA",             "Atlanta VA",          "Birmingham VA",       "Cincinnati VA",
+            "Dayton VA",            "Richmond VA",         "Hampton VA",          "Columbia SC VA",
+            "Augusta VA",           "Orlando VA",
         };
 
         public string[] Sports => s_sports;
