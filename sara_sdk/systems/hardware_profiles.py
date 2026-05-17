@@ -40,12 +40,14 @@ _HMI_3D_KEYWORDS: List[str] = [
 ]
 
 _GAMEPAD_KEYWORDS: List[str] = [
-    "gamepad", "controller", "dualshock", "dual shock",
-    "xbox", "xinput", "x-input",
+    "gamepad", "game controller", "dualshock", "dual shock",
+    "xbox", "xinput", "x-input", "x input",
     "playstation", "ds4", "ds5",
     "switch pro", "steam controller", "8bitdo",
     "rumble pad", "rumblepad",
     "logitech f310", "logitech f710", "logitech f510",
+    "powera", "pdp wired", "pdp afterglow",
+    "usb gamepad", "generic usb joystick",
 ]
 
 # ── Windows device class GUIDs (without braces, lowercase) ───────────────────
@@ -117,6 +119,55 @@ _KNOWN_SPECS: Dict[str, Dict[str, Any]] = {
                             "povs": 1, "hmi_class": "joystick", "manufacturer": "Microsoft"},
     "microsoft sidewinder":{"buttons": 8,  "axes": ["X","Y","Z","RZ"],
                             "povs": 1, "hmi_class": "joystick", "manufacturer": "Microsoft"},
+    # ── Xbox / XInput gamepads ───────────────────────────────────────────────
+    # Axes: X/Y = left stick, RX/RY = right stick, Z = LT, RZ = RT, Slider0/1 = alt trigger
+    # POV = D-pad (as a single hat on DirectInput)
+    "xbox 360 wired":         {"buttons": 10, "axes": ["X","Y","Z","RX","RY","RZ"],
+                               "povs": 1, "hmi_class": "gamepad", "manufacturer": "Microsoft"},
+    "xbox 360 for windows":   {"buttons": 10, "axes": ["X","Y","Z","RX","RY","RZ"],
+                               "povs": 1, "hmi_class": "gamepad", "manufacturer": "Microsoft"},
+    "xbox one for windows":   {"buttons": 10, "axes": ["X","Y","Z","RX","RY","RZ"],
+                               "povs": 1, "hmi_class": "gamepad", "manufacturer": "Microsoft"},
+    "xbox one controller":    {"buttons": 10, "axes": ["X","Y","Z","RX","RY","RZ"],
+                               "povs": 1, "hmi_class": "gamepad", "manufacturer": "Microsoft"},
+    "xbox series":            {"buttons": 10, "axes": ["X","Y","Z","RX","RY","RZ"],
+                               "povs": 1, "hmi_class": "gamepad", "manufacturer": "Microsoft"},
+    "xbox elite":             {"buttons": 12, "axes": ["X","Y","Z","RX","RY","RZ"],
+                               "povs": 1, "hmi_class": "gamepad", "manufacturer": "Microsoft"},
+    # Generic / cheap Xbox-style (Walmart brands, off-brand XInput)
+    # Windows names these: "Controller (XBOX 360 For Windows)" or "Controller (Xbox...)"
+    # Match on just "controller (xbox" or "xinput"
+    "controller (xbox":       {"buttons": 10, "axes": ["X","Y","Z","RX","RY","RZ"],
+                               "povs": 1, "hmi_class": "gamepad", "manufacturer": "Generic/OEM"},
+    "controller (xinput":     {"buttons": 10, "axes": ["X","Y","Z","RX","RY","RZ"],
+                               "povs": 1, "hmi_class": "gamepad", "manufacturer": "Generic XInput"},
+    # PowerA — sold at Walmart, Best Buy, Target
+    "powera enhanced":        {"buttons": 11, "axes": ["X","Y","Z","RX","RY","RZ"],
+                               "povs": 1, "hmi_class": "gamepad", "manufacturer": "PowerA"},
+    "powera spectra":         {"buttons": 11, "axes": ["X","Y","Z","RX","RY","RZ"],
+                               "povs": 1, "hmi_class": "gamepad", "manufacturer": "PowerA"},
+    "powera wired":           {"buttons": 10, "axes": ["X","Y","Z","RX","RY","RZ"],
+                               "povs": 1, "hmi_class": "gamepad", "manufacturer": "PowerA"},
+    # PDP — also common at Walmart
+    "pdp wired":              {"buttons": 10, "axes": ["X","Y","Z","RX","RY","RZ"],
+                               "povs": 1, "hmi_class": "gamepad", "manufacturer": "PDP"},
+    "pdp afterglow":          {"buttons": 10, "axes": ["X","Y","Z","RX","RY","RZ"],
+                               "povs": 1, "hmi_class": "gamepad", "manufacturer": "PDP"},
+    # Logitech F-series gamepads
+    "logitech f310":          {"buttons": 10, "axes": ["X","Y","Z","RX","RY","RZ"],
+                               "povs": 1, "hmi_class": "gamepad", "manufacturer": "Logitech"},
+    "logitech f710":          {"buttons": 10, "axes": ["X","Y","Z","RX","RY","RZ"],
+                               "povs": 1, "hmi_class": "gamepad", "manufacturer": "Logitech"},
+    "logitech f510":          {"buttons": 10, "axes": ["X","Y","Z","RX","RY","RZ"],
+                               "povs": 1, "hmi_class": "gamepad", "manufacturer": "Logitech"},
+    # 8BitDo
+    "8bitdo":                 {"buttons": 12, "axes": ["X","Y","Z","RX","RY","RZ"],
+                               "povs": 1, "hmi_class": "gamepad", "manufacturer": "8BitDo"},
+    # Generic USB gamepad fallbacks ("USB Gamepad", "Generic USB Joystick")
+    "usb gamepad":            {"buttons": 10, "axes": ["X","Y","Z","RX","RY","RZ"],
+                               "povs": 1, "hmi_class": "gamepad", "manufacturer": "Generic"},
+    "generic usb joystick":   {"buttons": 10, "axes": ["X","Y","Z","RZ"],
+                               "povs": 1, "hmi_class": "gamepad", "manufacturer": "Generic"},
 }
 
 # ── 3D-mouse axis pre-map (HOTAS / joystick / flight stick) ──────────────────
@@ -146,14 +197,36 @@ BUTTON_ROLE_HINTS: Dict[int, Dict[str, str]] = {
     3: {"sara_role": "menu_toggle",      "description": "Menu / start"},
 }
 
-# Gamepad axis pre-map
+# Gamepad axis pre-map — Xbox / XInput style
+# DirectInput exposes Xbox sticks as: X/Y=LS, RX/RY=RS, Z=LT, RZ=RT
+# Some generic controllers use Z/RZ for right stick instead — both are mapped.
 AXIS_MAP_GAMEPAD: Dict[str, Dict[str, str]] = {
-    "X":       {"sara_role": "left_stick_x",   "description": "Left stick horizontal"},
-    "Y":       {"sara_role": "left_stick_y",   "description": "Left stick vertical"},
-    "Z":       {"sara_role": "right_stick_x",  "description": "Right stick horizontal"},
-    "RZ":      {"sara_role": "right_stick_y",  "description": "Right stick vertical"},
-    "Slider0": {"sara_role": "left_trigger",   "description": "Left analog trigger"},
-    "Slider1": {"sara_role": "right_trigger",  "description": "Right analog trigger"},
+    "X":       {"sara_role": "left_stick_x",    "description": "Left stick horizontal"},
+    "Y":       {"sara_role": "left_stick_y",    "description": "Left stick vertical"},
+    "RX":      {"sara_role": "right_stick_x",   "description": "Right stick horizontal (Xbox DI)"},
+    "RY":      {"sara_role": "right_stick_y",   "description": "Right stick vertical (Xbox DI)"},
+    "Z":       {"sara_role": "left_trigger",    "description": "Left analog trigger (or RS-X on generic)"},
+    "RZ":      {"sara_role": "right_trigger",   "description": "Right analog trigger (or RS-Y on generic)"},
+    "Slider0": {"sara_role": "left_trigger",    "description": "Left analog trigger (alt)"},
+    "Slider1": {"sara_role": "right_trigger",   "description": "Right analog trigger (alt)"},
+}
+
+# Xbox-style button layout (10 standard buttons, 0-indexed)
+# Matches: Xbox 360, Xbox One, Xbox Series, and most cheap XInput clones
+BUTTON_ROLE_HINTS_XBOX: Dict[int, Dict[str, str]] = {
+    0:  {"sara_role": "face_a",          "description": "A button (bottom face)"},
+    1:  {"sara_role": "face_b",          "description": "B button (right face)"},
+    2:  {"sara_role": "face_x",          "description": "X button (left face)"},
+    3:  {"sara_role": "face_y",          "description": "Y button (top face)"},
+    4:  {"sara_role": "bumper_left",     "description": "LB — left shoulder bumper"},
+    5:  {"sara_role": "bumper_right",    "description": "RB — right shoulder bumper"},
+    6:  {"sara_role": "menu_back",       "description": "Back / View button"},
+    7:  {"sara_role": "menu_start",      "description": "Start / Menu button"},
+    8:  {"sara_role": "thumbstick_left", "description": "L3 — left stick click"},
+    9:  {"sara_role": "thumbstick_right","description": "R3 — right stick click"},
+    # Extra buttons on Xbox Elite Series 2 / some PowerA models
+    10: {"sara_role": "paddle_p1",       "description": "Paddle P1 or extra button 11"},
+    11: {"sara_role": "paddle_p2",       "description": "Paddle P2 or extra button 12"},
 }
 
 # ── OS Hardware Enumeration ───────────────────────────────────────────────────
@@ -440,8 +513,9 @@ def build_default_mapping(spec: Dict[str, Any], category: str) -> Dict[str, Any]
                 {"sara_role": f"pov{i}_{d.lower()}", "description": f"POV{i} {d}"},
             )
 
+    btn_lut = BUTTON_ROLE_HINTS_XBOX if is_pad else BUTTON_ROLE_HINTS
     for i in range(buttons):
-        mapping["buttons"][f"Button{i + 1}"] = BUTTON_ROLE_HINTS.get(
+        mapping["buttons"][f"Button{i + 1}"] = btn_lut.get(
             i, {"sara_role": f"button_{i + 1}", "description": f"Button {i + 1}"}
         )
 
