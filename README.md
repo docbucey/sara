@@ -308,3 +308,77 @@ Open-source. Clinical input requested from CTRS, ATP, PT, and OT professionals w
 **U.S. Department of Veterans Affairs.** Section 508 Resource Office Compliance Guidelines. Under the authority of 29 U.S.C. § 794d.
 > Dictates user-space UI Automation and standard `SendInput` event routing required for deployment on federal networks without kernel-level administrative modifications — the basis for SARA's zero-kernel-driver architecture.
 
+---
+
+### Federal Disability & Accessibility Law
+
+**Americans with Disabilities Act of 1990 (ADA), 42 U.S.C. §§ 12101–12213**, as amended by the **ADA Amendments Act of 2008 (ADAAA), Pub. L. 110-325.**
+> Establishes the federal definition of disability and the non-discrimination mandate across employment, public accommodations, and government services. ADAAA broadened the "substantially limits" standard — expanding SARA's eligible user population to include episodic and mitigating-measures conditions (e.g., medicated Parkinson's, intermittent spasticity).
+
+**Section 504 of the Rehabilitation Act of 1973, 29 U.S.C. § 794.**
+> Prohibits disability discrimination by any program or activity receiving federal financial assistance. Establishes baseline reasonable-accommodation obligations that SARA's configurable filter profiles directly satisfy for VA clinical and telehealth contexts.
+
+**Section 508 of the Rehabilitation Act of 1973 (as amended), 29 U.S.C. § 794d; Access Board ICT Standards (36 C.F.R. Part 1194).**
+> Federal procurement mandate requiring electronic and information technology to be accessible to people with disabilities. The 2017 Refresh (WCAG 2.0 AA harmonization) governs SARA's UI and output layer compliance obligations.
+
+**Assistive Technology Act of 1998 (AT Act), Pub. L. 105-394, 29 U.S.C. § 3001 et seq.**, reauthorized 2004 (Pub. L. 108-364).
+> Funds state AT programs (Kentucky, Tennessee, Mississippi each maintain an AT Act program) and establishes device loan, reutilization, and demonstration center infrastructure. SARA device profiles can be distributed through these state networks as funded AT.
+
+**21st Century Communications and Video Accessibility Act (CVAA) of 2010, Pub. L. 111-260, 47 U.S.C. § 617.**
+> Extends accessibility requirements to advanced communications services and user interfaces. Applies to any SARA module that routes communications output (Office Suite Bridge, session recording export) to modern communication platforms.
+
+**World Wide Web Consortium (W3C). Web Content Accessibility Guidelines (WCAG) 2.1, W3C Recommendation (June 2018). WCAG 2.2, W3C Recommendation (October 2023).**
+> The international technical standard harmonized into U.S. Section 508 (2017 Refresh) and referenced by DOJ in ADA web enforcement. WCAG 2.1 Level AA is the operative compliance floor for SARA's WPF UI; 2.2 SC 2.5.7 (Dragging Movements) and SC 2.5.8 (Target Size) are directly addressed by SARA's tremor filter and enlarged hit-target design.
+
+---
+
+### State Accessibility & Disability Law — Kentucky · Tennessee · Mississippi
+
+#### Kentucky
+
+**Kentucky Civil Rights Act (KCRA), KRS Chapter 344**, specifically KRS 344.040 (employment) and KRS 344.120 (public accommodations).
+> Kentucky's primary anti-discrimination statute, mirroring ADA Title I and Title III protections. Enforced by the Kentucky Commission on Human Rights. Governs any VA-adjacent or private clinical deployment of SARA in the Commonwealth.
+
+**Commonwealth of Kentucky Executive Branch Technology Policies — Digital Accessibility Standard**, referencing WCAG 2.1 AA, issued under authority of the Governor's Office for Electronic and Cabinet Services (GOECS).
+> Requires all Commonwealth digital services to meet WCAG 2.1 Level AA. Applies to SARA deployments in Kentucky state-funded VA community care clinics, state university hospital systems, and Medicaid waiver telehealth programs.
+
+**Kentucky Assistive Technology Service (KATS) Network**, established under the AT Act (KRS 194A.160).
+> State AT program providing device demonstrations, loans, and reutilization. Distribution pathway for SARA hardware profiles and device configurations to motor-impaired Kentucky veterans outside VAMC direct care.
+
+#### Tennessee
+
+**Tennessee Human Rights Act (THRA), T.C.A. § 4-21-101 et seq.**, specifically § 4-21-401 (places of public accommodation).
+> Tennessee's state-level disability non-discrimination statute. Enforcement by the Tennessee Human Rights Commission. Governs any non-federal deployment of SARA within the state, including private OT clinics and community-based outpatient programs.
+
+**Tennessee Technology Accessibility Act, T.C.A. § 4-5-1502; Tennessee Department of Finance and Administration IT Policy 2.00.**
+> Requires Tennessee state government IT and web systems to conform to Section 508 and WCAG 2.0 AA. Directly applicable to SARA deployments in Tennessee state-administered Veterans Service programs and TennCare-funded rehabilitation.
+
+**Tennessee Assistive Technology Program (TATN)**, operating under the AT Act via the Tennessee Technology Access Project.
+> Provides AT device loan and demonstration services statewide. Primary channel for SARA controller profile distribution to veterans in rural Tennessee telehealth settings.
+
+#### Mississippi
+
+**Mississippi Rights of Persons with Disabilities Act, Miss. Code Ann. § 43-6-1 et seq.**
+> State disability rights statute covering employment, public services, and physical access. Establishes the state-level non-discrimination framework applicable to SARA clinical deployments in Mississippi community care and VAMC Jackson-affiliated sites.
+
+**Mississippi Code Ann. § 25-53-191 — Mississippi ITS Accessibility Standard**, administered by the Mississippi Department of Information Technology Services (ITS).
+> Requires state agency technology to meet Section 508 accessibility standards. Governs SARA integration with Mississippi state-funded behavioral health and rehabilitation platforms, including Division of Medicaid telerehabilitation programs.
+
+**Mississippi Assistive Technology Program (MATP)**, operated by the University of Southern Mississippi under the AT Act.
+> Provides AT device loans, demonstrations, and reutilization services. Distribution infrastructure for SARA input device profiles to motor-impaired veterans in the Mississippi Delta and rural service areas underserved by VAMC direct care.
+
+#### Illinois *(VA Entry Point / Primary Federal Submission Jurisdiction)*
+
+**Illinois Human Rights Act (IHRA), 775 ILCS 5**, specifically Article I (Disability) and Article 5 (Public Accommodations).
+> Illinois's primary disability anti-discrimination statute, enforced by the Illinois Department of Human Rights (IDHR). Broader "disability" definition than the federal ADA — covers any determinable physical or mental characteristic. Governs all SARA deployments at Illinois VA sites, affiliated CBOCs, and partner healthcare systems including Hines VA, Jesse Brown VAMC, and Marion VAMC.
+
+**Illinois Information Technology Accessibility Act (IITAA), 30 ILCS 587**, and implementing IITAA Web Standards (v2.0+, aligned to WCAG 2.1 AA).
+> Requires all Illinois state agencies and their contractors to make web-based and desktop IT accessible to people with disabilities. Directly applicable to SARA as a clinical software tool deployed in any Illinois state-funded or state-co-administered rehabilitation program alongside VA care.
+
+**Illinois Assistive Technology Program (IATP)**, administered by Equip for Equality under the AT Act.
+> Illinois AT Act program providing device demonstrations, short-term loans, and reutilization. Primary in-state distribution channel for SARA input device profiles; IATP's AT Reuse Program is the mechanism for getting adapted controller hardware (HOTAS, accessibility switches) to Illinois veterans outside VAMC direct care catchment.
+
+**Department of Veterans' Affairs — Illinois (IDVA)**, operating under 20 ILCS 2805, coordinating with VHA Network 12 (VISN 12 — Great Lakes).
+> Illinois IDVA is the state-level VA entry-point authority. VISN 12 encompasses Jesse Brown VAMC (Chicago), Edward Hines Jr. VA Hospital, Lovell Federal Health Care Center, and Marion VA Medical Center. SARA's federal submission pathway runs through VISN 12 innovation and clinical operations channels. Illinois state claims, benefits navigation, and community care referrals route through IDVA as the coordinating body.
+
+
