@@ -1,4 +1,5 @@
 # SARA — Symbolic Adaptive Remapping Architecture
+### *Current Working Prototype: SARA — Systematic Adaptive Reasoning AI*
 
 **A non-kernel adaptive input platform for motor-impaired veterans. Tremor filtering, device remapping, therapeutic activity sessions, and zero-trust profile mobility — all in user-space.**
 
