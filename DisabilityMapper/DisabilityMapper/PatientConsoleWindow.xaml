@@ -386,7 +386,7 @@
                                 </Style>
                             </Ellipse.Style>
                         </Ellipse>
-                        <TextBlock Text="Console Bridge Active"
+                        <TextBlock Text="Input Adapter Active"
                                    FontSize="14" Foreground="#2E9E6B"
                                    VerticalAlignment="Center"/>
                     </StackPanel>

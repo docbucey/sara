@@ -23,7 +23,7 @@ namespace DisabilityMapper.ViewModels
         [ObservableProperty] private string _statusText = "Starting up…";
         [ObservableProperty] private bool _saraConnected;
         [ObservableProperty] private bool _isConsoleBridgeActive;
-        [ObservableProperty] private string _consoleBridgeStatus = "Console Bridge: off";
+        [ObservableProperty] private string _consoleBridgeStatus = "Input Adapter: off";
 
         // Signal monitor — raw vs filtered live display
         [ObservableProperty] private string _signalInputName = "—";
@@ -228,8 +228,8 @@ namespace DisabilityMapper.ViewModels
                 _vds.Disconnect();
                 _hid.SetVirtualDevice(null);
                 IsConsoleBridgeActive = false;
-                ConsoleBridgeStatus   = "Console Bridge: off";
-                StatusText            = "Console Bridge stopped.";
+                ConsoleBridgeStatus   = "Input Adapter: off";
+                StatusText            = "Input Adapter stopped.";
             }
             else
             {
@@ -238,7 +238,7 @@ namespace DisabilityMapper.ViewModels
                     _hid.SetVirtualDevice(_vds);
                     IsConsoleBridgeActive = true;
                     ConsoleBridgeStatus   = msg;
-                    StatusText            = "Console Bridge active — device appears as Xbox 360 controller";
+                    StatusText            = "Input Adapter active — controller input forwarded to keyboard and mouse";
                 }
                 else
                 {

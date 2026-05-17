@@ -266,7 +266,7 @@
                                     </Style>
                                 </Ellipse.Style>
                             </Ellipse>
-                            <TextBlock Text="Console Bridge" VerticalAlignment="Center"/>
+                            <TextBlock Text="Input Adapter" VerticalAlignment="Center"/>
                         </StackPanel>
                     </Button>
 

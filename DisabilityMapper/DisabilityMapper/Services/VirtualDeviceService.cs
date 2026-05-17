@@ -1,145 +1,147 @@
 using System;
-using Nefarius.ViGEm.Client;
-using Nefarius.ViGEm.Client.Targets;
-using Nefarius.ViGEm.Client.Targets.Xbox360;
+using InputSimulatorStandard;
+using InputSimulatorStandard.Native;
 
 namespace DisabilityMapper.Services
 {
     /// <summary>
-    /// Presents any connected HOTAS / joystick as a virtual Xbox 360 controller via ViGEmBus.
-    /// Requires the ViGEmBus driver installed separately:
-    ///   github.com/nefarius/ViGEmBus/releases
+    /// Routes physical controller inputs to Windows keyboard and mouse events
+    /// via SendInput (Windows accessibility API).
+    ///
+    /// Uses InputSimulatorStandard — no kernel driver or external installation required.
+    /// Compatible with VA workstation security policies and Section 508 requirements.
+    ///
+    /// Default mapping:
+    ///   Left stick X/Y   → mouse cursor movement
+    ///   Right stick X/Y  → horizontal / vertical scroll
+    ///   Left trigger     → left mouse button
+    ///   Right trigger    → right mouse button
+    ///   D-pad            → arrow keys
+    ///   A / B / X / Y   → Space / Escape / E / Q
+    ///   LB / RB          → Left Shift / Left Control
+    ///   Back / Start     → Tab / Return
+    ///   L3 / R3          → F1 / F2
     /// </summary>
     public sealed class VirtualDeviceService : IDisposable
     {
-        private ViGEmClient?        _client;
-        private IXbox360Controller? _ctrl;
-        private bool                _connected;
+        private readonly IInputSimulator _sim = new InputSimulator();
+        private const double MouseScale       = 12.0; // normalised axis → pixels per poll
+        private const double TriggerThreshold = 0.5;  // value above this = pressed
+        private bool _ltHeld;
+        private bool _rtHeld;
 
         // ── Lifecycle ─────────────────────────────────────────────────────────
 
         /// <summary>
-        /// Attempts to connect to ViGEmBus and create a virtual Xbox 360 controller.
-        /// Returns true on success; sets <paramref name="message"/> to a human-readable status.
+        /// Always succeeds — no external driver required.
         /// </summary>
         public bool TryConnect(out string message)
         {
-            try
-            {
-                _client    = new ViGEmClient();
-                _ctrl      = _client.CreateXbox360Controller();
-                _ctrl.Connect();
-                _connected = true;
-                message    = "Console Bridge: active";
-                return true;
-            }
-            catch (Exception ex)
-            {
-                Disconnect();
-                // ViGEmBus not installed → VIGEM_ERROR_BUS_NOT_FOUND (0xE0000001)
-                message = (uint)ex.HResult == 0xE0000001
-                    ? "ViGEmBus driver not found — install from github.com/nefarius/ViGEmBus/releases"
-                    : $"Console Bridge failed: {ex.Message}";
-                return false;
-            }
+            message = "Input Adapter: active";
+            return true;
         }
 
-        /// <summary>Tears down the virtual controller cleanly.</summary>
-        public void Disconnect()
-        {
-            _connected = false;
-            try { _ctrl?.Disconnect(); }   catch { /* ignore teardown errors */ }
-            try { _client?.Dispose(); }    catch { }
-            _ctrl   = null;
-            _client = null;
-        }
+        /// <summary>No-op — no external resource to release.</summary>
+        public void Disconnect() { }
 
         // ── Input forwarding ──────────────────────────────────────────────────
 
         /// <summary>
-        /// Routes a named input event onto the virtual controller.
+        /// Routes a named input event to keyboard or mouse output via SendInput.
         /// Axis values arrive normalised to −1..+1; button values are 0.0 or 1.0.
         /// </summary>
         public void Forward(string inputName, double value)
         {
-            if (!_connected || _ctrl is null) return;
-
-            try
+            switch (inputName)
             {
-                switch (inputName)
-                {
-                    // ── Left thumb-stick ─────────────────────────────────────
-                    case "Axis_X":
-                        _ctrl.SetAxisValue(Xbox360Axis.LeftThumbX, ToShort(value));
-                        break;
-                    case "Axis_Y":
-                        // DirectInput Y+ = down; XInput Y+ = up — invert
-                        _ctrl.SetAxisValue(Xbox360Axis.LeftThumbY, ToShortInv(value));
-                        break;
+                // ── Left stick → mouse cursor ──────────────────────────────────
+                case "Axis_X":
+                    MoveMouseX(value);
+                    break;
+                case "Axis_Y":
+                    // Invert: joystick Y+ = forward/up → cursor moves up (screen Y-)
+                    MoveMouseY(-value);
+                    break;
 
-                    // ── Right thumb-stick ────────────────────────────────────
-                    case "Axis_RX":
-                        _ctrl.SetAxisValue(Xbox360Axis.RightThumbX, ToShort(value));
-                        break;
-                    case "Axis_RY":
-                        _ctrl.SetAxisValue(Xbox360Axis.RightThumbY, ToShortInv(value));
-                        break;
+                // ── Right stick → scroll ───────────────────────────────────────
+                case "Axis_RX":
+                    { int n = (int)Math.Round(value * 2.0); if (n != 0) _sim.Mouse.HorizontalScroll(n); }
+                    break;
+                case "Axis_RY":
+                    { int n = (int)Math.Round(-value * 2.0); if (n != 0) _sim.Mouse.VerticalScroll(n); }
+                    break;
 
-                    // ── Triggers ─────────────────────────────────────────────
-                    case "Axis_Z":
-                    case "Slider0":
-                        _ctrl.SetSliderValue(Xbox360Slider.LeftTrigger, ToTrigger(value));
-                        break;
-                    case "Axis_RZ":
-                    case "Slider1":
-                        _ctrl.SetSliderValue(Xbox360Slider.RightTrigger, ToTrigger(value));
-                        break;
+                // ── Left trigger → left click ──────────────────────────────────
+                case "Axis_Z":
+                case "Slider0":
+                    ToggleMouseButton(value, ref _ltHeld, leftButton: true);
+                    break;
 
-                    // ── D-pad from hat switch ────────────────────────────────
-                    case "Hat0_Up":    _ctrl.SetButtonState(Xbox360Button.Up,    value > 0.5); break;
-                    case "Hat0_Down":  _ctrl.SetButtonState(Xbox360Button.Down,  value > 0.5); break;
-                    case "Hat0_Left":  _ctrl.SetButtonState(Xbox360Button.Left,  value > 0.5); break;
-                    case "Hat0_Right": _ctrl.SetButtonState(Xbox360Button.Right, value > 0.5); break;
+                // ── Right trigger → right click ────────────────────────────────
+                case "Axis_RZ":
+                case "Slider1":
+                    ToggleMouseButton(value, ref _rtHeld, leftButton: false);
+                    break;
 
-                    // ── Face + shoulder buttons (0-9) ────────────────────────
-                    // Layout: A  B  X  Y  LB  RB  Back  Start  LThumb  RThumb
-                    case "Button0": _ctrl.SetButtonState(Xbox360Button.A,             value > 0.5); break;
-                    case "Button1": _ctrl.SetButtonState(Xbox360Button.B,             value > 0.5); break;
-                    case "Button2": _ctrl.SetButtonState(Xbox360Button.X,             value > 0.5); break;
-                    case "Button3": _ctrl.SetButtonState(Xbox360Button.Y,             value > 0.5); break;
-                    case "Button4": _ctrl.SetButtonState(Xbox360Button.LeftShoulder,  value > 0.5); break;
-                    case "Button5": _ctrl.SetButtonState(Xbox360Button.RightShoulder, value > 0.5); break;
-                    case "Button6": _ctrl.SetButtonState(Xbox360Button.Back,          value > 0.5); break;
-                    case "Button7": _ctrl.SetButtonState(Xbox360Button.Start,         value > 0.5); break;
-                    case "Button8": _ctrl.SetButtonState(Xbox360Button.LeftThumb,     value > 0.5); break;
-                    case "Button9": _ctrl.SetButtonState(Xbox360Button.RightThumb,    value > 0.5); break;
+                // ── D-pad → arrow keys ─────────────────────────────────────────
+                case "Hat0_Up":    ToggleKey(VirtualKeyCode.UP,    value > 0.5); break;
+                case "Hat0_Down":  ToggleKey(VirtualKeyCode.DOWN,  value > 0.5); break;
+                case "Hat0_Left":  ToggleKey(VirtualKeyCode.LEFT,  value > 0.5); break;
+                case "Hat0_Right": ToggleKey(VirtualKeyCode.RIGHT, value > 0.5); break;
 
-                    default: return; // nothing to submit for unknown inputs
-                }
-
-                _ctrl.SubmitReport();
-            }
-            catch
-            {
-                // Lost connection to ViGEmBus — mark inactive so Forward is a no-op
-                _connected = false;
+                // ── Face + shoulder buttons ────────────────────────────────────
+                // A=Space  B=Escape  X=E  Y=Q
+                // LB=LShift  RB=LCtrl  Back=Tab  Start=Return  L3=F1  R3=F2
+                case "Button0": ToggleKey(VirtualKeyCode.SPACE,    value > 0.5); break;
+                case "Button1": ToggleKey(VirtualKeyCode.ESCAPE,   value > 0.5); break;
+                case "Button2": ToggleKey(VirtualKeyCode.VK_E,     value > 0.5); break;
+                case "Button3": ToggleKey(VirtualKeyCode.VK_Q,     value > 0.5); break;
+                case "Button4": ToggleKey(VirtualKeyCode.LSHIFT,   value > 0.5); break;
+                case "Button5": ToggleKey(VirtualKeyCode.LCONTROL, value > 0.5); break;
+                case "Button6": ToggleKey(VirtualKeyCode.TAB,      value > 0.5); break;
+                case "Button7": ToggleKey(VirtualKeyCode.RETURN,   value > 0.5); break;
+                case "Button8": ToggleKey(VirtualKeyCode.F1,       value > 0.5); break;
+                case "Button9": ToggleKey(VirtualKeyCode.F2,       value > 0.5); break;
             }
         }
 
-        // ── Conversion helpers ────────────────────────────────────────────────
+        // ── Helpers ───────────────────────────────────────────────────────────
 
-        // Normalised −1..+1  →  XInput short  −32767..+32767
-        private static short ToShort(double v)
-            => (short)Math.Clamp(v * 32767.0, -32768, 32767);
+        private void MoveMouseX(double v)
+        {
+            int delta = (int)Math.Round(v * MouseScale);
+            if (delta != 0) _sim.Mouse.MoveMouseBy(delta, 0);
+        }
 
-        // Same but inverted for Y axes
-        private static short ToShortInv(double v)
-            => (short)Math.Clamp(-v * 32767.0, -32768, 32767);
+        private void MoveMouseY(double v)
+        {
+            int delta = (int)Math.Round(v * MouseScale);
+            if (delta != 0) _sim.Mouse.MoveMouseBy(0, delta);
+        }
 
-        // Normalised −1..+1  →  trigger byte  0 (idle) .. 255 (fully pressed)
-        private static byte ToTrigger(double v)
-            => (byte)Math.Clamp((v + 1.0) / 2.0 * 255.0, 0, 255);
+        private void ToggleKey(VirtualKeyCode key, bool pressed)
+        {
+            if (pressed) _sim.Keyboard.KeyDown(key);
+            else         _sim.Keyboard.KeyUp(key);
+        }
 
-        public void Dispose() => Disconnect();
+        private void ToggleMouseButton(double value, ref bool held, bool leftButton)
+        {
+            bool pressed = value > TriggerThreshold;
+            if (pressed == held) return;
+            held = pressed;
+            if (leftButton)
+            {
+                if (pressed) _sim.Mouse.LeftButtonDown();
+                else         _sim.Mouse.LeftButtonUp();
+            }
+            else
+            {
+                if (pressed) _sim.Mouse.RightButtonDown();
+                else         _sim.Mouse.RightButtonUp();
+            }
+        }
+
+        public void Dispose() { }
     }
 }
