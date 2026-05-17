@@ -24,24 +24,46 @@ public partial class App : Application
         // Poll /health until control_loaded == true (up to 15 seconds).
         Dispatcher.InvokeAsync(async () =>
         {
-            bool ready = await WaitForControlAsync(timeoutSeconds: 15);
-            if (!ready)
+            try
+            {
+                // Open the window immediately — don't block on backend health
+                string saraRoot = SaraPaths.ResolveSaraRoot();
+
+                try
+                {
+                    _inputMap = new InputMapService(saraRoot);
+                    _joystick = new JoystickService(_inputMap);
+                    _joystick.Start();
+                }
+                catch (Exception exInput)
+                {
+                    MessageBox.Show(
+                        $"Input service failed to start:\n{exInput.Message}\n\nSARA will open without input remapping.",
+                        "SARA — Input Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+
+                new MainWindow().Show();
+
+                // Check backend health in background after window is visible
+                bool ready = await WaitForControlAsync(timeoutSeconds: 15);
+                if (!ready)
+                {
+                    MessageBox.Show(
+                        "SARA CONTROL did not respond in time.\nCheck that run_sara.ps1 is running.\n\nYou can still use VALANCE — backend features will be unavailable.",
+                        "SARA — Backend Offline", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+
+                // Report machine device profile to SARA / NBS (fire and forget)
+                if (ready)
+                    _ = MachineProfileService.ScanAndReportAsync(saraRoot);
+            }
+            catch (Exception ex)
             {
                 MessageBox.Show(
-                    "SARA CONTROL did not start in time.\nCheck that Python is installed and the SARA folder is accessible.",
-                    "SARA — Startup Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    $"SARA failed to start:\n\n{ex.GetType().Name}: {ex.Message}\n\n{ex.StackTrace}",
+                    "SARA — Fatal Startup Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                Shutdown(1);
             }
-
-            // Start TSR input layer — input remapping is always on
-            string saraRoot = SaraPaths.ResolveSaraRoot();
-            _inputMap = new InputMapService(saraRoot);
-            _joystick = new JoystickService(_inputMap);
-            _joystick.Start();
-
-            // Report machine device profile to SARA / NBS (fire and forget)
-            _ = MachineProfileService.ScanAndReportAsync(saraRoot);
-
-            new MainWindow().Show();
         });
     }
 

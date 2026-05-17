@@ -10,12 +10,17 @@ namespace DisabilityMapper.Services
     /// <summary>
     /// A normalized HID event emitted for every raw input occurrence.
     /// Value is 1.0/0.0 for buttons, -1..+1 for axes, 0..1 for sliders.
+    /// Role is set from the DeviceProfile so session data is tagged by participant.
     /// </summary>
     public readonly record struct HidEvent(
-        string   DeviceId,
-        string   InputName,
-        double   Value,
-        DateTime Timestamp);
+        string     DeviceId,
+        string     InputName,
+        double     Value,
+        DateTime   Timestamp)
+    {
+        /// <summary>Who generated this event. Default Unassigned for backward compat.</summary>
+        public DeviceRole Role { get; init; } = DeviceRole.Unassigned;
+    }
 
     public class HidService : IDisposable
     {
@@ -319,8 +324,9 @@ namespace DisabilityMapper.Services
                     _disconnectedProfiles[capturedGuid] = capturedProfile;
                 DeviceDisconnected?.Invoke(capturedGuid);
             };
-            watcher.VirtualDevice    = _vds;
-            watcher.FilteredCallback = e => FilteredHidEvent?.Invoke(e);
+            watcher.VirtualDevice      = _vds;
+            watcher.FilteredCallback   = e => FilteredHidEvent?.Invoke(e);
+            watcher.CapabilitiesDetected = p => _store.Save(p);
             lock (_watchers) _watchers.Add(watcher);
             watcher.Start();
         }
@@ -507,12 +513,50 @@ namespace DisabilityMapper.Services
                 _joystick = new Joystick(_di, new Guid(_profile.DeviceGuid));
                 _joystick.Properties.BufferSize = 128;
                 _joystick.Acquire();
+
+                // Snapshot real hardware capabilities so the UI shows only inputs
+                // that physically exist on this device (e.g. 14 buttons on a T.Flight,
+                // not the DirectInput maximum of 128).
+                var caps = _joystick.Capabilities;
+                _profile.JoystickButtonCount = caps.ButtonCount;
+                _profile.JoystickPovCount    = caps.PovCount;
+
+                // Enumerate axes that are actually wired up on this device.
+                var axisObjects = _joystick.GetObjects(DeviceObjectTypeFlags.AbsoluteAxis);
+                var presentAxes = new List<string>();
+                foreach (var obj in axisObjects)
+                {
+                    var axisName = obj.Usage switch
+                    {
+                        1  => "X",
+                        2  => "Y",
+                        3  => "Z",
+                        4  => "RX",
+                        5  => "RY",
+                        6  => "RZ",
+                        _ when obj.Name.Contains("Slider", StringComparison.OrdinalIgnoreCase) => "Slider0",
+                        _  => null
+                    };
+                    if (axisName is not null && !presentAxes.Contains(axisName))
+                        presentAxes.Add(axisName);
+                }
+                // Only overwrite if we got a non-empty list (some devices return nothing here)
+                if (presentAxes.Count > 0)
+                    _profile.JoystickAxes = string.Join(",", presentAxes);
+
+                CapabilitiesDetected?.Invoke(_profile);
             }
             catch { return; }
 
             _thread = new Thread(PollLoop) { IsBackground = true };
             _thread.Start();
         }
+
+        /// <summary>
+        /// Fired once after the joystick is acquired and capabilities are read.
+        /// HidService uses this to save the updated profile to disk.
+        /// </summary>
+        internal Action<DeviceProfile>? CapabilitiesDetected;
 
         private void PollLoop()
         {

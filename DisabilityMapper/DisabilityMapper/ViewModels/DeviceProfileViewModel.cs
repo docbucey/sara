@@ -155,7 +155,7 @@ namespace DisabilityMapper.ViewModels
                 .ToDictionary(m => m.SourceInput, StringComparer.OrdinalIgnoreCase);
 
             // Build a full, stable list of inputs for this device type.
-            foreach (var input in BuildKnownInputs(DeviceType))
+            foreach (var input in BuildKnownInputs(DeviceType, _model))
             {
                 var row = new InputMappingRowViewModel(input)
                 {
@@ -267,7 +267,7 @@ namespace DisabilityMapper.ViewModels
                 FillAndClearLearner(inputLabel);
         }
 
-        private static IEnumerable<string> BuildKnownInputs(string deviceType)
+        private static IEnumerable<string> BuildKnownInputs(string deviceType, DeviceProfile? profile = null)
         {
             if (deviceType.Equals("Keyboard", StringComparison.OrdinalIgnoreCase))
             {
@@ -326,25 +326,47 @@ namespace DisabilityMapper.ViewModels
                 yield break;
             }
 
-            // Gamepads / joysticks / throttles / HOTAS
-            for (int i = 0; i < 128; i++)
+            // ── Gamepads / Joysticks / HOTAS ────────────────────────────────────
+            // Use real hardware caps if we have them, otherwise fall back to maximums.
+            int buttonCount = (profile?.JoystickButtonCount > 0) ? profile.JoystickButtonCount : 128;
+            int povCount    = (profile?.JoystickPovCount    > 0) ? profile.JoystickPovCount    : 4;
+
+            for (int i = 0; i < buttonCount; i++)
                 yield return $"Button{i}";
 
-            foreach (var axis in new[] { "Axis_X", "Axis_Y", "Axis_Z", "Axis_RX", "Axis_RY", "Axis_RZ" })
+            // Axes — use discovered list if available, else all standard axes
+            IEnumerable<string> axisNames;
+            if (!string.IsNullOrWhiteSpace(profile?.JoystickAxes))
+            {
+                axisNames = profile.JoystickAxes.Split(',')
+                    .Select(a => a.Trim())
+                    .Where(a => !string.IsNullOrEmpty(a))
+                    .Select(a => a.StartsWith("Slider") ? a : $"Axis_{a}");
+            }
+            else
+            {
+                axisNames = new[] { "Axis_X", "Axis_Y", "Axis_Z", "Axis_RX", "Axis_RY", "Axis_RZ" };
+            }
+
+            foreach (var axis in axisNames)
             {
                 yield return axis;
                 yield return axis + "+";
                 yield return axis + "-";
             }
 
-            for (int i = 0; i < 2; i++)
+            // Sliders — only emit if not already covered by JoystickAxes
+            if (string.IsNullOrWhiteSpace(profile?.JoystickAxes))
             {
-                yield return $"Slider{i}";
-                yield return $"Slider{i}+";
-                yield return $"Slider{i}-";
+                for (int i = 0; i < 2; i++)
+                {
+                    yield return $"Slider{i}";
+                    yield return $"Slider{i}+";
+                    yield return $"Slider{i}-";
+                }
             }
 
-            for (int hat = 0; hat < 4; hat++)
+            for (int hat = 0; hat < povCount; hat++)
             {
                 yield return $"Hat{hat}_Up";
                 yield return $"Hat{hat}_Right";

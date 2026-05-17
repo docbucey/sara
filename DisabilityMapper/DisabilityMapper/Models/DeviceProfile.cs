@@ -3,6 +3,20 @@ using System.Collections.Generic;
 namespace DisabilityMapper.Models
 {
     /// <summary>
+    /// Role assigned to a physical device for a session.
+    /// Patient  — the person receiving therapy; input drives virtual controller output.
+    /// Operator — PT/OT team member; input feeds the prescription/assist pipeline.
+    /// Personal — developer / WFH user device (never travels to field).
+    /// </summary>
+    public enum DeviceRole
+    {
+        Unassigned,
+        Patient,
+        Operator,
+        Personal
+    }
+
+    /// <summary>
     /// Top-level profile stored per physical device.
     /// Persisted to %AppData%\DisabilityMapper\profiles\{DeviceGuid}.json
     /// </summary>
@@ -16,6 +30,20 @@ namespace DisabilityMapper.Models
         public bool   IsEnabled      { get; set; } = true;
         /// <summary>True when SetupAPI reports CM_DEVCAP_WAKEUP for this device.</summary>
         public bool   CanWake        { get; set; } = false;
+        /// <summary>
+        /// Who is using this device.  Persisted so the same stick is remembered
+        /// across sessions (e.g. the patient stick is always Patient on the field RPi).
+        /// </summary>
+        public DeviceRole Role       { get; set; } = DeviceRole.Unassigned;
+
+        // ── DirectInput capability snapshot (populated on first connect) ──────
+        /// <summary>Actual button count reported by DirectInput. 0 = not yet detected (falls back to 128).</summary>
+        public int    JoystickButtonCount { get; set; } = 0;
+        /// <summary>Actual POV hat count reported by DirectInput. 0 = not yet detected (falls back to 4).</summary>
+        public int    JoystickPovCount    { get; set; } = 0;
+        /// <summary>Comma-separated axis names actually present (e.g. "X,Y,Z,RZ,Slider0"). Empty = use all defaults.</summary>
+        public string JoystickAxes        { get; set; } = string.Empty;
+
         public TremorFilterSettings  TremorFilter { get; set; } = new();
         public List<ButtonMapping>   Mappings     { get; set; } = new();
     }
