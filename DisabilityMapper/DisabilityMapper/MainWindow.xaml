@@ -291,7 +291,7 @@
                             </Style>
                         </Button.Style>
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="🎮" Margin="0,0,6,0" VerticalAlignment="Center"/>
+                            <TextBlock Text="&#x1F4CB;" Margin="0,0,6,0" VerticalAlignment="Center"/>
                             <TextBlock Text="Patient Console" VerticalAlignment="Center"/>
                         </StackPanel>
                     </Button>
@@ -500,6 +500,17 @@
                                                     Content="✕" Padding="6,2" FontSize="13"
                                                     Height="24"
                                                     ToolTip="Delete profile"/>
+                                        </StackPanel>
+                                        <!-- Role selector -->
+                                        <StackPanel Orientation="Horizontal" Margin="0,3,0,0">
+                                            <TextBlock Text="Role:" FontSize="12"
+                                                       Foreground="{StaticResource FgSub}"
+                                                       VerticalAlignment="Center" Margin="0,0,6,0"/>
+                                            <ComboBox ItemsSource="{Binding Source={x:Static vm:DeviceProfileViewModel.RoleValues}}"
+                                                      SelectedItem="{Binding Role}"
+                                                      FontSize="12" Height="24"
+                                                      MinWidth="110" Padding="6,2"
+                                                      ToolTip="Patient · Operator · Personal · Unassigned"/>
                                         </StackPanel>
                                     </StackPanel>
                                 </DockPanel>

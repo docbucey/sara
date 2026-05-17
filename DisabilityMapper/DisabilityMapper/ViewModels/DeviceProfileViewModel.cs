@@ -36,6 +36,10 @@ namespace DisabilityMapper.ViewModels
 
         [ObservableProperty] private string _selectedProfileName = "Default";
         [ObservableProperty] private InputMappingRowViewModel? _selectedMappingRow;
+        [ObservableProperty] private DeviceRole _role = DeviceRole.Unassigned;
+
+        /// <summary>Bound to the Role ComboBox ItemsSource in the device tile.</summary>
+        public static IEnumerable<DeviceRole> RoleValues { get; } = Enum.GetValues<DeviceRole>();
 
         public ObservableCollection<string> ProfileNames { get; } = new();
         public ObservableCollection<InputMappingRowViewModel> MappingRows { get; } = new();
@@ -138,11 +142,12 @@ namespace DisabilityMapper.ViewModels
 
         private void ApplyModelToEditableState(DeviceProfile p)
         {
-            DeviceName = p.DeviceName;
-            IsEnabled = p.IsEnabled;
-            TremorEnabled = p.TremorFilter.IsEnabled;
-            DebounceMs = p.TremorFilter.DebounceMs;
-            AxisDeadZone = p.TremorFilter.AxisDeadZone;
+            DeviceName      = p.DeviceName;
+            IsEnabled       = p.IsEnabled;
+            Role            = p.Role;
+            TremorEnabled   = p.TremorFilter.IsEnabled;
+            DebounceMs      = p.TremorFilter.DebounceMs;
+            AxisDeadZone    = p.TremorFilter.AxisDeadZone;
             AxisSmoothAlpha = p.TremorFilter.AxisSmoothAlpha;
         }
 
@@ -377,8 +382,9 @@ namespace DisabilityMapper.ViewModels
 
         public void Save()
         {
-            _model.DeviceName = DeviceName;
-            _model.IsEnabled = IsEnabled;
+            _model.DeviceName  = DeviceName;
+            _model.IsEnabled   = IsEnabled;
+            _model.Role        = Role;
             _model.ProfileName = SelectedProfileName;
             _model.TremorFilter.IsEnabled = TremorEnabled;
             _model.TremorFilter.DebounceMs = DebounceMs;

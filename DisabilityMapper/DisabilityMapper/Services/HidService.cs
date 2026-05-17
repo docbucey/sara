@@ -316,7 +316,7 @@ namespace DisabilityMapper.Services
                 // DeviceWatcher for execution routing.
                 var displayLabel = NormalizeAxisLabel(label);
                 RawInputDetected?.Invoke(capturedGuid, displayLabel);
-                RawHidEvent?.Invoke(new HidEvent(capturedGuid, displayLabel, value, DateTime.UtcNow));
+                RawHidEvent?.Invoke(new HidEvent(capturedGuid, displayLabel, value, DateTime.UtcNow) { Role = capturedProfile.Role });
             };
             watcher.Disconnected = () =>
             {
@@ -349,18 +349,21 @@ namespace DisabilityMapper.Services
             if (isDown)
             {
                 var label = $"Key_{keyName}";
+                _rawKbProfiles.TryGetValue(devicePath, out var kbp);
+                var kbRole = kbp?.Role ?? DeviceRole.Unassigned;
                 RawInputDetected?.Invoke(devicePath, label);
-                RawHidEvent?.Invoke(new HidEvent(devicePath, label, 1.0, DateTime.UtcNow));
+                RawHidEvent?.Invoke(new HidEvent(devicePath, label, 1.0, DateTime.UtcNow) { Role = kbRole });
             }
-            if (!_rawKbProfiles.TryGetValue(devicePath, out var kbp)) return;
-            kbp.Filter.OnRawButton(keyName, isDown);
+            if (!_rawKbProfiles.TryGetValue(devicePath, out var kbProfile)) return;
+            kbProfile.Filter.OnRawButton(keyName, isDown);
         }
 
         private void OnMouseRawEvent(string devicePath, string inputName, bool isDown)
         {
             var displayLabel = NormalizeAxisLabel(inputName);
+            var mouseRole = _mouseProfiles.TryGetValue(devicePath, out var mp0) ? mp0.Role : DeviceRole.Unassigned;
             RawInputDetected?.Invoke(devicePath, displayLabel);
-            RawHidEvent?.Invoke(new HidEvent(devicePath, displayLabel, isDown ? 1.0 : 0.0, DateTime.UtcNow));
+            RawHidEvent?.Invoke(new HidEvent(devicePath, displayLabel, isDown ? 1.0 : 0.0, DateTime.UtcNow) { Role = mouseRole });
 
             if (!_mouseProfiles.TryGetValue(devicePath, out var mp)) return;
             mp.Filter.OnRawButton(inputName, isDown);
@@ -378,8 +381,9 @@ namespace DisabilityMapper.Services
         /// </summary>
         private void OnMouseAxisEvent(string devicePath, string axisName, double value)
         {
+            var axisRole = _mouseProfiles.TryGetValue(devicePath, out var mp1) ? mp1.Role : DeviceRole.Unassigned;
             RawInputDetected?.Invoke(devicePath, axisName);
-            RawHidEvent?.Invoke(new HidEvent(devicePath, axisName, value, DateTime.UtcNow));
+            RawHidEvent?.Invoke(new HidEvent(devicePath, axisName, value, DateTime.UtcNow) { Role = axisRole });
 
             if (_mouseProfiles.TryGetValue(devicePath, out var mp))
                 mp.Filter.OnRawAxis(axisName, value);
@@ -399,8 +403,9 @@ namespace DisabilityMapper.Services
                 DeviceConnected?.Invoke(deviceId, "Pen / Digitizer");
             }
 
+            var ptrRole = _touchProfiles.TryGetValue(deviceId, out var tp0) ? tp0.Role : DeviceRole.Unassigned;
             RawInputDetected?.Invoke(deviceId, inputName);
-            RawHidEvent?.Invoke(new HidEvent(deviceId, inputName, 1.0, DateTime.UtcNow));
+            RawHidEvent?.Invoke(new HidEvent(deviceId, inputName, 1.0, DateTime.UtcNow) { Role = ptrRole });
 
             if (_touchProfiles.TryGetValue(deviceId, out var tp))
                 tp.Filter.OnRawButton(inputName, true);
@@ -425,10 +430,12 @@ namespace DisabilityMapper.Services
     internal sealed class RawHidDeviceProfile
     {
         public readonly TremorFilterService Filter;
+        public DeviceRole Role { get; }
         private const double AxisDeadzone = 0.15;
 
         internal RawHidDeviceProfile(DeviceProfile profile, MacroEngine macro)
         {
+            Role = profile.Role;
             Filter = new TremorFilterService(profile.TremorFilter);
             Filter.FilteredButtonEvent += (src, isDown) =>
             {

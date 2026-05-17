@@ -22,3 +22,9 @@
 {"ts": "2026-05-12T15:01:29.986055+00:00", "event_type": "dispatch", "actor": "king", "decision": "DENY", "reason": "KING:sovereignty-check-failed"}
 {"ts": "2026-05-15T00:37:49.046514+00:00", "event_type": "dispatch", "actor": "king", "decision": "DENY", "reason": "KING:sovereignty-check-failed"}
 {"ts": "2026-05-16T13:32:57.795162+00:00", "event_type": "dispatch", "actor": "king", "decision": "DENY", "reason": "KING:sovereignty-check-failed"}
+{"ts": "2026-05-17T20:13:00.031673+00:00", "event_type": "dispatch_security", "actor": "king", "decision": "DENY", "reason": "KING:sovereignty-check-failed"}
+{"ts": "2026-05-17T20:13:00.033183+00:00", "event_type": "hardware_discovery", "actor": "sara_mama.hardware_discovery", "decision": true, "reason": "ok", "details": {"device_count": 217, "hmi_count": 46, "machine_id": "BOSGAME-ZAU8P_BOSGAME-ZAU8P"}}
+{"ts": "2026-05-17T20:18:02.346309+00:00", "event_type": "dispatch_security", "actor": "king", "decision": "DENY", "reason": "KING:sovereignty-check-failed"}
+{"ts": "2026-05-17T20:18:02.347310+00:00", "event_type": "hardware_discovery", "actor": "sara_mama.hardware_discovery", "decision": true, "reason": "ok", "details": {"device_count": 217, "hmi_count": 46, "machine_id": "BOSGAME-ZAU8P_BOSGAME-ZAU8P"}}
+{"ts": "2026-05-17T20:18:36.868525+00:00", "event_type": "dispatch_security", "actor": "king", "decision": "DENY", "reason": "KING:sovereignty-check-failed"}
+{"ts": "2026-05-17T20:18:36.869530+00:00", "event_type": "hardware_discovery", "actor": "sara_mama.hardware_discovery", "decision": true, "reason": "ok", "details": {"device_count": 217, "hmi_count": 29, "machine_id": "BOSGAME-ZAU8P_BOSGAME-ZAU8P"}}

@@ -79,6 +79,7 @@ namespace DisabilityMapper.Services
                 {
                     t        = e.Timestamp.ToString("O"),
                     device   = e.DeviceId,
+                    role     = e.Role.ToString(),
                     input    = e.InputName,
                     raw      = Math.Round(rawVal,    4),
                     filtered = Math.Round(e.Value,   4)

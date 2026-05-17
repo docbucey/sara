@@ -119,7 +119,7 @@ Default mapping: left stick → mouse cursor · right stick → scroll · trigge
 Automatic JSONL telemetry for every input event, started when mapping activates:
 
 ```json
-{"timestamp":"2026-05-17T16:20:01.002Z","device":"HOTAS_T16000M","input":"AXIS_X","raw_value":0.421,"filtered_value":0.210}
+{"timestamp":"2026-05-17T16:20:01.002Z","device":"HOTAS_T16000M","role":"Patient","input":"AXIS_X","raw_value":0.421,"filtered_value":0.210}
 ```
 
 Location: `%AppData%\DisabilityMapper\sessions\session_YYYYMMDD_HHMMSS.jsonl`
